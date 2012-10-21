@@ -46,44 +46,68 @@
 
 \section{Project Description}
 
-For scientists carrying out background research for a paper they are authoring, or looking for 
-information on a specific topic that interests them, the vast quantity of
-research papers available online can often be quite daunting, making 
-choosing which papers to read very difficult. This problem
-is exacerbated when there is a time limit on the research to be carried
-out. Partridge aims to aid the reader in finding documents relative to their
-interests through the use of Artificial Intelligence techniques. This should
-make the research process more efficient and save the reader time. The program
-may also help them find papers they may otherwise not have read.
+For scholars carrying out a literature review or researching a specific topic
+the vast quantity of research papers available on the internet can often be quite daunting;  
+with the advent of the `Information Age', choosing which papers to read 
+has become very difficult. This problem is exacerbated when there is a 
+time limit to the research. Partridge aims to aid the 
+reader in finding documents aposite to their interests through the use of 
+Artificial Intelligence techniques. As well as making research processes 
+more efficient and saving time, the program may also help the scholar to find
+papers that they may otherwise not have read.
 
-Partridge will use a web interface to allow a user to indicate which
-specific scientific fields they are interested in - either through manual entry
-of interests and types of report or by allowing the application to collect a
-list of papers that the user has already read and to learn their user profile.
-The program will then suggest sets of papers from the corpus depending on their
-contents and relevance to the user. The program will make these recommendations
-based upon a machine learning approach to classifying the text corpus and
-learning the user's preferences.
+Partridge will use a web interface to allow users to specify particular
+research topics. This can be done through manual entry of interests and types of 
+report or by allowing the application to collate the papers that the user 
+has read and to learn what is relevant to them. By appropriating this information,
+Partridge will use learning algorithms to examine and classify the available
+corpus of literature and make recommendations as to which articles the
+scholar would find most helpful. 
 
-\section{Work to be tackled}
-Whilst a web interface for the program will need to be implemented, the main
-body of the work in this project comes from the backend of the system and the
-Artificial Intelligence that drives it.
+\section{Work to be `tackled':}
+Despite the need for a web interface, the main body of the work in this project 
+comes from the backend of the system and the Artificial Intelligence that drives it.
 
-Firstly, there will need to be some significant research into Natural Language
-Parsing techniques and how different features of the text can be used to
-classify papers and help the system to understand the differences between them.
+Initial research must be undertaken  into Natural Language
+Parsing techniques and how different features of a text can be used to
+classify papers. Furthermore, clear identification of the attributes which
+allow the system to understand the differences between texts is vital.
 
-Once these features are understood, it will be possible to set up a learning
-algorithm to analyse some collections of scientific papers and store
-information about the differences between them. The system will make use of
-some third party software to help with this process, however I will be using
-knowledge from CS36110 Machine Learning as well as any relevant research papers
-and text books to build a paper classifier myself.
+Once these features are understood, a learning algorithm will be developed to
+analyse scientific papers and to store information about the differences between 
+them. The system will make use of some third party software (SAPIENTA) to help
+with this process. Additionally, knowledge from CS36110 Machine will be used in
+this project.
+
+The first iteration of the system should the search for  that match specific criteria,
+corresponding directly to `features' identified using the aforementioned AI
+algorithms. Further iterations could be used  to build a profile based upon the user's 
+reading history and used to make suggestions for further.
+
+\section{`Project Deliverables'}
+
+Although a formal 'XP' methodology will not be adopted since this is an
+individual project, the project will be developed using an agile approach. It will be built in an
+iterative manner. An initial release of the product will be made as soon as
+possible. Subsequent releases will be made in iterations of two months.
+
+Deliverables include:
+\begin{itemize}
+    \item Initial version of the system with restricted functionality; This
+    would  use simple search and filtering techniques to find relevant research
+    papers;
+    \item Progress report evaluating the initial product and outlining ongoing
+    development of the Artificial Intellegince underlying the results
+    classifier module;
+    \item Release two of the product, including result classifying behaviour;
+    \item Demonstration of the artificial intelligence in the product;
+    \item Following iteration three, the next release of the product will show
+    evolved classification behaviour.
+    \item Final report and release of software.
+\end{itemize}
 
 
-\section{Project Deliverables}
-
+\renewcommand{\refname}{Initial Bibliography} 
 \bibliographystyle{plain}
 \nocite{*}
 \bibliography{report}
