@@ -62,22 +62,30 @@ class SciXMLConverter(object):
 
             for obj in layout:
                 if( isinstance(obj, LTTextBox) ):
-                    l = len(word_tokenize(obj.get_text()))
+                    txt = obj.get_text().replace("\n"," ").replace("  "," ").strip()
+
+                    l = len(word_tokenize(txt))
 
                     if not self.abstractFound:
 
                         if l > 75:
-                            abstract = self.doc.createTextNode(obj.get_text())
+                            abstract = self.doc.createTextNode(txt)
                             self.abstractEl.appendChild(abstract)
                             self.abstractFound = True
                     else:
-                        self.bodyEl.appendChild(self.doc.createTextNode(obj.get_text()))
+                        self.bodyEl.appendChild(self.doc.createTextNode(txt))
         # Get the outlines of the document.
         for xref in doc.xrefs: 
            info_ref = xref.trailer.get('Info') 
            if info_ref: 
                 info = resolve1(info_ref)
-                self.titleEl.appendChild(self.doc.createTextNode(info['Title']))
+
+                if(info.has_key("Title")):
+                    title = info['Title']
+                else:
+                    title = raw_input("No title found, please specify one>>>")
+                
+                self.titleEl.appendChild(self.doc.createTextNode(title))
 
         #write the XML to the out stream
         self.doc.writexml(pdfoutput)
