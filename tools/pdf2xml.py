@@ -20,11 +20,12 @@ from pdfminer.pdftypes import resolve1
 
 from xml.dom import minidom
 
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, sent_tokenize
 
 class SciXMLConverter(object):
 
     title = ""
+    nextSID = 1
 
     def convert(self, pdfinput, pdfoutput, pdfpassword=""):
         '''Given a PDF input stream, converts the text to a SciXML document
@@ -66,7 +67,7 @@ class SciXMLConverter(object):
 
             for obj in layout:
                 if( isinstance(obj, LTTextBox) ):
-                    txt = obj.get_text().replace("\n"," ").replace("  "," ")
+                    txt = obj.get_text().replace("\n"," ").replace("  "," ").strip()
 
                     l = len(word_tokenize(txt))
 
@@ -78,11 +79,10 @@ class SciXMLConverter(object):
                     if not self.abstractFound:
 
                         if l > 75:
-                            abstract = self.doc.createTextNode(txt)
-                            self.abstractEl.appendChild(abstract)
+                            self.sentence_split(txt, self.abstractEl)
                             self.abstractFound = True
                     else:
-                        self.bodyEl.appendChild(self.doc.createTextNode(txt))
+                        self.sentence_split(txt, self.bodyEl)
 
         # Get the outlines of the document.
         for xref in doc.xrefs: 
@@ -93,10 +93,31 @@ class SciXMLConverter(object):
                 if(info.has_key("Title")):
                     self.title = info['Title']
                 
-                self.titleEl.appendChild(self.doc.createTextNode(self.title))
+                
+                self.sentence_split(self.title, self.titleEl)
 
         #write the XML to the out stream
         self.doc.writexml(pdfoutput)
+
+    def sentence_split(self, text, parentNode):
+        '''Use NLTK to run a sentence splitter over the document
+
+        Takes text and splits into sentences then appends <s> 
+        elements to the parentNode for each sentence
+        '''
+        
+        for sent in sent_tokenize(text):
+
+            #see how long the sentence is and if we can just ignore it
+            if(len(sent) < 5):
+                continue
+            
+            sEl = self.doc.createElement("s")
+            sEl.appendChild(self.doc.createTextNode(sent))
+            sEl.setAttribute("sid", str(self.nextSID))
+            parentNode.appendChild(sEl)
+            self.nextSID += 1
+
 
     def initxml(self):
         self.doc = minidom.Document()
