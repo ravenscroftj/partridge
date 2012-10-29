@@ -19,6 +19,7 @@ from pdfminer.converter import PDFPageAggregator
 from pdfminer.pdftypes import resolve1
 
 from xml.dom import minidom
+from optparse import OptionParser
 
 from nltk.tokenize import word_tokenize, sent_tokenize
 
@@ -27,13 +28,13 @@ class SciXMLConverter(object):
     title = ""
     nextSID = 1
 
-    def convert(self, pdfinput, pdfoutput, pdfpassword=""):
+    def convert(self, pdfinput, pdfoutput, pdfpassword="", splitsentences=False):
         '''Given a PDF input stream, converts the text to a SciXML document
         '''
         #start the xml stuff
         self.initxml()
 
-            
+        self.splitsentences = splitsentences
 
         self.abstractFound = False
 
@@ -63,26 +64,11 @@ class SciXMLConverter(object):
             # receive the LTPage object for the page.
             layout = device.get_result()
 
-            paper_text = ""
-
             for obj in layout:
                 if( isinstance(obj, LTTextBox) ):
                     txt = obj.get_text().replace("\n"," ").replace("  "," ").strip()
-
-                    l = len(word_tokenize(txt))
-
-                    #make some assumptions about the paper title
-                    #we can correct these using metadata later (hopefully)
-                    if(self.title == ""):
-                        self.title = txt
-
-                    if not self.abstractFound:
-
-                        if l > 75:
-                            self.sentence_split(txt, self.abstractEl)
-                            self.abstractFound = True
-                    else:
-                        self.sentence_split(txt, self.bodyEl)
+                    #process the text in this section
+                    self.process_text(txt)
 
         # Get the outlines of the document.
         for xref in doc.xrefs: 
@@ -93,11 +79,45 @@ class SciXMLConverter(object):
                 if(info.has_key("Title")):
                     self.title = info['Title']
                 
-                
-                self.sentence_split(self.title, self.titleEl)
+                if(self.splitsentences):
+                    self.sentence_split(self.title, self.titleEl)
+                else:
+                    self.titleEl.appendChild(self.doc.createTextNode(self.title))
 
         #write the XML to the out stream
         self.doc.writexml(pdfoutput)
+
+
+    #---------------------------------------------------------------------------------------------
+
+    def process_text(self, txt):
+        ''' Method used to process bodies of text within the PDF and add to the XML output
+        '''
+
+        l = len(word_tokenize(txt))
+
+        #make some assumptions about the paper title
+        #we can correct these using metadata later (hopefully)
+        if(self.title == ""):
+            self.title = txt
+
+        if not self.abstractFound:
+
+            if l > 75:
+
+                if(self.splitsentences):
+                    self.sentence_split(txt, self.abstractEl)
+                else:
+                    self.abstractEl.appendChild(self.doc.createTextNode(txt))
+
+                self.abstractFound = True
+        else:
+            if(self.splitsentences):
+                self.sentence_split(txt, self.bodyEl)
+            else:
+                self.bodyEl.appendChild(self.doc.createTextNode(txt))
+
+    #----------------------------------------------------------------------------------------------
 
     def sentence_split(self, text, parentNode):
         '''Use NLTK to run a sentence splitter over the document
@@ -117,8 +137,9 @@ class SciXMLConverter(object):
             sEl.setAttribute("sid", str(self.nextSID))
             parentNode.appendChild(sEl)
             self.nextSID += 1
-
-
+      
+    #---------------------------------------------------------------------------------------------
+    
     def initxml(self):
         self.doc = minidom.Document()
 
@@ -137,17 +158,30 @@ class SciXMLConverter(object):
             
 
 
+#---------------------------------------------------------------------------------------------
+
 if __name__ == "__main__":
+    
+    usage = "usage: %prog [options] file1.pdf [file2.pdf] "
+    
+    parser = OptionParser(usage=usage)
+    parser.add_option("-s", "--split-sent", action="store_true", dest="split",
+        help="If true, split sentences using NLTK sentence splitter")
 
-    print sys.argv
+    (options, args) = parser.parse_args()
 
-    if( len(sys.argv) < 2):
-        print "Not enough arguments. Try %s <pdffile1> <pdffile2>"
+
+
+    if( len(args) < 1):
+        parser.print_help()
         sys.exit(1)
  
-    for infile in sys.argv[1:]:
+    for infile in args:
 
         print "Converting %s" % infile
+
+        if(options.split):
+            print "Splitting sentences in %s" % infile
 
         if not(os.path.exists(infile)):
             print "Input file %s does not exist" % infile
@@ -160,5 +194,5 @@ if __name__ == "__main__":
         with open(infile,"rb") as f:
             with codecs.open(outfile,'w', encoding='utf-8') as out:
                 s = SciXMLConverter()
-                s.convert(f,out, "")
+                s.convert(f,out, "", splitsentences=options.split)
 
