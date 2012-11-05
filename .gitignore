@@ -50,3 +50,6 @@ pip-log.txt
 *.mtc1
 *.out
 *.synctex.gz
+
+#ignore editor files (stuff ending with ~)
+*~
