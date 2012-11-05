@@ -7,12 +7,14 @@ import os
 import pycurl
 import codecs
 
-from docparser import SciXML
-from crf import Tagger
+
 from progressbar import ProgressBar
 from xml.dom import minidom
+from nltk.tokenize import word_tokenize, sent_tokenize
 
+from curlutil import CURLUploader
 
+SAPIENTA_URL = "http://www.ebi.ac.uk/Rebholz-srv/sapienta/CoreSCWeb/submitRPC"
 
 class Annotator(CURLUploader):
     #------------------------------------------------------------------------- 

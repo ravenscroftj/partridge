@@ -160,7 +160,6 @@ class PDFXConverter(CURLUploader):
             
             sEl = self.outdoc.createElement("s")
 
-
             #create annotationART element
             artEl = self.outdoc.createElement("annotationART")
             artEl.setAttribute("type", "")
