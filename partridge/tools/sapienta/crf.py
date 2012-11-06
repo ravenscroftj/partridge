@@ -16,7 +16,7 @@ import pdb
 
 logging.basicConfig()
 logger = logging.getLogger('crf')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 class AttributeGenerator:
     
@@ -120,8 +120,10 @@ class Tagger:
         
     def getSentenceLabelsWithProbabilities(self, doc):
         itemSequence = crfsuite.ItemSequence()
+        sids = []
 
         for sentence in doc.yieldSentences():
+            sids.append(sentence.sid)
             logger.debug('sentence: %s', sentence.content.encode('ascii', 'ignore'))
             item = crfsuite.Item()
             candcFeatures = self.candcClient.getFeatures(sentence.content)
@@ -134,10 +136,10 @@ class Tagger:
             itemSequence.append(item)
         logger.info('...done generating features, tagging')
         self.tagger.set(itemSequence)
-        predictedLabels = self.tagger.viterbi()
+        predictedLabels = zip(sids, self.tagger.viterbi())
         probabilities = []
         for i, label in enumerate(predictedLabels):
-            probability = self.tagger.marginal(label, i)
+            probability = self.tagger.marginal(label[1], i)
             probabilities.append(probability)
             #print '%s:%f' % (label, probability)
         return predictedLabels, probabilities

@@ -208,6 +208,7 @@ class Sentence:
         self.headerType = '' #aka 'Strict-3'
         self.locationInHeader2 = ''
         self.length = ''
+        self.sid = 0 #initialise sentence ID (ravenscroftj)
         
     def addText(self, text):
         self.content += text
@@ -233,6 +234,10 @@ class SciXML:
         self.inHeader = self.inParagraph = self.inAnnotation = False
         self.currHeader = self.currParagraph = self.currSentence = None
         
+        #initialise sentence finding vars (ravenscroftj)
+        self.inSentence = False
+        self.currentSentenceID = None
+
     def startElement(self, name, attrs):
         if name == 'ABSTRACT':
             header = Header()
@@ -248,6 +253,11 @@ class SciXML:
             header = Header()
             self.doc.addHeader(header)
             self.currHeader = header
+        #detect sentence elements and pick up sentence ID (ravenscroftj)
+        elif name == 's':
+            self.inSentence = True
+            self.currentSentenceID = attrs['sid']
+        #end change
         elif name == 'P':
             self.inParagraph = True
             para = Paragraph()
@@ -259,6 +269,8 @@ class SciXML:
             self.inAnnotation = True
             label = attrs['type']
             sent = Sentence(label)
+            #add sentence ID to sentence object (ravenscroftj)
+            sent.sid = self.currentSentenceID
             self.currParagraph.addSentence(sent)
             self.currSentence = sent
         elif name == 'REF' and self.inAnnotation:
@@ -269,6 +281,9 @@ class SciXML:
             self.inHeader = False
         elif name == 'P':
             self.inParagraph = False
+
+        elif name == 's':
+            self.inSentence = False
         elif name == 'annotationART':
             self.inAnnotation = False
     
