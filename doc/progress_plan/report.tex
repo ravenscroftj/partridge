@@ -47,7 +47,7 @@
 \section{Project Summary}
 
 \subsection{Introduction}
-Partridge is a web-based tool designed to assist information processing and knowledge
+Partridge is a web-based tool designed to assist in information processing and knowledge
 acquisition in the domain of scientific research.
 
 Since the advent of the 'Digital Age' and the ability of computers to copy and
@@ -57,10 +57,9 @@ Bj\"{o}rk suggests that approximately 1.4 Million papers were published in the
 year 2006 alone\cite{bjork2009}. Moreover, the growing popularity of Open Access
 publishing (making papers available for free online\cite{Suber2012}) across
 most scientific disciplines is providing researchers with an even larger volume
-of information to be processed. It logically follows that as the amount of
-general information grows, the proportion of relevant material becomes harder
-to find without the assistance of complicated information filtering and retrieval
-systems.
+of information to be processed. As the amount of available information grows,
+relevant material becomes increasingly difficult to find and the need for an
+automated information retrieval tool is ever more apparent.
 
 Partridge aims to autonomously process as many scientific papers as possible to
 facilitate researchers who would otherwise be required to manually read each
@@ -77,18 +76,49 @@ their result, whether the paper yielded positive, negative or inconclusive
 evidence for a hypothesis. Depending upon the time constraints of the
 project, it is hoped that Partridge will also offer a user 'profiling' system
 that provides recommendations for researchers based on their reading history.
-This may help Partridge users find relevant papers more quickly or find
-research that they may have otherwise overlooked.
+This feature should help users find relevant papers more quickly or find research that
+they may have otherwise overlooked.
 
-Despite the existence of several complex information retrieval systems
-already in this domain, it is hoped that Partridge will offer a service that
-proves to be more effective and useful for locating relevant scientific papers
-than any counterparts.
+To facilitate the above behaviour, Partridge will make use of Natural
+Language Processing (NLP) techniques. NLP enables the automated extraction of
+meaningful information from texts written in human languages such as English or
+French. 
+
+\section{Current Progress}
 
 \subsection{Prior Art}
 
+Within the field of scientific research and on the internet in general, there
+are already several systems for assisting users in retrieving useful and
+relevant information.
 
-\section{Current Progress}
+There are many existing search engines for finding information on the internet
+in general. Most people have heard of Google (\url{http://wwww.google.com}),
+and Yahoo (\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
+(\url{http://www.ask.com}). There are many more similar systems available for free
+general use across the internet. They all present very similar user interfaces in
+which users are asked to supply keywords that might be linked to relevant documents 
+and the search engine returns a list of Uniform Resource Locators (URLs) that they 
+consider to match the user's query. 
+
+These search engines are often helpful in locating other pages within the World Wide
+Web. Unfortunately, the results they provide are usually too general to find
+scientific papers and journals. Search engines also index a huge proportion of
+irrelevant information compared to useful information\cite{Berghel1997}, and as
+a result, even relatively specific queries such as effects of gravity on rockets" yield
+millions of results (as shown in Figure \ref{fig:rocket_results}). 
+
+\begin{figure}[!ht]
+\includegraphics[width=0.80\textwidth]{images/space_rocket_query.png}
+\caption{{Google showing over 7M results for ``effects of gravity on rockets"}}
+\label{fig:rocket_results}
+\end{figure}
+
+There are also a number of search and indexing systems available for locating
+scientific papers by keyword or through the use of metadata to make
+recommendations. One of the most publicised paper search system is Google
+Scholar. This is an adaptation of Google's general search algorithm to
+specifically handle scientific papers. 
 
 \section{Planning}
 
