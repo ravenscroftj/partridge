@@ -1,0 +1,114 @@
+% Outline Project Specification Report
+
+%The document is a report
+\documentclass[12pt,a4paper]{article}
+
+%define horizontal rule
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage{fullpage}
+
+%use the listings package
+\usepackage{listings}
+%use the English language
+\usepackage[english]{babel}
+%use graphics
+\usepackage{graphicx}
+%use wrap figures
+\usepackage{wrapfig}
+%geometry stuffs
+\usepackage{lscape}
+%use natbib bibliography package
+%\usepackage[numbers]{natbib}
+%use harvard bibliography package
+%\usepackage{harvard}	
+%use captions
+\usepackage{caption}
+%use multi-row tables
+\usepackage{multirow}
+\usepackage{url}
+
+\begin{document}
+
+%use harvard citations
+%\citationstyle{agsm}
+
+%include the title page
+\input{title}
+
+%some definitions for paragraph layout stuff
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.5ex plus 0.5ex minus 0.2ex}
+
+%\tableofcontents
+
+\pagebreak
+
+\section{Project Description}
+
+For scholars carrying out a literature review or researching a specific topic,
+the vast quantity of research papers available on the internet can often be quite daunting;  
+with the advent of the `Information Age', choosing which papers to read 
+has become very difficult. This problem is exacerbated when there is a 
+time limit to the research. Partridge aims to aid the 
+reader in finding documents aposite to their interests through the use of 
+Artificial Intelligence. As well as making the research processes 
+more efficient and saving time, the program may also help the scholar to find
+papers that they may otherwise not have read.
+
+Partridge will use a web interface to allow users to specify particular
+research topics. This can be done through manual entry of interests and types of 
+report or by allowing the application to collate the papers that the user 
+has read and to learn what is relevant to them. After appropriating this information,
+Partridge will use learning algorithms to examine and classify the available
+corpus of literature and to make recommendations as to which articles the
+scholar would find most helpful. 
+
+\section{Work to be `tackled':}
+Despite the need for a web interface, the main body of the work in this project 
+comes from the backend of the system and the Artificial Intelligence that drives it.
+
+Initial research must be undertaken  into Natural Language
+Parsing techniques and how different features of a text can be used to
+classify papers. Furthermore, clear identification of the attributes which
+allow the system to understand the differences between texts is vital.
+
+Once these features are understood, a learning algorithm will be developed to
+analyse scientific papers and to store information about the differences between 
+them. The system will make use of some third party software (SAPIENTA) to help
+with this process. Additionally, knowledge from CS36110 Machine Learning will be used in
+this project.
+
+The first iteration of the system should search for specific criteria corresponding directly to `features' identified using the aforementioned AI
+algorithms. Further iterations could be used  to build a profile based upon the user's 
+reading history and to make suggestions for further reading.
+
+\section{`Project Deliverables'}
+
+Although a formal `XP' methodology will not be adopted since this is an
+individual project, it will be developed using an agile approach and will be built in an
+iterative manner. An initial release of the product will be made as soon as
+possible. Subsequent releases will be made in iterations of two months.
+
+Deliverables include:
+\begin{itemize}
+    \item Initial version of the system with restricted functionality; this
+    would  use simple search and filtering techniques to find relevant research
+    papers;
+    \item Progress report evaluating the initial product and outlining ongoing
+    development of the Artificial Intelligence underlying the results
+    classifier module;
+    \item Release two of the product, including result classifying behaviour;
+    \item Demonstration of the Artificial Intelligence in the product;
+    \item Following iteration three, the next release of the product will show
+    evolved classification behaviour;
+    \item Final report and release of software.
+\end{itemize}
+
+
+\renewcommand{\refname}{Initial Bibliography} 
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{report}
+
+\end{document}
