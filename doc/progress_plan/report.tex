@@ -107,24 +107,65 @@ scientific papers in a novel way.
 \section{Current Progress}
 
 The Partridge project has been underway since the beginning of October. The
-following section looks at related works and how Partridge compares to them,
-some prior investigation and prototyping work that has already been carried
-out.
+following section looks at some literature on the subjects of Natural Language
+Processing and information retrieval within the domain of scientific papers.
+Some related works are investigated and compared to Partridge and details of
+prototyping work that has been carried out are given.
 
+\subsection{Literature Review}
+Natural Language Processing is still a relatively unexplored discipline and as
+such is still a very active area of research and development within the
+Artificial Intelligence community. E. Liddy defines Natural Language Processing as:
+
+\begin{quotation} 
+A theoretically motivated range of computational techniques for analyzing and
+representing naturally occurring texts at one or more levels of linguistic
+analysis for the purpose of achieving human-like language processing for a
+range of tasks or applications. \cite{liddy2001natural} 
+\end{quotation}
+
+In the case of Partridge, scientific papers, constituting the naturally occuring
+texts, are processed at sentence-by-sentence and word-by-word levels of
+linguistics and represented in the form of Extended Markup Language (XML)
+documents, a format that is both human and machine readable. This information
+is then used for the purpose of classifying and searching papers in a
+human-like way. 
+
+It is therefore necessary to define what a 'human-like way' of processing
+scientific papers on the internet consists of. Steven Krug is an expert in the field of
+human-computer interaction on the internet. In `Don't Make Me Think', Krug
+suggests that when browsing the internet, humans find it much easier to locate
+specific information within a labelled and logically structured document than
+one that is provided as a single text entity.\cite{Krug:2005:DMM:1051204}. In
+order to help humans to find relevant research papers, Partridge will represent
+all research papers in its repository in a logical hierarchy that can be
+queried directly by the human users and also processed using other NLP
+techniques to extract further information. 
+
+Partridge's document storage format should therefore be formalised to provide a
+standard way of processing each document. In their 2007 paper, Soldatova and
+Liakata propose a methodology for storing the Core Information about Scientific
+Papers (CISP) as a way to formally represent scientific concepts that should be
+present in the papers in a logical ontology\cite{soldatova2007ontology}. They
+then proceed to define a schema for their CISP ontology that defines the
+Core Scientific Concepts (CoreSC) as part of the XML document
+itself\cite{liakata2008guidelines}. Using this format for Partridge would allow
+the system to read and process the ART corpus produced using CoreSC markup
 
 \subsection{Related Works}
 \label{sec:prior_art}
 
 There are already many existing systems for finding and filtering information
 on the World Wide Web. Search engines are very useful for information retrieval
-in this very large and generalised search domain. Most people have heard of Google (\url{http://wwww.google.com}),
-Yahoo (\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
-(\url{http://www.ask.com}). There are many more similar systems available for free
-general use across the internet. They all present very similar user interfaces
-(as shown in Figure \ref{fig:search_interfaces})
-in which users are asked to supply keywords that might be linked to relevant documents 
-and the search engine returns a list of Uniform Resource Locators (URLs) that they 
-consider to match the user's query. 
+in this very large and generalised search domain. Most people have heard of
+Google (\url{http://wwww.google.com}), Yahoo (\url{http://www.yahoo.co.uk}),
+Bing (\url{http://www.bing.com}) and Ask (\url{http://www.ask.com}). There are
+many more similar systems available for free general use across the internet.
+They all present very similar user interfaces (as shown in Figure
+\ref{fig:search_interfaces}) in which users are asked to supply keywords that
+might be linked to relevant documents and the search engine returns a list of
+Uniform Resource Locators (URLs) that they consider to match the user's query.
+
 
 \begin{figure}[!ht]
         \centering
@@ -189,7 +230,11 @@ problem of `information overload' and provides even more fine control over the
 information returned from searches,  the user is still required to have a very
 good idea of what they are looking for in terms of keywords and/or specific
 authors. It is possible that a user would not know what they are looking for
-until they've seen it. 
+until they've seen it. Even if the user has a set of keywords to search for,
+they can only search the title of the paper or the content as a whole. This
+means that users who want to find a particular phrase within a CoreSC part of
+the paper (e.g. only look for this phrase in the `Result' section of the
+paper) are unable to get results at their desired level of detail.
 
 \begin{figure}[!hbt]
         \centering
@@ -213,8 +258,10 @@ until they've seen it.
 Partridge will provide the option to filter papers by subject and it is hoped
 that the system will also provide user-specific recommendations by profiling
 them through their reading history. This will make it easier for users to find
-relevant papers without knowing exactly what keywords they want to search for.
-
+relevant papers without knowing exactly which keywords they need to search for.
+Partridge will also offer facilitate searching for keywords within a specific
+CoreSC section by making use of Liaketa et al's SAPIENTA project for
+classifying each sentence of paper. 
 
 
 \section{Planning}
