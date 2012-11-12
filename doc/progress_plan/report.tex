@@ -27,6 +27,7 @@
 %use multi-row tables
 \usepackage{multirow}
 \usepackage{url}
+\usepackage{subcaption}
 
 \begin{document}
 
@@ -34,6 +35,7 @@
 %\citationstyle{agsm}
 
 %include the title page
+\input{revision}
 \input{title}
 
 %some definitions for paragraph layout stuff
@@ -46,7 +48,6 @@
 
 \section{Project Summary}
 
-\subsection{Introduction}
 Partridge is a web-based tool designed to assist in information processing and knowledge
 acquisition within the domain of scientific research.
 
@@ -77,37 +78,92 @@ their result, whether the paper yielded positive, negative or inconclusive
 evidence for a hypothesis. Depending upon the time constraints of the
 project, it is hoped that Partridge will also offer a user 'profiling' system
 that provides recommendations for researchers based on their reading history.
-This feature should help users find relevant papers more quickly or find research that
-they may have otherwise overlooked.
+This feature should help users find relevant papers more quickly or find
+research that they may have otherwise overlooked.
 
-To facilitate the above behaviour, Partridge will make use of Natural
-Language Processing (NLP) techniques. NLP enables the automated extraction of
-meaningful information from texts written in human languages such as English or
-French. 
+There are already several tools that help researchers manage the vast library
+of internet journals available on the internet. Search engines such as Google
+({\url{http://www.google.com/}}), and social citation management tools such as
+CiteULike ({\url{http://www.citeulike.org}}), do offer some assistance in
+tracking down relevant information. However, these tools are often too general
+or rely upon the user knowing exactly what keywords to search for before
+carrying out the search. These drawbacks are further discussed in Section
+\ref{sec:prior_art} below.
+
+To overcome the drawbacks of these existing systems, Partridge will make use of
+several modern Natural Language Processing (NLP) techniques.  NLP enables the
+automated extraction of meaningful information from texts written in human
+languages such as English or French. There have already been several papers on
+using NLP for detecting emotions in suicide notes\cite{citeulike:11077287}, the
+genre of a web page on the World Wide Web\cite{citeulike:11288938} and
+emotional polarity of a phrase or sentence\cite{Wilson05Polarity}. Liakata et
+al. have also used NLP techniques to classify sentences within scientific
+papers to determine what scientific concept they relate to (i.e. does this
+sentence cover background information or is it a part of the
+hypothesis?)\cite{citeulike:10444769}. Partridge will build upon and make use
+of these existing applications of NLP to filter and retrieve data from
+scientific papers in a novel way.
 
 \section{Current Progress}
 
-\subsection{Prior Art}
+The Partridge project has been underway since the beginning of October. The
+following section looks at related works and how Partridge compares to them,
+some prior investigation and prototyping work that has already been carried
+out.
 
-Within the field of scientific research and on the internet in general, there
-are already several systems for assisting users in retrieving useful and
-relevant information.
 
-There are many existing search engines for finding information on the internet
-in general. Most people have heard of Google (\url{http://wwww.google.com}),
-and Yahoo (\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
+\subsection{Related Works}
+\label{sec:prior_art}
+
+There are already many existing systems for finding and filtering information
+on the World Wide Web. Search engines are very useful for information retrieval
+in this very large and generalised search domain. Most people have heard of Google (\url{http://wwww.google.com}),
+Yahoo (\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
 (\url{http://www.ask.com}). There are many more similar systems available for free
-general use across the internet. They all present very similar user interfaces in
-which users are asked to supply keywords that might be linked to relevant documents 
+general use across the internet. They all present very similar user interfaces
+(as shown in Figure \ref{fig:search_interfaces})
+in which users are asked to supply keywords that might be linked to relevant documents 
 and the search engine returns a list of Uniform Resource Locators (URLs) that they 
 consider to match the user's query. 
 
-These search engines are often helpful in locating other pages within the World Wide
-Web. Unfortunately, the results they provide are usually too general to find
-scientific papers and journals. Search engines also index a huge proportion of
-irrelevant information compared to useful information\cite{Berghel1997}, and as
-a result, even relatively specific queries such as effects of gravity on rockets" yield
-millions of results (as shown in Figure \ref{fig:rocket_results}). 
+\begin{figure}[!ht]
+        \centering
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/ask_front.png}
+                \caption{Ask.com}
+                \label{fig:ask_interface}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/bing_front.png}
+                \caption{Bing.com}
+                \label{fig:bing_interface}
+        \end{subfigure}\\
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/google_front.png}
+                \caption{Google.com}
+                \label{fig:google_interface}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/yahoo_front.png}
+                \caption{Yahoo.com}
+                \label{fig:yahoo_interface}
+        \end{subfigure}%
+        \caption{4 popular search engine interfaces}\label{fig:animals}
+        \label{fig:search_interfaces}
+\end{figure}
+
+
+Search engines are helpful in locating pages and websites within the World Wide
+Web. Unfortunately, the problem space they deal with is usually too big for
+them to find scientific papers and journals given a set of keywords. Internet
+search engines index a huge proportion of irrelevant information compared to
+useful information\cite{Berghel1997}, and as a result, even relatively specific
+queries such as effects of gravity on rockets" yield millions of results (as
+shown in Figure \ref{fig:rocket_results}). 
 
 \begin{figure}[!ht]
 \includegraphics[width=0.80\textwidth]{images/space_rocket_query.png}
@@ -115,11 +171,51 @@ millions of results (as shown in Figure \ref{fig:rocket_results}).
 \label{fig:rocket_results}
 \end{figure}
 
-There are also a number of search and indexing systems available for locating
-scientific papers by keyword or through the use of metadata to make
-recommendations. One of the most publicised paper search system is Google
-Scholar. This is an adaptation of Google's general search algorithm to
-specifically handle scientific papers. 
+Partridge offers an advantage over these mechanisms as it will specifically
+index research papers rather than attempting to index the whole Internet.
+This means that there should be a higher proportion of useful information as
+output compared to the output of an Internet Search Engine.
+
+There are also a number of search and indexing systems that specifically look
+for scientific papers as opposed to web pages. One of the most publicised and
+well known paper search system is Google Scholar
+(\url{http://scholar.google.com}).  As can be seen in Figure
+\ref{fig:scholar_basic}, This is an adaptation of Google's general search
+engine (discussed above) to specifically index and search scientific papers.
+Google also offers advanced query options specific to Scholar that allow
+searching by author, year and for words that occur only in the document title
+as shown in figure \ref{fig:scholar_advanced}. Whilst this does deal with the
+problem of `information overload' and provides even more fine control over the
+information returned from searches,  the user is still required to have a very
+good idea of what they are looking for in terms of keywords and/or specific
+authors. It is possible that a user would not know what they are looking for
+until they've seen it. 
+
+\begin{figure}[!hbt]
+        \centering
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/googlescholar_front.png}
+                \caption{Google Scholar's General front page}
+                \label{fig:scholar_basic}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.50\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/googlescholar_advanced.png}
+                \caption{Advanced search features}
+                \label{fig:scholar_advanced}
+        \end{subfigure}
+
+        \caption{Google Scholar's user interface}
+        \label{fig:scholar_interface}
+\end{figure}
+
+Partridge will provide the option to filter papers by subject and it is hoped
+that the system will also provide user-specific recommendations by profiling
+them through their reading history. This will make it easier for users to find
+relevant papers without knowing exactly what keywords they want to search for.
+
+
 
 \section{Planning}
 
