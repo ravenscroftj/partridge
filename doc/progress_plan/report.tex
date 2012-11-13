@@ -395,12 +395,6 @@ any embedded information that could be missed by these social metadata systems.
 
 \subsection{Methodology}
 
-Partridge is based upon several fairly complex and new ideas in AI and NLP.
-For the project to be a success it is imperative that the right language,
-environment and toolkits are used to avoid unnecessary work on existing
-technologies and allow priority to be given to the novel aspects of the
-project. 
-
 The language that Partridge will be written in is one of the most fundamental
 and important choices to be made. The language choice effects not only the end
 performance of the application, but the speed at which the project is developed
@@ -450,9 +444,42 @@ inefficient sections of Python code could be re-written as C extensions and
 compiled into the application. For these reasons, Python was selected as the
 preferred programming language for Partridge development.
 
-\subsubsection{User Interface Style}
-
 \subsubsection{Web Presentation Frameworks} 
+
+Partridge's web frontend will be used by researchers to wish to query the
+system for information on scientific papers. As it is a web tool, Partridge
+will be presented as a set of HTML web pages. 
+
+It is possible to use a separate software stack Such as Apache web server
+(\url{http://httpd.apache.org/}) and PHP (\url{http://www.php.net}) as a web
+presentation layer. However, this would involve adding more software to the
+project and building an interface between the PHP scripts and Partridge's
+python backend. To prevent unnecessary complication, this approach will be
+avoided and instead, a Python web toolkit will be used and integrated directly
+with the backend.
+
+Django (\url{http://www.djangoproject.com/}) is a Python web framework with
+integrated database management and templating capabilities \cite{django2012}.
+The framework provides automatic management of all aspects of your
+application's data storage systems unless explicitely disabled. The framework
+also uses a fairly stricty Model-View-Controller pattern and this is enforced
+in the structure of the application code. These features may be useful in a
+general web application such as a news site. Partridge requires a much more
+complex internal structure to take into account the machine learning and NLP
+aspects of the system. Having to `shoehorn' Partridge into a specific structure
+to make it compatible with Django adds extra overhead to the project and is not
+desirable.
+
+Flask (\url{http://flask.pocoo.org}) is a python `microframework' for web
+development. Ronacher (2012) writes that ``Flask aims to keep the core simple
+but extensible...[and] won't make any decisions for you\cite{flask2012}." It
+uses a simple templating system that can optionally be swapped out for an
+equivalent system and does not impose any limitations or requirements on the
+layout of the program or the type of database that is used. Flask integrates
+very simply into existing software using Python annotations\emph{(Ibid)}. This approach
+means that the framework could be adapted to Partridge very quickly, rather
+than requiring Partridge to be adapted to the framework. Therefore, Flask has
+been chosen as the preferred web framework for use in the project.
 
 \subsubsection{Natural Language Libraries}
 \label{sec:libschoice}.
