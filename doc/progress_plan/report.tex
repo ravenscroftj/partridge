@@ -125,7 +125,7 @@ Despite lacking behind the imagination of authors and script writers, over the l
 has been a huge amount of progress in AI techniques. The phrase `Artificial
 Intelligence' was coined in 1956\cite{russell2010artificial} and can be used as
 an umbrella term, describing many subfields from ``learning and perception
-to... diagnosing diseases\it{(Ibid)}."
+to... diagnosing diseases\emph{(Ibid)}."
 
 Turing(1950) proposed a test for determining whether a machine could be
 considered intelligent or not\cite{turing1950computing}. Turing's test is based
@@ -200,8 +200,8 @@ for information retrieval tests from early on in the project.
 Liakata et al. (2012) describe a system for automatically processing and
 categorising sentences in a research paper according to their respective
 CoreSC element\cite{citeulike:10444769}. SAPIENTA
-(\url({http://www.sapientaproject.com}) was trained using the ART corpus and
-can achieve promising accuracies when categorising sentences \it{(Ibid)}. With
+(\url{http://www.sapientaproject.com}) was trained using the ART corpus and
+can achieve promising accuracies when categorising sentences (\emph{Ibid}). With
 the authors' permissions, Partridge will make use of SAPIENTA when introducing
 new papers into its repository. It is hoped that preclassifying papers will
 make the development of Partridge more manageable within the timeframe
@@ -216,21 +216,10 @@ Chemistry, Biology), type of paper (Literature review, Case Study, Experiment)
 and the polarity of the result (positive, negative, inconclusive). These tasks
 involve implementing existing AI techniques and applying them specifically to
 the task of text classification. To avoid the time consuming task of re-implementing these
-methods, it was decided that a library should be used instead. 
+methods, it was decided that a library should be used instead. Different NLP
+libraries and their properies are discussed below in Section
+\ref{sec:libschoice}.
 
-\subsubsection{NLTK}
-
-There are several existing libraries to facilitate Natural Language Processing.
-Many are written for Java \cite{mallet2002}\cite{cunningham2011text} and are
-very complex or not well documented. The Natural Language Toolkit (NLTK) is a
-simple and intuitive library written for Python. Bird(2009) states that NLTK
-was designed ``to provide an intuitive framework along with substantial
-building blocks, giving users a practical knowledge of NLP". The project is
-relatively mature in comparison to the above named Java libraries. There is
-also a free book that accompanies the project available at
-\url{http://nltk.org/book/} which provides a huge amount of information on how
-to implement many popular NLP techniques using the library. For this reason
-NLTK was chosen as the primary accompanying library for the project.
 
 \subsection{Related Works}
 \label{sec:prior_art}
@@ -352,7 +341,7 @@ the `information overload' problem.  Services like Goodreads
 (\url{http://www.citeulike.org/}) allow you to register your interest in
 specific authors and subjects. This allows the sites to build up a profile of
 the sorts of materials that you might be interested in and provide lists of
-recommendations as in Figure \cite{social_indexes}.
+recommendations as in Figure \ref{social_indexes}.
 
 \begin{figure}[!hbt]
         \centering
@@ -374,16 +363,15 @@ recommendations as in Figure \cite{social_indexes}.
 \end{figure}
 
 These systems have the ability to make recommendations to the user without
-requiring specific keywords or search terms. They are able to do this by
-learning the user's profile and taking into account the preferences of their
-'friends' and their browsing history. However, the above-named systems do not
-take into account the content of the paper or book. They only deal with
-metadata as can be seen in Figure \ref{fig:social_searches}. This means that
-important discriminatory information that could be contained within the actual
-document content is overlooked completely. Partridge will analyse documents on
-a sentence-by-sentence and possibly word-by-word basis, thereby taking account
-of any embedded information that could be missed by these social metadata
-systems.
+requiring specific keywords or search terms. They do this by learning the
+user's profile and taking into account the preferences of their 'friends' and
+their browsing history. However, the above-named systems do not take into
+account the content of the paper or book. They only deal with metadata as can
+be seen in Figure \ref{fig:social_searches}. This means that important
+discriminatory information that could be contained within the actual document
+content is overlooked completely. Partridge will analyse documents on a
+sentence-by-sentence and possibly word-by-word basis, thereby taking account of
+any embedded information that could be missed by these social metadata systems.
 
 \begin{figure}[!hbt]
         \centering
@@ -407,11 +395,95 @@ systems.
 
 \subsection{Methodology}
 
+Partridge is based upon several fairly complex and new ideas in AI and NLP.
+For the project to be a success it is imperative that the right language,
+environment and toolkits are used to avoid unnecessary work on existing
+technologies and allow priority to be given to the novel aspects of the
+project. 
+
+The language that Partridge will be written in is one of the most fundamental
+and important choices to be made. The language choice effects not only the end
+performance of the application, but the speed at which the project is developed
+and the portability of the end code \cite{britton2008}. To avoid a learning
+overhead, it was decided that the programming language should be one that the
+author is familiar with. This reduced the choice of language down to C, Java
+and Python. 
+
+The C programming language was invented by Kernighan and Ritchie and
+published in 1978\cite{ritchie1978c}. The language is small and
+optimised\cite{prinz2002c} and therefore compiled C programs tend to run
+extremely fast. Unfortunately, C is designed to be general and lack restriction
+\cite{ricthie1978c} which is often an advantage for programmers who favour
+optimised code over excessive error checking. However, this means that
+debugging C programms can be quite long winded and challenging. Since the NLP
+aspects of Partridge present an amibitious challenge in themselves, having to
+debug applications without help from a managed programming environment is not
+desirable. 
+
+The Java programming language on the other hand, does provide memory management
+and error checking\cite{Coffey2008} at the cost of program performance. Java is
+a pseudo-compiled language that is translated into an intermediate bytecode
+which is then interpreted at runtime by an interpreter on the client computer
+called a Virtuam Machine(VM). Gosling (2000) describes java as as a
+``general-purpose...  programming language [that allows] developers to write a
+program once and then be able to run it everywhere on the
+internet\cite{gosling2000java}." Java provides a solid and stable programming
+environment and stringent error checking, both of which would be advantageous
+in the development of Partridge.  The language syntax is very verbose and a lot
+of `boiler-plate' code must be written before a program can be executed.
+Therefore Java is not suitable as a rapid prototyping language. Since
+Partridge's development requires a steep learning curve for the author, a
+language that allows quick prototyping with minimal programming.
+
+Python is a programming language with a famously shallow learning curve,
+readable syntax and dynamic inspection that facilitates rapid prototyping
+\cite{bird2009natural}. The language was invented by Guido Van Rossum as a
+multi-use, flexible, interpreted scripting language, extensible via compiled C
+modules\cite{An93pythonfor}. Developing Partridge in python
+would provide a flexible prototyping environment and readable syntax allowing
+for investigative work to be carried out quickly and efficiently with minimal
+overheads for writing boiler-plate code and debugging. The ability to extend
+the language using native code would give Partridge an even greater advantage.
+Since NLP techniques can be quite processor intensive and Python is an
+interpreted language, and in its very nature, slower than a compiled language,
+inefficient sections of Python code could be re-written as C extensions and
+compiled into the application. For these reasons, Python was selected as the
+preferred programming language for Partridge development.
+
+\subsubsection{User Interface Style}
+
+\subsubsection{Web Presentation Frameworks} 
+
+\subsubsection{Natural Language Libraries}
+\label{sec:libschoice}.
+There are several existing libraries to facilitate Natural Language Processing.
+Many are written for Java \cite{mallet2002}\cite{cunningham2011text} and are
+very complex or not well documented. The Natural Language Toolkit (NLTK) is a
+simple and intuitive library written for Python. Bird(2009) states that NLTK
+was designed ``to provide an intuitive framework along with substantial
+building blocks, giving users a practical knowledge of
+NLP\cite{bird2009natural}". The project is
+relatively mature in comparison to the above named Java libraries. There is
+also a free book that accompanies the project available at
+\url{http://nltk.org/book/} which provides a huge amount of information on how
+to implement many popular NLP techniques using the library. For this reason
+NLTK was chosen as the primary accompanying library for the project.
+
 \subsection{Prototyping/Pilot Studies}
 
 \subsection{Subsequent Changes to Methodology}
 
 \section{Planning}
+
+\subsection{Development Methodology}
+
+\subsubsection{Agile}
+\subsubsection{Waterfall Development}
+
+\subsubsection{ Partridge's methodology}
+
+\subsection{ Work Timeline }
+
 
 \pagebreak
 \bibliographystyle{IEEEannot}
