@@ -187,10 +187,10 @@ ontology\cite{soldatova2007ontology}. They then proceed to define a schema for
 their CISP ontology that defines the Core Scientific Concepts (CoreSC) as part
 of the XML document itself\cite{liakata2008guidelines}. 
 
-It is proposed that Partridge should use the CoreSC schema for document storage
-in order to provide a standard way to access and process the papers and thus
-eliminate the task of dealing with multiple documents during its learning
-phase. Using CoreSC also offers the advantage of making Partridge compatible
+It is proposed that Partridge uses the CoreSC schema for document storage
+to provide a standard way to access and process the papers and thus
+eliminate dealing with multiple documents during its learning phase. 
+Using CoreSC also offers the advantage of making Partridge compatible
 with the ART corpus. This is a set of physical chemistry and biochemistry
 research papers that have been pre-processed and already annotated using CISP
 concepts\cite{liakataART}. This would provide Partridge with a set of papers
@@ -210,7 +210,27 @@ problems rather than re-implementing a SAPIENTA clone. Any modifications that
 have to be made to SAPIENTA to integrate it into Partridge will be submitted
 back to the original authors to help them improve their works.
 
+After pre-processing by SAPIENTA is complete, Partridge will need to do some
+classification work of its own to determine the area of study (i.e. Physics,
+Chemistry, Biology), type of paper (Literature review, Case Study, Experiment)
+and the polarity of the result (positive, negative, inconclusive). These tasks
+involve implementing existing AI techniques and applying them specifically to
+the task of text classification. To avoid the time consuming task of re-implementing these
+methods, it was decided that a library should be used instead. 
+
 \subsubsection{NLTK}
+
+There are several existing libraries to facilitate Natural Language Processing.
+Many are written for Java \cite{mallet2002}\cite{cunningham2011text} and are
+very complex or not well documented. The Natural Language Toolkit (NLTK) is a
+simple and intuitive library written for Python. Bird(2009) states that NLTK
+was designed ``to provide an intuitive framework along with substantial
+building blocks, giving users a practical knowledge of NLP". The project is
+relatively mature in comparison to the above named Java libraries. There is
+also a free book that accompanies the project available at
+\url{http://nltk.org/book/} which provides a huge amount of information on how
+to implement many popular NLP techniques using the library. For this reason
+NLTK was chosen as the primary accompanying library for the project.
 
 \subsection{Related Works}
 \label{sec:prior_art}
@@ -279,7 +299,7 @@ output compared to the output of an Internet Search Engine.
 
 There are also a number of search and indexing systems that specifically look
 for scientific papers as opposed to web pages. One of the most publicised and
-well known paper search system is Google Scholar
+well known paper search systems is Google Scholar
 (\url{http://scholar.google.com}).  As can be seen in Figure
 \ref{fig:scholar_basic}, This is an adaptation of Google's general search
 engine (discussed above) to specifically index and search scientific papers.
@@ -321,7 +341,7 @@ them through their reading history. This will make it easier for users to find
 relevant papers without knowing exactly which keywords they need to search for.
 Partridge will also offer facilitate searching for keywords within a specific
 CoreSC section by making use of Liakata et al's SAPIENTA project for
-classifying each sentence of paper. 
+classifying each sentence of paper as it is added to the repository.
 
 
 \subsection{Methodology}
