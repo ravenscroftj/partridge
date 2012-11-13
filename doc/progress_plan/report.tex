@@ -416,18 +416,17 @@ desirable.
 
 The Java programming language on the other hand, does provide memory management
 and error checking\cite{Coffey2008} at the cost of program performance. Java is
-a pseudo-compiled language that is translated into an intermediate bytecode
-which is then interpreted at runtime by an interpreter on the client computer
-called a Virtuam Machine(VM). Gosling (2000) describes java as as a
-``general-purpose...  programming language [that allows] developers to write a
-program once and then be able to run it everywhere on the
-internet\cite{gosling2000java}." Java provides a solid and stable programming
-environment and stringent error checking, both of which would be advantageous
-in the development of Partridge.  The language syntax is very verbose and a lot
-of `boiler-plate' code must be written before a program can be executed.
-Therefore Java is not suitable as a rapid prototyping language. Since
-Partridge's development requires a steep learning curve for the author, a
-language that allows quick prototyping with minimal programming.
+a pseudo-compiled language that is translated into bytecode then interpreted at
+runtime by a Virtual Machine(VM) on the client computer. Gosling (2000)
+describes java as a ``general-purpose...  programming language [that allows]
+developers to write a program once and then be able to run it everywhere on the
+internet\cite{gosling2000java}." Java provides a stable programming environment
+and error checking, both of which would be advantageous in the development of
+Partridge. Java's syntax is very verbose and a lot of `boiler-plate' code must
+be written before a program can be executed.  Therefore Java is not suitable as
+a rapid prototyping language. Since Partridge's development requires a steep
+learning curve for the author, a language that allows quick prototyping with
+minimal programming.
 
 Python is a programming language with a famously shallow learning curve,
 readable syntax and dynamic inspection that facilitates rapid prototyping
@@ -481,17 +480,15 @@ means that the framework could be adapted to Partridge very quickly, rather
 than requiring Partridge to be adapted to the framework. Therefore, Flask has
 been chosen as the preferred web framework for use in the project.
 
-\subsubsection{Natural Language Libraries}
-\label{sec:libschoice}.
-There are several existing libraries to facilitate Natural Language Processing.
-Many are written for Java \cite{mallet2002}\cite{cunningham2011text} and are
-very complex or not well documented. The Natural Language Toolkit (NLTK) is a
-simple and intuitive library written for Python. Bird(2009) states that NLTK
-was designed ``to provide an intuitive framework along with substantial
-building blocks, giving users a practical knowledge of
-NLP\cite{bird2009natural}". The project is
-relatively mature in comparison to the above named Java libraries. There is
-also a free book that accompanies the project available at
+\subsubsection{Natural Language Libraries} \label{sec:libschoice}.  There are
+several existing libraries to facilitate Natural Language Processing.  Many are
+written for Java \cite{mallet2002}\cite{cunningham2011text} and are very
+complex or not well documented. The Natural Language Toolkit (NLTK) is a simple
+and intuitive library written for Python. Bird(2009) states that NLTK was
+designed ``to provide an intuitive framework along with substantial building
+blocks, giving users a practical knowledge of NLP\cite{bird2009natural}". The
+project is relatively mature in comparison to the above named Java libraries.
+There is also a free book that accompanies the project available at
 \url{http://nltk.org/book/} which provides a huge amount of information on how
 to implement many popular NLP techniques using the library. For this reason
 NLTK was chosen as the primary accompanying library for the project.
@@ -504,12 +501,100 @@ NLTK was chosen as the primary accompanying library for the project.
 
 \subsection{Development Methodology}
 
-\subsubsection{Agile}
-\subsubsection{Waterfall Development}
+\subsubsection{Existing Methodologies}
+Selecting a suitable development methodology for building Partridge is another
+very important choice for the project.
 
-\subsubsection{ Partridge's methodology}
+Under the traditional `Waterfall' Software Development model, Requirements
+Gathering, Analysis, Program Design, Coding, Testing and Operations were all
+defined as formal phases in the development cycle. There is little flexibility
+other than moving back up the waterfall to rectify mistakes after
+testing.\cite{Royce:1987:MDL:41765.41801}. This model was very focused on
+paperwork and bureaucracy, trying to maintain a paper trail and manage risk
+through accountability \emph{(Ibed)}. This approach to software development is
+very heavyweight and slow and often produced software that did not match the
+users' needs as a result \cite{Boehm1988}.
 
-\subsection{ Work Timeline }
+As an alternative to the heavyweight Waterfall approach, Beck et al came up
+with the principle of the Agile Manifesto, favouring a lightweight, responsive
+development model over the heavyweight slow waterfall
+system\cite{beck2001agile}. Many of Beck's ideas focus around working in a team
+of developers and prioriting communication between team members. This is most
+prominent in the Extreme Programming (XP) method of software development. Since
+Partridge is an individual project, XP is not really applicable. However, some
+concepts like rapid prototyping/spike work and iterative release cycles will be
+used as part of the Partridge development methodology.
+
+\subsubsection{ Partridge's Development Methodology}
+
+Since Partridge is an individual project but does involve discussions with
+supervisors, a customised methodology has been adopted. Firstly, all design
+and planning documentation have been written up and placed on a wiki which is
+accessible and modifiable by the author and both supervisors. This creates a
+paper trail for all tasks and also allows collaboration between involved
+parties through the Internet. A full printout of the wiki is available in
+Appendix \ref{sec:wiki}. 
+
+Weekly meetings are held with both supervisors. The notes from the preceeding
+week are analysed and each task discussed in depth. New tasks are then noted
+down along with any observations that should be documented. These new notes are
+uploaded to the wiki the following day or earlier. Each party present at the
+meeting adds their own observations to the notes page. This page is then
+reviewed at the next meeting. As seen in Appendix \ref{sec:wiki}, this practice
+has already been running for several weeks and has so far proven to be highly
+effective.
+
+Partridge will adopt an Agile approach to release cycles, producing a working
+software package at iterations of one month.  Each iteration, the software will
+include more of the desired functionality discussed above and in the wiki.
+GitHub's issue manager program will be used to track tasks and bugfixes and
+plan which tasks will be carried out in which iteration. Tasks that are created
+in a full iteration (where no development time is left) will be added to a
+backlog and integrated in the next iteration with enough development time to
+contain it.
+
+Partridge's testing strategy consists of multiple unit tests that are run at
+integration of new code into the codebase. As soon as the first release is
+built, Partridge will be made available for use by the public and users
+encouraged to test the system and submit any bugs via the GitHub issue manager.
+It is hoped that colleagues at Aberystwyth University and Dr. Liakata's
+colleages at the EBI will try to use the system one it becomes available.
+
+\subsubsection{ Work Timeline }
+
+The tasks involved in Partridge have been carefully calculated and prioritised.
+They were then added to the GitHub issue management system and a report
+generated listing them in the order that they are expected to be
+accomplished. This report can be seen in Appendix \ref{sec:timeline}. 
+
+
+\subsubsection{ Mid-Project Demonstration Plan}
+
+The mid-project demonstration is scheduled for after iteration two of the
+Partridge project. If everything runs to schedule, then at this point it will
+be possible to demonstrate keyword search within the project's database and
+filter based upon the polarity of the paper's results. For redundancy purposes,
+Partridge will be configured to run as a server on multiple computers. Both
+this and the final project demonstration will require a room with Internet
+access. However, should this be unavailable, then Partridge could be run
+locally on the author's laptop.
+
+\subsubsection{ Final Project Demonstration Plan}
+
+The final demonstration of Partridge will be fairly similar to the Mid-Project
+demonstration. However, it should include all of the planned classifiers and if
+there is extra time on the project, the profiling/recommendation engine will
+also be demonstrated. This demonstration will use the same redundancy
+precautions as the Mid-project demonstration above, and will also need a room
+with the internet if available.
+
+\appendix
+\section{Project Timeline}
+\label{sec:timeline}
+
+\appendix
+\section{Project Wiki}
+\label{sec:wiki}
 
 
 \pagebreak
