@@ -113,15 +113,45 @@ prototyping work that has been carried out are given.
 
 \subsection{Literature Review}
 
+In science fiction literature and films, Artificial Intelligence (AI) and the
+ability of machines to automatically process and understand human language is
+almost always present. The current state of AI is a long way behind these
+fantastic visions. Dale(2000) comments that ``Even the most ardent exponent of
+artificial intelligence research would have to admit that the likes of HAL in
+Kubrick's 2001: A Space Odyssey remain firmly in the realms of science
+fiction\cite{dale2000handbook}".
+
+Despite lacking behind the imagination of authors and script writers, over the last 60 years there
+has been a huge amount of progress in AI techniques. The phrase `Artificial
+Intelligence' was coined in 1956\cite{russell2010artificial} and can be used as
+an umbrella term, describing many subfields from ``learning and perception
+to... diagnosing diseases\it{(Ibid)}."
+
+Turing(1950) proposed a test for determining whether a machine could be
+considered intelligent or not\cite{turing1950computing}. Turing's test is based
+upon whether a computer can communicate in a natural language proficiently
+enough to deceive a human into thinking that the machine is also human. A
+machine able to pass such a test would need to possess the ability to represent
+and learn from knowledge, to be able to reason about what it knows and to be
+able to process natural language\cite{russell2010artificial}. Partridge will
+also need to be able to process natural language and learn from any
+observations it makes. It is reasonable to consider Partridge's backend system
+to be an Artificial Intelligence problem.
+
+
 \subsubsection{Natural Language Processing} 
 
-Start with history of NLP.
-
-Natural Language Processing is
-still a relatively unexplored discipline and as such is still a very active
-area of research and development within the Artificial Intelligence
-community\cite{liddy2001natural}. Liddy goes on to define Natural Language
-Processing as:
+Natural Language Processing (NLP) is still a relatively unexplored discipline
+and as such is a very active area of research and development within the
+Artificial Intelligence community\cite{liddy2001natural}. NLP enables the
+automated extraction of meaningful information from texts written in human
+languages such as English or French. NLP has already been applied to many text
+classification and data extraction problems. Studies have been carried out in
+the detection of emotions in suicide notes\cite{citeulike:11077287}, the
+classification of a web page's genre on the World Wide
+Web\cite{citeulike:11288938} and emotional polarity (is the sentence positive
+or negative) of a phrase or sentence\cite{Wilson05Polarity}. Liddy(2001)
+defines Natural Language Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
@@ -142,9 +172,9 @@ scientific papers.  Krug (2005), suggests that when browsing the internet,
 humans find it much easier to locate specific information within a labelled and
 logically structured document than one that is provided as a single text
 entity\cite{Krug:2005:DMM:1051204}. In order to help humans to find relevant
-research papers, Partridge will represent all research papers in its repository
-in a logical hierarchy that can be queried directly by the human users and also
-processed using other NLP techniques to extract further information.
+research papers, Partridge will represent all papers in its repository in a
+logical hierarchical structure. This will facilitate better information
+retrieval for keyword searches and enable more advanced NLP techniques.
 Partridge's document storage format should therefore be standardised to provide
 a uniform way of processing each document. 
 
@@ -157,19 +187,21 @@ ontology\cite{soldatova2007ontology}. They then proceed to define a schema for
 their CISP ontology that defines the Core Scientific Concepts (CoreSC) as part
 of the XML document itself\cite{liakata2008guidelines}. 
 
-Partridge will make use of
-several modern Natural Language Processing (NLP) techniques.  NLP enables the
-automated extraction of meaningful information from texts written in human
-languages such as English or French. There have already been several papers on
-using NLP for detecting emotions in suicide notes\cite{citeulike:11077287}, the
-genre of a web page on the World Wide Web\cite{citeulike:11288938} and
-emotional polarity of a phrase or sentence\cite{Wilson05Polarity}. Liakata et
-al. have also used NLP techniques to classify sentences within scientific
-papers to determine what scientific concept they relate to (i.e. does this
-sentence cover background information or is it a part of the
-hypothesis?). Partridge will build upon and make use
-of these existing applications of NLP to filter and retrieve data from
-scientific papers in a novel way.
+It is proposed that Partridge should use the CoreSC schema for document storage
+in order to provide a standard way to access and process the papers and thus
+eliminate the task of dealing with multiple documents during its learning
+phase. Using CoreSC also offers the advantage of making Partridge compatible
+with the ART corpus. This is a set of physical chemistry and biochemistry
+research papers that have been pre-processed and already annotated using CISP
+concepts\cite{liakataART}. This would provide Partridge with a set of papers
+that could be used as a training set for classification tasks and could be used
+for information retrieval tests from early on in the project.
+
+Liakata et al. (2012) describe a system for automatically processing and
+categorising sentences in a research paper according to their respective
+CoreSC. 
+
+\subsubsection{NLTK}
 
 \subsection{Related Works}
 \label{sec:prior_art}
@@ -279,7 +311,7 @@ that the system will also provide user-specific recommendations by profiling
 them through their reading history. This will make it easier for users to find
 relevant papers without knowing exactly which keywords they need to search for.
 Partridge will also offer facilitate searching for keywords within a specific
-CoreSC section by making use of Liaketa et al's SAPIENTA project for
+CoreSC section by making use of Liakata et al's SAPIENTA project for
 classifying each sentence of paper. 
 
 
