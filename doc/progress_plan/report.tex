@@ -493,9 +493,42 @@ There is also a free book that accompanies the project available at
 to implement many popular NLP techniques using the library. For this reason
 NLTK was chosen as the primary accompanying library for the project.
 
-\subsection{Prototyping/Pilot Studies}
+\subsection{Prototyping/Current Work}
 
-\subsection{Subsequent Changes to Methodology}
+\subsubsection{PDF Conversion}
+Most scientific papers available on the internet are formatted as PDF
+documents. However, Partridge uses and stores documents that use the CoreSC
+schema by Soldatova and Liakata\cite{liakata2008guidelines}. Therefore some
+spike work was carried out to determine the feasibility of converting papers
+published as PDF documents into XML documents. Townsendi et al(2009) liken converting
+PDF to XML to ``converting hamburgers into cows," they go on to explain that
+PDF documents do not contain any semantic data and documents lose much of their
+explicit structure when they are formatted in this way \cite{Townsend2009}.
+Therefore, to convert PDF documents into an NLP-friendly format, some
+heuristics must be used to detect the document's structure. 
+
+A prototype script was written using a Python PDF extraction library called
+PDFMiner (\url{http://www.unixuser.org/~euske/python/pdfminer/index.html}).
+This toolkit already contains some heuristics about how to extract text from
+PDF documents in a sane way\cite{pdfminer}. The script then used the NLTK
+library to split the text into sentences and save the document in a CoreSC
+compatible format for processing by SAPIENTA. 
+
+The script had limited success due to the high variation of formatting within
+scientific papers. It was suggested that PDFX (\url{http://pdfx.cs.man.ac.uk/})
+a free service hosted by the university of manchester, could be used instead of
+PDFMiner. PDFX's main advantage is that it uses a machine learning system to
+guess PDF document structures more accurately than through the use of simple
+Heuristics. With an adapted backend that sends PDFs for analysis using PDFX and
+then splits the results using NLTK, the conversion script now has a much higher
+success rate and will be used as a preprocessor for adding PDF  documents to
+Partridge.
+
+\subsubsection{Interface Design}
+
+\subsubsection{System Processes}
+
+
 
 \section{Planning}
 
