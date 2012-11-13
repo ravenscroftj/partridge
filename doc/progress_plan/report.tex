@@ -53,22 +53,26 @@ acquisition within the domain of scientific research.
 
 Since the advent of the 'Digital Age' and the ability of computers to copy and
 reproduce information for a negligible cost, the amount of information
-available to researchers has been increasing drastically.  A 2009 study by B-C
-Bj\"{o}rk suggests that approximately 1.4 Million papers were published in the
-year 2006 alone\cite{bjork2009}. Moreover, the growing popularity of Open Access
+available to researchers has been increasing drastically.  B-C Bj\"{o}rk (2009)
+estimates that approximately 1.4 Million papers were published in the year 2006
+alone\cite{bjork2009}. Moreover, the growing popularity of Open Access
 publishing (making papers available for free online\cite{Suber2012}) across
 most scientific disciplines\cite{bjork2009}\cite{harnad2004comparing} is
 providing researchers with an even larger volume of information to be
 processed. As available information increases, relevant material becomes
 progressively more difficult to find and the need for an automated information
-retrieval tool more apparent.
+retrieval tool more apparent. The problem is even more vital for General
+Practitioners. Goldacre (2008:97) points out that ``there have been an
+estimated 15 million medical academic articles published so far, and 5000
+journals published every month... picking out what's relevant is a garganutan
+task."\cite{goldacre2009bad} 
 
 Partridge aims to autonomously process as many scientific papers as possible to
 facilitate researchers who would otherwise be required to manually read each
 paper themselves. This should reduce the amount of information that the reader
 is required to process themselves, thereby speeding up the research process.
 Partridge will achieve this through the use of several existing techniques in
-the field of Natural Language Processing which are discussed below.
+Natural Language Processing which are discussed below.
 
 From the point of view of it's users, Partridge will assist researchers in two
 ways. The system will provide filtering of papers based upon their
@@ -82,27 +86,22 @@ This feature should help users find relevant papers more quickly or find
 research that they may have otherwise overlooked.
 
 There are already several tools that help researchers manage the vast library
-of internet journals available on the internet. Search engines such as Google
+of journals available on the internet. Search engines such as Google
 ({\url{http://www.google.com/}}), and social citation management tools such as
 CiteULike ({\url{http://www.citeulike.org}}), do offer some assistance in
 tracking down relevant information. However, these tools are often too general
-or rely upon the user knowing exactly what keywords to search for before
-carrying out the search. These drawbacks are further discussed in Section
+or rely upon the user knowing exactly what keywords to use before carrying out
+the search. These drawbacks are further discussed in Section
 \ref{sec:prior_art} below.
 
 To overcome the drawbacks of these existing systems, Partridge will make use of
-several modern Natural Language Processing (NLP) techniques.  NLP enables the
-automated extraction of meaningful information from texts written in human
-languages such as English or French. There have already been several papers on
-using NLP for detecting emotions in suicide notes\cite{citeulike:11077287}, the
-genre of a web page on the World Wide Web\cite{citeulike:11288938} and
-emotional polarity of a phrase or sentence\cite{Wilson05Polarity}. Liakata et
-al. have also used NLP techniques to classify sentences within scientific
-papers to determine what scientific concept they relate to (i.e. does this
-sentence cover background information or is it a part of the
-hypothesis?)\cite{citeulike:10444769}. Partridge will build upon and make use
-of these existing applications of NLP to filter and retrieve data from
-scientific papers in a novel way.
+several cutting edge Artificial Intelligence (AI) techniques in order to analyse and
+process the papers in a more in depth way. AI is a very complex and field and
+implementing the above features will be incredibly challenging. To help with
+this, Partridge will build upon the system implemented by Liakata et al. for
+classifying papers on a sentence-by-sentence basis\cite{citeulike:10444769} and
+make use of Natural Language Toolkit for Python
+\cite{Bird:2006:NNL:1225403.1225421} 
 
 \section{Current Progress}
 
@@ -113,15 +112,22 @@ Some related works are investigated and compared to Partridge and details of
 prototyping work that has been carried out are given.
 
 \subsection{Literature Review}
-Natural Language Processing is still a relatively unexplored discipline and as
-such is still a very active area of research and development within the
-Artificial Intelligence community. E. Liddy defines Natural Language Processing as:
+
+\subsubsection{Natural Language Processing} 
+
+Start with history of NLP.
+
+Natural Language Processing is
+still a relatively unexplored discipline and as such is still a very active
+area of research and development within the Artificial Intelligence
+community\cite{liddy2001natural}. Liddy goes on to define Natural Language
+Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
 representing naturally occurring texts at one or more levels of linguistic
 analysis for the purpose of achieving human-like language processing for a
-range of tasks or applications. \cite{liddy2001natural} 
+range of tasks or applications \it{(Ibid)}.  
 \end{quotation}
 
 In the case of Partridge, scientific papers, constituting the naturally occuring
@@ -132,25 +138,38 @@ is then used for the purpose of classifying and searching papers in a
 human-like way. 
 
 It is therefore necessary to define what a 'human-like way' of processing
-scientific papers on the internet consists of. Steven Krug is an expert in the field of
-human-computer interaction on the internet. In `Don't Make Me Think', Krug
-suggests that when browsing the internet, humans find it much easier to locate
-specific information within a labelled and logically structured document than
-one that is provided as a single text entity.\cite{Krug:2005:DMM:1051204}. In
-order to help humans to find relevant research papers, Partridge will represent
-all research papers in its repository in a logical hierarchy that can be
-queried directly by the human users and also processed using other NLP
-techniques to extract further information. 
+scientific papers.  Krug (2005), suggests that when browsing the internet,
+humans find it much easier to locate specific information within a labelled and
+logically structured document than one that is provided as a single text
+entity\cite{Krug:2005:DMM:1051204}. In order to help humans to find relevant
+research papers, Partridge will represent all research papers in its repository
+in a logical hierarchy that can be queried directly by the human users and also
+processed using other NLP techniques to extract further information.
+Partridge's document storage format should therefore be standardised to provide
+a uniform way of processing each document. 
 
-Partridge's document storage format should therefore be formalised to provide a
-standard way of processing each document. In their 2007 paper, Soldatova and
-Liakata propose a methodology for storing the Core Information about Scientific
-Papers (CISP) as a way to formally represent scientific concepts that should be
-present in the papers in a logical ontology\cite{soldatova2007ontology}. They
-then proceed to define a schema for their CISP ontology that defines the
-Core Scientific Concepts (CoreSC) as part of the XML document
-itself\cite{liakata2008guidelines}. Using this format for Partridge would allow
-the system to read and process the ART corpus produced using CoreSC markup
+\subsubsection{CISP, CoreSC and SAPIENTA}
+
+Soldatova and Liakata(2007) proposed a methodology for storing the Core
+Information about Scientific Papers (CISP) as a way to formally represent
+scientific concepts that should be present in the articles in a logical
+ontology\cite{soldatova2007ontology}. They then proceed to define a schema for
+their CISP ontology that defines the Core Scientific Concepts (CoreSC) as part
+of the XML document itself\cite{liakata2008guidelines}. 
+
+Partridge will make use of
+several modern Natural Language Processing (NLP) techniques.  NLP enables the
+automated extraction of meaningful information from texts written in human
+languages such as English or French. There have already been several papers on
+using NLP for detecting emotions in suicide notes\cite{citeulike:11077287}, the
+genre of a web page on the World Wide Web\cite{citeulike:11288938} and
+emotional polarity of a phrase or sentence\cite{Wilson05Polarity}. Liakata et
+al. have also used NLP techniques to classify sentences within scientific
+papers to determine what scientific concept they relate to (i.e. does this
+sentence cover background information or is it a part of the
+hypothesis?). Partridge will build upon and make use
+of these existing applications of NLP to filter and retrieve data from
+scientific papers in a novel way.
 
 \subsection{Related Works}
 \label{sec:prior_art}
@@ -203,7 +222,7 @@ Web. Unfortunately, the problem space they deal with is usually too big for
 them to find scientific papers and journals given a set of keywords. Internet
 search engines index a huge proportion of irrelevant information compared to
 useful information\cite{Berghel1997}, and as a result, even relatively specific
-queries such as effects of gravity on rockets" yield millions of results (as
+queries such as ``effects of gravity on rockets" yield millions of results (as
 shown in Figure \ref{fig:rocket_results}). 
 
 \begin{figure}[!ht]
@@ -263,6 +282,12 @@ Partridge will also offer facilitate searching for keywords within a specific
 CoreSC section by making use of Liaketa et al's SAPIENTA project for
 classifying each sentence of paper. 
 
+
+\subsection{Methodology}
+
+\subsection{Prototyping/Pilot Studies}
+
+\subsection{Subsequent Changes to Methodology}
 
 \section{Planning}
 
