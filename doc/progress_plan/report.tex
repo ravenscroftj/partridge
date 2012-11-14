@@ -29,6 +29,9 @@
 \usepackage{url}
 \usepackage{subcaption}
 
+
+\usepackage[nottoc,numbib]{tocbibind}
+
 \begin{document}
 
 %use harvard citations
@@ -65,7 +68,7 @@ retrieval tool more apparent. The problem is even more vital for General
 Practitioners. Goldacre (2008:97) points out that ``there have been an
 estimated 15 million medical academic articles published so far, and 5000
 journals published every month... picking out what's relevant is a garganutan
-task."\cite{goldacre2009bad} 
+task."\cite{goldacre2008bad} 
 
 Partridge aims to autonomously process as many scientific papers as possible to
 facilitate researchers who would otherwise be required to manually read each
@@ -77,7 +80,7 @@ Natural Language Processing which are discussed below.
 From the point of view of it's users, Partridge will assist researchers in two
 ways. The system will provide filtering of papers based upon their
 specific domain (i.e. is the paper primarily concerned with methodology within
-an experiment in chemistry or is it about Ethics in Psychological studies?) and
+an experiment in chemistry or is it about ethics in psychological studies?) and
 their result, whether the paper yielded positive, negative or inconclusive
 evidence for a hypothesis. Depending upon the time constraints of the
 project, it is hoped that Partridge will also offer a user 'profiling' system
@@ -101,21 +104,15 @@ implementing the above features will be incredibly challenging. To help with
 this, Partridge will build upon the system implemented by Liakata et al. for
 classifying papers on a sentence-by-sentence basis\cite{citeulike:10444769} and
 make use of Natural Language Toolkit for Python
-\cite{Bird:2006:NNL:1225403.1225421} 
+\cite{bird2009natural} 
 
 \section{Current Progress}
-
-The Partridge project has been underway since the beginning of October. The
-following section looks at some literature on the subjects of Natural Language
-Processing and information retrieval within the domain of scientific papers.
-Some related works are investigated and compared to Partridge and details of
-prototyping work that has been carried out are given.
 
 \subsection{Literature Review}
 
 In science fiction literature and films, Artificial Intelligence (AI) and the
 ability of machines to automatically process and understand human language is
-almost always present. The current state of AI is a long way behind these
+almost always taken for granted. The current state of AI is a long way behind these
 fantastic visions. Dale(2000) comments that ``Even the most ardent exponent of
 artificial intelligence research would have to admit that the likes of HAL in
 Kubrick's 2001: A Space Odyssey remain firmly in the realms of science
@@ -136,22 +133,23 @@ and learn from knowledge, to be able to reason about what it knows and to be
 able to process natural language\cite{russell2010artificial}. Partridge will
 also need to be able to process natural language and learn from any
 observations it makes. It is reasonable to consider Partridge's backend system
-to be an Artificial Intelligence problem.
+to be an Artificial Intelligence problem. Primarily, Patridge can be considered
+a Natural Language Processing problem.
 
 
 \subsubsection{Natural Language Processing} 
 
 Natural Language Processing (NLP) is still a relatively unexplored discipline
-and as such is a very active area of research and development within the
-Artificial Intelligence community\cite{liddy2001natural}. NLP enables the
-automated extraction of meaningful information from texts written in human
-languages such as English or French. NLP has already been applied to many text
-classification and data extraction problems. Studies have been carried out in
-the detection of emotions in suicide notes\cite{citeulike:11077287}, the
-classification of a web page's genre on the World Wide
-Web\cite{citeulike:11288938} and emotional polarity (is the sentence positive
-or negative) of a phrase or sentence\cite{Wilson05Polarity}. Liddy(2001)
-defines Natural Language Processing as:
+and as such is a very active area of research and development within the AI
+community\cite{liddy2001natural}. NLP enables the automated extraction of
+meaningful information from texts written in human languages such as English or
+French. NLP has already been applied to many text classification and data
+extraction problems. Studies have been carried out in the detection of emotions
+in suicide notes\cite{citeulike:11077287}, the classification of a web page's
+genre on the World Wide Web\cite{citeulike:11288938} and emotional polarity
+(determining the positive or negative implications of) of a phrase or
+sentence\cite{Wilson05Polarity}. Liddy(2001) defines Natural Language
+Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
@@ -198,43 +196,45 @@ that could be used as a training set for classification tasks and could be used
 for information retrieval tests from early on in the project.
 
 Liakata et al. (2012) describe a system for automatically processing and
-categorising sentences in a research paper according to their respective
-CoreSC element\cite{citeulike:10444769}. SAPIENTA
-(\url{http://www.sapientaproject.com}) was trained using the ART corpus and
-can achieve promising accuracies when categorising sentences (\emph{Ibid}). With
+categorising sentences in a research paper according to their respective CoreSC
+element\cite{citeulike:10444769}. SAPIENTA
+(\url{http://www.sapientaproject.com}) was trained using the ART corpus and can
+achieve promising accuracies when categorising sentences (\emph{Ibid}). With
 the authors' permissions, Partridge will make use of SAPIENTA when introducing
-new papers into its repository. It is hoped that preclassifying papers will
-make the development of Partridge more manageable within the timeframe
-available and will also allow more effort to be put into other classification
-problems rather than re-implementing a SAPIENTA clone. Any modifications that
-have to be made to SAPIENTA to integrate it into Partridge will be submitted
-back to the original authors to help them improve their works.
+new papers into its repository. It is hoped that preclassifying papers with
+SAPIENTA will make the development of Partridge more manageable within the
+timeframe available and will also allow more effort to be put into other
+classification problems rather than re-implementing a SAPIENTA clone. Any
+modifications that have to be made to SAPIENTA to integrate it into Partridge
+will be submitted back to the original authors to assist them in their research.
 
 After pre-processing by SAPIENTA is complete, Partridge will need to do some
 classification work of its own to determine the area of study (i.e. Physics,
 Chemistry, Biology), type of paper (Literature review, Case Study, Experiment)
 and the polarity of the result (positive, negative, inconclusive). These tasks
 involve implementing existing AI techniques and applying them specifically to
-the task of text classification. To avoid the time consuming task of re-implementing these
-methods, it was decided that a library should be used instead. Different NLP
-libraries and their properies are discussed below in Section
-\ref{sec:libschoice}.
+the task of text classification. To avoid the time consuming task of
+re-implementing these methods, it was decided that a library should be used
+instead. Different NLP libraries and their properies are discussed below in
+Section \ref{sec:libschoice}.
 
 
 \subsection{Related Works}
 \label{sec:prior_art}
 
-\subsubsection{Search Engines}
+\subsubsection{Search Engines} 
+
 There are already many existing systems for finding and filtering information
 on the World Wide Web. Search engines are very useful for information retrieval
-in this very large and generalised search domain. Most people have heard of
-Google (\url{http://wwww.google.com}), Yahoo (\url{http://www.yahoo.co.uk}),
-Bing (\url{http://www.bing.com}) and Ask (\url{http://www.ask.com}). There are
-many more similar systems available for free general use across the internet.
-They all present very similar user interfaces (as shown in Figure
-\ref{fig:search_interfaces}) in which users are asked to supply keywords that
-might be linked to relevant documents and the search engine returns a list of
-Uniform Resource Locators (URLs) that they consider to match the user's query.
+in the very large and generalised search domain of the Internet. Most people
+have heard of Google (\url{http://wwww.google.com}), Yahoo
+(\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
+(\url{http://www.ask.com}). There are many more similar systems available for
+free general use across the internet.  They all present very similar user
+interfaces (as shown in Figure \ref{fig:search_interfaces}) in which users are
+asked to supply keywords that might be linked to relevant documents and the
+search engine returns a list of Uniform Resource Locators (URLs) that they
+consider to match the user's query.
 
 
 \begin{figure}[!ht]
@@ -505,7 +505,7 @@ PDF to XML to ``converting hamburgers into cows," they go on to explain that
 PDF documents do not contain any semantic data and documents lose much of their
 explicit structure when they are formatted in this way \cite{Townsend2009}.
 Therefore, to convert PDF documents into an NLP-friendly format, some
-heuristics must be used to detect the document's structure. 
+heuristics must be used to detect the document's structure\cite{pdfminer}. 
 
 A prototype script was written using a Python PDF extraction library called
 PDFMiner (\url{http://www.unixuser.org/~euske/python/pdfminer/index.html}).
@@ -526,9 +526,15 @@ Partridge.
 
 \subsubsection{Interface Design}
 
+To help in visualising how the final web frontend will appear, some diagrams of
+the user interface have been drawn. You can see these diagrams in Appendix
+\ref{sec:ui_designs}. 
+
 \subsubsection{System Processes}
 
-
+To visualise how some of the system processes will work and how they should be
+programmed, some flow diagrams have been produced and attached in Appendix
+\ref{sec:system_diagrams}
 
 \section{Planning}
 
@@ -542,7 +548,7 @@ Under the traditional `Waterfall' Software Development model, Requirements
 Gathering, Analysis, Program Design, Coding, Testing and Operations were all
 defined as formal phases in the development cycle. There is little flexibility
 other than moving back up the waterfall to rectify mistakes after
-testing.\cite{Royce:1987:MDL:41765.41801}. This model was very focused on
+testing\cite{Royce:1987:MDL:41765.41801}. This model was very focused on
 paperwork and bureaucracy, trying to maintain a paper trail and manage risk
 through accountability \emph{(Ibed)}. This approach to software development is
 very heavyweight and slow and often produced software that did not match the
@@ -552,17 +558,19 @@ As an alternative to the heavyweight Waterfall approach, Beck et al came up
 with the principle of the Agile Manifesto, favouring a lightweight, responsive
 development model over the heavyweight slow waterfall
 system\cite{beck2001agile}. Many of Beck's ideas focus around working in a team
-of developers and prioriting communication between team members. This is most
-prominent in the Extreme Programming (XP) method of software development. Since
-Partridge is an individual project, XP is not really applicable. However, some
-concepts like rapid prototyping/spike work and iterative release cycles will be
-used as part of the Partridge development methodology.
+of developers and prioriting communication between team members \emph{(Ibid)}.
+This is most prominent in the Extreme Programming (XP) method of software
+development. Since Partridge is an individual project, XP is not really
+applicable. However, some concepts like rapid prototyping/spike work and
+iterative release cycles will be used as part of the Partridge development
+methodology.
 
 \subsubsection{ Partridge's Development Methodology}
 
-Since Partridge is an individual project but does involve discussions with
-supervisors, a customised methodology has been adopted. Firstly, all design
-and planning documentation have been written up and placed on a wiki which is
+Partridge is an individual project but does involve discussions with
+supervisors. The customers have been identified as the end-users of the system.
+Therefore, a customised methodology has been adopted. Firstly, all design and
+planning documentation have been written up and placed on a wiki which is
 accessible and modifiable by the author and both supervisors. This creates a
 paper trail for all tasks and also allows collaboration between involved
 parties through the Internet. A full printout of the wiki is available in
@@ -580,11 +588,12 @@ effective.
 Partridge will adopt an Agile approach to release cycles, producing a working
 software package at iterations of one month.  Each iteration, the software will
 include more of the desired functionality discussed above and in the wiki.
-GitHub's issue manager program will be used to track tasks and bugfixes and
+GitHub's issue manager program is being used to track tasks and bugfixes and
 plan which tasks will be carried out in which iteration. Tasks that are created
 in a full iteration (where no development time is left) will be added to a
 backlog and integrated in the next iteration with enough development time to
-contain it.
+contain it. Tasks are also assigned a priority, higher priority issues being
+tackled before low priority ones.
 
 Partridge's testing strategy consists of multiple unit tests that are run at
 integration of new code into the codebase. As soon as the first release is
@@ -622,6 +631,15 @@ precautions as the Mid-project demonstration above, and will also need a room
 with the internet if available.
 
 \appendix
+\section{User Interface Designs}
+\label{sec:ui_designs}
+
+\appendix
+\section{System Process Diagrams}
+\label{sec:system_diagrams}
+
+
+\appendix
 \section{Project Timeline}
 \label{sec:timeline}
 
@@ -630,7 +648,6 @@ with the internet if available.
 \label{sec:wiki}
 
 
-\pagebreak
 \bibliographystyle{IEEEannot}
 \bibliography{report}
 
