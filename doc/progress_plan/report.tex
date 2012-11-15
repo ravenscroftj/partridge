@@ -405,6 +405,13 @@ NLTK was chosen as the primary accompanying library for the project.
 
 \subsection{Prototyping/Current Work}
 
+\subsubsection{ Sourcing Scientific Papers}
+For Partridge to be a success, it is important to include a large variety of
+different scientific papers in its corpus. Therefore, several sources of
+scientific papers were explored and considered.
+
+
+
 \subsubsection{PDF Conversion}
 Most scientific papers available on the internet are formatted as PDF
 documents. However, Partridge uses and stores documents that use the CoreSC
@@ -435,22 +442,25 @@ that had been trained to recognise sentence boundaries to split the text. Each
 sentence was then added to a CoreSC compatible XML document for processing by
 SAPIENTA.
 
-Initially, the PDF conversion subroutine had a very high error rate due to high
-variation in the formatting of scientific papers. It was suggested that PDFX (\url{http://pdfx.cs.man.ac.uk/})
-a free service hosted by the University of Manchester could be used instead of
-PDFMiner for the initial PDF data extraction. The main advantage of PDFX over
-the PDFMiner library is that is a trained machine learning system that has been
-trained using a large full-text selection of articles; PDFX's classifier is
-more suited to paper conversion than PDFMiner's more general heuristic
-approach. 
+Initially, the PDF conversion subroutine had a very high error rate due to the
+variation in the formatting of scientific papers. It was suggested that PDFX
+(\url{http://pdfx.cs.man.ac.uk/}) a free service hosted by the University of
+Manchester could be used instead of PDFMiner for the initial PDF data
+extraction. The main advantage of PDFX over the PDFMiner library is that is a
+trained machine learning system that has been trained using a large full-text
+selection of articles; PDFX's classifier is more suited to paper conversion
+than PDFMiner's more general heuristic approach.
 
+PDFX also provides output that already has some metadata, such as title,
+author, and abstract, associated with it. PDFMiner did not provide any
+metadata, and it was necessary for the script to guess which passage of text
+was the abstract after the initial text extraction stage.
 
-PDFX's main advantage is that it uses a machine learning system to
-guess PDF document structures more accurately than through the use of simple
-Heuristics. With an adapted backend that sends PDFs for analysis using PDFX and
-then splits the results using NLTK, the conversion script now has a much higher
-success rate and will be used as a preprocessor for adding PDF  documents to
-Partridge.
+With the new PDF extraction method in place, the script ran without the need
+to modify either of the whitespace sanitiser or sentence splitter routines. The
+process was much more successful and able to produce SAPIENTA-compatible
+documents from most of the PDF input files that were provided.
+
 
 \subsubsection{Interface Design}
 
