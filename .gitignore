@@ -53,3 +53,4 @@ pip-log.txt
 
 #ignore editor files (stuff ending with ~)
 *~
+*.swp
