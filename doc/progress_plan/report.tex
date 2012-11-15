@@ -51,29 +51,30 @@
 
 \section{Project Summary}
 
-Partridge is a web-based tool designed to assist in information processing and knowledge
-acquisition within the domain of scientific research.
+This document describes the creation of Partridge, a new web-based tool
+designed to assist in information processing and knowledge acquisition within
+the domain of scientific research.
 
 Since the advent of the 'Digital Age' and the ability of computers to copy and
 reproduce information for a negligible cost, the amount of information
 available to researchers has been increasing drastically.  B-C Bj\"{o}rk (2009)
 estimates that approximately 1.4 Million papers were published in the year 2006
 alone\cite{bjork2009}. Moreover, the growing popularity of Open Access
-publishing (making papers available for free online\cite{Suber2012}) across
+publishing (making papers available to readers for free online\cite{Suber2012}) across
 most scientific disciplines\cite{bjork2009}\cite{harnad2004comparing} is
-providing researchers with an even larger volume of information to be
+providing scientists and researchers with an even larger volume of information to be
 processed. As available information increases, relevant material becomes
 progressively more difficult to find and the need for an automated information
 retrieval tool more apparent. The problem is even more vital for General
 Practitioners. Goldacre (2008:97) points out that ``there have been an
 estimated 15 million medical academic articles published so far, and 5000
-journals published every month... picking out what's relevant is a garganutan
+journals published every month... picking out what's relevant is a gargantuan
 task."\cite{goldacre2008bad} 
 
-Partridge aims to autonomously process as many scientific papers as possible to
-facilitate researchers who would otherwise be required to manually read each
-paper themselves. This should reduce the amount of information that the reader
-is required to process themselves, thereby speeding up the research process.
+Partridge's main objective is to provide reading recommendations and
+information retrieval for scientists and researchers. This should reduce the
+amount of extraneous information that users have to read for themselves by
+helping them find information specific to their interests more quickly.
 Partridge will achieve this through the use of several existing techniques in
 Natural Language Processing which are discussed below.
 
@@ -88,23 +89,24 @@ that provides recommendations for researchers based on their reading history.
 This feature should help users find relevant papers more quickly or find
 research that they may have otherwise overlooked.
 
-There are already several tools that help researchers manage the vast library
-of journals available on the internet. Search engines such as Google
-({\url{http://www.google.com/}}), and social citation management tools such as
-CiteULike ({\url{http://www.citeulike.org}}), do offer some assistance in
-tracking down relevant information. However, these tools are often too general
-or rely upon the user knowing exactly what keywords to use before carrying out
-the search. These drawbacks are further discussed in Section
-\ref{sec:prior_art} below.
+Search engines such as Google ({\url{http://www.google.com/}}), and social
+citation management tools such as CiteULike ({\url{http://www.citeulike.org}}),
+do offer some assistance in tracking down relevant information. However, these
+tools are often too general or rely upon the user knowing exactly what keywords
+to use before carrying out the search. These drawbacks are further discussed in 
+Section \ref{sec:prior_art} below.
 
 To overcome the drawbacks of these existing systems, Partridge will make use of
 several cutting edge Artificial Intelligence (AI) techniques in order to analyse and
 process the papers in a more in depth way. AI is a very complex and field and
 implementing the above features will be incredibly challenging. To help with
 this, Partridge will build upon the system implemented by Liakata et al. for
-classifying papers on a sentence-by-sentence basis\cite{citeulike:10444769} and
-make use of Natural Language Toolkit for Python
-\cite{bird2009natural} 
+recognising hypotheses, methods, results, conclusions and a number of other
+scientific concepts in scientific articles \cite{citeulike:10444769}. The
+Natural Language Toolkit for Python will also be used to build models for
+recognising different fields and topics, classifying results as positive or
+negative and recognising different types of papers, from case studies to
+methodology papers\cite{bird2009natural}.
 
 \section{Current Progress}
 
