@@ -110,8 +110,9 @@ methodology papers\cite{bird2009natural}.
 
 \section{Current Progress}
 
-\subsection{Literature Review}
+\subsection{Background}
 
+\subsubsection{Artificial Intelligence}
 In science fiction literature and films, Artificial Intelligence (AI) and the
 ability of machines to automatically process and understand human language is
 almost always taken for granted. The current state of AI is a long way behind these
@@ -132,94 +133,49 @@ upon whether a computer can communicate in a natural language proficiently
 enough to deceive a human into thinking that the machine is also human. A
 machine able to pass such a test would need to possess the ability to represent
 and learn from knowledge, to be able to reason about what it knows and to be
-able to process natural language\cite{russell2010artificial}. Partridge will
-also need to be able to process natural language and learn from any
-observations it makes. It is reasonable to consider Partridge's backend system
-to be an Artificial Intelligence problem. Primarily, Patridge can be considered
-a Natural Language Processing problem.
+able to process natural language\cite{russell2010artificial}. 
 
+\subsubsection{Natural Language Processing}
 
-\subsubsection{Natural Language Processing} 
-
-Natural Language Processing (NLP) is still a relatively unexplored discipline
-and as such is a very active area of research and development within the AI
-community\cite{liddy2001natural}. NLP enables the automated extraction of
-meaningful information from texts written in human languages such as English or
-French. NLP has already been applied to many text classification and data
-extraction problems. Studies have been carried out in the detection of emotions
-in suicide notes\cite{citeulike:11077287}, the classification of a web page's
-genre on the World Wide Web\cite{citeulike:11288938} and emotional polarity
-(determining the positive or negative implications of) of a phrase or
-sentence\cite{Wilson05Polarity}. Liddy(2001) defines Natural Language
-Processing as:
+Natural Language Processing (NLP)  enables the automated extraction of
+meaningful information from texts written in human languages such as French or
+English. Liddy(2001) defines Natural Language Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
 representing naturally occurring texts at one or more levels of linguistic
 analysis for the purpose of achieving human-like language processing for a
-range of tasks or applications \it{(Ibid)}.  
+range of tasks or applications \cite{liddy2001natural}.  
 \end{quotation}
 
-In the case of Partridge, scientific papers, constituting the naturally occuring
-texts, are processed at sentence-by-sentence and word-by-word levels of
-linguistics and represented in the form of Extended Markup Language (XML)
-documents, a format that is both human and machine readable. This information
-is then used for the purpose of classifying and searching papers in a
-human-like way. 
+Over the last 60 years, NLP has been used in a wide variety of applications
+such as automated translation between languages\cite{hutchins2004first}, the
+engineering of systems for querying databases using natural languages
+\cite{rao2010natural} and for building `chatterbot' systems designed to
+communicate with their users in a human-like way\cite{Alfonsi2006}.
+More recently, NLP has been used for text classification purposes such as
+classifying emotions within phrases and sentences \cite{Wilson05Polarity} and
+even within suicide notes \cite{citeulike:11077287}.
 
-It is therefore necessary to define what a 'human-like way' of processing
-scientific papers.  Krug (2005), suggests that when browsing the internet,
-humans find it much easier to locate specific information within a labelled and
-logically structured document than one that is provided as a single text
-entity\cite{Krug:2005:DMM:1051204}. In order to help humans to find relevant
-research papers, Partridge will represent all papers in its repository in a
-logical hierarchical structure. This will facilitate better information
-retrieval for keyword searches and enable more advanced NLP techniques.
-Partridge's document storage format should therefore be standardised to provide
-a uniform way of processing each document. 
 
 \subsubsection{CISP, CoreSC and SAPIENTA}
 
-Soldatova and Liakata(2007) proposed a methodology for storing the Core
-Information about Scientific Papers (CISP) as a way to formally represent
-scientific concepts that should be present in the articles in a logical
-ontology\cite{soldatova2007ontology}. They then proceed to define a schema for
-their CISP ontology that defines the Core Scientific Concepts (CoreSC) as part
-of the XML document itself\cite{liakata2008guidelines}. 
-
-It is proposed that Partridge uses the CoreSC schema for document storage
-to provide a standard way to access and process the papers and thus
-eliminate dealing with multiple documents during its learning phase. 
-Using CoreSC also offers the advantage of making Partridge compatible
-with the ART corpus. This is a set of physical chemistry and biochemistry
-research papers that have been pre-processed and already annotated using CISP
-concepts\cite{liakataART}. This would provide Partridge with a set of papers
-that could be used as a training set for classification tasks and could be used
-for information retrieval tests from early on in the project.
-
 Liakata et al. (2012) describe a system for automatically processing and
-categorising sentences in a research paper according to their respective CoreSC
-element\cite{citeulike:10444769}. SAPIENTA
-(\url{http://www.sapientaproject.com}) was trained using the ART corpus and can
-achieve promising accuracies when categorising sentences (\emph{Ibid}). With
-the authors' permissions, Partridge will make use of SAPIENTA when introducing
-new papers into its repository. It is hoped that preclassifying papers with
-SAPIENTA will make the development of Partridge more manageable within the
-timeframe available and will also allow more effort to be put into other
-classification problems rather than re-implementing a SAPIENTA clone. Any
-modifications that have to be made to SAPIENTA to integrate it into Partridge
-will be submitted back to the original authors to assist them in their research.
+classifying sentences in a research paper according to the scientific concept
+they describe (e.g. a sentence can be categorised as a hypothesis, background
+information, a method or similar)\cite{citeulike:10444769}. SAPIENTA
+(\url{http://www.sapientaproject.com}) is a machine learning application,
+trained using a corpus of physical chemistry and biochemistry research papers
+that were pre-processed and annotated using Core Information about Scientific
+Papers (CISP)\cite{LIAKATA10.644}. 
 
-After pre-processing by SAPIENTA is complete, Partridge will need to do some
-classification work of its own to determine the area of study (i.e. Physics,
-Chemistry, Biology), type of paper (Literature review, Case Study, Experiment)
-and the polarity of the result (positive, negative, inconclusive). These tasks
-involve implementing existing AI techniques and applying them specifically to
-the task of text classification. To avoid the time consuming task of
-re-implementing these methods, it was decided that a library should be used
-instead. Different NLP libraries and their properies are discussed below in
-Section \ref{sec:libschoice}.
-
+CISP, Soldatova and Liakata(2007), is a way to formally represent core
+scientific concepts (CoreSC), e.g. background, hypothesis, method etc., that
+should be present in the articles in a logical
+ontology\cite{soldatova2007ontology}. Subsequent work implements this set of
+concepts as a three layered sentence based annotation scheme (CoreSC scheme)
+where annotations are encoded in Extended Markup Language
+(XML)\cite{LIAKATA10.644}.
 
 \subsection{Related Works}
 \label{sec:prior_art}
@@ -231,52 +187,7 @@ on the World Wide Web. Search engines are very useful for information retrieval
 in the very large and generalised search domain of the Internet. Most people
 have heard of Google (\url{http://wwww.google.com}), Yahoo
 (\url{http://www.yahoo.co.uk}), Bing (\url{http://www.bing.com}) and Ask
-(\url{http://www.ask.com}). There are many more similar systems available for
-free general use across the internet.  They all present very similar user
-interfaces (as shown in Figure \ref{fig:search_interfaces}) in which users are
-asked to supply keywords that might be linked to relevant documents and the
-search engine returns a list of Uniform Resource Locators (URLs) that they
-consider to match the user's query.
-
-
-\begin{figure}[!ht]
-        \centering
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/ask_front.png}
-                \caption{Ask.com}
-                \label{fig:ask_interface}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/bing_front.png}
-                \caption{Bing.com}
-                \label{fig:bing_interface}
-        \end{subfigure}\\
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/google_front.png}
-                \caption{Google.com}
-                \label{fig:google_interface}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/yahoo_front.png}
-                \caption{Yahoo.com}
-                \label{fig:yahoo_interface}
-        \end{subfigure}%
-        \caption{4 popular search engine interfaces}\label{fig:animals}
-        \label{fig:search_interfaces}
-\end{figure}
-
-
-Search engines are helpful in locating pages and websites within the World Wide
-Web. Unfortunately, the problem space they deal with is usually too big for
-them to find scientific papers and journals given a set of keywords. Internet
-search engines index a huge proportion of irrelevant information compared to
-useful information\cite{Berghel1997}, and as a result, even relatively specific
-queries such as ``effects of gravity on rockets" yield millions of results (as
-shown in Figure \ref{fig:rocket_results}). 
+(\url{http://www.ask.com}). 
 
 \begin{figure}[!ht]
 \includegraphics[width=0.80\textwidth]{images/space_rocket_query.png}
@@ -284,12 +195,19 @@ shown in Figure \ref{fig:rocket_results}).
 \label{fig:rocket_results}
 \end{figure}
 
-Partridge offers an advantage over these mechanisms as it will specifically
-index research papers rather than attempting to index the whole Internet.
-This means that there should be a higher proportion of useful information as
-output compared to the output of an Internet Search Engine.
+
+Despite their use as general search tools on the World Wide Web, the problem
+space that search engines deal with is usually too big for them to find
+scientific papers and journals given a set of keywords. Internet search engines
+index a huge proportion of irrelevant information compared to useful
+information\cite{Berghel1997}, and as a result, even relatively specific
+queries such as ``effects of gravity on rockets" yield millions of results (as
+shown in Figure \ref{fig:rocket_results}). This shortcoming has already led to
+the development of search engines designed specifically to find scientific
+papers. 
 
 \subsubsection{Scientific Paper Search Engines}
+
 There are also a number of search and indexing systems that specifically look
 for scientific papers as opposed to web pages. One of the most publicised and
 well known paper search systems is Google Scholar
@@ -328,14 +246,6 @@ paper) are unable to get results at their desired level of detail.
         \label{fig:scholar_interface}
 \end{figure}
 
-Partridge will provide the option to filter papers by subject and it is hoped
-that the system will also provide user-specific recommendations by profiling
-them through their reading history. This will make it easier for users to find
-relevant papers without knowing exactly which keywords they need to search for.
-Partridge will also offer facilitate searching for keywords within a specific
-CoreSC section by making use of Liakata et al's SAPIENTA project for
-classifying each sentence of paper as it is added to the repository.
-
 \subsubsection{Social Citation and Recommendation Engines}
 Social citation and recommendation engines also provide a partial solution to
 the `information overload' problem.  Services like Goodreads
@@ -371,9 +281,7 @@ their browsing history. However, the above-named systems do not take into
 account the content of the paper or book. They only deal with metadata as can
 be seen in Figure \ref{fig:social_searches}. This means that important
 discriminatory information that could be contained within the actual document
-content is overlooked completely. Partridge will analyse documents on a
-sentence-by-sentence and possibly word-by-word basis, thereby taking account of
-any embedded information that could be missed by these social metadata systems.
+content is overlooked completely. 
 
 \begin{figure}[!hbt]
         \centering
@@ -507,19 +415,37 @@ PDF to XML to ``converting hamburgers into cows," they go on to explain that
 PDF documents do not contain any semantic data and documents lose much of their
 explicit structure when they are formatted in this way \cite{Townsend2009}.
 Therefore, to convert PDF documents into an NLP-friendly format, some
-heuristics must be used to detect the document's structure\cite{pdfminer}. 
+heuristics must be used to detect the document's structure\cite{pdfminer}.
 
-A prototype script was written using a Python PDF extraction library called
-PDFMiner (\url{http://www.unixuser.org/~euske/python/pdfminer/index.html}).
-This toolkit already contains some heuristics about how to extract text from
-PDF documents in a sane way\cite{pdfminer}. The script then used the NLTK
-library to split the text into sentences and save the document in a CoreSC
-compatible format for processing by SAPIENTA. 
+This was the first big challenge in the project. A prototype script was written
+using a Python PDF extraction library called PDFMiner
+(\url{http://www.unixuser.org/~euske/python/pdfminer/index.html}).  This
+toolkit already contains some heuristics about how to extract text from PDF
+documents, grouping together characters that appear very close to each other,
+and separating paragraphs and headings when a larger area of whitespace is
+detected\cite{pdfminer}. Despite these rules, the library still produced some
+extraneous whitespace and newline characters as part of the output. A
+subroutine to trim whitespace and newlines was added to the script to resolve
+this problem. 
 
-The script had limited success due to the high variation of formatting within
-scientific papers. It was suggested that PDFX (\url{http://pdfx.cs.man.ac.uk/})
-a free service hosted by the university of manchester, could be used instead of
-PDFMiner. PDFX's main advantage is that it uses a machine learning system to
+The next stage was to split the text into sentences in preparation for
+processing with SAPIENTA. With the assistance of the NLTK library, a sentence
+splitting subroutine was implemented. This used a machine learning algorithm
+that had been trained to recognise sentence boundaries to split the text. Each
+sentence was then added to a CoreSC compatible XML document for processing by
+SAPIENTA.
+
+Initially, the PDF conversion subroutine had a very high error rate due to high
+variation in the formatting of scientific papers. It was suggested that PDFX (\url{http://pdfx.cs.man.ac.uk/})
+a free service hosted by the University of Manchester could be used instead of
+PDFMiner for the initial PDF data extraction. The main advantage of PDFX over
+the PDFMiner library is that is a trained machine learning system that has been
+trained using a large full-text selection of articles; PDFX's classifier is
+more suited to paper conversion than PDFMiner's more general heuristic
+approach. 
+
+
+PDFX's main advantage is that it uses a machine learning system to
 guess PDF document structures more accurately than through the use of simple
 Heuristics. With an adapted backend that sends PDFs for analysis using PDFX and
 then splits the results using NLTK, the conversion script now has a much higher
