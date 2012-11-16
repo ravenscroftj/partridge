@@ -308,35 +308,8 @@ content is overlooked completely.
 The language that Partridge will be written in is one of the most fundamental
 and important choices to be made. The language choice effects not only the end
 performance of the application, but the speed at which the project is developed
-and the portability of the end code \cite{britton2008}. To avoid a learning
-overhead, it was decided that the programming language should be one that the
-author is familiar with. This reduced the choice of language down to C, Java
-and Python. 
-
-The C programming language was invented by Kernighan and Ritchie and
-published in 1978\cite{ritchie1978c}. The language is small and
-optimised\cite{prinz2002c} and therefore compiled C programs tend to run
-extremely fast. Unfortunately, C is designed to be general and lack restriction
-\cite{ricthie1978c} which is often an advantage for programmers who favour
-optimised code over excessive error checking. However, this means that
-debugging C programms can be quite long winded and challenging. Since the NLP
-aspects of Partridge present an amibitious challenge in themselves, having to
-debug applications without help from a managed programming environment is not
-desirable. 
-
-The Java programming language on the other hand, does provide memory management
-and error checking\cite{Coffey2008} at the cost of program performance. Java is
-a pseudo-compiled language that is translated into bytecode then interpreted at
-runtime by a Virtual Machine(VM) on the client computer. Gosling (2000)
-describes java as a ``general-purpose...  programming language [that allows]
-developers to write a program once and then be able to run it everywhere on the
-internet\cite{gosling2000java}." Java provides a stable programming environment
-and error checking, both of which would be advantageous in the development of
-Partridge. Java's syntax is very verbose and a lot of `boiler-plate' code must
-be written before a program can be executed.  Therefore Java is not suitable as
-a rapid prototyping language. Since Partridge's development requires a steep
-learning curve for the author, a language that allows quick prototyping with
-minimal programming.
+and the portability of the end code \cite{britton2008}. It was decided that
+Python would be the best language for developing Partridge.
 
 Python is a programming language with a famously shallow learning curve,
 readable syntax and dynamic inspection that facilitates rapid prototyping
@@ -350,58 +323,57 @@ the language using native code would give Partridge an even greater advantage.
 Since NLP techniques can be quite processor intensive and Python is an
 interpreted language, and in its very nature, slower than a compiled language,
 inefficient sections of Python code could be re-written as C extensions and
-compiled into the application. For these reasons, Python was selected as the
-preferred programming language for Partridge development.
+compiled into the application. 
+
+Other languages that were considered were Java and C. However, it was decided
+that Python's clean syntax and ease of use for prototyping were preferable to
+the C and Java style syntax. As stated above, C may still be used in part for
+developing Python extensions to improve the overall performance of the
+application.
 
 \subsubsection{Web Presentation Frameworks} 
 
 Partridge's web frontend will be used by researchers to wish to query the
 system for information on scientific papers. As it is a web tool, Partridge
-will be presented as a set of HTML web pages. 
+will be presented as a set of HTML web pages.
 
-It is possible to use a separate software stack Such as Apache web server
-(\url{http://httpd.apache.org/}) and PHP (\url{http://www.php.net}) as a web
-presentation layer. However, this would involve adding more software to the
+For this purpose, the Flask (\url{http://flask.pocoo.org}) library was chosen.
+Flask is a python `microframework' for web development. Ronacher (2012) writes
+that ``Flask aims to keep the core simple but extensible...[and] won't make any
+decisions for you\cite{flask2012}." It uses a simple templating system that can
+optionally be swapped out for an equivalent system and does not impose any
+limitations or requirements on the layout of the program or the type of
+database that is used. Flask also integrates very simply into existing software
+using Python annotations\emph{(Ibid)}. 
+
+An alternative approach that was considered was using a separate software
+stack such as the Apache web server (\url{http://httpd.apache.org/}) and PHP 
+(\url{http://www.php.net}). However, this would involve adding more software to the
 project and building an interface between the PHP scripts and Partridge's
-python backend. To prevent unnecessary complication, this approach will be
-avoided and instead, a Python web toolkit will be used and integrated directly
-with the backend.
+python backend. The Django framework (\url{http://www.djangoproject.com/}) for Python was also
+considered but it was determined to be overly complicated in terms of
+Partridge's requirements.
 
-Django (\url{http://www.djangoproject.com/}) is a Python web framework with
-integrated database management and templating capabilities \cite{django2012}.
-The framework provides automatic management of all aspects of your
-application's data storage systems unless explicitely disabled. The framework
-also uses a fairly stricty Model-View-Controller pattern and this is enforced
-in the structure of the application code. These features may be useful in a
-general web application such as a news site. Partridge requires a much more
-complex internal structure to take into account the machine learning and NLP
-aspects of the system. Having to `shoehorn' Partridge into a specific structure
-to make it compatible with Django adds extra overhead to the project and is not
-desirable.
+\subsubsection{Natural Language Libraries} \label{sec:libschoice}.  
 
-Flask (\url{http://flask.pocoo.org}) is a python `microframework' for web
-development. Ronacher (2012) writes that ``Flask aims to keep the core simple
-but extensible...[and] won't make any decisions for you\cite{flask2012}." It
-uses a simple templating system that can optionally be swapped out for an
-equivalent system and does not impose any limitations or requirements on the
-layout of the program or the type of database that is used. Flask integrates
-very simply into existing software using Python annotations\emph{(Ibid)}. This approach
-means that the framework could be adapted to Partridge very quickly, rather
-than requiring Partridge to be adapted to the framework. Therefore, Flask has
-been chosen as the preferred web framework for use in the project.
+It was decided that a pre-existing NLP library should be used to provide
+implementations of existing algorithms and techniques for Partridge. For this
+purpose the The Natural Language Toolkit (NLTK) was selected. The NLTK is a
+simple and intuitive library written for Python. Bird(2009) states that NLTK
+was designed ``to provide an intuitive framework along with substantial
+building blocks, giving users a practical knowledge of
+NLP\cite{bird2009natural}". NLTK provides implementations for sentence
+splitting, tagging (the process of analysing sentences and classifying words as
+verbs, nouns etc.), and information retrieval from text \emph{(Ibid)}. NLTK
+also provides implementations of classifiers and a framework for extracting
+features to be used for classification from text. There is also a free book
+that accompanies the project available at \url{http://nltk.org/book/} which
+provides a huge amount of information on how to implement many popular NLP
+techniques using the library.
 
-\subsubsection{Natural Language Libraries} \label{sec:libschoice}.  There are
-several existing libraries to facilitate Natural Language Processing.  Many are
-written for Java \cite{mallet2002}\cite{cunningham2011text} and are very
-complex or not well documented. The Natural Language Toolkit (NLTK) is a simple
-and intuitive library written for Python. Bird(2009) states that NLTK was
-designed ``to provide an intuitive framework along with substantial building
-blocks, giving users a practical knowledge of NLP\cite{bird2009natural}". The
-project is relatively mature in comparison to the above named Java libraries.
-There is also a free book that accompanies the project available at
-\url{http://nltk.org/book/} which provides a huge amount of information on how
-to implement many popular NLP techniques using the library. For this reason
-NLTK was chosen as the primary accompanying library for the project.
+Some other libraries were considered\cite{mallet2002}\cite{cunningham2011text}.
+However, these were written for Java and Partridge is a python project. They
+also require a steeper learning curve than NLTK. 
 
 \subsection{Prototyping/Current Work}
 
@@ -416,7 +388,14 @@ CoreSC schema and has been pre-annotated. This means that Partridge would not
 need to do any conversion or pre-processing on the papers. These scientific
 papers are all chemistry papers. Therefore, more papers from other scientific
 domains are needed to get a wider variety of topics and make Partridge useful
-to as wide an audience as possible.
+to as wide an audience as possible. 
+
+The `mega-journals' PLOS ONE \url{http://www.plosone.org/} and arXiv
+\url{http://www.arxiv.org/} were suggested as sources for more open access
+articles that could be added to Partridge. Both of these sites were found to
+contain large volumes of open access papers. However, most of these papers were
+published as PDF files which meant that some conversion would be required to
+make them compatible with Partridge.
 
 \subsubsection{PDF Conversion}
 Most scientific papers available on the internet are formatted as PDF
@@ -489,7 +468,15 @@ carried out until the server was repaired and raised concerns about how the
 remote servers might cope with a large number of automated requests from a
 full version of Partridge.
 
-The Python version of SAPIENTA was then installed
+The Python version of SAPIENTA was then downloaded and a test executed.
+Unfortunately there were several data files missing from the package that had
+to be acquired from Dr Liakata. 
+
+SAPIENTA for Python also relies upon a package called CRFSuite which implements
+Conditional Random Fields, a method for segmenting and labelling sequence
+data\cite{CRFsuite}. This library did not compile properly on the test
+environment and its creator had to be contacted via a mailing list (See
+Appendix \ref{sec:crfletter}. 
 
 
 \subsubsection{Interface Design}
@@ -605,6 +592,9 @@ with the internet if available.
 \section{System Process Diagrams}
 \label{sec:system_diagrams}
 
+\section{Email for CRFSuite}
+\label{sec:crfemail}
+\input{crfletter}
 
 \section{Project Timeline}
 \label{sec:timeline}
