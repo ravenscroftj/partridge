@@ -7,7 +7,7 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \usepackage{fullpage}
-
+\usepackage{pdfpages}
 %use the listings package
 \usepackage{listings}
 %use the English language
@@ -253,7 +253,7 @@ the `information overload' problem.  Services like Goodreads
 (\url{http://www.citeulike.org/}) allow you to register your interest in
 specific authors and subjects. This allows the sites to build up a profile of
 the sorts of materials that you might be interested in and provide lists of
-recommendations as in Figure \ref{social_indexes}.
+recommendations as in Figure \ref{fig:social_indexes}.
 
 \begin{figure}[!hbt]
         \centering
@@ -476,7 +476,7 @@ SAPIENTA for Python also relies upon a package called CRFSuite which implements
 Conditional Random Fields, a method for segmenting and labelling sequence
 data\cite{CRFsuite}. This library did not compile properly on the test
 environment and its creator had to be contacted via a mailing list (See
-Appendix \ref{sec:crfletter}. After a few days, the owner responded and the
+Appendix \ref{sec:crfemail}. After a few days, the owner responded and the
 library was compiled successfully.  
 
 Once all the data files and libraries were successfully in place, the Python
@@ -590,25 +590,8 @@ also be demonstrated. This demonstration will use the same redundancy
 precautions as the Mid-project demonstration above, and will also need a room
 with the internet if available.
 
-\appendix
-\section{User Interface Designs}
-\label{sec:ui_designs}
 
-\section{System Process Diagrams}
-\label{sec:system_diagrams}
-
-\section{Email for CRFSuite}
-\label{sec:crfemail}
-\input{crfletter}
-
-\section{Project Timeline}
-\label{sec:timeline}
-
-\section{Project Wiki}
-\label{sec:wiki}
-
-
-\bibliographystyle{IEEEannot}
-\bibliography{report}
+%include document appendix
+\input{appendix}
 
 \end{document}
