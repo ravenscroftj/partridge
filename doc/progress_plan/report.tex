@@ -78,7 +78,7 @@ helping them find information specific to their interests more quickly.
 Partridge will achieve this through the use of several existing techniques in
 Natural Language Processing which are discussed below.
 
-From the point of view of it's users, Partridge will assist researchers in two
+From the point of view of its users, Partridge will assist researchers in two
 ways. The system will provide filtering of papers based upon their
 specific domain (i.e. is the paper primarily concerned with methodology within
 an experiment in chemistry or is it about ethics in psychological studies?) and
@@ -100,7 +100,7 @@ To overcome the drawbacks of these existing systems, Partridge will make use of
 several cutting edge Artificial Intelligence (AI) techniques in order to analyse and
 process the papers in a more in depth way. AI is a very complex and field and
 implementing the above features will be incredibly challenging. To help with
-this, Partridge will build upon the system implemented by Liakata et al. for
+this, Partridge will build upon the system implemented by Liakata \emph{et al.} for
 recognising hypotheses, methods, results, conclusions and a number of other
 scientific concepts in scientific articles \cite{citeulike:10444769}. The
 Natural Language Toolkit for Python will also be used to build models for
@@ -116,7 +116,7 @@ methodology papers\cite{bird2009natural}.
 In science fiction literature and films, Artificial Intelligence (AI) and the
 ability of machines to automatically process and understand human language is
 almost always taken for granted. The current state of AI is a long way behind these
-fantastic visions. Dale(2000) comments that ``Even the most ardent exponent of
+fantastic visions. Dale (2000) comments that ``Even the most ardent exponent of
 artificial intelligence research would have to admit that the likes of HAL in
 Kubrick's 2001: A Space Odyssey remain firmly in the realms of science
 fiction\cite{dale2000handbook}".
@@ -125,9 +125,9 @@ Despite lacking behind the imagination of authors and script writers, over the l
 has been a huge amount of progress in AI techniques. The phrase `Artificial
 Intelligence' was coined in 1956\cite{russell2010artificial} and can be used as
 an umbrella term, describing many subfields from ``learning and perception
-to... diagnosing diseases\emph{(Ibid)}."
+to... diagnosing diseases\emph{(Ibid.)}."
 
-Turing(1950) proposed a test for determining whether a machine could be
+Turing (1950) proposed a test for determining whether a machine could be
 considered intelligent or not\cite{turing1950computing}. Turing's test is based
 upon whether a computer can communicate in a natural language proficiently
 enough to deceive a human into thinking that the machine is also human. A
@@ -139,7 +139,7 @@ able to process natural language\cite{russell2010artificial}.
 
 Natural Language Processing (NLP)  enables the automated extraction of
 meaningful information from texts written in human languages such as French or
-English. Liddy(2001) defines Natural Language Processing as:
+English. Liddy (2001) defines Natural Language Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
@@ -160,7 +160,7 @@ even within suicide notes \cite{citeulike:11077287}.
 
 \subsubsection{CISP, CoreSC and SAPIENTA}
 
-Liakata et al. (2012) describe a system for automatically processing and
+Liakata \emph{et al.} (2012) describe a system for automatically processing and
 classifying sentences in a research paper according to the scientific concept
 they describe (e.g. a sentence can be categorised as a hypothesis, background
 information, a method or similar)\cite{citeulike:10444769}. SAPIENTA
@@ -169,7 +169,7 @@ trained using a corpus of physical chemistry and biochemistry research papers
 that were pre-processed and annotated using Core Information about Scientific
 Papers (CISP)\cite{LIAKATA10.644}. 
 
-CISP, Soldatova and Liakata(2007), is a way to formally represent core
+CISP, Soldatova and Liakata (2007), is a way to formally represent core
 scientific concepts (CoreSC), e.g. background, hypothesis, method etc., that
 should be present in the articles in a logical
 ontology\cite{soldatova2007ontology}. Subsequent work implements this set of
@@ -344,7 +344,7 @@ decisions for you\cite{flask2012}." It uses a simple templating system that can
 optionally be swapped out for an equivalent system and does not impose any
 limitations or requirements on the layout of the program or the type of
 database that is used. Flask also integrates very simply into existing software
-using Python annotations\emph{(Ibid)}. 
+using Python annotations\emph{(Ibid.)}. 
 
 An alternative approach that was considered was using a separate software
 stack such as the Apache web server (\url{http://httpd.apache.org/}) and PHP 
@@ -359,12 +359,12 @@ Partridge's requirements.
 It was decided that a pre-existing NLP library should be used to provide
 implementations of existing algorithms and techniques for Partridge. For this
 purpose the The Natural Language Toolkit (NLTK) was selected. The NLTK is a
-simple and intuitive library written for Python. Bird(2009) states that NLTK
+simple and intuitive library written for Python. Bird (2009) states that NLTK
 was designed ``to provide an intuitive framework along with substantial
 building blocks, giving users a practical knowledge of
 NLP\cite{bird2009natural}". NLTK provides implementations for sentence
 splitting, tagging (the process of analysing sentences and classifying words as
-verbs, nouns etc.), and information retrieval from text \emph{(Ibid)}. NLTK
+verbs, nouns etc.), and information retrieval from text \emph{(Ibid.)}. NLTK
 also provides implementations of classifiers and a framework for extracting
 features to be used for classification from text. There is also a free book
 that accompanies the project available at \url{http://nltk.org/book/} which
@@ -402,7 +402,7 @@ Most scientific papers available on the internet are formatted as PDF
 documents. However, Partridge uses and stores documents that use the CoreSC
 schema by Soldatova and Liakata\cite{liakata2008guidelines}. Therefore some
 spike work was carried out to determine the feasibility of converting papers
-published as PDF documents into XML documents. Townsendi et al(2009) liken converting
+published as PDF documents into XML documents. Townsendi \emph{et al.} (2009) liken converting
 PDF to XML to ``converting hamburgers into cows," they go on to explain that
 PDF documents do not contain any semantic data and documents lose much of their
 explicit structure when they are formatted in this way \cite{Townsend2009}.
@@ -514,11 +514,11 @@ through accountability \emph{(Ibed)}. This approach to software development is
 very heavyweight and slow and often produced software that did not match the
 users' needs as a result \cite{Boehm1988}.
 
-As an alternative to the heavyweight Waterfall approach, Beck et al came up
+As an alternative to the heavyweight Waterfall approach, Beck \emph{et al.} came up
 with the principle of the Agile Manifesto, favouring a lightweight, responsive
 development model over the heavyweight slow waterfall
 system\cite{beck2001agile}. Many of Beck's ideas focus around working in a team
-of developers and prioriting communication between team members \emph{(Ibid)}.
+of developers and prioriting communication between team members \emph{(Ibid.)}.
 This is most prominent in the Extreme Programming (XP) method of software
 development. Since Partridge is an individual project, XP is not really
 applicable. However, some concepts like rapid prototyping/spike work and
