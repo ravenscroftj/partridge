@@ -1,0 +1,134 @@
+
+\appendix
+\section{User Interface Designs}
+\label{sec:ui_designs}
+
+\subsection{ Partridge Query Interface}
+
+
+Figure \ref{fig:ui_mockup} shows the user interface that will be utilised to
+search and query Partridge's corpus. 
+
+The query form shows two main sections: Filters and Keywords. 
+
+Filters can be used to show a large set of papers where the user is unsure of
+what to search for. Users will be able to look for papers by type and topic as
+discussed above. The paper result filter has not been included in this diagram.
+However, it is expected that a drop down menu for result type would be included
+in the filters section of the form.
+
+Keywords allows the user to look for a set of keywords that is specifically
+within a CoreSC concept for a paper. For example, the reader may want to find
+experiments that use a server farm to do lots of calculations. Therefore, they
+would enter ``Server Farm" as their keywords and chose ``Method" from the paper
+section. The user then adds this to the set of keyword queries in the table
+below the text field with the add button.
+
+Once a user has configured both filters and keywords to their preferences, they
+click the search form to run the search itself.
+
+Other notable features on this mockup include a list of most recent searches.
+This helps the user to understand how to use Partridge and gives them some
+suggestions for what they might search for. Similar listings are provided for
+the most popular papers in the Partridge database and the most recent papers
+added to the system.
+
+\begin{figure}[!ht]
+\includegraphics[width=\textwidth]{images/mockup_1.png}
+\caption{User interface design for querying Partridge}
+\label{fig:ui_mockup}
+\end{figure}
+
+
+\section{System Process Diagrams}
+\label{sec:system_diagrams}
+
+This section documents the system process diagrams that have been produced. The
+first completed diagram shows how a paper will be added to Partridge and the
+actions that will be carried out upon it.
+
+\subsection{Adding a Paper to Partridge}
+
+\begin{figure}[!ht]
+\includegraphics[width=0.75\textwidth]{images/PaperAddedProcess.png}
+\caption{The process of adding a new paper to Partridge}
+\end{figure}
+
+The system starts off by converting the document to XML from PDF if necessary
+through the use of the PDFX tool provided by Manchester University. A sentence
+splitting tool is then used to parse the resulting document and separate the
+sentences.
+
+Once the sentences have been split, Maria's SAPIENTA tool is used to annotate
+each sentence to determine which of the core scientific concepts it covers.
+This information is stored back in the XML file with the document.
+
+After this, feature extraction is carried out upon the document to find useful
+features for the following classification tasks:
+
+\begin{enumerate}
+\item Paper topic/subject -i.e. is the paper a biology paper or a computer science paper?
+\item Type of paper - i.e. is the paper a case study, an experiment or a literature review?
+\item Paper result - i.e. did the paper have a positive, negative or inconclusive result?
+\end{enumerate}
+
+These classifiers are then run (they could potentially be run in parallel if
+processing power is available) to determine the paper's class for each
+classifier respectively. The data gathered along with any paper metadata
+captured such as title, author, date, institute etc are then stored in the
+database.
+
+
+\section{Email for CRFSuite}
+\label{sec:crfemail}
+\input{crfletter}
+
+\section{Project Timeline}
+\label{sec:timeline}
+
+This table shows the projected timeline for the Partridge project. These
+calculations were carried out under the assumption of 2 full days of work per
+week on the project and one iteration equating to one month (28 days). There
+will be 7 iterations in total and after each, a new version of Partridge will
+be made available (except for iteration zero which is a research only
+iteration).
+
+
+\begin{figure}[htp] 
+ \vspace{ -1cm }
+ \centering{\includegraphics[scale=0.60,page=1]{../timeline.pdf}}
+  
+\end{figure}
+
+\begin{figure}[!htp] 
+ \centering{\includegraphics[scale=0.60,page=2]{../timeline.pdf}}
+ \vspace{-2cm}
+\centering{\includegraphics[scale=0.60,page=3]{../timeline.pdf}}
+\end{figure}
+
+\pagebreak
+\section{Project Wiki}
+\label{sec:wiki}
+
+All pages from the Wiki are shown below with the exceptions of those pages
+which have already been mostly featured in the document (UI Mockups and
+Progress Diagrams and the project timetable are not shown in this section).
+
+\subsection{ Notes 03/10/2012 }
+\input{wiki/Notes-03-10-2012}
+
+\subsection{ Notes 10/10/2012 }
+\input{wiki/Notes-10-10-2012}
+
+\subsection{ Notes 19/10/2012 }
+\input{wiki/Notes-19-10-2012}
+
+\subsection{ Notes 24/10/2012 }
+\input{wiki/Notes-24-10-2012}
+
+\subsection{ Notes 31/10/2012 }
+\input{wiki/Notes-31-10-2012}
+
+\subsection{ Notes 07/11/2012 }
+\input{wiki/Notes-07-11-2012}
+
