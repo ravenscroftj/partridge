@@ -1,0 +1,3 @@
+[submodule "partridge/web/static/bootstrap"]
+	path = partridge/web/static/bootstrap
+	url = git://github.com/twitter/bootstrap.git

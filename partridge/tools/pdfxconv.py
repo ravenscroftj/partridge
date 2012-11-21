@@ -3,7 +3,9 @@
 This script enables the conversion of a PDF document to XML recognised by Sapienta via pdfx
 
 '''
+import sys
 import os
+
 from optparse import OptionParser
 from converter import PDFXConverter
 from annotate import Annotator
