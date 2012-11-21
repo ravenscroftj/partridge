@@ -1,14 +1,81 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>{% block title %}Partridge Web Interface {% endblock %} - Partridge Project</title>
-    <link href="/static/bootstrap/less/bootstrap.less" type="text/css" rel="stylesheet" />
+    <link href="/static/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <style type="text/css">
+    <!-- 
+
+    #navigation{ 
+      background-color: #DDDDDD;
+    }
+
+   
+    #navigation h2{
+      margin:5px;
+      margin-left: 15px;
+      margin-right: 50px;
+      font-size: 16px;
+      border-bottom: 1px solid #000000;
+    }
+    
+    #copyrightDiv{
+      font-size: 9px;
+      background-color: #BBBBBB;
+    }
+
+    .contentbox{
+
+    }
+    
+    -->
+    </style>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
   </head>
   <body>
 
   <div class="container">
-  </div>
+    <!-- Banner div -->
+    <div class="row">
+      <div class="span12">
+        <img src="/static/image/banner.jpg" alt="Partridge Banner" />
+      </div>
+    </div>
+    <!-- -->
+    <div class="row">
+
+      <!-- Main content -->
+      <div class="span8">{% block content %}{% endblock %}</div>
+
+      <!-- Navigation Menu -->
+      <div class="span4" id="navigation">
+        <h2>Navigation</h2>
+        <ul>
+          <li>Index</li>
+          <li>About</li>
+          <li>Query</li>
+          <li>Help</li>
+        </ul>
+
+        
+        <h2>Account</h2>
+        <ul>
+          <li>My Account</li>
+          <li>Recent Searches</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="span12" id="copyrightDiv">
+      Copyright &copy; James Ravenscroft 2012 - All Rights Reserved. 
+      Powered by <a href="http://www.papro.org.uk/">Partridge</a>,
+      Banner image provided by Attribution by <a href="http://www.flickr.com/photos/paul_lowry/">Paul Lowry</a> by Attribution.
+      </div>
+    </div>
+</div>
 
   </body>
 </html>
