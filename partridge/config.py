@@ -4,7 +4,7 @@ Global configuration module for Partridge
 '''
 
 import json
-
+import os
 
 class Config:
   
@@ -21,7 +21,11 @@ config = Config()
 for loc in (os.curdir, 
   os.path.expanduser("~/.config/"), "/etc/", 
   os.environ.get("PARTRIDGE_CONF")):
-          try: 
+          try:
+
+              if( loc == None):
+                 continue
+              source = os.path.join(loc,"partridge.json")
               config.load(source)
           except IOError:
               pass
