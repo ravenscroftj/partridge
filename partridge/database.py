@@ -9,8 +9,10 @@ http://flask.pocoo.org/docs/patterns/sqlalchemy/
 @author James Ravenscroft
 
 '''
-from pkgutil import walk_packages
+import sys
+import logging
 
+from pkgutil import walk_packages
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -40,6 +42,7 @@ def initialise():
   
   This should be called after all models are imported
   '''
+  find_all_models()
   Base.metadata.create_all(bind=engine)
 
 def find_all_models():
@@ -57,6 +60,6 @@ def find_all_models():
     loader = finder.find_module(name)
 
     if loader is not None:
-      print "Loading %s " % name
-      print loader.load_module(name)
+      logging.info("Loading %s" % name)
+      loader.load_module(name)
 
