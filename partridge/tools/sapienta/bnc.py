@@ -9,7 +9,7 @@ read BNC word frequency provided by http://www.kilgarriff.co.uk/bnc-readme.html
 class BncFilter:
     
     maxlines = 100
-    bncFreqPath = '/home/james/tmp/written.num.o5'
+    bncFreqPath = '/home/james/dissertation/models/written.num.o5'
 
     def __init__(self):
         self.stopwords = set()
