@@ -24,7 +24,7 @@ import logging
 import pdb
 
 bnc = BncFilter()
-wsdlPath = 'file:/home/james/tmp/ccg_binding.wsdl'
+wsdlPath = 'file:/home/james/dissertation/models/ccg_binding.wsdl'
 
 class Features:
     interestingRelations = set(['dobj', 'iobj', 'ncsubj', 'obj2'])
