@@ -75,10 +75,7 @@ class PDFXConverter(CURLUploader):
         articleTitle = frontEl.getElementsByTagName("article-title")[0].firstChild.data
 
 
-        if(self.split):
-            self.sentence_split( articleTitle, self.titleEl)
-        else:
-            self.titleEl.appendChild(self.outdoc.createTextNode( articleTitle ))
+        self.titleEl.appendChild(self.outdoc.createTextNode( articleTitle ))
 
         #copy abstract or produce warning
         abstractEls = frontEl.getElementsByTagName("abstract")
@@ -105,10 +102,7 @@ class PDFXConverter(CURLUploader):
         else:
             abstract = abstractEls[0].firstChild.data
 
-        if(self.split):
-            self.sentence_split(abstract, self.abstractEl)
-        else:
-            self.abstractEl.appendChild(self.outdoc.createTextNode( abstract ) )
+        self.abstractEl.appendChild(self.outdoc.createTextNode( abstract ) )
 
 
         #now process all other text nodes
@@ -122,10 +116,8 @@ class PDFXConverter(CURLUploader):
                 #self.bodyEl.appendChild( self.outdoc.createTextNode( self.getText(region) ) )
                 text += self.getText(region) + " "
         
-        if(self.split):
-            self.sentence_split(text, self.bodyEl)
-        else:
-            self.bodyEl.appendChild( self.outdoc.createTextNode( text ) )
+        
+        self.bodyEl.appendChild( self.outdoc.createTextNode( text ) )
      
     #---------------------------------------------------------------------------------------------   
     def getText(self, el):

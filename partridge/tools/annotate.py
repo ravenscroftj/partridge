@@ -13,13 +13,15 @@ from sapienta.crf import Tagger
 from progressbar import ProgressBar
 from xml.dom import minidom
 
+from partridge.config import config
 
+MODEL_PATH = str(os.path.join(config.models_dir, "a.model"))
 
 class Annotator:
     #------------------------------------------------------------------------- 
     def annotate(self, filename, outfilename):
-        
-        tagger = Tagger('a.model')
+        print MODEL_PATH
+        tagger = Tagger(MODEL_PATH)
         parser = SciXML()
         doc = parser.parse(filename)
         labels, probabilites = tagger.getSentenceLabelsWithProbabilities(doc)
