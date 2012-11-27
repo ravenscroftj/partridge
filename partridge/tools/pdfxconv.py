@@ -53,9 +53,9 @@ if __name__ == "__main__":
         if(ext == ".pdf"):
 
             print "Converting %s" % infile
-
             
             p.convert(infile, outfile)
+            split_infile = outfile
 
                 
 

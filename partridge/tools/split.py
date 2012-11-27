@@ -3,11 +3,15 @@ Module for splitting sentences on articles that need splitting
 '''
 import codecs
 import logging
+import cPickle
+import os
 
 from nltk.tokenize.punkt import PunktSentenceTokenizer
 
 from xml.dom import minidom
 from sets import Set
+
+from partridge.config import config
 
 blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
 'contrib','xref','aff','pub-date','volume','issue','elocation-id','history',
@@ -16,12 +20,18 @@ blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
 
 logging.basicConfig(level=logging.DEBUG)
 
+SPLITTER_PATH = str(os.path.join(config.models_dir, "splitter.dat"))
+
 class SentenceSplitter:
     '''XML Aware sentence splitter for Partridge
     '''
 
     def __init__(self):
-        self.tokenizer = PunktSentenceTokenizer()
+
+        with open(SPLITTER_PATH,'rb') as f:
+            self.tokenizer = cPickle.load(f)
+
+        #self.tokenizer = PunktSentenceTokenizer()
         self.nextSID = 1
 
     def split(self, filename, outfile):
