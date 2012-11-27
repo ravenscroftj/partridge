@@ -129,7 +129,12 @@ class SoapClient:
         
     def callSoap(self, s):
         #TODO ascii only input? caused by soap server?
-        ascii = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore')
+
+        if isinstance(s, unicode):
+            ascii = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore')
+        else:
+            ascii = s
+
         result = self.suds.service.parse_string(ascii)
         return result
     

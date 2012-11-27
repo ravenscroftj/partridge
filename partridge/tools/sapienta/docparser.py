@@ -238,8 +238,10 @@ class SciXML:
         self.inSentence = False
         self.currentSentenceID = None
 
+        #initialise first header for metadata and such (ravenscroftj)
+
     def startElement(self, name, attrs):
-        if name == 'ABSTRACT':
+        if name.upper() == 'ABSTRACT':
             header = Header()
             header.name = 'Abstract'
             self.doc.addHeader(header)
@@ -248,7 +250,7 @@ class SciXML:
             para = Paragraph()
             self.currHeader.addParagraph(para)
             self.currParagraph = para
-        elif name == 'HEADER':
+        elif name.upper() == 'HEADER':
             self.inHeader = True
             header = Header()
             self.doc.addHeader(header)
@@ -258,10 +260,22 @@ class SciXML:
             self.inSentence = True
             self.currentSentenceID = attrs['sid']
         #end change
-        elif name == 'P':
+
+        #detect sections and titles in scixml (ravenscroftj)
+        elif name == "sec":
+            self.inHeader = True
+            header = Header()
+            self.doc.addHeader(header)
+            self.currHeader = header
+        #end change
+
+        elif name.upper() == 'P':
             self.inParagraph = True
             para = Paragraph()
-            self.currHeader.addParagraph(para)
+
+            if(self.currHeader != None):
+                self.currHeader.addParagraph(para)
+
             self.currParagraph = para
         elif name == 'annotationART':
             if self.currParagraph == None:
@@ -273,14 +287,19 @@ class SciXML:
             sent.sid = self.currentSentenceID
             self.currParagraph.addSentence(sent)
             self.currSentence = sent
-        elif name == 'REF' and self.inAnnotation:
+        elif name.upper() == 'REF' and self.inAnnotation:
             self.currSentence.incrementCitations()
             
     def endElement(self, name):
-        if name == 'HEADER':
+        if name.upper() == 'HEADER':
             self.inHeader = False
-        elif name == 'P':
+        elif name.upper() == 'P':
             self.inParagraph = False
+
+        #detect end of section in scixml (ravenscroftj)
+        elif name == "sec" or name == "abstract":
+            self.inHeader = False
+        #end change
 
         elif name == 's':
             self.inSentence = False
