@@ -11,7 +11,8 @@ from sets import Set
 
 blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
 'contrib','xref','aff','pub-date','volume','issue','elocation-id','history',
-'copyright-statement', 'copyright-year','counts','s','subj-group','author-notes'])
+'copyright-statement', 'copyright-year','counts','s','subj-group','author-notes'
+'title','ref-list','ack'])
 
 logging.basicConfig(level=logging.DEBUG)
 
