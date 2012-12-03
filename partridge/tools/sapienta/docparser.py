@@ -239,6 +239,10 @@ class SciXML:
         self.currentSentenceID = None
 
         #initialise first header for metadata and such (ravenscroftj)
+        #self.currHeader = Header()
+        #self.doc.addHeader(self.currHeader)
+        #self.currParagraph = Paragraph()
+        #self.currHeader.addParagraph(self.currParagraph)
 
     def startElement(self, name, attrs):
         if name.upper() == 'ABSTRACT':
