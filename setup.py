@@ -11,7 +11,10 @@ setup(
 
     #program entrypoints
     entry_points ={
-     'console_scripts' : ['partridged = partridge:run']
+     'console_scripts' : [
+        'partridged = partridge:run',
+        'pdfxconv = partridge.tools.pdfxconv:main'
+     ]
     },
     #author details
     author = "James Ravenscroft",
