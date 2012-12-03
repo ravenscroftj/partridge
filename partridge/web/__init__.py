@@ -16,5 +16,5 @@ def index():
 
 
 def serve(port=5000, debug=False):
-  app.debug = True
+  app.debug = debug
   app.run(port=port)
