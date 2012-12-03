@@ -11,7 +11,7 @@ def run():
     parser.add_option("-v", "--verbose", dest="verbose", action="store_true",
         help="Make the server provide more verbose logging to the console")
 
-    parser.add_option("-p", dest="port", default=5000,
+    parser.add_option("-p", dest="port", default="5000",
         help="Set the port that partridge will server web pages on")
 
     parser.add_option("-d", "--debug", dest="debug", action="store_true",
@@ -22,4 +22,4 @@ def run():
     if(opts.debug):
         print "Debug mode is active..."
     
-    serve(opts.port, opts.debug)
+    serve(int(opts.port), opts.debug)

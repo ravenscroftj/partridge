@@ -12,7 +12,8 @@ from converter import PDFXConverter
 from annotate import Annotator, RemoteAnnotator
 from split import SentenceSplitter
 
-if __name__ == "__main__":
+
+def main():
     
     usage = "usage: %prog [options] file1.pdf [file2.pdf] "
     
@@ -81,3 +82,8 @@ if __name__ == "__main__":
             name,ext = os.path.splitext(anno_infile)
             outfile = name + "_annotated" + ext
             a.annotate( anno_infile, outfile )
+
+
+
+if __name__ == "__main__":
+    main()
