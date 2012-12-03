@@ -9,7 +9,7 @@ import logging
 
 from optparse import OptionParser
 from converter import PDFXConverter
-from annotate import Annotator
+from annotate import Annotator, RemoteAnnotator
 from split import SentenceSplitter
 
 if __name__ == "__main__":
@@ -75,7 +75,7 @@ if __name__ == "__main__":
             anno_infile = outfile
 
         if(options.annotate):
-            a = Annotator()
+            a = RemoteAnnotator()
 
             #build annotated filename
             name,ext = os.path.splitext(anno_infile)

@@ -14,9 +14,9 @@ from sets import Set
 from partridge.config import config
 
 blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
-'contrib','xref','aff','pub-date','volume','issue','elocation-id','history',
+'contrib','aff','pub-date','volume','issue','elocation-id','history',
 'copyright-statement', 'copyright-year','counts','s','subj-group','author-notes'
-'title','ref-list','ack'])
+'title','ref-list','ack','meta'])
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -56,6 +56,7 @@ class SentenceSplitter:
         for node in element.childNodes:
             
             if node.nodeType == self.indoc.ELEMENT_NODE:
+
                 if node.localName not in blacklist:
                     self.splitElement( node )
 
@@ -73,14 +74,10 @@ class SentenceSplitter:
                 for s in self.tokenizer.tokenize(text):
                     el = self.indoc.createElement("s")
 
-                    artEl = self.indoc.createElement("annotationART")
-                    artEl.setAttribute("type", "")
-
                     tnode = self.indoc.createTextNode(s)
                     el.setAttribute("sid", str(self.nextSID))
 
-                    artEl.appendChild(tnode)
-                    el.appendChild(artEl)
+                    el.appendChild(tnode)
                     element.appendChild(el)
                     self.nextSID += 1
 
