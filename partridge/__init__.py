@@ -3,9 +3,15 @@ import sys
 from optparse import OptionParser
 from flask import Config
 
-from web import create_app
 from models import db
 
+
+def create_app( config ):
+    """Register app object and return to caller"""
+    app = Flask(__name__)
+    app.config.update(config)
+    db.init_app(app)
+    return app
 
 def run():
     
