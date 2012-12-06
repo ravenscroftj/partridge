@@ -1,7 +1,7 @@
 import sys
 
 from optparse import OptionParser
-from flask import Config
+from flask import Config,Flask
 
 from models import db
 
@@ -9,6 +9,11 @@ from models import db
 def create_app( config ):
     """Register app object and return to caller"""
     app = Flask(__name__)
+
+    #load views model lazily
+    import views
+
+    app.add_url_rule("/",view_func = views.index) 
     app.config.update(config)
     db.init_app(app)
     return app
