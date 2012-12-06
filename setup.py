@@ -7,7 +7,10 @@ setup(
 
     #install requirements
     install_requires = ['Flask>=0.9',
-            'Flask-SQLAlchemy>=0.16'],
+            'Flask-SQLAlchemy>=0.16',
+            'pycurl>=7.19.0',
+            'nltk>=2.0.4',
+            'progressbar>=2.3'],
 
     #program entrypoints
     entry_points ={
