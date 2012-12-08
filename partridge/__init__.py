@@ -10,11 +10,13 @@ def create_app( config ):
     """Register app object and return to caller"""
     app = Flask(__name__)
 
+    app.config.update(config)
+
     #load views model lazily
     import views
 
     app.add_url_rule("/",view_func = views.index) 
-    app.config.update(config)
+    db.app = app
     db.init_app(app)
     return app
 
@@ -29,8 +31,8 @@ def run():
     parser.add_option("-p", "--port", dest="port", default="5000",
         help="Set the port that partridge will server web pages on")
 
-    parser.add_option("-c", "--configfile", dest="config", default="",
-        help="Override the path to the config file to load.")
+    parser.add_option("-c", "--configfile", dest="config",
+        default="/etc/partridge.cfg", help="Override the path to the config file to load.")
 
     parser.add_option("-d", "--debug", dest="debug", action="store_true",
         help="Store true if the server should run in debug mode")
@@ -40,8 +42,9 @@ def run():
 
     opts,args = parser.parse_args(sys.argv)
 
+    config = Config({})
+
     try:
-        config = Config({})
         config.from_pyfile(opts.config)
     except IOError:
         try:
@@ -54,6 +57,10 @@ def run():
 
     if(opts.debug):
         print "Debug mode is active..."
+
+    if(opts.initdb):
+        print "Initialising database tables..."
+        db.create_all()
 
     app.debug = opts.debug
     app.run(host="0.0.0.0", port=int(opts.port))
