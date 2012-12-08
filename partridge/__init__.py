@@ -15,7 +15,8 @@ def create_app( config ):
     #load views model lazily
     import views
 
-    app.add_url_rule("/",view_func = views.index) 
+    app.add_url_rule("/",view_func = views.index)
+    app.add_url_rule("/query", view_func = views.query)
     db.app = app
     db.init_app(app)
     return app

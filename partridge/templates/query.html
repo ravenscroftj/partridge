@@ -1,0 +1,167 @@
+{% extends "mainpage.html" %}
+{% block title %}Run Query{% endblock %}
+{% block content %}
+<div class="row">
+
+<div class="span8 contentbox">
+
+<h2>Query Partridge</h2>
+
+<div class="row">
+
+<div class="span6">
+<p>Partridge currently holds information on 1234 papers. You can query this
+dataset through the form below.</p>
+</div>
+
+<div class="span2">
+
+<div class="btn-group">
+
+    <button class="btn btn-large btn-primary">Search</button>
+    <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu">
+        <li><a href="#">Clear Form</a></li>
+    </ul>
+
+</div>
+
+
+</div>
+
+</div>
+
+<div class="row">
+
+    <div class="span4">
+        <h4>Filters</h4>
+
+        <div class="row">
+            <div class="span2">
+                Paper Type:
+            </div>
+            <div class="span2">
+
+            <ul class="checklist">
+                <li>
+                    <input name="research_type" type="checkbox"/>
+                    Research
+                </li>
+                <li>
+                    <input name="casestudy_type" type="checkbox"/>
+                    Case Study
+                </li>
+            </ul>
+
+            </div>
+        </div>
+            
+        <div class="row">
+            <div class="span2">
+            Paper Topics:
+            </div>
+            <div class="span2">
+            
+            <ul class="checklist">
+                <li>
+                    <input name="comp_topic" type="checkbox"/>
+                    Computing
+                </li>
+                <li>
+                    <input name="physics_topic" type="checkbox"/>
+                    Physics
+                </li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span2">
+            Paper Results:
+            </div>
+            <div class="span2">
+            
+            <ul class="checklist">
+                <li>
+                    <input name="comp_topic" type="checkbox"/>
+                    Positive
+                </li>
+                <li>
+                    <input name="physics_topic" type="checkbox"/>
+                    Negative
+                </li>
+                <li>
+                    <input name="physics_topic" type="checkbox"/>
+                    Inconclusive
+                </li>
+
+            </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="span4">
+        <h4> Search Words</h4>
+        <table width="100%">
+        <tr>
+            <th>CoreSC</th>
+            <th>Keywords</th>
+        </tr>
+        <tr>
+            <td colspan="2">No keywords yet, add some below.</td>
+        </tr>
+        </table>
+
+
+        <button class="btn btn-danger">Remove Search</button>
+
+    </div>
+    
+    <div class="span4">
+        <h4>Add Keywords</h4>
+
+        <div class="row">
+        <div class="span1">
+            CoreSC:
+        </div>
+
+        <div class="span3">
+            <select>
+                <option>Background</option>
+                <option>Methodology</option>
+                <option>Experiment</option>
+                <option>Conclusion</option>
+            </select>
+        </div>
+        </div>
+
+
+
+        <div class="row">
+        <div class="span1">
+        Keywords:
+        </div>
+        <div class="span3">
+        <input type="text" name="keywords" />
+        </div>
+        
+        <div class="span4">
+        <button class="btn btn-primary">Add Search</button>
+        </div>
+
+
+ 
+
+    </div>
+   </div>
+
+</div>
+
+</div>
+
+</div>
+{% endblock %}
