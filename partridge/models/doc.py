@@ -21,7 +21,9 @@ class Sentence( db.Model ):
   id     = Column(Integer, primary_key=True)
   text   = Column(String)
   coresc = Column(String)
-  paper  = relationship("Paper", backref=backref('sentences', order_by=id))
+  paper_id = Column(Integer, db.ForeignKey('papers.id'))
+  paper  = relationship("Paper", backref=backref('sentences', order_by=id),
+    primaryjoin=(paper_id==Paper.id) )
 
 
 #-----------------------------------------------------------------------------
@@ -39,10 +41,12 @@ class PaperFile( db.Model ):
 
   __tablename__ = "paper_files"
 
-  id     = Column(Integer, primary_key=True)
-  path   = Column(String)
-  type   = Column(String)
-  paper  = relationship("Paper", backref=backref('files', order_by=id))
+  id       = Column(Integer, primary_key=True)
+  path     = Column(String)
+  type     = Column(String)
+  paper_id = Column(Integer, db.ForeignKey('papers.id'))
+  paper    = relationship("Paper", backref=backref('files', order_by=id),
+  primaryjoin=(paper_id==Paper.id))
 
 #-----------------------------------------------------------------------------
 
