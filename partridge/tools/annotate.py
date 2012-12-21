@@ -22,7 +22,7 @@ from collections import Counter
 
 SAPIENTA_URL="http://www.ebi.ac.uk/Rebholz-srv/sapienta/CoreSCWeb/submitRPC"
 
-MODEL_PATH = str(os.path.join(config.models_dir, "a.model"))
+MODEL_PATH = str(os.path.join(config['MODELS_DIR'], "a.model"))
 
 class Annotator:
     #------------------------------------------------------------------------- 

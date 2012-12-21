@@ -2,9 +2,9 @@
 Global configuration module for Partridge
 
 '''
-
-import json
 import os
+import json
+import flask
 
 class Config:
   
@@ -16,16 +16,19 @@ class Config:
         self.__dict__[k] = config[k]
 
 
-config = Config()
+config = flask.Config({})
 
-for loc in (os.curdir, 
-  os.path.expanduser("~/.config/"), "/etc/", 
-  os.environ.get("PARTRIDGE_CONF")):
+if( os.getenv("PARTRIDGE_CONF")):
+    #try and load config from env directory
+    config.from_envvar("PARTRIDGE_CONF")
+
+for loc in (os.getcwd(), 
+  os.path.expanduser("~/.config/"), 
+  "/etc/"):
+  
           try:
-
-              if( loc == None):
-                 continue
-              source = os.path.join(loc,"partridge.json")
-              config.load(source)
+                source = os.path.join(loc,"partridge.cfg")
+                config.from_pyfile(source)
           except IOError:
-              pass
+            pass
+              
