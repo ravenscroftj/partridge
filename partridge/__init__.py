@@ -1,9 +1,12 @@
 import sys
+import logging
 
 from optparse import OptionParser
 from flask import Config,Flask
 
-from models import db
+from partridge.config import config
+from partridge.models import db
+from partridge.preprocessor import create_daemon
 
 
 def create_app( config ):
@@ -33,7 +36,7 @@ def run():
         help="Set the port that partridge will server web pages on")
 
     parser.add_option("-c", "--configfile", dest="config",
-        default="/etc/partridge.cfg", help="Override the path to the config file to load.")
+        default="", help="Override the path to the config file to load.")
 
     parser.add_option("-d", "--debug", dest="debug", action="store_true",
         help="Store true if the server should run in debug mode")
@@ -43,16 +46,12 @@ def run():
 
     opts,args = parser.parse_args(sys.argv)
 
-    config = Config({})
-
-    try:
-        config.from_pyfile(opts.config)
-    except IOError:
+    if(opts.config != ""):
         try:
-            config.from_pyfile("partridge.cfg")
-        except:
-            print "Could not find any configuration files. Exiting."
-            sys.exit(0)
+            config.from_pyfile(opts.config)
+        except IOError:
+                print "Could not find any configuration files. Exiting."
+                sys.exit(0)
 
     app = create_app( config )
 
@@ -63,5 +62,11 @@ def run():
         print "Initialising database tables..."
         db.create_all()
 
+    #set up paper preprocessor
+    pdaemon =  create_daemon( config )
+    pdaemon.start()
+
     app.debug = opts.debug
     app.run(host="0.0.0.0", port=int(opts.port))
+
+    pdaemon.stop()

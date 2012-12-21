@@ -20,7 +20,7 @@ blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
 
 logging.basicConfig(level=logging.DEBUG)
 
-SPLITTER_PATH = str(os.path.join(config.models_dir, "splitter.dat"))
+SPLITTER_PATH = str(os.path.join(config['MODELS_DIR'], "splitter.dat"))
 
 class SentenceSplitter:
     '''XML Aware sentence splitter for Partridge
