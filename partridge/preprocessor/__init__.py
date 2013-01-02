@@ -13,7 +13,7 @@ from Queue import Empty
 from partridge.models import db
 
 from partridge.tools.converter import PDFXConverter
-from partridge.tools.annotate import Annotator
+from partridge.tools.annotate import RemoteAnnotator
 from partridge.tools.split import SentenceSplitter
 
 from fs import FilesystemWatcher
@@ -41,13 +41,7 @@ class PaperDaemon(Thread):
             try:
                 paper = self.fsw.paper_queue.get(block=False)
                 self.logger.info("Processing %s", paper)
-                
-                name,ext = os.path.splitext(paper)
-
-                if( paper.endswith("pdf")):
-                    
-                    p = PDFXConverter()
-                    outfile = name + ".xml"
+                self._process_paper(paper)
 
             except Empty:
                 self.logger.debug("No work to do.. going back to sleep")
@@ -61,6 +55,67 @@ class PaperDaemon(Thread):
 
     def _process_paper(self, papername):
         """Single method for handling a paper"""
+
+        # set up a list of files that need moving to the processed folder
+        # and recording in the db
+        paper_files = [ (papername, 'move'),  ]
+
+        basename = os.path.basename(papername)
+
+        name,ext = os.path.splitext(basename)
+
+        infile = papername
+
+        #carry out pdf conversion if necessary
+        if( papername.endswith("pdf")):
+            
+            self.logger.info("Converting %s to xml", infile)
+
+            p = PDFXConverter()
+            outfile = os.path.join(self.outdir, name + ".xml")
+            p.convert(infile, outfile)
+
+            paper_files.append( (outfile, 'move') )
+
+            infile = outfile
+
+        else:
+            self.logger.debug("No conversion necessary on file %s", papername)
+
+        #run XML splitting and annotating
+        self.logger.info("Splitting sentences in %s",  infile)
+
+        outfile = name + "_split.xml"
+
+        s = SentenceSplitter()
+        s.split(infile, outfile)
+        paper_files.append( (outfile, 'delete') )
+
+        #run XML annotation
+        infile = outfile
+        outfile = os.path.join(self.outdir,  name + "_final.xml")
+        a = RemoteAnnotator()
+        a.annotate( infile, outfile )
+        paper_files.append( (outfile, 'noaction') )
+
+    def cleanup_files(self, papers_list):
+        """Move or delete all files involved in the conversion"""
+
+        for filename, action in papers_list:
+            
+            if action == "move":
+                basename = os.path.basename(filename)
+                destname = os.path.join(self.outdir, basename)
+                os.rename(basename, destname)
+            
+            elif action == "delete":
+              os.delete( filename )
+
+            else:
+               #store file in database
+               pass
+
+
     
 #-----------------------------------------------------------------------------
 

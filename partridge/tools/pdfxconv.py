@@ -57,9 +57,7 @@ def main():
             
             p.convert(infile, outfile)
             split_infile = outfile
-
-                
-
+            
         elif( ext == ".xml"):
             print "No conversion needed on %s" % infile
             split_infile = infile
