@@ -8,8 +8,8 @@ import pycurl
 import codecs
 from urllib import urlencode
 
-from sapienta.docparser import SciXML
-from sapienta.crf import Tagger
+#from sapienta.docparser import SciXML
+#from sapienta.crf import Tagger
 
 from progressbar import ProgressBar
 from xml.dom import minidom
