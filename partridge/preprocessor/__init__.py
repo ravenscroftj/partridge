@@ -5,6 +5,7 @@ import logging
 import os
 import time
 import sys
+import traceback
 
 from threading import Thread
 from multiprocessing import Queue
@@ -43,8 +44,15 @@ class PaperDaemon(Thread):
                 self.logger.info("Processing %s", paper)
                 try:
                     self._process_paper(paper)
-                except:
-                    self.logger.error("Error processing paper %s", paper)
+                except Exception as e:
+                    #get exception information and dump to user
+                    exc_type, exc_obj, exc_tb = sys.exc_info()
+                    self.logger.error("Error processing paper %s: %s",
+                        paper,e)
+                    
+                    for line in traceback.format_tb(exc_tb):
+                        self.logger.error(line)
+
             except Empty:
                 self.logger.debug("No work to do.. going back to sleep")
                 time.sleep(1)
