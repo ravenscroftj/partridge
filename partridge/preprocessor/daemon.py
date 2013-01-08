@@ -12,37 +12,6 @@ from fs import FilesystemWatcher
 
 from partridge.models import db
 
-class PaperDaemon(Thread):
-    """The paper daemon handles conversion and preprocessing of papers
-    """
-    
-    running = False
-
-    def __init__(self, q, logger):
-        Thread.__init__(self)
-        self.q = q
-        self.logger = logger
-
-    def run(self):
-        """This is the main loop for the paper daemon"""
-        self.running = True
-
-        while self.running:
-            try:
-                paper = self.q.get(block=False)
-                self.logger.info("Processing %s", paper)
-            except Empty:
-                self.logger.debug("No work to do.. going back to sleep")
-                time.sleep(1)
-
-    def stop(self):
-        self.running = False
-
-    def _process_paper(self, papername):
-        """Single method for handling a paper"""
-        
-
-
 if __name__ == "__main__":
 
     running = True

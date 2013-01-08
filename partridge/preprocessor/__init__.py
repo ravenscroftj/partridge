@@ -41,8 +41,10 @@ class PaperDaemon(Thread):
             try:
                 paper = self.fsw.paper_queue.get(block=False)
                 self.logger.info("Processing %s", paper)
-                self._process_paper(paper)
-
+                try:
+                    self._process_paper(paper)
+                except:
+                    self.logger.error("Error processing paper %s", paper)
             except Empty:
                 self.logger.debug("No work to do.. going back to sleep")
                 time.sleep(1)
