@@ -10,7 +10,7 @@ class Paper( db.Model ):
   __tablename__ = "papers"
 
   id = Column(Integer, primary_key=True)
-  title = Column(String) 
+  title = Column(String(100)) 
 
 #-----------------------------------------------------------------------------
 
@@ -19,8 +19,8 @@ class Sentence( db.Model ):
   __tablename__ = "sentences"
 
   id     = Column(Integer, primary_key=True)
-  text   = Column(String)
-  coresc = Column(String)
+  text   = Column(String(250))
+  coresc = Column(String(25))
   paper_id = Column(Integer, db.ForeignKey('papers.id'))
   paper  = relationship("Paper", backref=backref('sentences', order_by=id),
     primaryjoin=(paper_id==Paper.id) )
@@ -42,8 +42,8 @@ class PaperFile( db.Model ):
   __tablename__ = "paper_files"
 
   id       = Column(Integer, primary_key=True)
-  path     = Column(String)
-  type     = Column(String)
+  path     = Column(String(100))
+  type     = Column(String(10))
   paper_id = Column(Integer, db.ForeignKey('papers.id'))
   paper    = relationship("Paper", backref=backref('files', order_by=id),
   primaryjoin=(paper_id==Paper.id))
@@ -55,8 +55,8 @@ class Author( db.Model ):
     __tablename__ = "authors"
 
     id = Column(Integer, primary_key=True)
-    surname = Column(String)
-    forenames = Column(String)
+    surname = Column(String(50))
+    forenames = Column(String(50))
 
 #-----------------------------------------------------------------------------
 
