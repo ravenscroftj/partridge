@@ -78,35 +78,66 @@ class PaperDaemon(Thread):
 
         #carry out pdf conversion if necessary
         if( papername.endswith("pdf")):
-            
-            self.logger.info("Converting %s to xml", infile)
-
-            p = PDFXConverter()
-            outfile = os.path.join(self.outdir, name + ".xml")
-            p.convert(infile, outfile)
-
-            paper_files.append( (outfile, 'move') )
-
-            infile = outfile
-
+            infile = self.convertPDF(infile)
         else:
             self.logger.debug("No conversion necessary on file %s", papername)
 
         #run XML splitting and annotating
-        self.logger.info("Splitting sentences in %s",  infile)
+        infile = self.splitXML(infile)
 
-        outfile = name + "_split.xml"
+        #run XML annotation
+        infile = self.annotateXML(infile)
+
+        #Finally do some analysis and store the paper in the DB
+
+    def storePaperData(self, infile):
+        """Call the metadata parser and return DB id for this paper"""
+        
+    
+    def annotateXML(self, infile):
+        """Routine to start the SAPIENTA process call"""
+        
+        outfile = os.path.join(self.outdir,  name + "_final.xml")
+        
+        self.logger.info("Annotating paper %s", infile)
+
+        a = RemoteAnnotator()
+        a.annotate( infile, outfile )
+        paper_files.append( (outfile, 'store') )
+
+        return outfile
+
+
+    def splitXML(self, infile):
+        """Routine for starting XML splitter call"""
+
+        self.logger.info("Splitting sentences in %s",  infile)
+        
+        outfile = os.path.join(self.outdir,  name + "_split.xml")
 
         s = SentenceSplitter()
         s.split(infile, outfile)
         paper_files.append( (outfile, 'delete') )
 
-        #run XML annotation
-        infile = outfile
-        outfile = os.path.join(self.outdir,  name + "_final.xml")
-        a = RemoteAnnotator()
-        a.annotate( infile, outfile )
-        paper_files.append( (outfile, 'noaction') )
+        return outfile
+
+
+    def convertPDF(self, infile):
+        """Small routine for starting the PDF conversion call
+        """
+
+        self.logger.info("Converting %s to xml", infile)
+
+        p = PDFXConverter()
+        outfile = os.path.join(self.outdir, name + ".xml")
+        p.convert(infile, outfile)
+
+        paper_files.append( (outfile, 'move') )
+
+        return outfile
+
+        
+
 
     def cleanup_files(self, papers_list):
         """Move or delete all files involved in the conversion"""
