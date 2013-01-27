@@ -14,10 +14,8 @@ class PaperParser:
             self.doc = xml.dom.minidom.parse(f)
 
         #extract metadata
-        titleEl = self.doc.getElementsByTagName("article-title")[0]
-
-        paper = Paper()
-        paper.title = self.extractText(titleEl)
+        self.paper = Paper()
+        self.extractTitle()
 
         #add authors
         for contrib in self.doc.getElementsByTagName("contrib"):
@@ -34,6 +32,15 @@ class PaperParser:
         print paper.title
         db.session.add(paper)
         db.session.commit()
+
+    def extractTitle(self):
+         """Extract paper title from XML"""
+         titleEls = self.doc.getElementsByTagName("article-title")
+
+         if titleEls < 1:
+            titleEls = self.doc.getElementsByTagName("TITLE")
+
+         self.paper.title = self.extractText(titleEls[0])
 
     def lookupAuthor(self, surname, forenames):
         """Given a surname and forename look up author or create new one
