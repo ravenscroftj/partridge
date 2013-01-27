@@ -28,7 +28,7 @@ class Sentence( db.Model ):
   __tablename__ = "sentences"
 
   id     = Column(Integer, primary_key=True)
-  text   = Colum(Text)
+  text   = Column(Text)
   coresc = Column(String(25))
   paper_id = Column(Integer, db.ForeignKey('papers.id'))
   paper  = relationship("Paper", backref=backref('sentences', order_by=id),
