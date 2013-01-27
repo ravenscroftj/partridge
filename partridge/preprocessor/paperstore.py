@@ -29,16 +29,17 @@ class PaperParser:
                 author = self.lookupAuthor(surname, forenames)
                 paper.authors.append(author)
 
-        print paper.title
-        db.session.add(paper)
+        print self.paper.title
+        db.session.add(self.paper)
         db.session.commit()
 
     def extractTitle(self):
          """Extract paper title from XML"""
          titleEls = self.doc.getElementsByTagName("article-title")
 
-         if titleEls < 1:
+         if len(titleEls) < 1:
             titleEls = self.doc.getElementsByTagName("TITLE")
+
 
          self.paper.title = self.extractText(titleEls[0])
 

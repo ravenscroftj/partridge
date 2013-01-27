@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship, backref
 
 from partridge.models import db
@@ -18,7 +18,7 @@ class Paper( db.Model ):
   __tablename__ = "papers"
 
   id = Column(Integer, primary_key=True)
-  title = Column(String(100)) 
+  title = Column(String(250)) 
   authors = relationship("Author", secondary=paper_authors, backref="papers") 
 
 #-----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class Sentence( db.Model ):
   __tablename__ = "sentences"
 
   id     = Column(Integer, primary_key=True)
-  text   = Column(String(250))
+  text   = Colum(Text)
   coresc = Column(String(25))
   paper_id = Column(Integer, db.ForeignKey('papers.id'))
   paper  = relationship("Paper", backref=backref('sentences', order_by=id),
