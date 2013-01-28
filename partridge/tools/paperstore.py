@@ -51,7 +51,7 @@ class PaperParser:
             self.paper.sentences.append(sent)
 
 
-    def extractAuthors(self)
+    def extractAuthors(self):
         """Extract author metadata from paper XML"""
 
         for contrib in self.doc.getElementsByTagName("contrib"):

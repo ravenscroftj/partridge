@@ -79,41 +79,80 @@ class RemoteAnnotator(CURLUploader):
     def annotate(self, infile, outfile):
         """Do the actual annotation work"""
 
-        pdata = [('paper', (pycurl.FORM_FILE, infile) )]
+        #parse doc to see if annotations already present
+        with open(infile,"rb") as f:
+            self.doc = minidom.parse(f)
 
-        c = pycurl.Curl()
-        c.setopt(pycurl.URL, SAPIENTA_URL)
-        c.setopt(pycurl.POST,1)
-        c.setopt(pycurl.HTTPPOST, pdata)
 
-        print "Uploading %s..." % infile
+        if len(self.doc.getElementsByTagName("annotationART")) > 0:
+            self.__upgradeXML()
 
-        self.perform(c)
+        elif len(self.doc.getElementsByTagName("CoreSc1")) < 1:
 
-        tmpnam, sents = self.result.split(":")
+            pdata = [('paper', (pycurl.FORM_FILE, infile) )]
 
-        labels = sents.split(">")
+            c = pycurl.Curl()
+            c.setopt(pycurl.URL, SAPIENTA_URL)
+            c.setopt(pycurl.POST,1)
+            c.setopt(pycurl.HTTPPOST, pdata)
 
-        self.__annotateXML(infile, labels, outfile)
+            print "Uploading %s..." % infile
 
-    def __annotateXML(self, infile, labels, outfile):
+            self.perform(c)
+
+            tmpnam, sents = self.result.split(":")
+
+            labels = sents.split(">")
+
+            self.__annotateXML( labels, outfile)
+
+        with codecs.open(outfile,'w', encoding='utf-8') as f:
+            self.doc.writexml(f)
+
+
+    def __upgradeXML(self):
+        """When passed in an old annotation format doc, upgrade the format
+        
+        This method takes an XML document and replaces old fashioned 
+        annotationART style elements with the new CoreSC style.
+        """
+
+        for annoEl in self.doc.getElementsByTagName("annotationART"):
+            sentEl = annoEl.parentNode
+
+            #remove annotation element from tree
+            sentEl.removeChild(annoEl)
+
+            #create the CoreSC element
+            coreEl = self.doc.createElement("CoreSc1")
+
+
+            for key in ['type', 'advantage', 'conceptID', 'novelty']:
+                coreEl.setAttribute(key, annoEl.getAttribute(key))
+
+            sentEl.appendChild(coreEl)
+
+            for child in annoEl.childNodes:
+                annoEl.removeChild(child)
+                sentEl.appendChild(child)
+
+
+
+
+    def __annotateXML(self, labels):
         """Read in the xml document and add labels to it
         """
 
-        with open(infile,"rb") as f:
-            doc = minidom.parse(f)
-
-
         c = Counter()
 
-        for s in doc.getElementsByTagName("s"):
+        for s in self.doc.getElementsByTagName("s"):
             if s.parentNode.localName == "article-title": continue 
 
             label = labels.pop(0)
 
             c[label] += 1
 
-            annoEl = doc.createElement("CoreSc1")
+            annoEl = self.doc.createElement("CoreSc1")
             annoEl.setAttribute("type", label)
             annoEl.setAttribute("conceptID", label + str(c[label]))
             annoEl.setAttribute("novelty", "None")
@@ -121,13 +160,9 @@ class RemoteAnnotator(CURLUploader):
 
             s.insertBefore(annoEl, s.firstChild)
 
-        with codecs.open(outfile,'w', encoding='utf-8') as f:
-            doc.writexml(f)
-
         
 
 if __name__ == "__main__":
     r = RemoteAnnotator()
-
     r.annotate("test.xml", "test_output.xml")
 
