@@ -14,7 +14,7 @@ from Queue import Empty
 from partridge.models import db
 from partridge.models.doc import PaperFile
 
-from partridge.preprocessor.paperstore import PaperParser
+from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
 from partridge.tools.annotate import RemoteAnnotator
 from partridge.tools.split import SentenceSplitter
@@ -105,7 +105,7 @@ class PaperDaemon(Thread):
         parser = PaperParser()
         paper = parser.storePaper(infile)
         self.logger.info("Added paper '%s' to database", paper.title)
-        
+        return paper
     
     def annotateXML(self, infile):
         """Routine to start the SAPIENTA process call"""
@@ -152,6 +152,9 @@ class PaperDaemon(Thread):
     def cleanupFiles(self, paper):
         """Move or delete all files involved in the conversion"""
 
+        if(paper == None):
+            self.logger.warn("Paper was not processed, removing files")
+
         def keep_file( filename ):
             fileObj = PaperFile( path=filename )
             db.session.add(fileObj)
@@ -162,16 +165,19 @@ class PaperDaemon(Thread):
         for filename, action in self.paper_files:
 
             if paper == None or action == "delete":
+                self.logger.debug("Deleting file %s", filename) 
                 os.unlink(filename)
 
             elif action == "move":
+                self.logger.debug("Moving file %s", filename)
                 bname = os.path.basename(filename)
                 newname = os.path.join(self.outdir, bname)
                 os.rename(filename, newname)
                 keep_file(filename)
 
             elif action == "keep":
-                    keep_file(filename)
+                self.logger.debug("Keeping file %s", filename)
+                keep_file(filename)
     
 #-----------------------------------------------------------------------------
 

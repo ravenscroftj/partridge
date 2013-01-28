@@ -78,15 +78,30 @@ class PaperParser:
 if __name__ == "__main__":
 
     import sys
+    from optparse import OptionParser
     from partridge import create_app
+    from flask import Config
 
-    create_app({'SQLALCHEMY_DATABASE_URI' : "mysql://root:icecream@localhost/partridge"}
-    )
+    optparser = OptionParser()
+    
+    optparser.add_option("-c", "--configfile", dest="config",
+        default="", help="Override the path to the config file to load.")
+
+    opts,args = optparser.parse_args(sys.argv)
+
+    if(opts.config != ""):
+        try:
+            config.from_pyfile(opts.config)
+        except IOError:
+                print "Could not find any configuration files. Exiting."
+                sys.exit(0)
+
+    create_app(config)
 
     parser = PaperParser()
 
     if(len(sys.argv) < 2):
-        print "Provide the name of a paper to test reading"
+        print "Provide the name of a paper to import"
         sys.exit(0)
 
     parser.storePaper(sys.argv[1])
