@@ -21,10 +21,20 @@ class PaperParser:
         for contrib in self.doc.getElementsByTagName("contrib"):
 
             if contrib.getAttribute("contrib-type") == "author":
-                surnameEl = contrib.getElementsByTagName("surname")[0]
-                forenameEl = contrib.getElementsByTagName("given-names")[0]
-                surname = self.extractText(surnameEl)
-                forenames = self.extractText(forenameEl)
+                
+                #see if the document is using surname/given-names or name
+                if(len(contrib.getElementsByTagName("surname")) > 0):
+                    surnameEl = contrib.getElementsByTagName("surname")[0]
+                    forenameEl = contrib.getElementsByTagName("given-names")[0]
+                    surname = self.extractText(surnameEl)
+                    forenames = self.extractText(forenameEl)
+                else:
+                    #try and extract names from 'name' tag
+                    nameEle = contrib.getElementsByTagName("name")[0]
+                    names = self.extractText(nameEle).split(" ")
+                    surname = names[-1]
+                    forenames = " ".join(names[0:-1])
+
 
                 author = self.lookupAuthor(surname, forenames)
                 self.paper.authors.append(author)
