@@ -27,11 +27,12 @@ class PaperParser:
                 forenames = self.extractText(forenameEl)
 
                 author = self.lookupAuthor(surname, forenames)
-                paper.authors.append(author)
+                self.paper.authors.append(author)
 
-        print self.paper.title
         db.session.add(self.paper)
         db.session.commit()
+
+        return self.paper
 
     def extractTitle(self):
          """Extract paper title from XML"""

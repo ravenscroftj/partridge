@@ -12,7 +12,9 @@ from multiprocessing import Queue
 from Queue import Empty
 
 from partridge.models import db
+from partridge.models.doc import PaperFile
 
+from partridge.preprocessor.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
 from partridge.tools.annotate import RemoteAnnotator
 from partridge.tools.split import SentenceSplitter
@@ -43,7 +45,7 @@ class PaperDaemon(Thread):
                 paper = self.fsw.paper_queue.get(block=False)
                 self.logger.info("Processing %s", paper)
                 try:
-                    self._process_paper(paper)
+                    paperObj = self._process_paper(paper)
                 except Exception as e:
                     #get exception information and dump to user
                     exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -52,6 +54,12 @@ class PaperDaemon(Thread):
                     
                     for line in traceback.format_tb(exc_tb):
                         self.logger.error(line)
+
+                    #set paperObj to none for file cleanup
+                    paperObj = None
+
+                finally:
+                    self.cleanupFiles(paperObj)
 
             except Empty:
                 self.logger.debug("No work to do.. going back to sleep")
@@ -68,11 +76,11 @@ class PaperDaemon(Thread):
 
         # set up a list of files that need moving to the processed folder
         # and recording in the db
-        paper_files = [ (papername, 'move'),  ]
+        self.paper_files = [ (papername, 'move'),  ]
 
         basename = os.path.basename(papername)
 
-        name,ext = os.path.splitext(basename)
+        self.name,ext= os.path.splitext(basename)
 
         infile = papername
 
@@ -89,21 +97,26 @@ class PaperDaemon(Thread):
         infile = self.annotateXML(infile)
 
         #Finally do some analysis and store the paper in the DB
+        return self.storePaperData(infile)
+
 
     def storePaperData(self, infile):
         """Call the metadata parser and return DB id for this paper"""
+        parser = PaperParser()
+        paper = parser.storePaper(infile)
+        self.logger.info("Added paper '%s' to database", paper.title)
         
     
     def annotateXML(self, infile):
         """Routine to start the SAPIENTA process call"""
         
-        outfile = os.path.join(self.outdir,  name + "_final.xml")
+        outfile = os.path.join(self.outdir,  self.name + "_final.xml")
         
         self.logger.info("Annotating paper %s", infile)
 
         a = RemoteAnnotator()
         a.annotate( infile, outfile )
-        paper_files.append( (outfile, 'store') )
+        self.paper_files.append( (outfile, 'keep') )
 
         return outfile
 
@@ -113,11 +126,11 @@ class PaperDaemon(Thread):
 
         self.logger.info("Splitting sentences in %s",  infile)
         
-        outfile = os.path.join(self.outdir,  name + "_split.xml")
+        outfile = os.path.join(self.outdir,  self.name + "_split.xml")
 
         s = SentenceSplitter()
         s.split(infile, outfile)
-        paper_files.append( (outfile, 'delete') )
+        self.paper_files.append( (outfile, 'delete') )
 
         return outfile
 
@@ -129,34 +142,36 @@ class PaperDaemon(Thread):
         self.logger.info("Converting %s to xml", infile)
 
         p = PDFXConverter()
-        outfile = os.path.join(self.outdir, name + ".xml")
+        outfile = os.path.join(self.outdir, self.name + ".xml")
         p.convert(infile, outfile)
 
-        paper_files.append( (outfile, 'move') )
+        self.paper_files.append( (outfile, 'keep') )
 
         return outfile
 
-        
-
-
-    def cleanup_files(self, papers_list):
+    def cleanupFiles(self, paper):
         """Move or delete all files involved in the conversion"""
 
-        for filename, action in papers_list:
-            
-            if action == "move":
-                basename = os.path.basename(filename)
-                destname = os.path.join(self.outdir, basename)
-                os.rename(basename, destname)
-            
-            elif action == "delete":
-              os.delete( filename )
-
-            else:
-               #store file in database
-               pass
+        def keep_file( filename ):
+            fileObj = PaperFile( path=filename )
+            db.session.add(fileObj)
+            paper.files.append(fileObj)
+            db.session.commit()
 
 
+        for filename, action in self.paper_files:
+
+            if paper == None or action == "delete":
+                os.unlink(filename)
+
+            elif action == "move":
+                bname = os.path.basename(filename)
+                newname = os.path.join(self.outdir, bname)
+                os.rename(filename, newname)
+                keep_file(filename)
+
+            elif action == "keep":
+                    keep_file(filename)
     
 #-----------------------------------------------------------------------------
 
