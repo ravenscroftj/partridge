@@ -6,6 +6,7 @@ Take a known, split paper and annotate it using Sapienta remotely
 import os
 import pycurl
 import codecs
+import logging
 from urllib import urlencode
 
 #from sapienta.docparser import SciXML
@@ -96,7 +97,7 @@ class RemoteAnnotator(CURLUploader):
             c.setopt(pycurl.POST,1)
             c.setopt(pycurl.HTTPPOST, pdata)
 
-            print "Uploading %s..." % infile
+            logging.info("Uploading %s to annotation server", infile)
 
             self.perform(c)
 
@@ -104,7 +105,7 @@ class RemoteAnnotator(CURLUploader):
 
             labels = sents.split(">")
 
-            self.__annotateXML( labels, outfile)
+            self.__annotateXML( labels )
 
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.doc.writexml(f)
@@ -130,11 +131,11 @@ class RemoteAnnotator(CURLUploader):
             for key in ['type', 'advantage', 'conceptID', 'novelty']:
                 coreEl.setAttribute(key, annoEl.getAttribute(key))
 
-            sentEl.appendChild(coreEl)
-
             for child in annoEl.childNodes:
-                annoEl.removeChild(child)
-                sentEl.appendChild(child)
+                sentEl.appendChild(child.cloneNode(True))
+                child.unlink()
+
+            sentEl.insertBefore( coreEl, sentEl.firstChild)
 
 
 
