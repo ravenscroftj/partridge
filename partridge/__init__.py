@@ -6,7 +6,6 @@ from flask import Config,Flask
 
 from partridge.config import config
 from partridge.models import db
-from partridge.preprocessor import create_daemon
 
 
 def create_app( config ):
@@ -17,9 +16,11 @@ def create_app( config ):
 
     #load views model lazily
     import views
+    import views.upload
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query)
+    app.add_url_rule("/upload", view_func = views.upload.upload)
     db.app = app
     db.init_app(app)
     return app
@@ -62,6 +63,7 @@ def run():
         print "Initialising database tables..."
         db.create_all()
 
+    from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
     pdaemon.start()
