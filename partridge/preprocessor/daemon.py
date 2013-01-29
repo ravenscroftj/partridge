@@ -1,9 +1,11 @@
 """
 Daemon that handles paper uploads and processes new data
 """
+import sys
 import logging
 import os
 import time
+import traceback
 
 from threading import Thread
 from multiprocessing import Queue
