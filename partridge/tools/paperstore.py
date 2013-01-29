@@ -32,19 +32,15 @@ class PaperParser:
     def extractSentences(self):
         """Extract sentences and relative coresc concept from xml"""
 
-        for s in self.doc.getElementsByTagName("s"):
+        for annoEl in self.doc.getElementsByTagName("CoreSc1"):
             
             #try and get the coreSC annotation
-            clist = self.doc.getElementsByTagName("CoreSC")
-            if( len(clist) < 1):
-                #get the annotation element instead
-                annoEl = self.doc.getElementsByTagName("annotationART")[0]
-            else:
-                annoEl = clist[0]
+            s = annoEl.parentNode
+            annoType = annoEl.getAttribute("type")
 
             #store sentence information
             sent = Sentence(text=self.extractText(s),
-                coresc=annoEl.getAttribute("type"))
+                coresc=annoType)
 
             db.session.add(sent)
 
@@ -113,7 +109,7 @@ class PaperParser:
             elif child.nodeType == self.doc.TEXT_NODE:
                 text += child.wholeText
 
-        return text
+        return text.strip()
 
 if __name__ == "__main__":
 
