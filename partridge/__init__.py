@@ -42,6 +42,9 @@ def run():
     parser.add_option("-d", "--debug", dest="debug", action="store_true",
         help="Store true if the server should run in debug mode")
 
+    parser.add_option("--paperdaemon", dest="paperdaemon", action="store_true",
+        help="If set, runs only paper daemon and not a webserver")
+
     parser.add_option("--initdb", action="store_true",dest="initdb",
         help="Initialise the patridge database and create tables")
 
@@ -62,13 +65,22 @@ def run():
     if(opts.initdb):
         print "Initialising database tables..."
         db.create_all()
+        
 
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
     pdaemon.start()
 
-    app.debug = opts.debug
-    app.run(host="0.0.0.0", port=int(opts.port))
-
-    pdaemon.stop()
+    if not opts.paperdaemon:
+        app.debug = opts.debug
+        app.run(host="0.0.0.0", port=int(opts.port))
+        pdaemon.stop()
+    else:
+        try:
+            while 1:
+                raw_input()
+        except KeyboardInterrupt as e:
+            print "Shutting down paper daemon..."
+        
+        pdaemon.stop()
