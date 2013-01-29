@@ -42,7 +42,12 @@ class SentenceSplitter:
 
         logging.debug("Parsed input file %s " % filename)
 
-        self.splitElement(self.indoc)
+        # check for existence of multiple s elements, possibly skip
+        # actually splitting things
+        if(len(self.indoc.getElementsByTagName("s")) > 0):
+            logging.debug("Skipped splitting document... already split!")
+        else:
+            self.splitElement(self.indoc)
 
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.indoc.writexml(f)

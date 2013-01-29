@@ -8,7 +8,7 @@ class PaperParser:
     """
 
     def storePaper(self, filename):
-        
+        """Store the paper information in the database"""
         #parse the document
         with open(filename,'rb') as f:
             self.doc = xml.dom.minidom.parse(f)
@@ -18,6 +18,38 @@ class PaperParser:
         self.extractTitle()
 
         #add authors
+        self.extractAuthors()
+        
+        #get sentence information
+        self.extractSentences()
+
+        #store the updated database info
+        db.session.add(self.paper)
+        db.session.commit()
+
+        return self.paper
+
+    def extractSentences(self):
+        """Extract sentences and relative coresc concept from xml"""
+
+        for annoEl in self.doc.getElementsByTagName("CoreSc1"):
+            
+            #try and get the coreSC annotation
+            s = annoEl.parentNode
+            annoType = annoEl.getAttribute("type")
+
+            #store sentence information
+            sent = Sentence(text=self.extractText(s),
+                coresc=annoType)
+
+            db.session.add(sent)
+
+            self.paper.sentences.append(sent)
+
+
+    def extractAuthors(self):
+        """Extract author metadata from paper XML"""
+
         for contrib in self.doc.getElementsByTagName("contrib"):
 
             if contrib.getAttribute("contrib-type") == "author":
@@ -39,11 +71,6 @@ class PaperParser:
                 author = self.lookupAuthor(surname, forenames)
                 self.paper.authors.append(author)
 
-        db.session.add(self.paper)
-        db.session.commit()
-
-        return self.paper
-
     def extractTitle(self):
          """Extract paper title from XML"""
          titleEls = self.doc.getElementsByTagName("article-title")
@@ -64,7 +91,6 @@ class PaperParser:
         if not author:
             author = Author(surname=surname, forenames=forenames)     
             db.session.add(author)
-            db.session.commit()
 
         return author
 
@@ -83,7 +109,7 @@ class PaperParser:
             elif child.nodeType == self.doc.TEXT_NODE:
                 text += child.wholeText
 
-        return text
+        return text.strip()
 
 if __name__ == "__main__":
 
@@ -99,6 +125,7 @@ if __name__ == "__main__":
 
     opts,args = optparser.parse_args(sys.argv)
 
+    config = Config({})
     if(opts.config != ""):
         try:
             config.from_pyfile(opts.config)
@@ -110,8 +137,8 @@ if __name__ == "__main__":
 
     parser = PaperParser()
 
-    if(len(sys.argv) < 2):
+    if(len(args) < 2):
         print "Provide the name of a paper to import"
         sys.exit(0)
 
-    parser.storePaper(sys.argv[1])
+    parser.storePaper(args[1])
