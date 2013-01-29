@@ -20,7 +20,8 @@ def create_app( config ):
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query)
-    app.add_url_rule("/upload", view_func = views.upload.upload)
+    app.add_url_rule("/upload", methods=['GET','POST'], 
+        view_func = views.upload.upload)
     db.app = app
     db.init_app(app)
     return app
