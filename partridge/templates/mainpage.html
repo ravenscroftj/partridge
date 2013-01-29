@@ -66,10 +66,12 @@
       <div class="span4" id="navigation">
         <h2>Navigation</h2>
         <ul>
-          <li>Index</li>
-          <li>About</li>
-          <li>Query</li>
-          <li>Help</li>
+          <li><a href="/">Index</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="{{ url_for('.query') }}">Query</a></li>
+          <li><a href="{{ url_for('.upload') }}">Upload Paper</a></li>
+          <li><a href="#"></a><Help</li>
+
         </ul>
 
         
