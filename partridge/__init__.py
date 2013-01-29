@@ -6,7 +6,6 @@ from flask import Config,Flask
 
 from partridge.config import config
 from partridge.models import db
-from partridge.preprocessor import create_daemon
 
 
 def create_app( config ):
@@ -64,6 +63,7 @@ def run():
         print "Initialising database tables..."
         db.create_all()
 
+    from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
     pdaemon.start()
