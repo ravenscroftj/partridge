@@ -5,6 +5,20 @@ from collections import Counter
 
 from partridge.models import db
 
+#list of coresc concept abreviations and full labels
+C_ABRV = {
+"Obj" : "Object",
+"Res" : "Result",
+"Goa" : "Goal",
+"Mot" : "Motivation",
+"Met" : "Method",
+"Bac" : "Background",
+"Exp" : "Experiment",
+"Mod" : "Model",
+"Obs" : "Observation",
+"Con" : "Conclusion"
+}
+
 #-----------------------------------------------------------------------------
 
 paper_authors = db.Table('paper_authors',
@@ -35,7 +49,7 @@ class Paper( db.Model ):
     percentages = []
 
     for label, num in count.items():
-        percentages.append( (label, num * 100 / totalSentences) )
+        percentages.append( (C_ABRV[label], num * 100 / totalSentences) )
 
     return percentages
         
