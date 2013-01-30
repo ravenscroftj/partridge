@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship, backref
 
+from collections import Counter
+
 from partridge.models import db
 
 #-----------------------------------------------------------------------------
@@ -19,7 +21,24 @@ class Paper( db.Model ):
 
   id = Column(Integer, primary_key=True)
   title = Column(String(250)) 
-  authors = relationship("Author", secondary=paper_authors, backref="papers") 
+  authors = relationship("Author", secondary=paper_authors, backref="papers")
+
+
+  def sentenceDistribution(self):
+    totalSentences = len(self.sentences)
+
+    count = Counter()
+
+    for sent in self.sentences:
+        count[sent.coresc] += 1
+
+    percentages = []
+
+    for label, num in count.items():
+        percentages.append( (label, num * 100 / totalSentences) )
+
+    return percentages
+        
 
 #-----------------------------------------------------------------------------
 

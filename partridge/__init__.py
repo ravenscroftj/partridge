@@ -7,6 +7,8 @@ from flask import Config,Flask
 from partridge.config import config
 from partridge.models import db
 
+from partridge.util.paperconv import PaperConverter
+
 
 def create_app( config ):
     """Register app object and return to caller"""
@@ -17,11 +19,19 @@ def create_app( config ):
     #load views model lazily
     import views
     import views.upload
+    import views.paper
+
+    app.url_map.converters["paper"] = PaperConverter
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query)
+
     app.add_url_rule("/upload", methods=['GET','POST'], 
         view_func = views.upload.upload)
+
+    app.add_url_rule("/paper/<paper:the_paper>", 
+        view_func=views.paper.paper_profile)
+
     db.app = app
     db.init_app(app)
     return app
