@@ -26,6 +26,22 @@
 {{ paper.abstract }}
 </div>
 
+<h4> Files </h4>
+
+{% if paper.files|count > 0 %}
+<ul>
+{% for file in paper.files %}
+<li> <a href="{{ url_for(".paper_file", the_file=file) }}">
+    {{file.basename}}
+    </a> 
+    - {{file.contentType}} 
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p> Currently no files available for this paper </p>
+{% endif %}
+
 <h4> CoreSC Distribution </h4>
 <div id="sentenceChart">
 

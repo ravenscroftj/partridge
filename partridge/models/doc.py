@@ -7,6 +7,7 @@ from partridge.models import db
 
 #list of coresc concept abreviations and full labels
 C_ABRV = {
+"Hyp" : "Hypothesis",
 "Obj" : "Object",
 "Res" : "Result",
 "Goa" : "Goal",
@@ -79,7 +80,24 @@ class PaperFile( db.Model ):
   paper_id = Column(Integer, db.ForeignKey('papers.id'))
   paper    = relationship("Paper", backref=backref('files', order_by=id),
   primaryjoin=(paper_id==Paper.id))
+  
+  @property
+  def basename(self):
+    import os
+    return os.path.basename(self.path)
 
+  @property
+  def contentType(self):
+    """Guess what sort of file this is"""
+
+    if self.path.endswith(".pdf"):
+        return "Original PDF format"
+
+    if "final" in self.path:
+        return "Final annotated XML file"
+
+    else:
+        return "Initial XML version of the paper"
 #-----------------------------------------------------------------------------
 
 class Author( db.Model ):

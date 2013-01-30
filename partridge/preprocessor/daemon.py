@@ -173,7 +173,7 @@ class PaperDaemon(Thread):
                 bname = os.path.basename(filename)
                 newname = os.path.join(self.outdir, bname)
                 os.rename(filename, newname)
-                keep_file(filename)
+                keep_file(newname)
 
             elif action == "keep":
                 self.logger.debug("Keeping file %s", filename)

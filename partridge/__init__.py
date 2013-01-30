@@ -7,7 +7,7 @@ from flask import Config,Flask
 from partridge.config import config
 from partridge.models import db
 
-from partridge.util.paperconv import PaperConverter
+from partridge.util.paperconv import PaperConverter, FileConverter
 
 
 def create_app( config ):
@@ -22,6 +22,7 @@ def create_app( config ):
     import views.paper
 
     app.url_map.converters["paper"] = PaperConverter
+    app.url_map.converters["file"] = FileConverter
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query)
@@ -31,6 +32,9 @@ def create_app( config ):
 
     app.add_url_rule("/paper/<paper:the_paper>", 
         view_func=views.paper.paper_profile)
+
+    app.add_url_rule("/file/<file:the_file>",
+        view_func=views.paper.paper_file)
 
     db.app = app
     db.init_app(app)
