@@ -60,13 +60,19 @@ def run():
 
     app = create_app( config )
 
+    logLevel = logging.INFO
+
     if(opts.debug):
         print "Debug mode is active..."
+        logLevel = logging.DEBUG
 
     if(opts.initdb):
         print "Initialising database tables..."
         db.create_all()
         
+        
+    #set up logger
+    logging.basicConfig(level=logLevel)
 
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
