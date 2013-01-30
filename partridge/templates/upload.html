@@ -22,10 +22,10 @@
 
    <div>
     <label for="paper_file"> Paper File</label>
-    <input type="file" name="paper_file" id="upload_field">
+    <input type="file" multiple="multiple" name="paper_file" id="upload_field">
    </div>
    <div>
-    <input type="checkbox" name="termsok">
+    <input type="checkbox" id="termsBox" name="termsok">
     I have the right to upload this paper to your server.
    </div>
     <input type="button" id="uploadButton" name="uploadForm" value="Upload Paper"/>
@@ -44,9 +44,7 @@
                     
                     autostart: false,
 
-                    url: function(number) {
-                        return prompt(number + " url", "/");
-                    },
+                    url: "{{ url_for('.upload')  }}",
                     sendBoundary: window.FormData || $.browser.mozilla,
                     onStart: function(event, total) {
                         return true;
@@ -74,7 +72,12 @@
             });
 
             $('#uploadButton').on('click',function(){
-              $('#upload_field').triggerHandler('html5_upload.start');
+
+              if($("#termsBox").is(':checked')){
+                $('#upload_field').triggerHandler('html5_upload.start');
+              }else{
+                alert("You must accept the terms and conditions.");
+              }
             })
 
 
