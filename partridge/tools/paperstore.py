@@ -16,6 +16,7 @@ class PaperParser:
         #extract metadata
         self.paper = Paper()
         self.extractTitle()
+        self.extractAbstract()
 
         #add authors
         self.extractAuthors()
@@ -45,6 +46,17 @@ class PaperParser:
             db.session.add(sent)
 
             self.paper.sentences.append(sent)
+
+    def extractAbstract(self):
+        """Extract the paper abstract from xml"""
+
+        #we are either looking for "abstract" element or "ABSTRACT" element
+        if( len(self.doc.getElementsByTagName("abstract")) > 0):
+            abEl = self.doc.getElementsByTagName("abstract")[0]
+        else:
+            abEl = self.doc.getElementsByTagName("ABSTRACT")[0]
+
+        self.paper.abstract = self.extractText(abEl)
 
 
     def extractAuthors(self):

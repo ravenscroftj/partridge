@@ -22,7 +22,7 @@ class Paper( db.Model ):
   id = Column(Integer, primary_key=True)
   title = Column(String(250)) 
   authors = relationship("Author", secondary=paper_authors, backref="papers")
-
+  abstract = Column(Text())
 
   def sentenceDistribution(self):
     totalSentences = len(self.sentences)
