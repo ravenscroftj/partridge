@@ -34,6 +34,7 @@ function updateResults(){
 
 }
 
+var offset = 0;
 
 /**
  * Callback function from get request for papers
@@ -41,7 +42,11 @@ function updateResults(){
  */
 function showResults( getResult ){
 
-   $("#searchResults").html(getResult); 
+   $("#resultStats").html("Showing results " + 
+   (1+offset) + " to " + (offset + getResult.count)
+   + " of " + getResult.total);
+
+   $("#searchResults").html(getResult.html); 
 
 }
 

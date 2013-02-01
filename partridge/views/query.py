@@ -1,6 +1,6 @@
 """Views related to querying partridge"""
 
-from flask import render_template,request
+from flask import render_template,request,jsonify
 from partridge.models import db
 from partridge.models.doc import Paper, C_ABRV
 
@@ -18,10 +18,15 @@ def query():
 
     if(searchterms != ''):
 
-        papers = Paper.query.limit(30).all()
+        q = Paper.query
 
-        return render_template("query_result.html",
-            papers=papers)
+
+        papers = q.limit(30).all()
+        
+        result_count = len(papers)
+
+        return jsonify(html=render_template("query_result.html",
+            papers=papers), total=q.count(), count=len(papers))
     else:
         return render_template("query.html", 
             paper_count=papercount, 
