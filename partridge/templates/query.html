@@ -1,6 +1,5 @@
 {% extends "mainpage.html" %}
 {% block title %}Run Query{% endblock %}
-{% block content %}
 {% block extrascripts %}
 <script type="text/javascript">
 var loader_image = "/static/img/loader.gif";
@@ -8,6 +7,8 @@ var loader_image = "/static/img/loader.gif";
 </script>
 <script src="/static/js/queryform.js" type="text/javascript"></script>
 {% endblock %}
+
+{% block content %}
 <div class="row">
 
 <div class="span8 contentbox">
@@ -59,7 +60,7 @@ dataset through the form below.</p>
 
         <div class="span6">
         
-        <form class="form-inline">
+        <div class="form-inline">
 
         <input type="text" placeholder="Search terms..." name="queryText" id="queryText"> 
         
@@ -73,7 +74,7 @@ dataset through the form below.</p>
 
         <button id="addConstraint" class="btn btn-primary"><i
         class="icon-plus"></i></button>
-        </form>
+        </div>
         </div>
 
 
