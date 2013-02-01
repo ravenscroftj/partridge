@@ -13,9 +13,23 @@ function updateResults(){
     $("#searchResults").html("<img src=\"" + loader_image +
         "\" alt=\"loading...\" />");
 
+    currentField = "";
+    
+    query = {}
+
+    $("#queryList input[type=hidden]").each(function(i){
+        if( $(this).attr("name") == "section"){
+            currentField = $(this).val() + i;   
+        }else{
+            query[currentField] = $(this).val();
+        }
+    });
+
+    query['q'] = "true";
+
     $.ajax({
         "success" : showResults,
-        "data" : {"q" : "true"}
+        "data" : query
     });
 
 }
@@ -56,8 +70,9 @@ $(function(){
         + "<input type=\"hidden\" value=\"" + section + "\""
         + " name=\"section\" />\n"
         + "<input type=\"hidden\" value=\""+ text +"\"" 
-        + " name=\"query\" /><a href=\"#\">"
-        + "<i class=\"icon-remove-circle\"></i></li>";
+        + " name=\"query\" /><a href=\"javascript: void(0)\" "
+        + " onclick=\"removeConstraint("+ constraintID +")\">"
+        + "<i class=\"icon-remove-circle\" ></i></li>";
       
 
         if( constraints == 0){
@@ -69,5 +84,20 @@ $(function(){
         constraints++;
         constraintID++;
 
+        updateResults();
+
     });
 });
+
+function removeConstraint( id ){
+   
+    constraints--;
+
+    $("#constraint" + id).remove();
+
+    if(constraints < 1){
+        $("#queryList").html("<i>No query constraints</i>");
+    }
+
+    updateResults();
+}
