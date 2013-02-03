@@ -19,7 +19,7 @@ function updateResults(){
 
     $("#queryList input[type=hidden]").each(function(i){
         if( $(this).attr("name") == "section"){
-            currentField = $(this).val() + i;   
+            currentField = $(this).val() + "_" + i;   
         }else{
             query[currentField] = $(this).val();
         }
