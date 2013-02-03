@@ -83,6 +83,37 @@ class PaperParser:
                 author = self.lookupAuthor(surname, forenames)
                 self.paper.authors.append(author)
 
+        #if there aren't any contrib elements, try CURRENT_AUTHOR els
+        for authorEl in self.doc.getElementsByTagName("CURRENT_AUTHOR"):
+
+            forenames = ""
+            surname = ""
+
+            if( (authorEl.firstChild.nodeType == self.doc.ELEMENT_NODE)
+                & (authorEl.firstChild.localName == "CURRENT_NAME")):
+                authorEl = authorEl.firstChild
+            
+            #get text node and surname 
+            for node in authorEl.childNodes:
+
+                if( (node.nodeType == self.doc.ELEMENT_NODE) & 
+                    (node.localName == "CURRENT_SURNAME")):
+                    surname = self.extractText(node)
+
+                if(node.nodeType == self.doc.TEXT_NODE):
+                    print node.wholeText
+                    print len(forenames)
+                    print len(node.wholeText)
+                    if (forenames == ""):
+                        forenames = node.wholeText
+
+                    if (len(node.wholeText) < len(forenames)):
+                        forenames = node.wholeText
+            
+            
+            author = self.lookupAuthor(surname, forenames)
+            self.paper.authors.append(author)
+
     def extractTitle(self):
          """Extract paper title from XML"""
          titleEls = self.doc.getElementsByTagName("article-title")
