@@ -1,0 +1,21 @@
+<ul>
+{% for paper in papers %}
+<li class="paperResult">
+    <p><a href="{{ url_for(".paper_profile", the_paper=paper) }}"> 
+    {{ paper.title }} 
+    </a>
+
+    by
+
+    {% if paper.authors|count > 0 %}
+        {% for author in paper.authors %}
+        {{author.forenames}} {{author.surname}},
+        {% endfor %}
+    {% else %}
+    Unknown Author
+    {% endif %}
+
+    </p>
+</li>
+{% endfor %}
+</ul>

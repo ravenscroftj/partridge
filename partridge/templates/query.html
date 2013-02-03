@@ -1,5 +1,13 @@
 {% extends "mainpage.html" %}
 {% block title %}Run Query{% endblock %}
+{% block extrascripts %}
+<script type="text/javascript">
+var loader_image = "/static/img/loader.gif";
+
+</script>
+<script src="/static/js/queryform.js" type="text/javascript"></script>
+{% endblock %}
+
 {% block content %}
 <div class="row">
 
@@ -9,156 +17,84 @@
 
 <div class="row">
 
-<div class="span6">
+<div class="span8">
 <p>Partridge currently holds information on {{ paper_count }} papers. You can query this
 dataset through the form below.</p>
 </div>
 
-<div class="span2">
-
-<div class="btn-group">
-
-    <button class="btn btn-large btn-primary">Search</button>
-    <button class="btn btn-large btn-primary dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-    </button>
-
-    <ul class="dropdown-menu">
-        <li><a href="#">Clear Form</a></li>
-    </ul>
-
-</div>
-
-
-</div>
 
 </div>
 
 <div class="row">
 
-    <div class="span4">
-        <h4>Filters</h4>
-
+    <div class="span2">
         <div class="row">
-            <div class="span2">
-                Paper Type:
-            </div>
-            <div class="span2">
 
-            <ul class="checklist">
-                <li>
-                    <input name="research_type" type="checkbox"/>
-                    Research
-                </li>
-                <li>
-                    <input name="casestudy_type" type="checkbox"/>
-                    Case Study
-                </li>
+        <div class="span2">
+            <h4>Queries</h4>
+
+            <ul id="queryList">
+                <i>No query constraints</i>
             </ul>
 
-            </div>
         </div>
-            
-        <div class="row">
-            <div class="span2">
-            Paper Topics:
-            </div>
-            <div class="span2">
-            
-            <ul class="checklist">
-                <li>
-                    <input name="comp_topic" type="checkbox"/>
-                    Computing
-                </li>
-                <li>
-                    <input name="physics_topic" type="checkbox"/>
-                    Physics
-                </li>
+
+
+        <div class="span2">
+            <h4>Filters</h4>
+
+            <ul id="filterList">
+                <i>No filters</i>
             </ul>
-            </div>
+
         </div>
 
-        <div class="row">
-            <div class="span2">
-            Paper Results:
-            </div>
-            <div class="span2">
+
+        </div>
             
-            <ul class="checklist">
-                <li>
-                    <input name="comp_topic" type="checkbox"/>
-                    Positive
-                </li>
-                <li>
-                    <input name="physics_topic" type="checkbox"/>
-                    Negative
-                </li>
-                <li>
-                    <input name="physics_topic" type="checkbox"/>
-                    Inconclusive
-                </li>
-
-            </ul>
-            </div>
-        </div>
-
     </div>
 
-    <div class="span4">
-        <h4> Search Words</h4>
-        <table width="100%">
-        <tr>
-            <th>CoreSC</th>
-            <th>Keywords</th>
-        </tr>
-        <tr>
-            <td colspan="2">No keywords yet, add some below.</td>
-        </tr>
-        </table>
-
-
-        <button class="btn btn-danger">Remove Search</button>
-
-    </div>
-    
-    <div class="span4">
-        <h4>Add Keywords</h4>
-
-        <div class="row">
-        <div class="span1">
-            CoreSC:
-        </div>
-
-        <div class="span3">
-            <select>
-                <option>Background</option>
-                <option>Methodology</option>
-                <option>Experiment</option>
-                <option>Conclusion</option>
-            </select>
-        </div>
-        </div>
-
-
-
-        <div class="row">
-        <div class="span1">
-        Keywords:
-        </div>
-        <div class="span3">
-        <input type="text" name="keywords" />
-        </div>
+    <div class="span6">
         
-        <div class="span4">
-        <button class="btn btn-primary">Add Search</button>
+        <div class="row">
+
+        <div class="span6">
+        
+        <div class="form-inline">
+
+        <input type="text" placeholder="Search terms..." name="queryText" id="queryText"> 
+        
+        <select id="corescSelect" class="input-small">
+        <option value="author">Authored By</option>
+        <option value="any"> Paper contains</option>
+        {% for key in corescs.keys() %}
+        <option value="{{ key }}"> {{ corescs[key] }} contains</option>
+        {% endfor %}
+        </select>
+
+        <button id="addConstraint" class="btn btn-primary"><i
+        class="icon-plus"></i></button>
+        </div>
         </div>
 
 
- 
+        <div class="span6">
 
+        <h3>Search Results</h3>
+
+        <div id="resultStats"></div>
+
+        <div id="searchResults">
+        <img src="/static/img/loader.gif" alt="loading results..." />
+        </div>
+
+        <div id="paginationStuff" class="pagination">
+        </div>
+
+        </div>
+
+        </div>
     </div>
-   </div>
-
 </div>
 
 </div>
