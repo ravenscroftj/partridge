@@ -32,6 +32,11 @@ def query():
                 paper_q = paper_q.join("authors")
                 clauses.append( Author.surname.like("%%%s%%" % value) | 
                     Author.forenames.like("%%%s%%") % value)
+
+            if attr in C_ABRV.keys():
+                paper_q = paper_q.join("sentences")
+                clauses.append( ( Sentence.coresc == attr ) & 
+                    Sentence.text.like("%%%s%%" % value))
         
         paper_q = paper_q.filter(or_(*clauses))
 
