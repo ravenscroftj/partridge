@@ -42,12 +42,19 @@ var offset = 0;
  */
 function showResults( getResult ){
 
-   $("#resultStats").html("Showing results " + 
-   (1+offset) + " to " + (offset + getResult.count)
-   + " of " + getResult.total);
 
-   $("#searchResults").html(getResult.html); 
+   if( getResult.count < 1){
+        
+       $("#resultStats").html("No results - try generalising your query");
+       $("#searchResults").html("");
 
+   }else{
+       $("#resultStats").html("Showing results " + 
+       (1+offset) + " to " + (offset + getResult.count)
+       + " of " + getResult.total);
+
+       $("#searchResults").html(getResult.html); 
+   }
 }
 
 var constraints = 0;
