@@ -15,15 +15,7 @@ function updateResults(){
 
     currentField = "";
     
-    query = {}
-
-    $("#queryList input[type=hidden]").each(function(i){
-        if( $(this).attr("name") == "section"){
-            currentField = $(this).val() + "_" + i;   
-        }else{
-            query[currentField] = $(this).val();
-        }
-    });
+    query = $.deparam.fragment();
 
     query['q'] = "true";
 
@@ -77,21 +69,10 @@ $(function(){
         var section = $("#corescSelect").val();
         var text = $("#queryText").val();
 
-        newHTML += "<li id=\"constraint" + constraintID + "\">" 
-        + text + " in " + section
-        + "<input type=\"hidden\" value=\"" + section + "\""
-        + " name=\"section\" />\n"
-        + "<input type=\"hidden\" value=\""+ text +"\"" 
-        + " name=\"query\" /><a href=\"javascript: void(0)\" "
-        + " onclick=\"removeConstraint("+ constraintID +")\">"
-        + "<i class=\"icon-remove-circle\" ></i></li>";
-      
+        var params = {}
+        params[ section + "_" + constraintID ] = text;
 
-        if( constraints == 0){
-            $("#queryList").html(newHTML);
-        }else{
-            $("#queryList").append(newHTML);
-        }
+        jQuery.bbq.pushState(params);
 
         constraints++;
         constraintID++;
@@ -99,13 +80,80 @@ $(function(){
         updateResults();
 
     });
+
+    /**
+     * Set up bbq hooks
+     *
+     */
+    $(window).bind( 'hashchange', function(e) {
+        
+
+        var params = $.deparam.fragment();
+
+        for( var constraint in params ){
+            
+            var parts = constraint.split("_");
+            var id = parts[1];
+            var text = params[constraint];
+            var section = parts[0];
+
+            // we need to allocate a new id larger than this next time
+            if( id > constraintID){
+                constraintID = id + 1;
+            }
+
+            if( $("#constraint" + constraintID).length < 1){
+
+                newHTML = "<li id=\"constraint" + id + "\">" 
+                + text + " in " + section
+                + "<a href=\"javascript: void(0)\" "
+                + " onclick=\"removeConstraint("+ id +")\">"
+                + "<i class=\"icon-remove-circle\" ></i></li>";
+             
+
+                if( constraints == 0){
+                    $("#queryList").html(newHTML);
+                }else{
+                    $("#queryList").append(newHTML);
+                }
+            }
+
+        }
+
+        //with all constraints in place, pull the latest results
+        updateResults(); 
+
+    });
+
+    //trigger hashchange and find any initial constraints
+    $(window).trigger( 'hashchange' );
 });
 
+/**
+ * When a user clicks 'x', remove constraint from query
+ *
+ */
 function removeConstraint( id ){
    
     constraints--;
 
+    var params = $.deparam.fragment();
+    var newparams = {};
+
+    for( var constraint in params ){
+        
+        var parts = constraint.split("_");
+
+        if(parts[1] != id) {
+            newparams[constraint] = params[constraint];
+        }
+
+    }
+
     $("#constraint" + id).remove();
+
+    //overwrite current fragment string
+    jQuery.bbq.pushState(newparams, 2);
 
     if(constraints < 1){
         $("#queryList").html("<i>No query constraints</i>");
