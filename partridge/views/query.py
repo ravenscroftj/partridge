@@ -6,6 +6,8 @@ from partridge.models.doc import Paper,Sentence,Author, C_ABRV
 
 from sqlalchemy import func, or_
 
+PAGE_LIMIT = 10
+
 def query():
     '''Display the query form and then show results if a query is provided
     '''
@@ -22,11 +24,15 @@ def query():
         author_q = Author.query
 
         clauses = []
+        offset = 0
 
         #process arguments
         for key in request.args: 
             value = request.args.get(key,'')
             attr = key.split("_")[0]
+
+            if(attr == "offset"):
+                offset = value
 
             if(attr == "author"):
                 paper_q = paper_q.join("authors")
@@ -40,7 +46,7 @@ def query():
         
         paper_q = paper_q.filter(or_(*clauses))
 
-        papers = paper_q.limit(30).all()
+        papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
         
         result_count = len(papers)
 
@@ -48,5 +54,6 @@ def query():
             papers=papers), total=paper_q.count(), count=len(papers))
     else:
         return render_template("query.html", 
-            paper_count=papercount, 
+            paper_count=papercount,
+            limit=PAGE_LIMIT,
             corescs=C_ABRV)
