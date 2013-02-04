@@ -1,7 +1,9 @@
 #Partridge server config
 DEBUG = True
 #database settings
-SQLALCHEMY_DATABASE_URI = "mysql://root:icecream@localhost/partridge"
+SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
+#You need mysql-python installed for this to work
+#SQLALCHEMY_DATABASE_URI = "mysql://root:password@localhost/partridge"
 #Upload directory
 PAPER_UPLOAD_DIR = "/home/james/dissertation/data/upload"
 #Processed paper directory
