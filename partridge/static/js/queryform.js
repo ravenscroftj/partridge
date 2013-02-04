@@ -74,7 +74,6 @@ $(function(){
 
         jQuery.bbq.pushState(params);
 
-        constraints++;
         constraintID++;
 
         updateResults();
@@ -102,7 +101,7 @@ $(function(){
                 constraintID = id + 1;
             }
 
-            if( $("#constraint" + constraintID).length < 1){
+            if( $("#constraint" + id).length < 1){
 
                 newHTML = "<li id=\"constraint" + id + "\">" 
                 + text + " in " + section
@@ -116,6 +115,9 @@ $(function(){
                 }else{
                     $("#queryList").append(newHTML);
                 }
+
+
+                constraints++;
             }
 
         }
@@ -143,6 +145,7 @@ function removeConstraint( id ){
     for( var constraint in params ){
         
         var parts = constraint.split("_");
+        
 
         if(parts[1] != id) {
             newparams[constraint] = params[constraint];
