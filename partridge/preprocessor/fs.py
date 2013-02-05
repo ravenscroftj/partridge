@@ -46,6 +46,14 @@ class FilesystemWatcher:
         
         self._wm.add_watch(path, self.mask, rec=True)
 
+        #add all files in the given directory to queue
+        for root,dirs,files in os.walk(path):
+            
+            for file in files:
+                if file.endswith("pdf") or file.endswith("xml"):
+                    self.logger.info("Adding %s to queue", file)
+                    self.paper_queue.put(os.path.join(root, file))
+
 
     def start(self):
         self.notifier.start()
