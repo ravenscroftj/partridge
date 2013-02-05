@@ -64,18 +64,25 @@
     <!-- -->
     <div class="row">
 
+      <div class="span12">
+      <p>Partridge is currently in testing. Spotted a problem? <a
+      href="https://github.com/ravenscroftj/partridge/issues/new">Report a bug.</a></p>
+
+      </div>
+
       <!-- Main content -->
-      <div class="span8">{% block content %}{% endblock %}</div>
+      <div class="span8">
+      {% block content %}{% endblock %}</div>
 
       <!-- Navigation Menu -->
       <div class="span4" id="navigation">
         <h2>Navigation</h2>
         <ul>
-          <li><a href="/">Index</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="#">About</a></li>
           <li><a href="{{ url_for('.query') }}">Query</a></li>
           <li><a href="{{ url_for('.upload') }}">Upload Paper</a></li>
-          <li><a href="#"></a><Help</li>
+          <li><a href="#">Help</a></li>
         </ul>
 
         
