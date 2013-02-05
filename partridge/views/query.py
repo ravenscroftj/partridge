@@ -31,6 +31,10 @@ def query():
             value = request.args.get(key,'')
             attr = key.split("_")[0]
 
+            if(attr == "any"):
+                paper_q = paper_q.join("sentences")
+                clauses.append( Sentence.text.like("%%%s%%" % value) )
+
             if(attr == "offset"):
                 offset = value
 
