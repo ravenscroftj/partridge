@@ -6,15 +6,6 @@ import os
 import json
 import flask
 
-class Config:
-  
-  def load(self, conffile):
-    with open(conffile,'r') as f:
-      config = json.load(f)
-
-      for k in config.keys():
-        self.__dict__[k] = config[k]
-
 
 config = flask.Config({})
 
