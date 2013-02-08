@@ -21,6 +21,7 @@ from partridge.tools.converter import PDFXConverter
 from partridge.tools.annotate import RemoteAnnotator
 from partridge.tools.split import SentenceSplitter
 
+
 class PaperDaemon(Thread):
     """The paper daemon handles conversion and preprocessing of papers
     """
@@ -90,6 +91,10 @@ class PaperDaemon(Thread):
         else:
             self.logger.debug("No conversion necessary on file %s", papername)
 
+        #see if the paper already exists
+        if(self.paperExists(infile)):
+            raise Exception("Paper already exists" % infile)
+
         #run XML splitting and annotating
         infile = self.splitXML(infile)
 
@@ -99,6 +104,10 @@ class PaperDaemon(Thread):
         #Finally do some analysis and store the paper in the DB
         return self.storePaperData(infile)
 
+    def paperExists(self, infile):
+        """Return true if paper with same authors and title already in db"""
+        parser = PaperParser()
+        return parser.paperExists(infile)
 
     def storePaperData(self, infile):
         """Call the metadata parser and return DB id for this paper"""

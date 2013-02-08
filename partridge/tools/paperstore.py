@@ -1,11 +1,29 @@
 import xml.dom.minidom
 
+from partridge.config import config
 from partridge.models import db
 from partridge.models.doc import Paper, Sentence, Author 
 
 class PaperParser:
     """This class does the final step of paper preprocessing
     """
+
+    def paperExists(self, filename):
+        """Check the database to see if an identical paper is found"""
+        with open(filename, 'rb') as f:
+            self.doc = xml.dom.minidom.parse(f)
+
+        self.paper = Paper()
+        self.extractTitle()
+        self.extractAuthors()
+
+        author_surnames = [ x.surname for x in self.paper.authors]
+
+        results = Paper.query.join("authors").filter(
+            Paper.title == self.paper.title,
+            Author.surname.in_( author_surnames) )
+
+        return results.count() > 0
 
     def storePaper(self, filename):
         """Store the paper information in the database"""
@@ -189,4 +207,4 @@ if __name__ == "__main__":
         print "Provide the name of a paper to import"
         sys.exit(0)
 
-    parser.storePaper(args[1])
+    print parser.paperExists(args[1])

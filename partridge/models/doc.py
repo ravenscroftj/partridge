@@ -39,7 +39,7 @@ class Paper( db.Model ):
   authors = relationship("Author", secondary=paper_authors, backref="papers")
   abstract = Column(Text())
 
-  def sentenceDistribution(self):
+  def sentenceDistribution(self, returnCounter=False):
     totalSentences = len(self.sentences)
 
     count = Counter()
@@ -47,11 +47,14 @@ class Paper( db.Model ):
     for sent in self.sentences:
         count[sent.coresc] += 1
 
+    if returnCounter:
+        return count
+
     percentages = []
 
     for label, num in count.items():
         percentages.append( (C_ABRV[label], num * 100 / totalSentences) )
-
+    
     return percentages
         
 
