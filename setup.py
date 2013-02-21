@@ -11,7 +11,8 @@ setup(
             'pycurl>=7.19.0',
             'nltk>=2.0.4',
             'progressbar>=2.3',
-            'pyinotify>=0.9.4'],
+            'pyinotify>=0.9.4',
+            'alembic>=0.4.2'],
 
     #program entrypoints
     entry_points ={
