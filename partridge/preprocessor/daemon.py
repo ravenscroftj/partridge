@@ -12,6 +12,7 @@ from multiprocessing import Queue
 from Queue import Empty
 
 from partridge.preprocessor.fs import FilesystemWatcher
+from partridge.preprocessor.notification import send_error_report
 
 from partridge.models import db
 from partridge.models.doc import PaperFile
@@ -56,6 +57,13 @@ class PaperDaemon(Thread):
                     for line in traceback.format_tb(exc_tb):
                         self.logger.error(line)
 
+                    try:
+                        #send the error report
+                        send_error_report( e, exc_tb, 
+                            [file for file,action in self.paper_files])
+                    except Exception as e:
+                        self.logger.error("ERROR SENDING EMAIL: %s", e)
+
                     #set paperObj to none for file cleanup
                     paperObj = None
 
@@ -93,7 +101,7 @@ class PaperDaemon(Thread):
 
         #see if the paper already exists
         if(self.paperExists(infile)):
-            raise Exception("Paper already exists" % infile)
+            raise Exception("Paper already exists")
 
         #run XML splitting and annotating
         infile = self.splitXML(infile)
