@@ -1,0 +1,62 @@
+% Final Dissertation Report
+
+%The document is a report
+\documentclass[11pt,a4paper]{article}
+
+%define horizontal rule
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage{fullpage}
+\usepackage{pdfpages}
+%use the listings package
+\usepackage{listings}
+%use the English language
+\usepackage[english]{babel}
+%use graphics
+\usepackage{graphicx}
+%use wrap figures
+\usepackage{wrapfig}
+%geometry stuffs
+\usepackage{lscape}
+%use natbib bibliography package
+%\usepackage[numbers]{natbib}
+%use harvard bibliography package
+%\usepackage{harvard}	
+%use captions
+\usepackage{caption}
+%use multi-row tables
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{subcaption}
+
+
+\usepackage[nottoc,numbib]{tocbibind}
+
+\begin{document}
+
+%include the title page
+\input{revision}
+\input{title}
+
+%some definitions for paragraph layout stuff
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.5ex plus 0.5ex minus 0.2ex}
+
+%TODO: STATEMENT OF ORIGINALITY
+
+%TODO: ACKNOWLEDGEMENTS
+
+%TODO: ABSTRACT
+
+\tableofcontents
+
+\pagebreak
+
+\section{Introduction}
+
+
+\pagebreak
+\bibliographystyle{IEEEannot}
+\bibliography{report}
+
+\end{document}
