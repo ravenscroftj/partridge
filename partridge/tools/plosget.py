@@ -96,7 +96,7 @@ if __name__ == "__main__":
     o.add_option("-s", "--start", dest="start", default=0,
         help="First row to return [default: 0]")
 
-    o.add_option("-p", "--print", dest="print" action="store_true",
+    o.add_option("-p", "--print", dest="p", action="store_true",
         help="If set, just print the result of the query and exit")
     
    
@@ -117,7 +117,9 @@ if __name__ == "__main__":
 
 
     for doc in response['docs']:
-        print doc
-        #downloadPaper( doc['id'], opts.directory )
+        if(opts.p):
+            print doc
+        else:
+            downloadPaper( doc['id'], opts.directory )
     
 
