@@ -74,11 +74,9 @@ def query( query_params ):
     return response['response']
 
 
-#--------------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    
-
+def main():
+    '''Main script entrypoint for plosget
+    '''
     o = OptionParser()
 
     o.add_option("-q", "--query", dest="query", default="*:*",
@@ -123,3 +121,8 @@ if __name__ == "__main__":
             downloadPaper( doc['id'], opts.directory )
     
 
+
+#--------------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    main()
