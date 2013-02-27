@@ -18,7 +18,8 @@ setup(
     entry_points ={
      'console_scripts' : [
         'partridged = partridge:run',
-        'pdfxconv = partridge.tools.pdfxconv:main'
+        'pdfxconv = partridge.tools.pdfxconv:main',
+        'plosget = partridge.tools.plosget:main'
      ]
     },
     #author details
