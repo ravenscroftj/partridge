@@ -20,12 +20,21 @@ papers are all chemistry papers. Therefore, more papers from other scientific
 domains are needed to get a wider variety of topics and make Partridge useful
 to as wide an audience as possible. 
 
-The `mega-journals' PLOS ONE \url{http://www.plosone.org/} and arXiv
+The `mega-journals' PLOSOne \url{http://www.plosone.org/} and arXiv
 \url{http://www.arxiv.org/} were suggested as sources for more open access
 articles that could be added to Partridge. Both of these sites were found to
-contain large volumes of open access papers. However, most of these papers were
-published as PDF files which meant that some conversion would be required to
-make them compatible with Partridge.
+contain large volumes of open access papers. Most of the journals stored on the
+arXiv site were in PDF format which, as discussed below, are difficult to
+convert and annotate. However, PLOSOne use the SciXML markup language for
+papers published through their journal, which made converting and annotating
+them a lot simpler for Patridge. PLOSOne also publish all of their papers under
+the Creative Commons Share-Alike-By-Attribution license\cite{ccbyattr}. This
+meant that as long as the author information was left intact, all of the papers
+could be used for data mining purposes.
+
+\subsubsection{Acquiring Scientific Papers}
+Once PLOSOne was identified as a suitable source of papers, a method for
+acquiring large batches of papers to be processed was formulated.
 
 \subsubsection{PDF Conversion}
 Most scientific papers available on the internet are formatted as PDF
@@ -113,4 +122,6 @@ Once all the data files and libraries were successfully in place, the Python
 version of SAPIENTA was used to process some of the papers converted from PDF.
 This was a great success and the annotations provided by SAPIENTA seemed to be
 accurate. 
+
+
 
