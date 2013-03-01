@@ -8,7 +8,17 @@
 
 \subsubsection{ Nose and Sniffer }
 
+Nose for python is an extension of Python's built in Unit testing module that
+is supposed to make setting up a testing environment and reusing test code
+easier. Unit tests for Patridge's webserver backend and paper preprocessor were
+written and maintained throughout the project. As each new feature was added to
+the system, the whole suite of tests was executed to provide integration
+coverage and make sure that new features did not break existing code. 
+
 \subsubsection{ Selenium }
+
+The frontend parts of Partridge that were written in Javascript and HTML5 also
+had to be tested to verify that the query and upload forms behaved as expected.
 
 
 \subsection{ User Testing } 
@@ -41,5 +51,5 @@ each\cite{alpaydin2004introduction}\cite{russell2010artificial}.
 \subsubsection{ Partitioned Data Sets}
 
 After a suitably large number of papers were collected and annotated, the
-papers were partitioned into disjoint \emph{training} set and a \emph{testing}
-sets. 
+papers were partitioned into disjoint \emph{training} and \emph{testing}
+sets. The decision tree that is used to classify a paper's "type"  
