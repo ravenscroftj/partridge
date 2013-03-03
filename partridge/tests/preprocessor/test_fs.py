@@ -14,15 +14,6 @@ from nose.tools import raises
 
 from partridge.preprocessor.fs import FilesystemWatcher, PaperProcesser
 
-#---------------------------------------------------------------------------
-class MockPaperProcessor:
-    
-    def process_IN_CLOSE_WRITE(self, evt):
-        pass
-
-
-#---------------------------------------------------------------------------
-
 class FileSystemWatchTester(TestCase):
 
     @classmethod
