@@ -4,6 +4,7 @@ This module tests each of the constituent behaviours of the partridge
 preprocessor daemon.
 
 """
+import os
 import logging
 import unittest
 import tempfile
@@ -23,6 +24,16 @@ class TestPaperDaemon(unittest.TestCase):
             self.outdir,
             logging.getLogger(__name__))
 
+    @classmethod
+    def tearDownClass(self):
+
+        for d in [self.watchdir, self.outdir]:
+            for root,dirs,files in os.walk(d):
+                for file in files:
+                    os.unlink(os.path.join(root, file))
+
+            os.rmdir(d)
+
     def test_paper_exists(self):
         '''Make sure that the right method is called '''
 
@@ -32,3 +43,5 @@ class TestPaperDaemon(unittest.TestCase):
 
             assert call().paperExists('/path/to/file.xml') in mock.mock_calls
 
+    def test_split_xml(self):
+        '''Ensure that '''
