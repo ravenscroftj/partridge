@@ -6,7 +6,11 @@ import tempfile
 import time
 import logging
 
+from Queue import Empty
+
 from unittest import TestCase
+
+from nose.tools import raises
 
 from partridge.preprocessor.fs import FilesystemWatcher, PaperProcesser
 
@@ -51,6 +55,17 @@ class FileSystemWatchTester(TestCase):
                 f.write("hello!")
 
             assert self.fsw.paper_queue.get() == n
+
+    @raises(Empty)
+    def test_add_invalid_paper(self):
+        """Add a load of invalid papers and make sure they don't queue"""
+        
+        filename = os.path.join(self.watchpath, "test.blob")
+
+        with file(filename,'wb') as f:
+            f.write("blah blah")
+
+        self.fsw.paper_queue.get(block=False)
 
 
     def test_queue_files(self):
