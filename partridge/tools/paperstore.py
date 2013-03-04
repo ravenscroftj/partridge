@@ -13,14 +13,13 @@ class PaperParser:
         with open(filename, 'rb') as f:
             self.doc = xml.dom.minidom.parse(f)
 
-        self.paper = Paper()
-        self.extractTitle()
-        self.extractAuthors()
+        title = self.extractTitle()
+        authors = self.extractAuthors()
 
-        author_surnames = [ x.surname for x in self.paper.authors]
+        author_surnames = [ x.surname for x in authors]
 
         results = Paper.query.join("authors").filter(
-            Paper.title == self.paper.title,
+            Paper.title == title,
             Author.surname.in_( author_surnames) )
 
         return results.count() > 0
@@ -32,21 +31,21 @@ class PaperParser:
             self.doc = xml.dom.minidom.parse(f)
 
         #extract metadata
-        self.paper = Paper()
-        self.extractTitle()
-        self.extractAbstract()
+        paper = Paper()
+        paper.title    = self.extractTitle()
+        paper.abstract = self.extractAbstract()
 
         #add authors
-        self.extractAuthors()
+        paper.authors.extend(self.extractAuthors())
         
         #get sentence information
-        self.extractSentences()
+        paper.sentences.extend( self.extractSentences() )
 
         #store the updated database info
-        db.session.add(self.paper)
+        db.session.add(paper)
         db.session.commit()
 
-        return self.paper
+        return paper
 
     def extractSentences(self):
         """Extract sentences and relative coresc concept from xml"""
@@ -63,7 +62,7 @@ class PaperParser:
 
             db.session.add(sent)
 
-            self.paper.sentences.append(sent)
+            yield sent
 
     def extractAbstract(self):
         """Extract the paper abstract from xml"""
@@ -74,7 +73,7 @@ class PaperParser:
         else:
             abEl = self.doc.getElementsByTagName("ABSTRACT")[0]
 
-        self.paper.abstract = self.extractText(abEl)
+        return self.extractText(abEl)
 
 
     def extractAuthors(self):
@@ -98,9 +97,7 @@ class PaperParser:
                     forenames = " ".join(names[0:-1])
 
 
-                author = self.lookupAuthor(surname, forenames)
-                self.paper.authors.append(author)
-
+                yield self.lookupAuthor(surname, forenames)
         
         authEls = self.doc.getElementsByTagName("CURRENT_AUTHOR")
         authEls.extend(self.doc.getElementsByTagName("AUTHOR"))
@@ -134,9 +131,8 @@ class PaperParser:
                         forenames = node.wholeText
             
             
-            author = self.lookupAuthor(surname, forenames)
-            self.paper.authors.append(author)
-
+            yield self.lookupAuthor(surname, forenames)
+        
     def extractTitle(self):
          """Extract paper title from XML"""
          titleEls = self.doc.getElementsByTagName("article-title")
@@ -145,7 +141,7 @@ class PaperParser:
             titleEls = self.doc.getElementsByTagName("TITLE")
 
 
-         self.paper.title = self.extractText(titleEls[0])
+         return self.extractText(titleEls[0])
 
     def lookupAuthor(self, surname, forenames):
         """Given a surname and forename look up author or create new one
