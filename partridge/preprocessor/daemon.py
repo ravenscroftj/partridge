@@ -21,6 +21,7 @@ from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
 from partridge.tools.annotate import RemoteAnnotator
 from partridge.tools.split import SentenceSplitter
+from partridge.tools.papertype import PaperClassifier
 
 class PaperExistsException(Exception):
     pass
@@ -38,6 +39,7 @@ class PaperDaemon(Thread):
         self.fsw.watch_directory(watchdir)
         self.outdir = outdir
         self.logger = logger
+        self.paper_classifier = PaperClassifier()
 
     def run(self):
         """This is the main loop for the paper daemon"""
@@ -114,8 +116,11 @@ class PaperDaemon(Thread):
         #run XML annotation
         infile = self.annotateXML(infile)
 
-        #Finally do some analysis and store the paper in the DB
-        return self.storePaperData(infile)
+        #do some analysis and store the paper in the DB
+        paper = self.storePaperData(infile)
+
+        #finally add paper type to the database
+        return self.classifyPaper(paper)
 
     def paperExists(self, infile):
         """Return true if paper with same authors and title already in db"""
@@ -128,6 +133,19 @@ class PaperDaemon(Thread):
         paper = parser.storePaper(infile)
         self.logger.info("Added paper '%s' to database", paper.title)
         return paper
+
+    def classifyPaper(self, paper):
+        """Decide what 'type' the paper is - case study, research or review"""
+        
+        type = str(self.paper_classifier.classify_paper(paper))
+        self.logger.info("Determined paper %s is of type %s", paper.title,
+            type)
+
+        paper.type = type
+
+        return db.session.merge(paper)
+        
+
     
     def annotateXML(self, infile):
         """Routine to start the SAPIENTA process call"""

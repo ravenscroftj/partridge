@@ -8,22 +8,19 @@ import sys
 import cPickle
 import Orange
 
+
+from optparse import OptionParser
+
 from partridge.config import config
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from partridge.models import db
-from partridge.models.doc import Paper
-
-app = Flask(__name__)
-app.config.update(config)
-
-db.app = app
-db.init_app(app)
+from partridge.models.doc import Paper, C_ABRV
 
 PAPER_TYPE_MODEL_PATH = os.path.join(config['MODELS_DIR'], "paper_types.model")
 
-FEATURES = ['Bac', 'Mot', 'Met']
+FEATURES = C_ABRV.keys()
 
 class PaperClassifier:
 
@@ -41,6 +38,7 @@ class PaperClassifier:
 
     def classify_paper( self, paper ):
         inst = self.instance_from_paper(paper)
+
         return self.classifier( inst )
     
     def instance_from_paper( self, paper ):
@@ -57,11 +55,49 @@ class PaperClassifier:
 
 if __name__ == "__main__":
 
+
+    app = Flask(__name__)
+    app.config.update(config)
+
+    db.app = app
+    db.init_app(app)
+
+
+    parser = OptionParser()
+
+    parser.add_option("-a", "--all", action="store_true", dest="all",
+        help="If is set, updates all unknown papers in database")
+
+
+    options,args = parser.parse_args()
+
     c = PaperClassifier()
-    p = c.get_paper_by_id(sys.argv[1])
+
+    if(options.all):
+        print "ignoring ID arguments and retrieving all papers"
+        papers = Paper.query.all()
+    else:
+        print "Retrieving papers with IDs in %s" % args
+        papers = Paper.query.filter(Paper.id.in_(args)).all()
+
+    for p in papers:
+
+        if( p.type != None ):
+            print "Skipping paper %s" % p.title
+            continue
+        
+        print p.title
+        for author in p.authors:
+            print "\t\t" + author.surname
+
+        cls = str(c.classify_paper(p))
+        
+        print "Predicted Class:" + cls
+
+        print "Saving paper type in database"
+        p.type = cls
+        db.session.merge(p)
     
-    print p.title
-    for author in p.authors:
-        print "\t\t" + author.surname
-    
-    print "Predicted Class:" + str( c.classify_paper(p) )
+    #commit the database session at the end of the run
+    db.session.commit()
+
