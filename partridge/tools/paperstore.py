@@ -89,12 +89,15 @@ class PaperParser:
                     forenameEl = contrib.getElementsByTagName("given-names")[0]
                     surname = self.extractText(surnameEl)
                     forenames = self.extractText(forenameEl)
-                else:
+                elif(len(contrib.getElementsByTagName("name")) > 0):
                     #try and extract names from 'name' tag
                     nameEle = contrib.getElementsByTagName("name")[0]
                     names = self.extractText(nameEle).split(" ")
                     surname = names[-1]
                     forenames = " ".join(names[0:-1])
+                else:
+                    #could be acknowledgement that this is a collaboration
+                    continue
 
 
                 yield self.lookupAuthor(surname, forenames)
