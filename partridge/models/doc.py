@@ -39,6 +39,8 @@ class Paper( db.Model ):
   authors = relationship("Author", secondary=paper_authors, backref="papers")
   abstract = Column(Text())
 
+  type = Column(String(25))
+
   def sentenceDistribution(self, returnCounter=False):
     totalSentences = len(self.sentences)
 

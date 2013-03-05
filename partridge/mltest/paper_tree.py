@@ -59,7 +59,7 @@ class_var.add_value("Research")
 class_var.add_value("Review")
 class_var.add_value("Case Study")
 
-corescs = ['Bac', 'Mot', 'Met'] #C_ABRV.keys()
+corescs =  C_ABRV.keys() #['Bac', 'Mot', 'Met']
 domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in corescs], 
 class_var)
 
