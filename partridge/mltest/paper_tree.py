@@ -59,8 +59,9 @@ class_var.add_value("Research")
 class_var.add_value("Review")
 class_var.add_value("Case Study")
 
-corescs =  C_ABRV.keys() #['Bac', 'Mot', 'Met']
-domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in corescs], 
+FEATURES = C_ABRV.keys()
+
+domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in FEATURES], 
 class_var)
 
 
@@ -75,7 +76,7 @@ for paper in papers:
 
     inst_list = []
     sentdist = paper.sentenceDistribution(True)
-    for coresc in corescs:
+    for coresc in FEATURES:
         inst_list.append( sentdist[coresc] * 100 / len(paper.sentences) )
         
     if(paper.id in review_ids):
@@ -103,9 +104,6 @@ class SimpleTreeLearnerSetProb():
         return self.wrapped(examples)
 
 
-#l = orngTree.TreeLearner( paper_table )
-
-#orngTree.printTxt(l)
 
 tree = Orange.classification.tree.TreeLearner(min_instances=5, measure="gainRatio")
 rf_def = Orange.ensemble.forest.RandomForestLearner(trees=50, base_learner=tree, name="for_gain")
@@ -133,7 +131,7 @@ print "Storing tree learned from data"
 
 import cPickle
 
-tree = rf_def( paper_table)
+tree = rf_simple( paper_table)
 
-with open("forestmodel.model",'wb') as f:
+with open("paper_types.model",'wb') as f:
     cPickle.dump(tree, f)
