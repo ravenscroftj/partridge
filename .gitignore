@@ -51,6 +51,9 @@ pip-log.txt
 *.out
 *.synctex.gz
 
+#ignore the revision file
+*revision.tex
+
 #ignore editor files (stuff ending with ~)
 *~
 *.swp
