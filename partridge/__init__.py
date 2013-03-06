@@ -38,6 +38,8 @@ def create_app( config ):
     app.add_url_rule("/remote", methods=['POST'],
         view_func = views.remote.download_papers)
 
+    app.add_url_rule("/bookmarklet", view_func = views.remote.bookmarklet)
+
     app.add_url_rule("/paper/<paper:the_paper>", 
         view_func=views.paper.paper_profile)
 

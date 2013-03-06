@@ -6,7 +6,7 @@ from urllib2 import urlopen
 
 import urlparse
 
-from flask import current_app, render_template, request, jsonify
+from flask import current_app, render_template, request, jsonify, make_response
 
 from partridge.util.remote import download_paper, paper_preview, \
 find_paper_plos_page
@@ -15,6 +15,12 @@ def scan_url( the_url=None ):
     """Scan the URL for papers to download"""
     
     return render_template("remote_form.html")
+
+def bookmarklet():
+    """Serve up the bookmarklet script"""
+    response = make_response(render_template("bookmarklet.js"))
+    response.headers['Content-type'] = "text/javascript"
+    return response
     
 
 def download_papers():

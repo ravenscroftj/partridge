@@ -31,7 +31,7 @@
 
                 loc = encodeURI(window.location.href);
 
-                var remoteLoc = "http://localhost:5000/remote#url=" + loc;
+                var remoteLoc = "{{ url_for('.scan_url', _external=True) }}#url=" + loc;
 
                 if(jQuery("#partridgeFrame").length == 0){
 
