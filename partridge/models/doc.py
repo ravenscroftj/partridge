@@ -115,4 +115,10 @@ class Author( db.Model ):
 
 #-----------------------------------------------------------------------------
 
+class PaperWatcher( db.Model ) :
 
+    __tablename__ = "paper_watchers"
+
+    filename = Column(String(50), primary_key=True)
+    email = Column(String(50))
+    
