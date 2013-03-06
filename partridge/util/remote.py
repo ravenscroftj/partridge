@@ -4,6 +4,9 @@ import os
 import uuid
 from partridge.tools.paperstore import PaperParser
 
+
+from urllib2 import urlopen
+
 from HTMLParser import HTMLParser
 from flask import render_template
 
