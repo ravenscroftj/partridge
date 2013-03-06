@@ -1,13 +1,15 @@
 """Accept remote URL as a paper file and download it """
 
 import os
-import uuid
 
 from urllib2 import urlopen
 
+import urlparse
+
 from flask import current_app, render_template, request, jsonify
 
-from partridge.tools.paperstore import PaperParser
+from partridge.util.remote import download_paper, paper_preview, \
+find_paper_plos_page
 
 def scan_url( the_url=None ):
     """Scan the URL for papers to download"""
@@ -18,40 +20,16 @@ def scan_url( the_url=None ):
 def download_papers():
 
     if "url" in request.form:
-        
         return do_scan( request.form['url'])
+
     elif "download_url" in request.form:
          url = request.form['download_url']
 
          try:
-            download_paper( url )
+            download_paper( url, current_app.config['PAPER_UPLOAD_DIR'] )
             return jsonify({"status" : "ok"})
          except Exception as e:
             return jsonify({"status" : "error", "message" : str(e)})
-
-def download_paper( url ):
-    """Download the paper at URL and save to uploads folder"""
-
-    destdir = current_app.config['PAPER_UPLOAD_DIR']
-
-    u = urlopen( url )
-    headers = u.info()
-    type = headers['Content-type']
-
-    if type.startswith("text/xml"):
-        ext = ".xml"
-    elif type.startswith("application/pdf"):
-        ext = ".pdf"
-
-    else:
-        raise Exception("URL is not a supported content type")
-
-    with open(os.path.join(destdir,  str(uuid.uuid4()) + ext), 'wb') as f:
-        f.write(u.read())
-
-    u.close()
-
-
 
 def do_scan( url ):
     """Do the URL scan on the given site and get some json back.
@@ -59,8 +37,10 @@ def do_scan( url ):
 
     #run a load of checks on the URL - it might be a paper
 
-
-    u = urlopen( url )
+    try:
+        u = urlopen( url )
+    except:
+        return "Invalid URL. Try again!"
 
     #get the headers
     headers = u.info()
@@ -69,18 +49,37 @@ def do_scan( url ):
     
     #get content type see if HTML, XML etc
     if type.startswith("text/html"):
-        print "Its a page"
-    elif type.startswith("text/xml"):
-        
-        p = PaperParser()
-        p.parseFileObject( u )
-        
-        u.close()
 
+        #see if its a PLOS page and whether we can harvest links
+
+        if( url.find("www.plosone.org/article/info") > -1):
+            #try extracting links to XML doc
+            path = find_paper_plos_page( u.read() )
+            u.close()
+
+            if(path != ""): 
+
+                n = urlparse.urlparse( url )
+                newurl = (n.scheme, n.netloc, path, n.params, n.query, n.fragment)
+
+                newurl = urlparse.urlunparse(newurl)
+                u = urlopen( newurl )
+
+                output = paper_preview( newurl, u )
+                u.close()
+                
+                return output
+
+        ##-----Otherwise if we got to this stage, no HTML handler is set up
+        
         return render_template("remote_download.html", the_url=url,
-            filetype="xml", paper_title=p.extractTitle(),
-            authors=p.extractAuthors(),
-            abstract=p.extractAbstract())
+                filetype="invalid")
+
+
+    elif type.startswith("text/xml"):
+       output = paper_preview( url, u ) 
+       u.close()
+       return output
 
 
     elif type.startswith("application/pdf"):
