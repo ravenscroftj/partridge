@@ -1,0 +1,38 @@
+<div>
+
+    <p>Scan results... </p>
+    <pre><a href="{{ the_url }}" id="theURL"> {{ the_url }} </a></pre>
+
+    {% if filetype == "pdf" %}
+    <p>We have determined that the URL at this location is a PDF File. Do you want to try and add it to Partridge?</p>
+
+    <button id="downloadSingle" class="btn btn-primary">Add</button>
+
+    {% elif filetype == "xml" %}
+    <p>We have determined that the URL at this location is an XML File. Do you
+    want to try and add it to Partridge?</p>
+
+    <button id="downloadSingle" class="btn btn-primary">Add</button>
+    
+    <h3>{{ paper_title }}</h3>
+
+
+    <h3> Authors </h3>
+    <ul>
+    {% for author in authors %}
+    <li>{{author.forenames}} {{author.surname}}</li>
+    {% endfor %}
+    </ul>
+    
+    <h3> Abstract </h3>
+
+    <pre>{{abstract}}</pre>
+    
+
+    {% else %}
+
+    <p>No supported paper formats found at this URL. Please try another URL.</p>
+
+    {% endif %}
+
+</div>

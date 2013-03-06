@@ -24,11 +24,21 @@ class PaperParser:
 
         return results.count() > 0
 
-    def storePaper(self, filename):
-        """Store the paper information in the database"""
+    
+    def parseFileObject(self, f):
+        self.doc = xml.dom.minidom.parse(f)
+
+
+    def parsePaper(self, filename):
+        """Parse a paper but don't store it"""
         #parse the document
         with open(filename,'rb') as f:
-            self.doc = xml.dom.minidom.parse(f)
+            self.parseFileObject(f)
+
+
+    def storePaper(self, filename):
+        """Store the paper information in the database"""
+        self.parsePaper(filename)
 
         #extract metadata
         paper = Paper()
