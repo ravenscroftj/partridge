@@ -12,10 +12,11 @@ from multiprocessing import Queue
 from Queue import Empty
 
 from partridge.preprocessor.fs import FilesystemWatcher
-from partridge.preprocessor.notification import send_error_report
+from partridge.preprocessor.notification import send_error_report, \
+send_success_report
 
 from partridge.models import db
-from partridge.models.doc import PaperFile
+from partridge.models.doc import PaperFile, PaperWatcher
 
 from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
@@ -53,6 +54,9 @@ class PaperDaemon(Thread):
                 self.logger.info("Processing %s", paper)
                 try:
                     paperObj = self._process_paper(paper)
+
+                    self.informWatcher( paper,paperObj=paperObj)
+
                 except Exception as e:
                     #get exception information and dump to user
                     exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -62,12 +66,20 @@ class PaperDaemon(Thread):
                     for line in traceback.format_tb(exc_tb):
                         self.logger.error(line)
 
+                    self.informWatcher( paper, 
+                        exception=e, 
+                        tb=exc_tb,
+                        files=[file for file,action in self.paper_files])
+
                     if not isinstance(e, PaperExistsException):
                     
                         try:
                             #send the error report
                             send_error_report( e, exc_tb, 
                                 [file for file,action in self.paper_files])
+
+
+
                         except Exception as e:
                             self.logger.error("ERROR SENDING EMAIL: %s", e)
 
@@ -75,6 +87,7 @@ class PaperDaemon(Thread):
                     paperObj = None
 
                 finally:
+
                     self.cleanupFiles(paperObj)
 
             except Empty:
@@ -83,6 +96,28 @@ class PaperDaemon(Thread):
 
         # stop the filesystem watcher
         self.fsw.stop()
+
+    def informWatcher(self, papername, **kwargs):
+        '''Inform watchers of papers what happened to them''' 
+
+        basename = os.path.basename(papername)
+
+        q = PaperWatcher.query.filter(PaperWatcher.filename == basename)
+
+        if(q.count() > 0):
+            w = q.first()
+
+            self.logger.info("Informing %s about paper %s", w.email, w.filename) 
+
+            if "paper" in kwargs:
+                send_success_report( kwargs['paperObj'], w.email)
+            else:
+                send_error_report( kwargs['exception'], kwargs['tb'],
+                    kwargs['files'], w.email)
+
+            db.session.delete(w)
+            db.session.commit()
+        
 
     def stop(self):
         self.running = False

@@ -25,10 +25,14 @@ def download_paper( url, destdir ):
     else:
         raise Exception("URL is not a supported content type")
 
-    with open(os.path.join(destdir,  str(uuid.uuid4()) + ext), 'wb') as f:
+    filename = str(uuid.uuid4()) + ext
+
+    with open(os.path.join(destdir,  filename), 'wb') as f:
         f.write(u.read())
 
     u.close()
+
+    return filename
 
 
 def paper_preview( url, file_object ):

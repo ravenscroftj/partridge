@@ -12,6 +12,9 @@ from flask import current_app, render_template, request, jsonify, make_response
 from partridge.util.remote import download_paper, paper_preview, \
 find_paper_plos_page
 
+from partridge.models import db
+from partridge.models.doc import PaperWatcher
+
 PMC_OSI = "http://www.pubmedcentral.gov/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:%s&metadataPrefix=pmc"
 
 def scan_url( the_url=None ):
@@ -34,8 +37,20 @@ def download_papers():
     elif "download_url" in request.form:
          url = request.form['download_url']
 
+
          try:
-            download_paper( url, current_app.config['PAPER_UPLOAD_DIR'] )
+            paper = download_paper( url, 
+                current_app.config['PAPER_UPLOAD_DIR'])
+
+            if "email" in request.form:
+                watcher = PaperWatcher()
+                watcher.email = request.form['email']
+                watcher.filename = paper
+
+                db.session.add(watcher)
+                db.session.commit()
+
+
             return jsonify({"status" : "ok"})
          except Exception as e:
             return jsonify({"status" : "error", "message" : str(e)})
@@ -56,8 +71,6 @@ def do_scan( url ):
             id = m.group(1)
 
             url = PMC_OSI % id
-
-    print url
 
     try:
         u = urlopen( url )
