@@ -185,6 +185,22 @@ $(function(){
 
     });
 
+    $("#paper_type").change( function( event ){
+       
+        type = $("#paper_type").val();
+
+        var params = {}
+
+        params [ "papertype_1" ] = type
+
+        params['offset'] = 0;
+
+        jQuery.bbq.pushState(params);
+
+        updateResults();
+
+    });
+
     /**
      * Set up bbq hooks
      *
@@ -202,6 +218,11 @@ $(function(){
             var section = parts[0];
 
             if(constraint == "offset"){
+                continue;
+            }
+
+            if(constraint == "papertype_1"){
+               $("select[name='paper_type'] option[value='" + text + "']").attr('selected', true);
                 continue;
             }
 

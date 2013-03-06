@@ -46,7 +46,19 @@ dataset through the form below.</p>
             <h4>Filters</h4>
 
             <ul id="filterList">
-                <i>No filters</i>
+                <div id="paperTypeDiv">
+                    <label for="paper_type">Paper Type:</label>
+                    <select name="paper_type" id="paper_type" class="input-small">
+                        <option value="">No Filter 
+                        ({{paper_count}} papers)
+                        </option> 
+                        {% for key in paper_types.keys() %}
+                        <option value="{{ key }}">{{ key }} 
+                        ({{ paper_types[key] }} Papers)
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </ul>
 
         </div>
