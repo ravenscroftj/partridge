@@ -1,6 +1,7 @@
 """Accept remote URL as a paper file and download it """
 
 import os
+import re
 
 from urllib2 import urlopen
 
@@ -10,6 +11,8 @@ from flask import current_app, render_template, request, jsonify, make_response
 
 from partridge.util.remote import download_paper, paper_preview, \
 find_paper_plos_page
+
+PMC_OSI = "http://www.pubmedcentral.gov/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:%s&metadataPrefix=pmc"
 
 def scan_url( the_url=None ):
     """Scan the URL for papers to download"""
@@ -43,6 +46,19 @@ def do_scan( url ):
 
     #run a load of checks on the URL - it might be a paper
 
+
+    if( url.find("ncbi.nlm.nih.gov/pmc/articles/") > -1):
+       
+        #get paper by PMC
+        m = re.search("PMC([0-9]+)", url)
+        
+        if m != None:
+            id = m.group(1)
+
+            url = PMC_OSI % id
+
+    print url
+
     try:
         u = urlopen( url )
     except:
@@ -75,6 +91,8 @@ def do_scan( url ):
                 u.close()
                 
                 return output
+
+
 
         ##-----Otherwise if we got to this stage, no HTML handler is set up
         
