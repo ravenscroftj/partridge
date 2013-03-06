@@ -18,6 +18,10 @@ var remote_paper_backend = "{{ url_for(".download_papers") }}";
 
 <h1> Scan Remote URL </h1>
 
+<a
+href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://localhost:5000/static/js/bookmarklet.js';})();">Partridge
+Paper Scanner Bookmarklet</a>
+
 <p>Enter the URL of a paper hosted with a remote Open Access Journal and we'll
 try and download it and add it to Partridge. Please make sure you have
 permission to add the paper first.</p>
