@@ -1,0 +1,127 @@
+%%------------------------------------------------------
+%  
+%  Implementation include for dissertation
+%
+%------------------------------------------------------
+
+
+\subsection{Technical Challenges}
+
+\subsubsection{ Sourcing Scientific Papers}
+For Partridge to be a success, it is important to include a large variety of
+different scientific papers in its corpus. Therefore, several sources of
+scientific papers were explored and considered.
+
+The most convenient and accessible source is the ART corpus that SAPIENTA was
+trained with\cite{citeulike:11077287}. This corpus is already stored using the
+CoreSC schema and has been pre-annotated. This means that Partridge would not
+need to do any conversion or pre-processing on the papers. These scientific
+papers are all chemistry papers. Therefore, more papers from other scientific
+domains are needed to get a wider variety of topics and make Partridge useful
+to as wide an audience as possible. 
+
+The `mega-journals' PLOSOne \url{http://www.plosone.org/} and arXiv
+\url{http://www.arxiv.org/} were suggested as sources for more open access
+articles that could be added to Partridge. Both of these sites were found to
+contain large volumes of open access papers. Most of the journals stored on the
+arXiv site were in PDF format which, as discussed below, are difficult to
+convert and annotate. However, PLOSOne use the SciXML markup language for
+papers published through their journal, which made converting and annotating
+them a lot simpler for Patridge. PLOSOne also publish all of their papers under
+the Creative Commons Share-Alike-By-Attribution license\cite{ccbyattr}. This
+meant that as long as the author information was left intact, all of the papers
+could be used for data mining purposes.
+
+\subsubsection{Acquiring Scientific Papers}
+Once PLOSOne was identified as a suitable source of papers, a method for
+acquiring large batches of papers to be processed was formulated.
+
+\subsubsection{PDF Conversion}
+Most scientific papers available on the internet are formatted as PDF
+documents. However, Partridge uses and stores documents that use the CoreSC
+schema by Soldatova and Liakata\cite{liakata2008guidelines}. Therefore some
+spike work was carried out to determine the feasibility of converting papers
+published as PDF documents into XML documents. Townsendi \emph{et al.} (2009) liken converting
+PDF to XML to ``converting hamburgers into cows," they go on to explain that
+PDF documents do not contain any semantic data and documents lose much of their
+explicit structure when they are formatted in this way \cite{Townsend2009}.
+Therefore, to convert PDF documents into an NLP-friendly format, some
+heuristics must be used to detect the document's structure\cite{pdfminer}.
+
+This was the first big challenge in the project. A prototype script was written
+using a Python PDF extraction library called PDFMiner
+(\url{http://www.unixuser.org/~euske/python/pdfminer/index.html}).  This
+toolkit already contains some heuristics about how to extract text from PDF
+documents, grouping together characters that appear very close to each other,
+and separating paragraphs and headings when a larger area of whitespace is
+detected\cite{pdfminer}. Despite these rules, the library still produced some
+extraneous whitespace and newline characters as part of the output. A
+subroutine to trim whitespace and newlines was added to the script to resolve
+this problem. 
+
+The next stage was to split the text into sentences in preparation for
+processing with SAPIENTA. With the assistance of the NLTK library, a sentence
+splitting subroutine was implemented. This used a machine learning algorithm
+that had been trained to recognise sentence boundaries to split the text. Each
+sentence was then added to a CoreSC compatible XML document for processing by
+SAPIENTA.
+
+Initially, the PDF conversion subroutine had a very high error rate due to the
+variation in the formatting of scientific papers. It was suggested that PDFX
+(\url{http://pdfx.cs.man.ac.uk/}), a free service hosted by the University of
+Manchester could be used instead of PDFMiner for the initial PDF data
+extraction. The main advantage of PDFX over the PDFMiner library is that it is a
+trained machine learning system that has been trained using a large full-text
+selection of scientific articles; PDFMiner uses more general heuristics
+designed to process a large selection of different types of PDF document.
+
+PDFX also provides output that already has some metadata, such as title,
+author, and abstract, associated with it. PDFMiner did not provide any
+metadata, and it was necessary for the script to guess which passage of text
+was the abstract after the initial text extraction stage.
+
+With the new PDF extraction method in place, the script ran without the need
+to modify either of the whitespace sanitiser or sentence splitter routines. The
+process was much more successful and able to produce SAPIENTA-compatible
+documents from most of the PDF input files that were provided.
+
+\subsubsection{Pre-processing with SAPIENTA}
+
+With a successful PDF conversion script, the next step was to try and run
+SAPIENTA over the converted papers and annotate them, ready for inclusion in
+the Partridge corpus.
+
+By default, SAPIENTA is packaged as a web-based tool, written in Java, that
+can be downloaded (from \url{http://www.sapientaproject.com/software}) and used
+to annotate one paper at a time. Dr Liakata was able to provide information on
+two alternative ways of using the system. One method was to submit a remote
+procedure call (RPC) to a server running SAPIENTA with a batch of papers and
+retrieve the output. The other method was to use an alternative version of the
+code that runs locally in a Python environment and could be modified to process
+papers as a batch.
+
+A script was written to send un-annotated XML documents to the remote SAPIENTA
+server and retrieve a list of annotations. This worked well until the server
+stopped replying to requests. This meant that no further conversions could be
+carried out until the server was repaired and raised concerns about how the
+remote servers might cope with a large number of automated requests from a
+full version of Partridge.
+
+The Python version of SAPIENTA was then downloaded and a test executed.
+Unfortunately there were several data files missing from the package that had
+to be acquired from Dr Liakata. 
+
+SAPIENTA for Python also relies upon a package called CRFSuite which implements
+Conditional Random Fields, a method for segmenting and labelling sequence
+data\cite{CRFsuite}. This library did not compile properly on the test
+environment and its creator had to be contacted via a mailing list (See
+Appendix \ref{sec:crfemail}. After a few days, the owner responded and the
+library was compiled successfully.  
+
+Once all the data files and libraries were successfully in place, the Python
+version of SAPIENTA was used to process some of the papers converted from PDF.
+This was a great success and the annotations provided by SAPIENTA seemed to be
+accurate. 
+
+
+
