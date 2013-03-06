@@ -21,6 +21,7 @@ def create_app( config ):
     import views.upload
     import views.paper
     import views.query
+    import views.remote
 
     app.url_map.converters["paper"] = PaperConverter
     app.url_map.converters["file"] = FileConverter
@@ -30,6 +31,12 @@ def create_app( config ):
 
     app.add_url_rule("/upload", methods=['GET','POST'], 
         view_func = views.upload.upload)
+
+    app.add_url_rule("/remote", methods=['GET'],
+        view_func = views.remote.scan_url)
+
+    app.add_url_rule("/remote", methods=['POST'],
+        view_func = views.remote.download_papers)
 
     app.add_url_rule("/paper/<paper:the_paper>", 
         view_func=views.paper.paper_profile)

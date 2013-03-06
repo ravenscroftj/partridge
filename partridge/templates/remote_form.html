@@ -1,0 +1,40 @@
+{% extends "mainpage.html" %}
+{% block title %} Add Remote Paper {% endblock %}
+{% block extrascripts %}
+<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+<script src="/static/js/jquery.ba-bbq.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+var loader_image = "/static/img/loader.gif";
+var remote_paper_backend = "{{ url_for(".download_papers") }}";
+</script>
+
+<script src="/static/js/remote.js" type="text/javascript"></script>
+
+{% endblock %}
+{% block content %}
+<div class="row">
+
+<div class="span8 contentbox">
+
+<h1> Scan Remote URL </h1>
+
+<p>Enter the URL of a paper hosted with a remote Open Access Journal and we'll
+try and download it and add it to Partridge. Please make sure you have
+permission to add the paper first.</p>
+
+<div>
+<label for="remote_url">Remote URL</label>
+<input type="text" name="remote_url" id="remote_url" >
+
+<button id="urlScanButton"  class="btn btn-primary">Scan URL For Papers</button>
+</div>
+
+<div id="resultsDiv">
+</div>
+
+
+</div>
+
+</div>
+
+{% endblock %}
