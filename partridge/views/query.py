@@ -14,9 +14,14 @@ def query():
 
     searchterms = request.args.get('q','')
 
-    r = db.session.query(func.count(Paper.id))
+    papercount = Paper.query.count()
 
-    papercount = r.first()[0]
+    #do paper counts for all paper types
+    paper_types = {'Review':0, 'Research': 0, 'Case Study': 0}
+
+    for k in paper_types:
+        paper_types[k] = str(Paper.query.filter(Paper.type == k).count())
+
 
     if(searchterms != ''):
 
@@ -37,6 +42,10 @@ def query():
 
             if(attr == "offset"):
                 offset = value
+
+            if(attr == "papertype"):
+                if value != "":
+                    clauses.append( Paper.type == value )
 
             if(attr == "author"):
                 paper_q = paper_q.join("authors")
@@ -60,4 +69,5 @@ def query():
         return render_template("query.html", 
             paper_count=papercount,
             limit=PAGE_LIMIT,
-            corescs=C_ABRV)
+            corescs=C_ABRV,
+            paper_types=paper_types)
