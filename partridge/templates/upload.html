@@ -57,18 +57,13 @@
 
             $(function() {
 
-                
-                if($("#email").val() != ""){
-                    email = encodeURI($("#email").val());
-                }
-
 
                 $("#upload_field").html5_upload({
                     
                     autostart: false,
 
                     url: function(){ return "{{ url_for('.upload')  }}?email="
-                    + email},
+                    +  encodeURI($("#email").val()); },
                     sendBoundary: window.FormData || $.browser.mozilla,
                     onStart: function(event, total) {
                         return true;
