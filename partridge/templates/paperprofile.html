@@ -11,6 +11,9 @@
 {% block content %}
 
 <h2>{{ paper.title }}</h2>
+
+<h3> Paper Type: {{paper.type}} </h3>
+
 <h3>
 {% if paper.authors|count > 0 %}
 {% for author in paper.authors %}
