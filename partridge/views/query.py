@@ -4,7 +4,7 @@ from flask import render_template,request,jsonify
 from partridge.models import db
 from partridge.models.doc import Paper,Sentence,Author, C_ABRV
 
-from sqlalchemy import func, or_
+from sqlalchemy import func, or_, and_
 
 PAGE_LIMIT = 10
 
@@ -57,7 +57,7 @@ def query():
                 clauses.append( ( Sentence.coresc == attr ) & 
                     Sentence.text.like("%%%s%%" % value))
         
-        paper_q = paper_q.filter(or_(*clauses))
+        paper_q = paper_q.filter(and_(*clauses))
 
         papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
         
