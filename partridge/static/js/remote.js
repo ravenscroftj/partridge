@@ -101,15 +101,23 @@ function onDownloadPaper( data, status){
 
 function downloadPaper(){
 
-    url = downloads.pop();
+    var email = $("#email").val()
+
+    var url = downloads.pop();
     currentDownload = url;
+
+    var data = {"download_url" : url}
+
+    if( email != "" ){
+        data['email'] = email
+    }
 
     $("#downloadLog").append("\n Downloading " + url  + "...");
 
     $.ajax({
         "url": remote_paper_backend,
         "type" : "POST",
-        "data" : {"download_url" : url},
+        "data" : data,
         "success" : onDownloadPaper
     });
 

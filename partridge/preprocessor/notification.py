@@ -1,11 +1,16 @@
 import smtplib
 import traceback
+import os
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from partridge.config import config
 
 from flask import url_for
+
+from partridge.models import db
+
+app = db.app
 
 def send_error_report( error, tb, paper_files, to=config['NOTIFICATION_ADDRESS']):
     """ Send an email report when a paper fails to process
@@ -20,7 +25,18 @@ def send_error_report( error, tb, paper_files, to=config['NOTIFICATION_ADDRESS']
     msg.preamble = "Message from the partridge paper processing daemon"
 
     #encode the message
-    text = "Failed to process a paper because %s \n" % error
+    text = """Hi There,
+
+Thanks for submitting your paper to Partridge for processing. Unfortunately,
+there was an error handling your paper and it couldn't be added to the
+database. The error message is below as well as the paper files that you
+uploaded/requested.
+
+Thanks,
+
+The Partridge Paper Processing Monkey
+    
+Failed to process a paper because %s \n""" % error
 
     for line in traceback.format_tb(tb):
         text += line
@@ -31,18 +47,25 @@ def send_error_report( error, tb, paper_files, to=config['NOTIFICATION_ADDRESS']
     for file in paper_files:
         with open(file, 'rb') as f:
             attachment = MIMEText(f.read(), _subtype="xml")
+        
+        basename = os.path.basename(file)
 
-        attachment.add_header('Content-Disposition', 'attachment',filename=file)
+        attachment.add_header('Content-Disposition',
+            'attachment',filename=basename)
+
         msg.attach(attachment)
 
-    send_mail( msg )
+    send_mail( msg, to)
 
 #-----------------------------------------------------------------------------
 
 def send_success_report( paperObj, to=config['NOTIFICATION_ADDRESS']):
    
-    url = url_for(".paper_profile", paper=paperObj, _external=True)
-
+    ctx=app.test_request_context()
+    ctx.push()
+    url = url_for(".paper_profile", the_paper=paperObj, _external=True)
+    ctx.pop()
+ 
     txt = """Hi There,
 
 Thanks for submitting your paper to Partridge. We've done some analysis and
@@ -51,7 +74,8 @@ your paper has been included into our corpus.
 Paper Title: %s
 Paper Type: %s
 
-You can see it here %s
+You can view the paper at the following URL:
+%s
 
 Thanks,
 
@@ -62,13 +86,13 @@ The Partridge Paper Processing Monkey """ % (paperObj.title, paperObj.type, url)
     msg['From']  = config['NOTIFICATION_FROM']
     msg['To'] = to
 
-    send_mail( msg )
+    send_mail( msg, to )
 #-----------------------------------------------------------------------------
 
-def send_mail( msg ):
+def send_mail( msg, to ):
     s = smtplib.SMTP(config['NOTIFICATION_SMTP_SERVER'])
     s.login(config['NOTIFICATION_SMTP_USER'], 
         config['NOTIFICATION_SMTP_PASWD'])
-    s.sendmail(config['NOTIFICATION_FROM'], config['NOTIFICATION_ADDRESS'],msg.as_string())
+    s.sendmail(config['NOTIFICATION_FROM'], to ,msg.as_string())
     s.quit()
 

@@ -54,8 +54,14 @@ class PaperDaemon(Thread):
                 self.logger.info("Processing %s", paper)
                 try:
                     paperObj = self._process_paper(paper)
-
-                    self.informWatcher( paper,paperObj=paperObj)
+                    
+                    try:
+                        self.informWatcher( paper,paperObj=paperObj)
+                    except Exception as e:
+                        self.logger.warn("Watcher couldn't be informed: %s", e)
+                        exc_type, exc_obj, exc_tb = sys.exc_info()
+                        for line in traceback.format_tb(exc_tb):
+                            self.logger.error(line)
 
                 except Exception as e:
                     #get exception information and dump to user
@@ -66,10 +72,16 @@ class PaperDaemon(Thread):
                     for line in traceback.format_tb(exc_tb):
                         self.logger.error(line)
 
-                    self.informWatcher( paper, 
-                        exception=e, 
-                        tb=exc_tb,
-                        files=[file for file,action in self.paper_files])
+                    try:
+                        self.informWatcher( paper, 
+                            exception=e, 
+                            tb=exc_tb,
+                            files=[file for file,action in self.paper_files])
+                    except Exception as emailError:
+                        self.logger.error("Error sending message %s",
+                            emailError)
+
+
 
                     if not isinstance(e, PaperExistsException):
                     
@@ -77,8 +89,6 @@ class PaperDaemon(Thread):
                             #send the error report
                             send_error_report( e, exc_tb, 
                                 [file for file,action in self.paper_files])
-
-
 
                         except Exception as e:
                             self.logger.error("ERROR SENDING EMAIL: %s", e)
@@ -109,7 +119,7 @@ class PaperDaemon(Thread):
 
             self.logger.info("Informing %s about paper %s", w.email, w.filename) 
 
-            if "paper" in kwargs:
+            if "paperObj" in kwargs:
                 send_success_report( kwargs['paperObj'], w.email)
             else:
                 send_error_report( kwargs['exception'], kwargs['tb'],
@@ -229,6 +239,9 @@ class PaperDaemon(Thread):
 
         if(paper == None):
             self.logger.warn("Paper was not processed, removing files")
+        else:
+            #make sure the paper is bound to the session
+            db.session.add(paper)
 
         def keep_file( filename ):
             fileObj = PaperFile( path=filename )

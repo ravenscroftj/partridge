@@ -7,7 +7,7 @@ from urllib2 import urlopen
 
 import urlparse
 
-from flask import current_app, render_template, request, jsonify, make_response
+from flask import current_app as app, render_template, request, jsonify, make_response
 
 from partridge.util.remote import download_paper, paper_preview, \
 find_paper_plos_page
@@ -36,19 +36,26 @@ def download_papers():
 
     elif "download_url" in request.form:
          url = request.form['download_url']
+         
+         paper = download_paper( url, 
+                app.config['PAPER_UPLOAD_DIR'])
 
 
          try:
-            paper = download_paper( url, 
-                current_app.config['PAPER_UPLOAD_DIR'])
+            app.logger.info("Downloading paper at %s", url)
+
 
             if "email" in request.form:
+                app.logger.info("Registering watcher for paper at email %s",
+                    request.form['email'])
+
                 watcher = PaperWatcher()
                 watcher.email = request.form['email']
                 watcher.filename = paper
 
                 db.session.add(watcher)
                 db.session.commit()
+
 
 
             return jsonify({"status" : "ok"})
