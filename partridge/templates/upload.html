@@ -25,9 +25,17 @@
     <input type="file" multiple="multiple" name="paper_file" id="upload_field">
    </div>
 
-    <p>(Optional) If you enter your email into this box, we'll let you know when your paper
-has been processed. We promise not to use your email address for any other
-purpose</p>
+
+    <div>
+        <p>(Optional) If you enter your email into this box, we'll let you know
+        when your paper(s)
+    have been processed. We promise not to use your email address for any other
+    purpose</p>
+
+    <label for="email">Email Address </label>
+    <input type-"text" name="email" id="email" >
+    </div>
+
 
 
    <div>
@@ -38,19 +46,29 @@ purpose</p>
 
         <div id="progress_report">
             <div id="progress_report_name"></div>
+
             <div id="progress_report_status" style="font-style: italic;"></div>
-            <div id="progress_report_bar_container" style="width: 90%; height: 5px;">
-                <div id="progress_report_bar" style="background-color: blue; width: 0; height: 100%;"></div>
+
+            <div class="progress progress-striped" id="progress_report_bar_container">
+                <div class="bar" id="progress_report_bar" style="width: 0; height: 100%;"></div>
             </div>
         </div>
         <script type="text/javascript">
 
             $(function() {
+
+                
+                if($("#email").val() != ""){
+                    email = encodeURI($("#email").val());
+                }
+
+
                 $("#upload_field").html5_upload({
                     
                     autostart: false,
 
-                    url: "{{ url_for('.upload')  }}",
+                    url: function(){ return "{{ url_for('.upload')  }}?email="
+                    + email},
                     sendBoundary: window.FormData || $.browser.mozilla,
                     onStart: function(event, total) {
                         return true;
@@ -82,7 +100,7 @@ purpose</p>
               if($("#termsBox").is(':checked')){
                 $('#upload_field').triggerHandler('html5_upload.start');
               }else{
-                alert("You must accept the terms and conditions.");
+                alert("You must confirm that you are authorized for this upload.");
               }
             })
 
