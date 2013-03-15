@@ -24,6 +24,18 @@ ran the command \emph{nose} from the project directory could automatically find
 and run all of the unit tests in the project without having to set up
 boilerplate test suites as in \emph{JUnit}.
 
+In cases where Partridge calls remote services, reuses code that has already
+been tested, or calls code that runs heavy computation, it can be inconvenient
+or unhelpful to run unit tests that trigger these behaviours. To save time,
+\emph{Mock}\cite{mock2013} was used for verifying these behaviours were being
+called correctly instead.  \emph{Mock} allows the arbitrary replacement of Python
+routines and objects with `mock' objects that mimic the behaviour of the
+original routine and store information on how they were called or used. This
+meant that calls to long-running routines and functions that already have tests
+can be validated and a fake return value sent back to the caller, without
+having to actually execute the code. This technique was used heavily in the
+paper processor which calls SAPIENTA and PDFX and also wraps several data
+classes which have their own unit tests.
 
 
 \subsection{ Selenium \& Frontend Testing }
