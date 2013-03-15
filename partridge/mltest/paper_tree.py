@@ -1,9 +1,15 @@
+from __future__ import division
+
 import Orange,orngTree
 import os
+import sys
+
 
 from partridge.config import config
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+
+from matplotlib import pyplot as plt
 
 from partridge.models import db
 from partridge.models.doc import Paper, PaperFile, Sentence, C_ABRV
@@ -25,6 +31,45 @@ def find_paper_ids( dir ):
                     ids.append(pfile.paper_id)
 
     return ids
+
+
+def printConfusion(confusion,classes):
+    cs = sorted(classes)
+    print 'conf\t\t' + '\t\t'.join(cs)
+    for c in cs:
+        sys.stdout.write(c)
+        for p in cs:
+            sys.stdout.write('\t\t' + str(confusion[c][p]))
+        print
+    print
+
+def printMeasures( confusion ):
+    
+    print "Class\t\tRecall\t\tPrecision\t\tF-measure"
+    print "-----------------------------------------------"
+
+    for c in confusion:
+        recall  = confusion[c][c] / sum(confusion[c].values())
+        prec = confusion[c][c] / sum( [ klass[c] for klass in confusion.values()] )
+        fm     = (2 * prec * recall) / (prec + recall)
+
+        print "%s\t\t%f\t\t%f\t\t%f" % ( c, recall, prec, fm)
+    
+def printResults(tabledata, tree, classes):
+    confusion = {}
+    # Set up empty confusion matrix 
+    for c1 in classes:
+        confusion[c1] = {}
+        for c2 in classes:
+            confusion[c1][c2] = 0
+    # Fill it with results
+    for d in tabledata:
+        correctclass = d.getclass()
+        predclass    = tree(d)
+        confusion[str(correctclass)][str(predclass)] += 1
+
+    printConfusion( confusion, classes )
+    printMeasures( confusion )
 
 
 app = Flask(__name__)
@@ -116,16 +161,38 @@ rf_simple = Orange.ensemble.forest.RandomForestLearner(learner=stp, trees=50, na
 learners = [ rf_def, rf_simple ]
 
 
+results = Orange.evaluation.testing.proportion_test([rf_def,rf_simple], paper_table, times=1)
+points = Orange.evaluation.scoring.compute_ROC(results)[0]
+
+xs = [ p[0] for p in points ]
+ys = [ p[1] for p in points ]
+
+plt.xlim(xmax=1)
+plt.ylabel("True Positives")
+plt.xlabel("False Positives")
+for x,y in [p for p in points]:
+    plt.plot([0,1],[0,1],'k--')
+    plt.plot(xs,ys,'b-')
+
+plt.savefig("ROC.png")
 
 print "--------------------3 Fold Cross Validation------------------------"
 
-results = Orange.evaluation.testing.cross_validation(learners, paper_table, folds=3)
+results = Orange.evaluation.testing.cross_validation(learners, paper_table,
+        folds=3, storeClassifiers=1)
+
+
+
+
 print "Learner  CA     Brier  AUC"
 for i in range(len(learners)):
     print "%-8s %5.3f  %5.3f  %5.3f" % (learners[i].name, \
     Orange.evaluation.scoring.CA(results)[i], 
     Orange.evaluation.scoring.Brier_score(results)[i],
     Orange.evaluation.scoring.AUC(results)[i])
+
+    for k in range(0,3):
+        printResults(paper_table, results.classifiers[k][i], ["Review","Research","Case Study"])
 
 print "Storing tree learned from data"
 
