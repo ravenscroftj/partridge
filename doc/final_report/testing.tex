@@ -15,7 +15,7 @@ refactored. As each new feature was added to the system, the whole suite of
 tests was executed to provide integration coverage and make sure that new
 features did not break existing code. 
 
-\subsection{ Backend \& Infrastructure Testing}
+\subsection{ Back-end \& Infrastructure Testing}
 
 The backend of the system was tested using Python unit tests based upon the
 built in \emph{unittest} module and a third party testing library called
@@ -28,29 +28,68 @@ In cases where Partridge calls remote services, reuses code that has already
 been tested, or calls code that runs heavy computation, it can be inconvenient
 or unhelpful to run unit tests that trigger these behaviours. To save time,
 \emph{Mock}\cite{mock2013} was used for verifying these behaviours were being
-called correctly instead.  \emph{Mock} allows the arbitrary replacement of Python
-routines and objects with `mock' objects that mimic the behaviour of the
+called correctly instead.  \emph{Mock} allows the arbitrary replacement of
+Python routines and objects with `mock' objects that mimic the behaviour of the
 original routine and store information on how they were called or used. This
 meant that calls to long-running routines and functions that already have tests
 can be validated and a fake return value sent back to the caller, without
-having to actually execute the code. This technique was used heavily in the
-paper processor which calls SAPIENTA and PDFX and also wraps several data
-classes which have their own unit tests.
+having to actually execute the code. This technique also allows the isolation
+of problems within the caller code and its commmunication with the target
+functions and will pass even if the target code is broken provided that the
+caller code is correct\cite{saff2004mock}. The Mock testing technique was used
+heavily in the paper processor which calls SAPIENTA and PDFX and also wraps
+several data classes which have their own unit tests.
+
+Partridge's web views were tested using \emph{Flask}'s in-built test client.
+This is an object attached to the \emph{Flask} app that can be used to emulate
+a call to a particular view\cite{flask2012}. Cookies and form information can also be
+manipulated through this client, enabling comprehensive testing of each of the backends
+for Partridge's query, paper upload and bookmarklet capabilities.
 
 
-\subsection{ Selenium \& Frontend Testing }
+\subsection{ Selenium \& Front-end Testing }
 
 The frontend parts of Partridge that were written in Javascript and HTML5 also
 had to be tested to verify that the query and upload forms behaved as expected.
+Selenium\cite{seleniumide} was selected to facilitate these tests.
+
+Selenium is a browser-based unit testing framework that allows developers to
+script actions that a user might undertake whilst browsing a website. Tests for
+selenium can be written in Firefox using the Selenium IDE framework. These
+tests can then be exported as HTML files with embedded javascript instructions
+and executed in any other browser to test compatibility with the product under
+test.
+
+During the development of Partridge, several suites of tests were written using
+Selenium to verify that the query form, paper upload form and bookmarklet code
+behave as expected. Not only do these tests verify the behaviour of the HTML
+and javascript interface, but they also helped to check the higher level
+functionality of Partridge. For example, the test suite for the Partridge query
+form also helps to verify that query backend is working correctly. The Selenium
+tests were executed as part of the integration process when a new feature was
+added to Partridge.
 
 
 \section{ User Testing } 
 
-Once a basic user interface had been implemented, the system was opened for
-user testing. The main Patridge instance
-(\url{http://farnsworth.papro.org.uk/}) was advertised using several social
-media streams and users encouraged to submit bug reports if they experienced
-any problems whilst using the site.
+Raymond(1999) suggests that as the developer of an open source project,
+``Treating your users as co-developers is your least-hassle route to rapid code
+improvement and effective debugging\cite{raymond1999cathedral}." Partridge
+hasn't been developed using an open methodology since, as a dissertation
+project, it has been necessary to avoid complications around work ownership.
+However, Raymond's notion that software should be released early and often and
+tested on its user-base is an effective one and has been widely adopted by both
+open and closed source developers\cite{linux2013}\cite{unity2013}.
+
+As soon as Iteration 1 was complete, Partridge was made open for user testing
+and the primary Patridge instance (\url{http://farnsworth.papro.org.uk/}) was
+advertised using several social media streams. It was made clear to any early
+adopting users that the system was still in development and they were
+encouraged to submit bug reports if they experienced any problems whilst using
+the site. This was a great success and a number of bugs and suggested
+improvements were raised both via the GitHub repository\cite{softlybug2013} and
+in conversation, helping to improve Partridge and find some defects that had
+previously been overlooked.
 
 
 \section{ Evaluating Learning Algorithms }
@@ -85,7 +124,7 @@ is trained on two of the sets and tested with the third. This is repeated three
 times so that all sets are used for both training and testing. Results from
 each of the folds can be represented separately or an average taken.
 
-\subsection{ Result Presentation } 
+\subsection{ Evaluation Result Analysis } 
 
 Results from the evaluation methods discussed above can be presented in a
 number of ways. When working with machine learning systems, it is important to
@@ -98,7 +137,7 @@ classifier's behaviour, whilst confusion matrices, recall, precision and
 f-measure give a detailed view of which specific data types were most
 frequently misclassified and what they were mistaken for. 
 
-\subsubsection{ Classifier Accuracy } 
+\subsection{ Classifier Accuracy } 
 
 The CA of a supervised classifier is simply represented as the percentage of
 the test data that the classifier was able to predict correctly. CA values that
@@ -108,7 +147,7 @@ individual performance values from each of the test/train cycles.
 
 3 Fold Validation on the Partridge corpus  
 
-\subsubsection{ Receiver Operating Characteristics Chart}
+\subsection{ Receiver Operating Characteristics Chart}
 
 Receiver Operating Characteristics (ROC) Charts are used to visually represent
 the trade-off between True Positives(TP) and False Positives(FP) as identified
@@ -134,7 +173,7 @@ Classifier after training on 60\% of the Partridge corpus and testing on 40\%.
 \end{center}
 \end{figure}
 
-\subsubsection{ Area Under Curve }
+\subsection{ Area Under Curve }
 
 The Area Under the Curve (AUC) measure is calculated as a percentage of  the
 area underneath a ROC curve. This can again be used to give an indication of
@@ -152,7 +191,7 @@ because a slightly higher number of training examples (66\% rather than 60\%)
 were used to train the classifiers during 3-fold validation and that the errors
 were averaged out at the end of the process.
 
-\subsubsection{ Confusion Matrices}
+\subsection{ Confusion Matrices}
 
 Confusion Matrices are a way of showing comprehensively which classes a machine
 learning system struggles to discriminate between the most. Known classes are
@@ -235,7 +274,7 @@ may be because case studies can be considered a specific type of review paper
 and the two classes share more similar CoreSC features than they do with
 research papers.  
 
-\subsubsection{ Precision, Recall and F-Measure }
+\subsection{ Precision, Recall and F-Measure }
 
 From a classifier's confusion matrices, it is possible to calculate its
 Precision, Recall and F-Measure values. These can be used to make further

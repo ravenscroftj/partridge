@@ -5,9 +5,9 @@
 %------------------------------------------------------
 
 
-\subsection{Technical Challenges}
+\section{Paper Preprocessor}
 
-\subsubsection{ Sourcing Scientific Papers}
+\subsection{ Sourcing and Acquiring Scientific Papers}
 For Partridge to be a success, it is important to include a large variety of
 different scientific papers in its corpus. Therefore, several sources of
 scientific papers were explored and considered.
@@ -32,11 +32,7 @@ the Creative Commons Share-Alike-By-Attribution license\cite{ccbyattr}. This
 meant that as long as the author information was left intact, all of the papers
 could be used for data mining purposes.
 
-\subsubsection{Acquiring Scientific Papers}
-Once PLOSOne was identified as a suitable source of papers, a method for
-acquiring large batches of papers to be processed was formulated.
-
-\subsubsection{PDF Conversion}
+\subsection{Format Conversion}
 Most scientific papers available on the internet are formatted as PDF
 documents. However, Partridge uses and stores documents that use the CoreSC
 schema by Soldatova and Liakata\cite{liakata2008guidelines}. Therefore some
@@ -85,7 +81,7 @@ to modify either of the whitespace sanitiser or sentence splitter routines. The
 process was much more successful and able to produce SAPIENTA-compatible
 documents from most of the PDF input files that were provided.
 
-\subsubsection{Pre-processing with SAPIENTA}
+\subsection{Pre-processing with SAPIENTA}
 
 With a successful PDF conversion script, the next step was to try and run
 SAPIENTA over the converted papers and annotate them, ready for inclusion in
@@ -123,5 +119,28 @@ version of SAPIENTA was used to process some of the papers converted from PDF.
 This was a great success and the annotations provided by SAPIENTA seemed to be
 accurate. 
 
+\subsection{Paper Type Classification}
+
+\subsection{ Paper Processing Notifications }
 
 
+
+
+\section{ Web Backend }
+
+\subsection{ Server Views }
+
+\subsection{Database Interaction \& SQLAlchemy}
+
+\subsection{Data version control \& Alembic}
+
+\subsection{WSGI and Apache Integration}
+
+
+\section{Web Frontend}
+
+\subsection{Query Interface}
+
+\subsection{ Paper Upload Interface }
+
+\subsection{ Bookmarklet }
