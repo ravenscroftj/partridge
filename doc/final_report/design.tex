@@ -134,6 +134,24 @@ anyway.
 
 \subsection{ Preprocessor }
 
+The preprocessor module is used to annotate and analyse new papers once they 
+have been uploaded by the user via the web interface. The preprocessor is designed 
+as a daemon which uses pyinotify to hook into the operating system and monitor a directory 
+for new papers that have been uploaded. As new papers are detected within the upload directory, 
+they are placed into a process queue and the preprocessor analyses them on a first in first out basis.
+
+When a paper is taken from the queue, a series of processes are run upon it to prepare 
+it for storage in the database. 
+
+\subsubsection{Conversion}
+
+\subsubsection{Sentence Splitting}
+
+\subsubsection{SAPIENTA Annotation}
+
+\subsubsection{Type Analysis}
+
+
 \subsection{ Web Backend }
 
 \subsection{ Web Frontend }
