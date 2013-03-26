@@ -4,26 +4,41 @@
 %
 %------------------------------------------------------
 
+Implementing Partridge from a set of initial designs proved to be a
+challenging but rewarding process. There were a great number of technical
+challenges involved in building the system, a large proportion of the
+implementation time was spent working on the paper preprocessor module.
+However, some aspects of the web interface and backend were also quite
+difficult to tackle. 
 
 \section{Paper Preprocessor}
 
 \subsection{ Sourcing and Acquiring Scientific Papers}
-For Partridge to be a success, it is important to include a large variety of
-different scientific papers in its corpus. Therefore, several sources of
-scientific papers were explored and considered.
 
-The most convenient and accessible source is the ART corpus that SAPIENTA was
-trained with\cite{citeulike:11077287}. This corpus is already stored using the
-CoreSC schema and has been pre-annotated. This means that Partridge would not
-need to do any conversion or pre-processing on the papers. These scientific
-papers are all chemistry papers. Therefore, more papers from other scientific
-domains are needed to get a wider variety of topics and make Partridge useful
-to as wide an audience as possible. 
+In order to provide a useful service to researchers looking for papers, growing
+a large corpus of scientific literature was made a high priority during the
+project. This was especially important when training the Machine Learning
+models since training data sets need to be statistically significant in order
+to provide any meaninful results. Users are given the option, and actively
+encouraged, to upload papers that they own or publish on another author's
+behalf to the Partridge instance. However, to speed up this process, a number
+of papers were acquired from various open access sources.
+
+The most convenient and accessible source was the ART corpus that SAPIENTA was
+trained with\cite{citeulike:11077287}. This corpus was already stored using the
+CoreSC schema and had been pre-annotated. This meant that Partridge would not
+need to do any conversion or pre-processing on the papers. The papers in this
+corpus were all of a similar type and covered similar subject areas within the
+domain of Biochemistry. There were also approximately 260 papers in the
+collection. These papers were used to help establish a conversion process from
+PDF to annotated XML. However, they only formed part of the final corpus.
+Including a large number of papers from other sources provided a more
+comprehensive collection of data for Partridge to learn from.
 
 The `mega-journals' PLOSOne \url{http://www.plosone.org/} and arXiv
 \url{http://www.arxiv.org/} were suggested as sources for more open access
 articles that could be added to Partridge. Both of these sites were found to
-contain large volumes of open access papers. Most of the journals stored on the
+contain large volumes of open access papers. Most of the articles stored on the
 arXiv site were in PDF format which, as discussed below, are difficult to
 convert and annotate. However, PLOSOne use the SciXML markup language for
 papers published through their journal, which made converting and annotating
@@ -32,17 +47,26 @@ the Creative Commons Share-Alike-By-Attribution license\cite{ccbyattr}. This
 meant that as long as the author information was left intact, all of the papers
 could be used for data mining purposes.
 
-\subsection{Format Conversion}
-Most scientific papers available on the internet are formatted as PDF
-documents. However, Partridge uses and stores documents that use the CoreSC
-schema by Soldatova and Liakata\cite{liakata2008guidelines}. Therefore some
-spike work was carried out to determine the feasibility of converting papers
-published as PDF documents into XML documents. Townsendi \emph{et al.} (2009) liken converting
-PDF to XML to ``converting hamburgers into cows," they go on to explain that
-PDF documents do not contain any semantic data and documents lose much of their
-explicit structure when they are formatted in this way \cite{Townsend2009}.
-Therefore, to convert PDF documents into an NLP-friendly format, some
-heuristics must be used to detect the document's structure\cite{pdfminer}.
+A third mega-journal used for downloading papers was the PubMed Centrala (PMC)
+repository \url{http://www.ncbi.nlm.nih.gov/pmc/}. Not all of
+the papers available for viewing at the PMC website are open access. However,
+they do offer a listing for the subset of open access papers available on their
+website. The PubMed Central format is also very similar to the SciXML format
+and compatible with SAPIENTA. Therefore, a large number of PubMed papers were
+also used for the initial training of Partridge.
+
+\subsection{Format Conversion} Most scientific papers available on the internet
+are formatted as PDF documents. However, Partridge uses and stores documents as
+XML markup and uses the CoreSC schema by Soldatova and
+Liakata\cite{liakata2008guidelines} for annotation. Therefore some spike work
+was carried out to determine the feasibility of converting papers published as
+PDF documents into XML documents. Townsend \emph{et al.} (2009) liken
+converting PDF to XML to ``converting hamburgers into cows," they go on to
+explain that PDF documents do not contain any semantic data and documents lose
+much of their explicit structure when they are formatted in this way
+\cite{Townsend2009}.  Therefore, to convert PDF documents into an NLP-friendly
+format, some heuristics must be used to detect the document's
+structure\cite{pdfminer}.
 
 This was the first big challenge in the project. A prototype script was written
 using a Python PDF extraction library called PDFMiner
@@ -116,10 +140,60 @@ library was compiled successfully.
 
 Once all the data files and libraries were successfully in place, the Python
 version of SAPIENTA was used to process some of the papers converted from PDF.
-This was a great success and the annotations provided by SAPIENTA seemed to be
-accurate. 
+This appeared to have been successful. However, after applying some machine
+learning evaluation techniques as discussed in Chapter \ref{chapter:testing},
+it was clear that the Python version of SAPIENTA was not accurate enough to
+provide CoreSC annotations, scoring 44\% accuracy on average. After discussion
+with its author, it became apparent that some of the features provided in the
+server-side version of SAPIENTA had not been implemented in the Python code
+yet. Therefore, it was necessary to switch bak to remote annotation.
 
 \subsection{Paper Type Classification}
+
+Once a large number of papers had been acquired from ART, PlosOne and PubMed
+Central, work could begin on implementing a paper type classifier able to
+discriminate between ``Case Study", ``Research" and ``Review" papers. However,
+for a machine learning classifier to discriminate between classes of data, it
+is necessary to choose a set of features that differ as much as possible
+between the classes. For example, to discriminate between cats and dogs,
+``number of legs" is a poor feature since both species normally have 4.
+However, the noise that these animals make may be a good discriminative feature
+since cats tend to mew and dogs bark. 
+
+\subsubsection{ Feature Selection and Clustering}
+
+There are several well established features used for classifying text within
+the NLP community. However, since Partridge has access to CoreSC annotations
+for each paper, an investigation was carried out into how useful CoreSC data
+can be as a feature for paper type discrimination. Every sentence in a given
+annotated paper has an associated CoreSC label. It is therefore trivial to
+calculate the proportion of a paper made up of sentences with a specified
+CoreSC type. Several papers were manually inspected and the proportions of each
+CoreSC represented within were calculated. A pattern quickly emerged between
+the types of paper and the proportions of each CoreSC within them. 
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.6\textwidth]{images/implementation/review_corescs.png}
+\caption{Contrasting CoreSC content of Review and Research Papers}
+\label{fig:coresc_pies}
+\end{figure}
+
+Figure \ref{fig:coresc_pies} shows the CoreSC content of a review aper and a
+research paper randomly selected from the corpus. The review papers tend to be
+made up almost entirely from Background CoreSC sentences. However, research
+papers are much more evenly spread, made up of several different types of
+CoreSC. This investigation suggested that there is almost certainly a discriminative
+relationship between CoreSC categories and a paper's type. 
+
+Although all of the CoreSC types could be influential in determining a paper's
+type, it was likely that some were more important than others. A further
+investigation was carried out to discover the most effective features for
+categorising the data. Since no classifier model had been trained at this
+point, the data was clustered into three unlabelled groups using the K-means
+clustering algorithm. This algorithm was run with three CoreSC 
+
+
 
 \subsection{ Paper Processing Notifications }
 
@@ -134,6 +208,8 @@ accurate.
 
 \subsection{Data version control \& Alembic}
 
+During the development of Partridge, the structure of the SQL database
+
 \subsection{WSGI and Apache Integration}
 
 
@@ -144,3 +220,21 @@ accurate.
 \subsection{ Paper Upload Interface }
 
 \subsection{ Bookmarklet }
+
+One of the most important user suggestions for improving the usability of
+Partridge and facilitating the rapid expansion of the paper corpus was the
+Paper Upload Bookmarklet. The bookmarklet was not in the initial system design
+and was added as an extra feature towards the end of the project. It allows
+users browsing sites such as PubMed Central and PlosOne to add papers that
+interest them to Partridge without having to download the paper from the
+journal and upload it to the Partridge server manually. 
+
+The system is implemented as a standard web page wrapped inside a javascript
+bootstrap module that can be added as a bookmark to a user's web browser. When
+the user finds a paper that they wish to add to Partridge on one of the
+compatible journal sites, they click the bookmark, loading an embedded frame in
+their current browser window and automatically uploading the paper that the
+user is looking at to Partridge's server. 
+
+The bookmarklet trivialises the act of adding new papers to Partridge and this
+should help to encourage users to help grow Partridge's paper corpus. 
