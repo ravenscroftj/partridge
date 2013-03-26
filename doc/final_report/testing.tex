@@ -4,6 +4,16 @@
 %
 %------------------------------------------------------
 
+%introduction to testing
+Throughout the implementation of the project, testing has remained a very
+important aspect of Partridge's development. A number of testing techniques
+have been used in order to evaluate the individual behaviours of Partridge's
+key components both separately and the system as a whole. This chapter
+discusses the techniques used to test Partridge, the results from these tests
+and any implications that these results have had upon development of the
+project. Combining all of these testing and evaluation techniques provides an
+in depth view of how useful Partridge is and how it can be improved upon.
+
 \section{ Unit Testing }
 
 At the beginning of the project, Unit tests for Patridge's server and paper
@@ -70,27 +80,6 @@ tests were executed as part of the integration process when a new feature was
 added to Partridge.
 
 
-\section{ User Testing } 
-
-Raymond(1999) suggests that as the developer of an open source project,
-``Treating your users as co-developers is your least-hassle route to rapid code
-improvement and effective debugging\cite{raymond1999cathedral}." Partridge
-hasn't been developed using an open methodology since, as a dissertation
-project, it has been necessary to avoid complications around work ownership.
-However, Raymond's notion that software should be released early and often and
-tested on its user-base is an effective one and has been widely adopted by both
-open and closed source developers\cite{linux2013}\cite{unity2013}.
-
-As soon as Iteration 1 was complete, Partridge was made open for user testing
-and the primary Patridge instance (\url{http://farnsworth.papro.org.uk/}) was
-advertised using several social media streams. It was made clear to any early
-adopting users that the system was still in development and they were
-encouraged to submit bug reports if they experienced any problems whilst using
-the site. This was a great success and a number of bugs and suggested
-improvements were raised both via the GitHub repository\cite{softlybug2013} and
-in conversation, helping to improve Partridge and find some defects that had
-previously been overlooked.
-
 
 \section{ Evaluating Learning Algorithms }
 
@@ -118,11 +107,12 @@ training, even at the expense of test data\cite{witten2005data}."
 \subsection{ Three Fold Validation }
 
 Three fold validation is a commonly used method for using all of the available
-data for both testing and training whilst still maintaining . As the name
-suggests, test data is split into three disjoint sets and then the classifier
-is trained on two of the sets and tested with the third. This is repeated three
-times so that all sets are used for both training and testing. Results from
-each of the folds can be represented separately or an average taken.
+data for both testing and training whilst still maintaining the separation
+between training and testing data. As the name suggests, test data is split
+into three disjoint sets and then the classifier is trained on two of the sets
+and tested with the third. This is repeated three times so that all sets are
+used for both training and testing. Results from each of the folds can be
+represented separately or an average taken.
 
 \subsection{ Evaluation Result Analysis } 
 
@@ -145,7 +135,12 @@ tend towards 1.0 correspond to a more accurate classifier. In a Three Fold
 validation, the CA for the classifier is calculated by taking the mean of the
 individual performance values from each of the test/train cycles. 
 
-3 Fold Validation on the Partridge corpus  
+3 Fold Validation on the Partridge corpus using the Random Forest Classifier
+for paper type gives a CA measure of 87.9\%. While this provides a positive,
+general overview of the classifier performance. It does not provide detail on
+what data was incorrectly classifier nor any insight on how the system could be
+improved. The following sections discuss techniques that provide more useful
+measures of performance for machine learning classifiers.
 
 \subsection{ Receiver Operating Characteristics Chart}
 
@@ -162,7 +157,7 @@ the TP-FP ratio is equal. There may be multiple plots on the axes if several
 learning algorithms are under evaluation. A graph plot that presents a steep
 curve that mostly fits into the upper left half of the graph shows a high TP-FP
 ratio which is a sign that the classifier is working well.  Figure
-\ref{fig:roc_random_forest} shows the ROC Chart for Partridge's Topic
+\ref{fig:roc_random_forest} shows the ROC Chart for Partridge's Paper Type
 Classifier after training on 60\% of the Partridge corpus and testing on 40\%.
 
 \begin{figure}[!h]
@@ -209,16 +204,15 @@ in Partridge can be seen in Figure \ref{fig:conf_matrices} below.
 
 \caption{Fold 1 Results}
 \centering
-\begin{tabular}{| l || l | l | l |}
+\begin{tabular}{ | r l l l l |}
 \hline
-	&	Case Study&	Research&	Review\\
-\hline
-\hline
-Case Study&	83&		2&		12\\
-\hline
-Research&	3&		255&		0\\
-\hline
-Review&		4&		2&		159\\
+\multirow{5}{*}{\begin{sideways}{Actual Class}\end{sideways}}
+&&\multicolumn{3}{c|}{Predicted Class} \\
+&& \multicolumn{1}{c}{Case Study} &	Research&	\multicolumn{1}{c|}{Review}\\
+\cline{3-5}
+& \multicolumn{1}{c|}{Case Study} &	83&		2&		12\\
+&\multicolumn{1}{c|}{Research}&	3&		255&		0\\
+&\multicolumn{1}{c|}{Review}&	4&		2&		159\\
 \hline
 
 \end{tabular}
@@ -229,16 +223,15 @@ Review&		4&		2&		159\\
 
 \caption{Fold 2 Results}
 \centering
-\begin{tabular}{| l || l | l | l |}
+\begin{tabular}{ | r l l l l |}
 \hline
-&	        Case Study&     Research&	Review\\
-\hline
-\hline
-Case Study&     85    &         2&		10\\
-\hline
-Research&	0   &		256&		2\\
-\hline
-Review&		5&		1&		159\\
+\multirow{5}{*}{\begin{sideways}{Actual Class}\end{sideways}}
+&&\multicolumn{3}{c|}{Predicted Class} \\
+&& \multicolumn{1}{c}{Case Study} &	Research&	\multicolumn{1}{c|}{Review}\\
+\cline{3-5}
+&\multicolumn{1}{c|}{Case Study}&   85    &         2&		10\\
+&\multicolumn{1}{c|}{Research}&	0   &		256&		2\\
+&\multicolumn{1}{c|}{Review}&	5&		1&		159\\
 \hline
 \end{tabular}
 
@@ -248,14 +241,15 @@ Review&		5&		1&		159\\
 
 \caption{Fold 3 Results}
 \centering
-\begin{tabular}{| l || l | l | l |}
+\begin{tabular}{ | r l l l l |}
 \hline
-&		Case Study&	Research&	Review\\
-\hline
-\hline
-Case Study&	82&		3	&	12 \\
-Research&	0&		257	&	1\\
-Review&		7&		2	&	156\\
+\multirow{5}{*}{\begin{sideways}{Actual Class}\end{sideways}}
+&&\multicolumn{3}{c|}{Predicted Class} \\
+&& \multicolumn{1}{c}{Case Study} &	Research&	\multicolumn{1}{c|}{Review}\\
+\cline{3-5}
+&\multicolumn{1}{c|}{Case Study}&	82&		3	&	12 \\
+&\multicolumn{1}{c|}{Research}&	0&		257	&	1\\
+&\multicolumn{1}{c|}{Review}&		7&		2	&	156\\
 \hline
 \end{tabular}
 
@@ -339,3 +333,85 @@ each iteration of the three fold validation sequence. The results in Figure
 three document types within Partridge. These results verify that Case Study is
 the hardest document type to classify as discussed above.
 
+\section{ User Testing } 
+
+Raymond(1999) suggests that for developers of open source projects, ``Treating
+your users as co-developers is your least-hassle route to rapid code
+improvement and effective debugging\cite{raymond1999cathedral}." Partridge
+hasn't been developed using an open methodology since, as a dissertation
+project, it has been necessary to avoid complications around work ownership.
+However, Raymond's notion that software should be released early and often and
+tested on its user-base is an effective one and has been widely adopted by both
+open and closed source developers\cite{linux2013}\cite{unity2013}.
+
+A publicly available instance of Partridge that can be accessed at
+(\url{http://farnsworth.papro.org.uk/}) was made available as soon as iteration
+1 was complete and advertised using several social media streams. This was an
+effort to attract as many users to Partridge as possible in the early stages of
+the project in order to provide user testing. It was made clear to any early
+adopting users that the system was still in development and they were
+encouraged to submit bug reports if they experienced any problems whilst using
+the site. This was a great success and a number of bugs and suggested
+improvements were raised both via the GitHub repository and in conversation,
+helping to improve Partridge and find some defects that had previously been
+overlooked. For example, one user noticed that the full text search within
+Partridge was not behaving as expected and returning all papers regardless of
+their contents.  The relevant code was repaired and the bug marked as resolved
+on GitHub\cite{softlybug2013}.
+
+
+\subsection{Intrinsic Feedback} 
+
+Intelligent information retrieval using machine learning techniques is a
+complicated and multifaceted process. Partridge attempts to encode this complex set of
+procedures into a usable and understandable interface designed for the use of
+non-programmers. It was therefore important to understand how usable the
+interface is for non-technical users.
+
+Most users who commented on the system found that the query form made a lot of
+sense and helped them to identify relevant papers very quickly. 
+
+There were a few comments on how the uploader system could be improved. Users
+were confused by the preprocessor and wondered why their paper didn't appear in
+the corpus as soon as they submitted it. The most popular solution to this was
+to add an email field to the uploader so that people who submit papers to the
+corpus are notified when their paper is incorporated. This also provided
+feedback for users whose papers could not be added to the corpus due to errors
+or rights ownership issues.
+
+Another suggestion was to add a twitter bot to announce when new papers have
+been added to the system. This would provide another way of issuing user
+feedback when a paper is submitted and would also help to draw users to
+Partridge - especially when high profile papers are successfully added to the
+system.
+
+\subsection{Extrinsic Feedback}
+
+As well as finding out how Partridge performs as a system, it was interesting
+to find out how Partridge blended in to the information retrieval ecosystem around
+it and how effectively it could be used day to day or in combination with any other
+online tools.
+
+One of the most important suggestions made was the addition of the Bookmarklet
+tool. This had the effect of making paper submission to Partridge a lot more
+convenient and intuitive. It also helped reduce confusion over paper
+rights since the bookmarklet only works on sites which license
+their papers under permissive licenses and allow data mining. 
+
+\section{Summary}
+
+The extensive range of testing methodologies used throughout the project meant
+that Partridge has been developed into a mature, stable and highly usable
+product. Unit testing has ensured that all procedural and scripted
+functionality within Partridge is predictable and reliable. Machine Learning
+Evaluation has ensured that an accurate and precise paper type classification
+mechanism has been developed and User Testing has ensured that non-technical
+users are able to use Partridge effectively.
+
+Testing has been highly effective throughout the project and any potential
+issues with the system were identified very early on and resolved due to the
+`open-source-esque' development lifecycle used during the project.  Testing has
+also provided a great deal of understanding about just how useful Partridge is
+as well as highlighting its limitations. It also raises questions as to the
+future development of the project and provides a number of ideas for future
+improvements.

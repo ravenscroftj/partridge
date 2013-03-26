@@ -130,28 +130,196 @@ paper preprocessor while a paper is still being analysed and all finished
 papers are added to the database which the web backend has full access to
 anyway.
 
-\subsection{ Data Storage }
 
 \subsection{ Preprocessor }
 
-The preprocessor module is used to annotate and analyse new papers once they 
-have been uploaded by the user via the web interface. The preprocessor is designed 
-as a daemon which uses pyinotify to hook into the operating system and monitor a directory 
-for new papers that have been uploaded. As new papers are detected within the upload directory, 
-they are placed into a process queue and the preprocessor analyses them on a first in first out basis.
+The preprocessor module is used to annotate and analyse new papers once they
+have been uploaded by the user via the web interface. The preprocessor is
+designed as a daemon which hooks into the operating system in order to monitor
+a directory for new papers that have been uploaded. As new papers are detected
+within the upload directory, they are placed into a process queue and the
+preprocessor analyses them on a first in first out basis. When a paper is taken
+from the queue, a series of processes are run upon it to prepare it for storage
+in the database. These processes are illustrated in Figure
+\ref{fig:flow_preprocessor}.
 
-When a paper is taken from the queue, a series of processes are run upon it to prepare 
-it for storage in the database. 
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.6\textwidth]{images/design/flow_preprocessor.png}
+\caption{A flowchart illustrating the preprocessor processes}
+\label{fig:flow_preprocessor}
+\end{figure}
 
-\subsubsection{Conversion}
+\subsubsection{PDF Conversion}
 
-\subsubsection{Sentence Splitting}
+The first process in the processing pipeline is conversion of the papers to a
+format that can be analysed by SAPIENTA. Currently, SAPIENTA supports the
+SciXML\cite{rupp2006flexible} and PubMed Central\cite{pubmedDTD} DTDs. However,
+papers stored in PDF format must still be converted in order to be processed.
+PDF Files will passed through a routine which extracts text from the paper and
+adds the relevant XML tags to make the document SAPIENTA compatible. This
+document is then passed forward to the splitter. Papers that are already in a
+compatible format are passed forward without any action being taken.
+
+\subsubsection{Sentence Splitting} 
+
+SAPIENTA allocates each sentence within a paper a separate CoreSC label.
+However, the sentence boundaries must be detected before the document is passed
+into SAPIENTA for annotation. The sentence splitter uses a regular expression
+to split the sentences within the document and then adds the necessary
+\verb|<s>| tags to the markup to indicate the location of each sentence.
 
 \subsubsection{SAPIENTA Annotation}
 
-\subsubsection{Type Analysis}
+Once the paper has been split, SAPIENTA is used to annotate each sentence with
+a relevant CoreSC allocation. These labels are calculated based upon the
+sentence's location within the paper as well pairs and triplets of words found
+consecutively within the sentence. After this stage, the paper is passed
+forwards to be further classified by Partridge.
 
+
+\subsubsection{Feature Extraction and Classifiers}
+
+The final stage in the preprocessor pipeline is paper classification. During
+this stage, features are extracted from the papers and used to classify the
+paper in three different ways. The paper's type: case study or review paper
+etc. is determined using the presence or absence of different CoreSC labels
+within the paper and their relative proportions. The type of paper is
+determined by the presence of domain specific nouns and adjectives within the
+paper. For example, a biology paper might contain words such as enzyme or amino
+acid. The result of the paper, i.e. whether the paper was conclusive and if the
+results were positive or negative, are detected through the presence or absense
+of words with a strong sentiment polarity as discussed by Wilson et al
+(2005)\cite{Wilson05Polarity}. The results from the whole process are then
+passed into the data store and saved.
+
+\subsubsection{File Retention and Error Handling}
+
+Each of the independent processes described above generate new files which are
+temporarily stored on the server until all of the sub-processes are complete.
+Once a paper analysis cycle has finished, the preprocessor triggers a cleanup
+operation that removes intermediate files from the system, storing only the
+initially uploaded file (which may be a PDF) and the final annotated file in a
+permanent location on the filesystem.  The whole analysis process for a single
+paper is also wrapped within an error handling block that automatically run the
+cleanup routine if something goes wrong. This prevents the system filling up
+with invalid files. This mechanism is shown in Figure
+\ref{fig:preprocessor_overview}.
+
+\begin{figure}[!h]
+\vspace{5mm}
+\centering
+\includegraphics[width=0.6\textwidth]{images/design/paper_processor_overview.png}
+\caption{Preprocessor System Overview}
+\label{fig:preprocessor_overview}
+\end{figure}
+
+
+\subsection{ Data Storage }
+It is expected that a given Partridge instance may grow in size to contain
+thousands of individual papers that have been annotated and are available to
+the web backend for inclusion into a user's search results. Reading in and
+parsing each individual XML file stored in the system is not really feasible
+when handling a HTTP request from the web frontend, this sort of process would
+take a long time to execute. To provide fast search and retrieval of paper
+data, a Relational Database Management server (RDBMS) was chosen for storage of
+papers that have been preprocessed using the system described above. An
+overview of the database schema is illustrated in Figure \ref{fig:e-r-diagram}.
+
+\begin{figure}[th]
+\vspace{5mm}
+\centering
+\includegraphics[width=0.8\textwidth]{images/design/e-r-diagram.png}
+\caption{Entity Relationship Diagram for Partridge's RDBMS}
+\label{fig:e-r-diagram}
+\end{figure}
+
+Partridge's database is required to keep track of all of the papers that have
+been added to the system. The Paper entity represents a single paper stored in
+Partridge. Information extracted by the classifiers such as the paper's type,
+topic and result are stored as part of the main paper entity. The title and
+topic are also stored for easy retrieval. One of the key requirements of
+Partridge is querying within a CoreSC field of a paper. Therefore, all
+sentences are stored as entities along with their CoreSC annotation. The sentence
+text is an index field to facilitate fast recall from the database.
+
+It is probable that any given author may have contributed to multiple papers
+stored within the system.  Therefore authors are treated as entities within the
+RDBMS and the many to many relationship between papers and authors is
+facilitated using the intermediary table PaperAuthors. A PaperAuthor record
+contains a boolean field used to indicate whether an author linked to a
+specific paper was the primary author on that paper.
+
+As discussed above, two or more files per paper are always stored within
+partridge so that a user can retrieve them for reading. Therefore files are
+kept in their own table along with a record of their type (eg. XML or PDF). 
 
 \subsection{ Web Backend }
 
+Partridge's web backend component is used to initially serve the HTML and
+JavaScript used to represent the User interface and to communicate with the
+JavaScript frontend running inside the browser via HTTP requests. It is used to
+interpret HTTP request fields into SQL queries and mediate queries made to the
+RDBMS on behalf of the user. An example use of the backend system can be seen
+in Figure \ref{fig:backend_sequence}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.75\textwidth]{images/design/backend_sequence.png}
+\caption{Sequence Diagram for a Query in Partridge}
+\label{fig:backend_sequence}
+\end{figure}
+
+The Flask web framework uses a model view controller-like architecture. Each
+behaviour of the server: handling paper uploads, displaying paper query
+results, allowing users to download papers, can be considered a `view'. Views
+register themselves with Flask under a specific URL. When flask receives a
+request to any such URL, it automatically routes the request through to the
+View object\cite{flask2012}.
+
+\subsubsection{Query View Backend}
+The query view is has two key responsibilities. The first is to display the
+query form to the user. This is a simple matter of sending an HTML file stored
+on the server to the browser that made the request. 
+
+The key responsibility of the query view is to translate incoming HTTP requests
+into search queries, retrieve a set of papers from the RDBMS  and return human
+readable results to the user. One of the most important steps in this process
+is to cleanse the incoming data and prevent SQL injection attacks that
+unscrupulous users may attempt to use to damage or purge the Partridge
+database. The system must also be capable of interpreting data retrieved from
+the database into HTML to be returned to the user's browser. The server
+mechanism utilises Flask's built in templating mechanism in order to quickly
+transform Python-specific data structures into valid HTML markup and return it
+to the user\cite{flask2012}.
+
+\subsubsection{Paper Upload View Backend}
+
+The paper upload view backend is responsible for handling file uploads from the
+HTML form and ensuring that files are placed in the right place so that the
+preprocessor can find them. The main challenge for this submodule is storing
+the file using a unique name so that different users uploading files don't
+overwrite each other's data. This is handled through the use of the Python UUID
+module which generates universally unique 128-bit identifiers as detailed in RFC
+4122\cite{rfc4122}. The low rate of collisions between UUID values should
+insure that the chances of two paper filenames colliding is very low. 
+
+The view also carries out validation on the filename to ensure that it is an
+XML or PDF file. No further validation is carried out by this system since the
+paper processor carries out file contents inspection and removes invalid file
+types automatically.
+
+
 \subsection{ Web Frontend }
+
+The web frontend consists of sets of HTML and JavaScript interfaces that are
+equipped to communicate with their relevant backend system using
+
+\subsubsection{ Query Form }
+
+\subsubsection{ Results Page }
+
+\subsubsection{ Paper Profile Page }
+
+\subsubsection{Paper Upload Form}
+Paper uploading is a 
