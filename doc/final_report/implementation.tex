@@ -208,7 +208,13 @@ clustering algorithm. This algorithm was run with three CoreSC
 
 \subsection{Data version control \& Alembic}
 
-During the development of Partridge, the structure of the SQL database
+During the development of Partridge, the structure of the SQL database used to
+store the papers changed a lot due to modifications to the ORM modules as
+discussed above. These structural changes meant that the production database at
+\url{http://farnsworth.papro.org.uk/} and the development database were not
+compatible and that updates to the code on the development server would break
+the application on the prodution server unless the database structure was also
+updated. 
 
 \subsection{WSGI and Apache Integration}
 
