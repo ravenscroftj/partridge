@@ -2,6 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -16,7 +17,7 @@
    sodipodi:version="0.32"
    inkscape:version="0.48.4 r9939"
    version="1.0"
-   sodipodi:docname="Results.svg"
+   sodipodi:docname="PaperProfile.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:export-filename="/home/james/dissertation/doc/final_report/design/Results.png"
    inkscape:export-xdpi="90"
@@ -35,52 +36,46 @@
   </metadata>
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient4522"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4524" />
+    </linearGradient>
     <clipPath
        id="SVGID_56_">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_55_"
-         overflow="visible"
+      <rect
+         height="24"
+         width="24"
+         y="409.26001"
+         x="556.10999"
          id="use337" />
     </clipPath>
     <clipPath
        id="SVGID_58_">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_57_"
-         overflow="visible"
+      <rect
+         height="25"
+         width="25"
+         y="408.76001"
+         x="555.60999"
          id="use345" />
     </clipPath>
     <clipPath
        id="SVGID_52_">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_51_"
-         overflow="visible"
-         id="use313" />
+      <path
+         d="m 534.11,409.26 h 92 c 1.104,0 2,0.896 2,2 v 20 c 0,1.104 -0.896,2 -2,2 h -92 c -1.104,0 -2,-0.896 -2,-2 l 0,0 v -20 c 0,-1.105 0.896,-2 2,-2 z"
+         id="use313"
+         inkscape:connector-curvature="0" />
     </clipPath>
     <clipPath
        id="SVGID_54_">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_53_"
-         overflow="visible"
+      <rect
+         height="25"
+         width="96.999001"
+         y="408.76001"
+         x="531.60999"
          id="use321" />
     </clipPath>
   </defs>
@@ -94,9 +89,9 @@
      objecttolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="427.43589"
-     inkscape:cy="567.46857"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="371.05753"
+     inkscape:cy="686.78037"
      inkscape:document-units="px"
      inkscape:current-layer="svg2"
      showgrid="true"
@@ -108,7 +103,7 @@
      inkscape:window-y="0"
      inkscape:snap-bbox="true"
      inkscape:window-maximized="1"
-     inkscape:snap-global="false">
+     inkscape:snap-global="true">
     <sodipodi:guide
        position="30,0"
        orientation="1,0"
@@ -320,20 +315,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="Interface"
-     sodipodi:insensitive="true">
-    <text
-       xml:space="preserve"
-       style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="60"
-       y="260"
-       id="text3940"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3942"
-         x="60"
-         y="260">Query Results</tspan></text>
-  </g>
+     inkscape:label="Interface" />
   <text
      xml:space="preserve"
      style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -416,374 +398,313 @@
        id="tspan3937"
        x="84.841125"
        y="269.7757" /></text>
-  <path
-     style="fill:none;stroke:#000000;stroke-width:1.76994395px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 50.566351,289.5 657.867299,0"
-     id="path3944"
-     inkscape:connector-curvature="0" />
+  <text
+     xml:space="preserve"
+     style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="60.082031"
+     y="261.27344"
+     id="text4335"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4337"
+       x="60.082031"
+       y="261.27344">Towards an Automated Search System</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="67.84082"
+     y="286.71484"
+     id="text4339"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4341"
+       x="67.84082"
+       y="286.71484"
+       style="font-size:22px">Fred Bloggs et al.</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="65.203125"
+     y="369.66016"
+     id="text4343"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4345"
+       x="65.203125"
+       y="369.66016"
+       style="font-weight:bold">Abstract</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="60"
+     y="550"
+     id="text4343-8"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4345-8"
+       x="60"
+       y="550"
+       style="font-weight:bold" /></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="450"
+     y="370"
+     id="text4343-9"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4345-2"
+       x="450"
+       y="370"
+       style="font-weight:bold">CoreSC Analysis</tspan></text>
   <g
-     id="g4108"
-     transform="translate(-81.416992,-0.63671875)">
-    <text
-       sodipodi:linespacing="125%"
-       id="text3946"
-       y="280.63672"
-       x="141.41699"
-       style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Sans"
-       xml:space="preserve"><tspan
-         y="280.63672"
-         x="141.41699"
-         id="tspan3948"
-         sodipodi:role="line">&lt;&lt; Refine Query</tspan></text>
+     transform="translate(229.23101,-180.704)"
+     id="g3708">
     <path
+       style="fill:#f2f2f2"
        inkscape:connector-curvature="0"
-       id="path3950"
-       d="M 141.72759,284.5 259.5,284.5"
-       style="fill:#0000ff;stroke:#0000c4;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       id="path117"
+       d="m 119.55272,571.204 h 373.05216 c 1.39972,0 2.53572,1.343 2.53572,3 v 246.444 c 0,1.657 -1.136,3 -2.53572,3 H 119.55272 c -1.40056,0 -2.53572,-1.343 -2.53572,-3 l 0,0 V 574.204 c 0,-1.657 1.13516,-3 2.53572,-3 z" />
+    <path
+       style="fill:none;stroke:#404040;stroke-width:0.91900772;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       inkscape:connector-curvature="0"
+       id="path119"
+       d="m 119.50942,571.1635 h 372.63876 c 1.39817,0 2.53292,1.34343 2.53292,3.00097 v 246.52306 c 0,1.65754 -1.13475,3.00097 -2.53292,3.00097 H 119.50942 c -1.39902,0 -2.53292,-1.34343 -2.53292,-3.00097 l 0,0 V 574.16447 c 0,-1.65754 1.1339,-3.00097 2.53292,-3.00097 z"
+       stroke-miterlimit="10" />
+    <path
+       style="fill:#ffffff"
+       inkscape:connector-curvature="0"
+       id="path121"
+       d="m 175.86602,621.57612 h 296.87556 c 1.32506,0 2.39902,1.43836 2.39902,3.21301 v 151.88874 c 0,1.77465 -1.07396,3.21301 -2.39902,3.21301 H 175.86602 c -1.32506,0 -2.39902,-1.43836 -2.39902,-3.21301 l 0,0 V 624.78913 c 0,-1.77465 1.07396,-3.21301 2.39902,-3.21301 z" />
+    <text
+       style="font-size:18px;font-family:ArialMT"
+       id="text123"
+       font-size="18"
+       transform="translate(132.1172,598.4639)">CoreSC Content</text>
+    <text
+       style="font-size:18px;font-family:ArialMT"
+       id="text125"
+       font-size="18"
+       transform="translate(214.8135,598.4639)" />
+    <text
+       style="font-size:18px;font-family:ArialMT"
+       id="text127"
+       font-size="18"
+       transform="translate(225.1406,598.4639)" />
+    <text
+       style="font-size:13px;fill:#404040;font-family:ArialMT"
+       id="text129"
+       font-size="13"
+       transform="translate(132.1172,615.4639)">CoreSC analysis of paper</text>
+    <line
+       style="fill:none;stroke:#808080;stroke-width:0.79855323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line131"
+       y2="747.12329"
+       x2="474.74133"
+       y1="747.12329"
+       x1="173.96628"
+       stroke-miterlimit="10" />
+    <line
+       style="fill:none;stroke:#808080;stroke-width:0.79855323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line133"
+       y2="720.77332"
+       x2="474.74133"
+       y1="720.77332"
+       x1="173.96628"
+       stroke-miterlimit="10" />
+    <line
+       style="fill:none;stroke:#808080;stroke-width:0.79855323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line135"
+       y2="694.4223"
+       x2="474.74133"
+       y1="694.4223"
+       x1="173.96628"
+       stroke-miterlimit="10" />
+    <line
+       style="fill:none;stroke:#808080;stroke-width:0.7898888;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line137"
+       y2="668.06897"
+       x2="471.47354"
+       y1="668.06897"
+       x1="173.96194"
+       stroke-miterlimit="10" />
+    <line
+       style="fill:none;stroke:#808080;stroke-width:0.79855323;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line139"
+       y2="641.72327"
+       x2="474.74133"
+       y1="641.72327"
+       x1="173.96628"
+       stroke-miterlimit="10" />
+    <text
+       style="font-size:12px;font-family:Helvetica"
+       id="text143"
+       font-size="12"
+       transform="matrix(0,-1,1,0,143.5771,726.3594)" />
+    <text
+       style="font-size:12px;font-family:Helvetica"
+       id="text145"
+       font-size="12"
+       transform="matrix(0,-1,1,0,143.5771,723.6816)">Sentences</text>
+    <text
+       style="font-size:12px;font-family:Helvetica"
+       id="text149"
+       font-size="12"
+       x="295.40622"
+       y="810.56348">CoreSC Types</text>
+    <line
+       style="fill:none;stroke:#808080;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line151"
+       y2="774.64398"
+       x2="173.467"
+       y1="626.82397"
+       x1="173.467"
+       stroke-miterlimit="10" />
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text153"
+       font-size="12"
+       transform="translate(185.0698,794.5039)">Methodology</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text157"
+       font-size="12"
+       transform="translate(279.7202,794.5039)">Hypothesis</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text159"
+       font-size="12"
+       x="382.37302"
+       y="794.50391">Results</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text163"
+       font-size="12"
+       transform="translate(155.2402,751.2236)">3</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text165"
+       font-size="12"
+       transform="translate(155.2402,724.874)">6</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text167"
+       font-size="12"
+       transform="translate(155.2402,698.5234)">9</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text169"
+       font-size="12"
+       transform="translate(151.9033,672.1738)">12</text>
+    <text
+       style="font-size:12px;font-family:Helvetica-Bold"
+       id="text171"
+       font-size="12"
+       transform="translate(151.9033,645.8242)">15</text>
+    <rect
+       id="rect173"
+       height="122.437"
+       width="37.631001"
+       y="651.20398"
+       x="198.507" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="rect175"
+       height="122.437"
+       width="37.631001"
+       stroke-miterlimit="10"
+       y="651.20398"
+       x="198.507" />
+    <rect
+       id="rect177"
+       height="43.395"
+       width="37.631001"
+       y="730.24402"
+       x="293.40701" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="rect179"
+       height="43.395"
+       width="37.631001"
+       stroke-miterlimit="10"
+       y="730.24402"
+       x="293.40701" />
+    <rect
+       id="rect181"
+       height="38"
+       width="37.632"
+       y="735.64398"
+       x="388.017" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="rect183"
+       height="38"
+       width="37.632"
+       stroke-miterlimit="10"
+       y="735.64398"
+       x="388.017" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="rect187"
+       height="69"
+       width="37.632"
+       stroke-miterlimit="10"
+       y="704.64398"
+       x="482.63699" />
+    <line
+       style="fill:none;stroke:#808080;stroke-width:2.39561915;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
+       id="line189"
+       y2="773.3418"
+       x2="473.94278"
+       y1="773.3418"
+       x1="173.16481"
+       stroke-miterlimit="10" />
   </g>
   <text
      xml:space="preserve"
-     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Sans"
-     x="155.57031"
-     y="318.73438"
-     id="text3952"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="73"
+     y="411"
+     id="text4479"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       id="tspan3954"
-       x="155.57031"
-       y="318.73438">Towards an Automated Search System</tspan></text>
-  <text
+       id="tspan4481"></tspan></text>
+  <flowRoot
      xml:space="preserve"
-     style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="160.5"
-     y="340.5"
-     id="text3956"
+     id="flowRoot4483"
+     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:14px;line-height:125%;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:Sans"><flowRegion
+       id="flowRegion4485"><rect
+         id="rect4487"
+         width="266"
+         height="265"
+         x="60"
+         y="382"
+         style="font-size:14px" /></flowRegion><flowPara
+       id="flowPara4489"></flowPara></flowRoot>  <flowRoot
+     xml:space="preserve"
+     id="flowRoot4491"
+     style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"><flowRegion
+       id="flowRegion4493"><rect
+         id="rect4495"
+         width="272"
+         height="273"
+         x="58"
+         y="378" /></flowRegion><flowPara
+       id="flowPara4497">This is the paper's full abstract and it contains lots of interesting information about what this paper covers and the results etc. This is the paper's full abstract and it contains lots of interesting information about what this paper covers and the results etc. This is the paper's full abstract and it contains lots of interesting information about what this paper covers and the results etc. This is the paper's full abstract and it contains lots of interesting information about what this paper covers and the results etc. </flowPara></flowRoot>  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000080;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+     x="467.64453"
+     y="308.23438"
+     id="text4343-0"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       id="tspan3958"
-       x="160.5"
-       y="340.5">Fred Bloggs et al.</tspan></text>
+       id="tspan4345-29"
+       x="467.64453"
+       y="308.23438"
+       style="font-weight:normal;fill:#000080">Download This Paper</tspan></text>
   <path
-     style="fill:#0000c4;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 160.5,320.5 455,0"
-     id="path3960"
+     style="fill:#0000ff;stroke:#0000ff;stroke-width:1.17984974px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 714.30398,310.5 -243.60796,0"
+     id="path4520"
      inkscape:connector-curvature="0" />
-  <text
-     xml:space="preserve"
-     style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="165.5"
-     y="360.5"
-     id="text3962"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3964"
-       x="165.5"
-       y="360.5">This is some paper abstract text for the above result. As you can</tspan><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="378"
-       id="tspan3966">see it is a very interesting paper and you should probably read</tspan><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="395.5"
-       id="tspan3968">it. Especially since Partridge picked it out for you.</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Sans"
-     x="155.57031"
-     y="437.73438"
-     id="text3952-6"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3954-8"
-       x="155.57031"
-       y="437.73438">A Generic Case Study in Widget Tops</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="160.5"
-     y="459.5"
-     id="text3956-7"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3958-6"
-       x="160.5"
-       y="459.5">Tom Jones and Mike Smith</tspan></text>
-  <path
-     style="fill:#0000c4;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 160.5,439.5 455,0"
-     id="path3960-7"
-     inkscape:connector-curvature="0" />
-  <text
-     xml:space="preserve"
-     style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="165.5"
-     y="479.5"
-     id="text3962-3"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="479.5"
-       id="tspan3968-0">Some more abstract text blah blah blah blah blah blah blah blah </tspan><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="497"
-       id="tspan4089">blah blah blah blah blah blah blah blah blah blah blah blah</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Sans"
-     x="155.57031"
-     y="538.73438"
-     id="text3952-6-2"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3954-8-9"
-       x="155.57031"
-       y="538.73438">An interesting paper on thingies</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="160.5"
-     y="560.5"
-     id="text3956-7-4"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3958-6-3"
-       x="160.5"
-       y="560.5">Elaine Jones and Mary Price</tspan></text>
-  <path
-     style="fill:#0000c4;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 160.5,540.5 455,0"
-     id="path3960-7-7"
-     inkscape:connector-curvature="0" />
-  <text
-     xml:space="preserve"
-     style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="165.5"
-     y="580.5"
-     id="text3962-3-2"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="580.5"
-       id="tspan3968-0-1">blah blah blah blah blah blah blah blah blah blah blah blah blah</tspan><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="598"
-       id="tspan4096">blah blah blah blah blah blah blah blah blah blah blah blah blah</tspan><tspan
-       sodipodi:role="line"
-       x="165.5"
-       y="615.5"
-       id="tspan4102">blah blah blah blah blah blah blah blah blah blah blah blah...</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:14px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="584.06152"
-     y="279.80176"
-     id="text4113"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan4115"
-       x="584.06152"
-       y="279.80176">Results 1-3 of 353</tspan></text>
-  <g
-     transform="matrix(1.2630209,0,0,1,-402.06602,216.74)"
-     id="g307">
-    <defs
-       id="defs309">
-      <path
-         inkscape:connector-curvature="0"
-         id="SVGID_51_"
-         d="m 534.11,409.26 h 92 c 1.104,0 2,0.896 2,2 v 20 c 0,1.104 -0.896,2 -2,2 h -92 c -1.104,0 -2,-0.896 -2,-2 l 0,0 v -20 c 0,-1.105 0.896,-2 2,-2 z" />
-    </defs>
-    <clipPath
-       id="clipPath4043">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_51_"
-         overflow="visible"
-         id="use4045" />
-    </clipPath>
-    <g
-       clip-path="url(#SVGID_52_)"
-       id="g315">
-      <defs
-         id="defs317">
-        <rect
-           id="SVGID_53_"
-           x="531.60999"
-           y="408.76001"
-           width="96.999001"
-           height="25" />
-      </defs>
-      <clipPath
-         id="clipPath4050">
-        <use
-           height="1052.3622"
-           width="744.09448"
-           y="0"
-           x="0"
-           style="overflow:visible"
-           xlink:href="#SVGID_53_"
-           overflow="visible"
-           id="use4052" />
-      </clipPath>
-      <g
-         transform="translate(6.103516e-5,0)"
-         clip-path="url(#SVGID_54_)"
-         id="g323">
-        <image
-           style="overflow:visible"
-           overflow="visible"
-           width="96"
-           height="24"
-           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGEAAAAZCAYAAAAhd0APAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIFJREFUeNrs1sEJgDAQRNENWJid aWmWYglWkBjBCozggu9fctvDDn82pda6RMQaA5RSAo+Zp9ba8JQ3ZvyZyQIThNDryBaYACYwAbcJ QkhggjpiApjABPgd5TFBHTEBVwhugjoCE5gAJmQyQQgJTFBHTAATcoQQsfd3s4rPOE4BBgBjC0/I 8HQAWAAAAABJRU5ErkJggg=="
-           transform="matrix(1.0104,0,0,1.0417,531.6104,408.7598)"
-           id="image325" />
-      </g>
-    </g>
-  </g>
-  <path
-     style="fill:none;stroke:#6d6d6d;stroke-width:1.11651731;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     inkscape:connector-curvature="0"
-     stroke-miterlimit="10"
-     d="m 272.56364,626.05826 h 115.24772 c 1.38297,0 2.50538,0.89165 2.50538,1.99029 v 19.9029 c 0,1.09864 -1.12241,1.99029 -2.50538,1.99029 H 272.56364 c -1.38297,0 -2.50538,-0.89165 -2.50538,-1.99029 l 0,0 v -19.9029 c 0,-1.09964 1.12241,-1.99029 2.50538,-1.99029 z"
-     id="path327" />
-  <text
-     y="641.49982"
-     x="277.49744"
-     style="font-size:12px;font-family:Times-Bold"
-     font-size="12"
-     id="text329">&lt;</text>
-  <g
-     transform="translate(-262.11,216.74)"
-     id="g331">
-    <defs
-       id="defs333">
-      <rect
-         id="SVGID_55_"
-         x="556.10999"
-         y="409.26001"
-         width="24"
-         height="24" />
-    </defs>
-    <clipPath
-       id="clipPath4061">
-      <use
-         height="1052.3622"
-         width="744.09448"
-         y="0"
-         x="0"
-         style="overflow:visible"
-         xlink:href="#SVGID_55_"
-         overflow="visible"
-         id="use4063" />
-    </clipPath>
-    <g
-       clip-path="url(#SVGID_56_)"
-       id="g339">
-      <defs
-         id="defs341">
-        <rect
-           id="SVGID_57_"
-           x="555.60999"
-           y="408.76001"
-           width="25"
-           height="25" />
-      </defs>
-      <clipPath
-         id="clipPath4068">
-        <use
-           height="1052.3622"
-           width="744.09448"
-           y="0"
-           x="0"
-           style="overflow:visible"
-           xlink:href="#SVGID_57_"
-           overflow="visible"
-           id="use4070" />
-      </clipPath>
-      <g
-         transform="translate(6.103516e-5,0)"
-         clip-path="url(#SVGID_58_)"
-         id="g347">
-        <image
-           style="overflow:visible"
-           overflow="visible"
-           width="24"
-           height="24"
-           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAYCAYAAAAPtVbGAAAACXBIWXMAAAqcAAAKnAH00t8SAAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADlJREFUeNpi3HXjfz0DA0MDA+1A AwsTIwPNwaglo5bQ0BLG0eAafJYwjQbXaD4ZtWTUkiFnCUCAAQBEmASyIZFpbQAAAABJRU5ErkJg gg=="
-           transform="matrix(1.0417,0,0,1.0417,555.6104,408.7598)"
-           id="image349" />
-      </g>
-    </g>
-  </g>
-  <rect
-     style="fill:none;stroke:#6a85a9;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     x="294"
-     y="626"
-     stroke-miterlimit="10"
-     width="24"
-     height="24"
-     id="rect351" />
-  <line
-     style="fill:none;stroke:#6d6d6d;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     stroke-miterlimit="10"
-     x1="318"
-     y1="626"
-     x2="318"
-     y2="650"
-     id="line363" />
-  <line
-     style="fill:none;stroke:#6d6d6d;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     stroke-miterlimit="10"
-     x1="342"
-     y1="626"
-     x2="342"
-     y2="650"
-     id="line365" />
-  <line
-     style="fill:none;stroke:#6d6d6d;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     stroke-miterlimit="10"
-     x1="367"
-     y1="626.125"
-     x2="367"
-     y2="650.125"
-     id="line367" />
-  <line
-     style="fill:none;stroke:#6d6d6d;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
-     stroke-miterlimit="10"
-     x1="294"
-     y1="626"
-     x2="294"
-     y2="650"
-     id="line369" />
-  <text
-     y="642.24805"
-     x="302.05664"
-     style="font-size:12px;font-family:Times-Bold"
-     font-size="12"
-     id="text329-3">1</text>
-  <text
-     y="642.12402"
-     x="326.07715"
-     style="font-size:12px;font-family:Times-Bold"
-     font-size="12"
-     id="text329-3-0">2</text>
-  <text
-     y="642.07812"
-     x="350.21875"
-     style="font-size:12px;font-family:Times-Bold"
-     font-size="12"
-     id="text329-3-0-8">3</text>
-  <text
-     y="641.61816"
-     x="374.70605"
-     style="font-size:12px;font-family:Times-Bold"
-     font-size="12"
-     id="text329-3-0-8-3">&gt;</text>
 </svg>

@@ -313,13 +313,139 @@ types automatically.
 \subsection{ Web Frontend }
 
 The web frontend consists of sets of HTML and JavaScript interfaces that are
-equipped to communicate with their relevant backend system using
+equipped to communicate with the backend systems discussed above using HTTP
+requests. The most important aspect in designing the frontend was insuring that
+the interfaces are intuitive and usable from the perspective of a non-technical
+user. It was suggested that the system should look as similar as possible to
+other online search and information retrieval systems in order to help users
+who are already familiar with other systems in learning to use Partridge more
+quickly.
 
 \subsubsection{ Query Form }
 
+\begin{figure}[!htb]
+\vspace{5mm}
+\centering
+\includegraphics[width=\textwidth]{images/design/query_mockup.png}
+\caption{Mockup image for the Partridge Query Interface}
+\label{fig:query_mockup}
+\end{figure}
+
+Figure \ref{fig:query_mockup} shows the initial design of the Partridge query
+interface. The interface tries to make it easy for the user to both filter and
+query papers in an intuitive way.
+
+The filter interface on the left hand side of the query form allows the user to
+use Partridge's machine learning classifiers to return subsets of the papers.
+The selection box control in the top left of the form contains a list of each
+of the types of paper within the database. The user should select one of these
+types of paper to restrict their query to that type. There is also an ``All
+Types" option in case they don't wish to use this filter.
+
+The paper topic filtering system is displayed in the bottom left of the query
+form. There is a `master list' of all paper topics in the corpus on the left
+and a `query list' containing topics that the user wants to be included into
+their search results on the right. The user selects items from each list and
+can use the arrow buttons in between to move them depending on their query.
+
+The search or `Keywords' section of the form shows a set of controls for
+specifying terms that must appear within sections of a document for it to show
+up in the search results. The user enters a search term in the input box on the
+top right of the form and then selects which section of the paper the term
+should appear within. This could be any of the CoreSC zones within the paper or
+within the abstract. The user could also specify a specific author's name. Once
+they are happy with their keywords and section, they click ``Add" and the
+keyword/section pair are inserted into the table on the bottom right. If they
+wish to remove a query constraint from this table, they can select it and click
+the ``Delete" button. 
+
+Once the user is happy with their search, they can click the ``Search" button
+at the extreme top right of the form to carry out the query and see the
+results.
+
 \subsubsection{ Results Page }
+
+Once a user has made their query, the results are displayed for them to peruse
+and find relevant papers to read. Figure \ref{fig:results_mockup} shows a
+mockup of the results view. This simplistic page lists all of the papers found
+during the query in relevence order. The results are paginated so that the user
+does not have to wait for a large page to render. It is hoped that users will
+run specific queries that do not return a high number of results. There is a
+prominent link at the top of the page that allows the user to go back to the
+query form and amend their query if the results are not satisfactory.
+
+\begin{figure}[!htb]
+\vspace{5mm}
+\centering
+\includegraphics[width=\textwidth]{images/design/results_mockup.png}
+\caption{Mockup image for the Partridge Search Results Interface}
+\label{fig:results_mockup}
+\end{figure}
+
+Each paper is listed by title and author and the first few sentences of the
+extract are also dislayed. The user can click on the paper title to be taken to
+the Profile Page for that paper.
+
 
 \subsubsection{ Paper Profile Page }
 
+The paper profile page is used to display all information about a specific
+paper in the Partridge corpus to the user. A mockup of the Paper Profile page
+can be seen in Figure \ref{fig:paper_profile}
+
+\begin{figure}[!htb]
+\vspace{5mm}
+\centering
+\includegraphics[width=\textwidth]{images/design/profile_mockup.png}
+\caption{Mockup image for the Partridge Paper Profile Page}
+\label{fig:paper_profile}
+\end{figure}
+
+The paper's title and author are displayed prominently in the top left hand
+corner of the page. The full abstract text is shown so that the user can read
+it and determine the paper's relevance to them. There is also a graph showing
+each of the CoreSC types and proportion within the paper. If the user is
+interested in the paper, they can click the Download link at the top of the
+page to access the annotated XML file stored in the system.
+
 \subsubsection{Paper Upload Form}
-Paper uploading is a 
+Paper uploading is another highly important user activity within Partridge.
+Without users uploading papers, Partridge has no data to work with. It was
+therefore, very important to make paper uploading as simplistic as possible to
+the end user. Figure \ref{fig:paper_upload} shows Partridge's main paper upload
+form. 
+
+\begin{figure}[!htb]
+\vspace{5mm}
+\centering
+\includegraphics[width=\textwidth]{images/design/upload_mockup.png}
+\caption{Mockup image for the Partridge Paper Upload Form}
+\label{fig:paper_upload}
+\end{figure}
+
+The papers are selected using the familiar File Upload dialog used in any
+website that requires users to upload files to the server. Multiple papers can
+be selected for batch upload if required. Once the relevant papers are
+selected, the user selects the Upload button to begin the process. 
+
+Once the upload process has started, the upload file browser and submit button
+are disabled and a progress indicator as well as a text summary are displayed
+directly underneath. Once the progress bar reaches 100\%, the upload file
+browser becomes available again, or the user can navigate away from the page.
+
+\section{ Summary}
+
+All of Partridge's subsystems have carefully been designed in order to make
+programming and implementing the project efficient and easy for the programmer.
+The system architecture allows the implementation of modules independantly of
+each other with minimal coupling and communication. Cohesion within the modules
+is maximised, with related behaviours grouped together as far as possible.
+
+The user interface has been designed to maximise usability for non-technical
+users whilst effectively encoding the complicated nature of Partridge's
+internal processes in a set of HTML forms.
+
+Partridge has been developed using an iterative methodology and therefore some
+of the designs descussed in this chapter have been modified during the
+development of the project. However, these designs did provide an excellent
+starting point for the implementation of the project.
