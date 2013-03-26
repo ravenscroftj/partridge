@@ -1,0 +1,979 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="657.5px" height="671.961px" viewBox="0 0 657.5 671.961" enable-background="new 0 0 657.5 671.961" xml:space="preserve">
+<line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="229.168" y1="508.109" x2="194.146" y2="489.378"/>
+<line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="229.168" y1="508.109" x2="195.668" y2="529.247"/>
+<line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="229.168" y1="508.109" x2="229.168" y2="469.26"/>
+<line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="229.168" y1="508.109" x2="263.676" y2="489.449"/>
+<line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="229.168" y1="508.109" x2="263.393" y2="527.609"/>
+<path fill="#FFFFFF" d="M253.563,483.715c13.473,13.473,13.473,35.317,0,48.79c-13.473,13.474-35.317,13.474-48.79,0
+	c-13.473-13.473-13.473-35.317,0-48.79C218.246,470.241,240.09,470.241,253.563,483.715"/>
+<path fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M253.563,483.715
+	c13.473,13.473,13.473,35.316,0,48.79s-35.317,13.474-48.79,0s-13.473-35.317,0-48.79
+	C218.246,470.241,240.09,470.241,253.563,483.715"/>
+<text transform="matrix(1 0 0 1 193.2808 565.5498)" font-family="'Arial-BoldMT'" font-size="13">Knob Label</text>
+<text transform="matrix(1 0 0 1 183.3311 538.1094)" font-family="'Helvetica'" font-size="12">0</text>
+<text transform="matrix(1 0 0 1 265.1685 538.1094)" font-family="'Helvetica'" font-size="12">100</text>
+<text transform="matrix(1 0 0 1 221.9941 465.7598)" font-family="'Helvetica'" font-size="12">50</text>
+<text transform="matrix(1 0 0 1 268.502 486.46)" font-family="'Helvetica'" font-size="12">75</text>
+<text transform="matrix(1 0 0 1 174.9722 486.46)" font-family="'Helvetica'" font-size="12">25</text>
+<g>
+	<defs>
+		<path id="SVGID_1_" d="M252.856,484.422c13.083,13.082,13.083,34.293,0,47.376s-34.293,13.083-47.376,0s-13.083-34.294,0-47.376
+			C218.562,471.339,239.773,471.339,252.856,484.422"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_2_)">
+		<defs>
+			<rect id="SVGID_3_" x="195.168" y="474.109" width="68" height="68"/>
+		</defs>
+		<clipPath id="SVGID_4_">
+			<use xlink:href="#SVGID_3_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_4_)">
+			
+				<image overflow="visible" width="67" height="67" xlink:href="data:image/png;base64,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
+AQYAqTN3QtlMiuQAAAAASUVORK5CYII=" transform="matrix(1.0149 0 0 1.0149 195.168 474.1094)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M252.856,484.422
+	c13.083,13.082,13.083,34.293,0,47.376s-34.293,13.083-47.376,0s-13.083-34.294,0-47.376
+	C218.562,471.339,239.773,471.339,252.856,484.422"/>
+<path fill="#404040" d="M198.868,491.953L198.868,491.953c0.519-0.976,1.729-1.346,2.705-0.827l0,0l27.947,14.859
+	c0.975,0.519,1.346,1.73,0.827,2.705c-0.519,0.976-1.73,1.346-2.705,0.827l0,0l-27.947-14.859
+	C198.72,494.14,198.349,492.929,198.868,491.953z"/>
+<path fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M198.868,491.953
+	L198.868,491.953c0.519-0.976,1.729-1.346,2.705-0.827l0,0l27.947,14.859c0.975,0.519,1.346,1.73,0.827,2.705
+	c-0.519,0.976-1.73,1.346-2.705,0.827l0,0l-27.947-14.859C198.72,494.14,198.349,492.929,198.868,491.953z"/>
+<path fill="#B50000" d="M415.413,509.558c-0.678-16.408,9.629-31.888,26.042-37.062c19.631-6.189,40.563,4.707,46.753,24.339
+	c4.395,13.935,0.179,28.525-9.659,38.033l7.715,7.715c12.617-12.293,18.006-31.081,12.348-49.028
+	c-8.002-25.377-35.06-39.463-60.437-31.461c-21.067,6.643-34.353,26.419-33.68,47.465H415.413z"/>
+<path fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M415.413,509.558c-0.678-16.408,9.629-31.888,26.042-37.062c19.631-6.189,40.563,4.707,46.753,24.339
+	c4.395,13.935,0.179,28.525-9.659,38.033l7.715,7.715c12.617-12.293,18.006-31.081,12.348-49.028
+	c-8.002-25.377-35.06-39.463-60.437-31.461c-21.067,6.643-34.353,26.419-33.68,47.465H415.413z"/>
+<path fill="#001590" d="M479.642,467.791L479.642,467.791L479.642,467.791c-11.744-7.887-26.835-10.553-41.375-5.969
+	c-21.108,6.656-34.405,26.497-33.675,47.589h-0.121c0.138,4.306,0.859,8.664,2.219,12.974c2.375,7.532,6.429,14.069,11.618,19.33
+	l0.121-0.122c0.014,0.014,0.026,0.026,0.039,0.04l5.861-5.861c-0.011-0.015-0.021-0.03-0.032-0.046l1.726-1.726
+	c-3.987-4.06-7.103-9.097-8.931-14.896c-0.219-0.693-0.416-1.389-0.593-2.085c-0.13-0.718-0.242-1.435-0.338-2.15
+	c0-0.001,0-0.003,0-0.004c-1.731-8.871-0.128-17.778,4.053-25.267c0-0.001,0.001-0.002,0.001-0.003
+	c5.314-10.917,15.133-19.603,28.035-23.329C458.867,463.2,469.862,463.984,479.642,467.791L479.642,467.791z"/>
+<path fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M479.642,467.791L479.642,467.791L479.642,467.791c-11.744-7.887-26.835-10.553-41.375-5.969
+	c-21.108,6.656-34.405,26.497-33.675,47.589h-0.121c0.138,4.306,0.859,8.664,2.219,12.974c2.375,7.532,6.429,14.069,11.618,19.33
+	l0.121-0.122c0.014,0.014,0.026,0.026,0.039,0.04l5.861-5.861c-0.011-0.016-0.021-0.03-0.032-0.046l1.726-1.726
+	c-3.987-4.06-7.103-9.097-8.931-14.896c-0.219-0.693-0.416-1.389-0.593-2.085c-0.13-0.718-0.242-1.435-0.338-2.15
+	c0-0.001,0-0.003,0-0.004c-1.731-8.871-0.128-17.778,4.053-25.267c0-0.001,0.001-0.002,0.001-0.003
+	c5.314-10.917,15.133-19.603,28.035-23.329C458.867,463.2,469.862,463.984,479.642,467.791L479.642,467.791z"/>
+<text transform="matrix(1 0 0 1 416.1289 565.5498)" font-family="'Arial-BoldMT'" font-size="13">Knob Label</text>
+<g>
+	<defs>
+		<path id="SVGID_5_" d="M476.35,484.422c13.083,13.082,13.083,34.293,0,47.376c-13.082,13.083-34.293,13.083-47.376,0
+			c-13.082-13.083-13.082-34.294,0-47.376C442.057,471.339,463.268,471.339,476.35,484.422"/>
+	</defs>
+	<clipPath id="SVGID_6_">
+		<use xlink:href="#SVGID_5_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_6_)">
+		<defs>
+			<rect id="SVGID_7_" x="418.662" y="474.109" width="68" height="68"/>
+		</defs>
+		<clipPath id="SVGID_8_">
+			<use xlink:href="#SVGID_7_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_8_)">
+			
+				<image overflow="visible" width="67" height="67" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABYBJREFUeNrsnF1y2zAMhGtFyXNv
+0iMkR+zRcpS+56+mp/CswF0AVJ1YSsIZjhRFlshPC5AiCR3u7+9/HQ6H37e3tz8sz/O82Ff55ubm
+lHG/5Wmazlufj/fqcktt+/b2dtpvW5ZfX1+7/PLyct62/Pz8vNhX+enp6ZRx//ibx/lY8J/Hgj5g
+JVmFIyiXAmIwGBQFo12zbdV1WcLr4t8tzU0F7aJMIWxbAaKgtEIyKBmQVnkPxSsDs0EaeSBWBgok
+guHBIBDbIgzbGoy1QBAKwmDmwoBE9+yAtB0FJIPCgIyaTRVIphAEgUDsPrZv96NAWiXaiQggcq6R
+o11rNhGQEXNp92oqaddv28hfMR/TmQxWeq0/MaUws7kEEGYu2LJkimSm0jnVf1IJzaUCRbU4BkX5
+kQyIQTEIXh2mDAYkUwfCOJuM+RBmInd3dyV/wpprD6Xy1BQQbzKsZTFzifwU3sc3vSeFGBD/9BEA
+g1Jtiit+RAGp+A+vDOY70Ed4VeDfnVP1mZnNGtOJ/EiUIv+R9TlUB411yOw+nUKUA2U5ghL5EvbE
+VG+y/c4XvNIJG+2tLpyqB7IWivIn1QKyJhD3W4FNadi6IJA1XXeELYEwOApM5E9aITMlrAHkfVLk
+NyIQ3iRLQJhqMtOxJvYSICIwBr1iKuplsQNihfdN5YgJMRjvnewe1qkcgeFbLqtzO34GkikkMyH0
+Fx+Z7H6m9BET8XlhMpFC2JiIV8Y1YHgo1ipl4ymtvNiUU4V4EAqOh4Gv99dMCKUy2oZ1MzAdENbt
+zkzoo3zGqPlkJoLKWCgEX74YDHYc/7cVGAyKV4Mvv4fSKQTBZGazRRgIxV5HKsrADt+M7Tgb/lNw
+rNO15aSUoIY5T+dnMJjUtuBER5ysyr6+TSFTpBAGaA8wMPmyq7rZsZkN3mQ/3AsQVImqE8n9wE0E
+ZQ++Q6lEwVjUG98B2IsSG3jZU1J1UwNKExuqj36wxxQC8KAUEAZor0CUUtigUhnInhVifkTN7X45
+IH4aIgXyncDXVMl9BnCV+n0rxCsEZ7CiVD1vy0kt1cI8VU/8KulbIV4hlZP8DPlnBDEEBCd19pqw
+DsNA/LDbZ/AllbotgLCT1GTOHmEoEP7YxOY4o2N7g1Ktlx2bohP9mq49A1F18fWe1Dwnu4Bt9+JL
+zCx8+RkUCkStEPZ5TyrBemQP+jQvY5VjMCIoNtiydVPBNazswfp6zjbJm0HAJY+YtwyEhYUoGFQh
+DEIboVb/synQLcLwK5xZ+T2chUKiH6qFt7jdIowoq/p2QAwAKsNDoQMrG4CCfgOjpSIY/thskvGm
+4SFky6avDWUERqSUGcMp1LRmFg3lR7evZSYtMxgMjDIj6UMiRaiVfrbE6iMdLfqMCIZSja/z2WSU
+IiqqwLdFW8703s0ydhV8tCWLuqwo5WwyakarulyaDR9gNMQlB7LxHt4veGUwKBkYCmRtyKcV1Baf
+sHiZS721IohMJSMm1DnVtTD8kke/2O1/oxVU8BADoqAoGAhlxoXzUXBPtEqYrQH1CmHxMnZt3EYx
+d+zVQgGpQglNRkUh+cJGTxD7NJFCfMioH91X11bBhxV/4vc9tIVTVfFpLCxLOVG1LjSKuRsFEr18
+Vkwnc7gdEGYiCgYzlRNlEeHNmvIqkCgqM/sAQqSOTiFtR6li5KmhMtBcsrjdESDslV29m0RQIkhn
+IFmnS0344BOrfCViDZBqZLdqiiNV4PHOh2Qw2PA9tihRy1KNtK5+LiNrcVTfJHOyC5NR87lZixK1
+LNnXIUaARF+H8H6k4k+Yg5VAql94YZ2wtR9CiICMfD8kApL5kfl4o8fj/R9GJoSxgK2CbVv5Poc6
+16KqRz654014pMwqlub495+/AgwAVuwpce+1jgEAAAAASUVORK5CYII=" transform="matrix(1.0149 0 0 1.0149 418.6621 474.1094)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M476.35,484.422
+	c13.083,13.082,13.083,34.293,0,47.376c-13.082,13.083-34.293,13.083-47.376,0c-13.082-13.083-13.082-34.294,0-47.376
+	C442.057,471.339,463.268,471.339,476.35,484.422"/>
+<path fill="#404040" d="M422.115,491.867L422.115,491.867c0.52-0.976,1.73-1.346,2.705-0.827l0,0l27.947,14.859
+	c0.975,0.519,1.346,1.729,0.827,2.705l0,0c-0.519,0.976-1.73,1.346-2.705,0.827l0,0l-27.947-14.86
+	C421.968,494.054,421.598,492.842,422.115,491.867z"/>
+<path fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M422.115,491.867
+	L422.115,491.867c0.52-0.976,1.73-1.346,2.705-0.827l0,0l27.947,14.859c0.975,0.519,1.346,1.729,0.827,2.705l0,0
+	c-0.519,0.976-1.73,1.346-2.705,0.827l0,0l-27.947-14.859C421.968,494.054,421.598,492.842,422.115,491.867z"/>
+<g>
+	<defs>
+		<path id="SVGID_9_" d="M51.5,381.476h124c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0v-25.228
+			C48.5,382.819,49.843,381.476,51.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_10_">
+		<use xlink:href="#SVGID_9_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_10_)">
+		<defs>
+			<rect id="SVGID_11_" x="48" y="380.976" width="131" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_12_">
+			<use xlink:href="#SVGID_11_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_12_)">
+			
+				<image overflow="visible" width="130" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAAAhCAYAAAD+vMi+AAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIxJREFUeNrs1dkJwzAARMEI0n9L
+6UkgrAs5/nYLO6+EZWBLrfX3UXTlQXCbIbtvKcUKEEAQfwetNXeQjuC6LgjSEfTeIUhHMMaAIB3B
+nBOCdARrLQjSEey9IUhHcM6BIB3B/WQGCCCAAAIIIIAAAkEgCASBIBAEgkAQCAJBIAgEgSAQBIJA
+EEh69xdgAC4NdqMdiik9AAAAAElFTkSuQmCC" transform="matrix(1.0077 0 0 1.0071 48 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M51.5,381.476h124
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0v-25.228C48.5,382.819,49.843,381.476,51.5,381.476z
+	"/>
+<text transform="matrix(1 0 0 1 130.5786 402.6162)" font-family="'ArialMT'" font-size="16">OFF</text>
+<text transform="matrix(1 0 0 1 68.7368 402.6162)" font-family="'ArialMT'" font-size="16">ON</text>
+<g>
+	<defs>
+		<path id="SVGID_13_" d="M51.5,381.476h59c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+			C48.5,382.819,49.843,381.476,51.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_14_">
+		<use xlink:href="#SVGID_13_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_14_)">
+		<defs>
+			<rect id="SVGID_15_" x="48" y="380.976" width="66" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_16_">
+			<use xlink:href="#SVGID_15_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 3.814697e-06 3.051758e-05)" clip-path="url(#SVGID_16_)">
+			
+				<image overflow="visible" width="65" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAhCAYAAACGA8YfAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGNJREFUeNrs08ENwCAMBEEM9N9S
+esJvcKTUkB9zJazm5lrraZcvMrNujzB7700EEUT4IowxRIgIEapKhL23COccEUgggQQSRHAHEkgg
+gQQSRHAHEkgggQQSRHAHEkiwP/YKMABgY1JV1GnN0gAAAABJRU5ErkJggg==" transform="matrix(1.0154 0 0 1.0071 48 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M51.5,381.476h59
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228C48.5,382.819,49.843,381.476,51.5,381.476z"
+	/>
+<g>
+	<defs>
+		<path id="SVGID_17_" d="M347.5,381.476h124c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0
+			v-25.228C344.5,382.819,345.843,381.476,347.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_18_">
+		<use xlink:href="#SVGID_17_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_18_)">
+		<defs>
+			<rect id="SVGID_19_" x="344" y="380.976" width="131" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_20_">
+			<use xlink:href="#SVGID_19_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_20_)">
+			
+				<image overflow="visible" width="130" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAAAhCAYAAAD+vMi+AAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIxJREFUeNrs1dkJwzAARMEI0n9L
+6UkgrAs5/nYLO6+EZWBLrfX3UXTlQXCbIbtvKcUKEEAQfwetNXeQjuC6LgjSEfTeIUhHMMaAIB3B
+nBOCdARrLQjSEey9IUhHcM6BIB3B/WQGCCCAAAIIIIAAAkEgCASBIBAEgkAQCAJBIAgEgSAQBIJA
+EEh69xdgAC4NdqMdiik9AAAAAElFTkSuQmCC" transform="matrix(1.0077 0 0 1.0071 344 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M347.5,381.476h124
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C344.5,382.819,345.843,381.476,347.5,381.476z"/>
+<text transform="matrix(1 0 0 1 426.5781 402.6162)" font-family="'ArialMT'" font-size="16">OFF</text>
+<text transform="matrix(1 0 0 1 364.7363 402.6162)" font-family="'ArialMT'" font-size="16">ON</text>
+<g>
+	<defs>
+		<path id="SVGID_21_" d="M412.5,381.476h59c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+			C409.5,382.819,410.843,381.476,412.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_22_">
+		<use xlink:href="#SVGID_21_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_22_)">
+		<defs>
+			<rect id="SVGID_23_" x="409" y="380.976" width="66" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_24_">
+			<use xlink:href="#SVGID_23_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 3.051758e-05 3.051758e-05)" clip-path="url(#SVGID_24_)">
+			
+				<image overflow="visible" width="65" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAhCAYAAACGA8YfAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGNJREFUeNrs08ENwCAMBEEM9N9S
+esJvcKTUkB9zJazm5lrraZcvMrNujzB7700EEUT4IowxRIgIEapKhL23COccEUgggQQSRHAHEkgg
+gQQSRHAHEkgggQQSRHAHEkiwP/YKMABgY1JV1GnN0gAAAABJRU5ErkJggg==" transform="matrix(1.0154 0 0 1.0071 409 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M412.5,381.476h59
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C409.5,382.819,410.843,381.476,412.5,381.476z"/>
+<g>
+	<defs>
+		<path id="SVGID_25_" d="M495.5,381.476h124c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0
+			v-25.228C492.5,382.819,493.843,381.476,495.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_26_">
+		<use xlink:href="#SVGID_25_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_26_)">
+		<defs>
+			<rect id="SVGID_27_" x="492" y="380.976" width="131" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_28_">
+			<use xlink:href="#SVGID_27_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_28_)">
+			
+				<image overflow="visible" width="130" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAAAhCAYAAAD+vMi+AAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHVJREFUeNrs1dEJgDAMRVHTNILg
+UB2q+7ma4Lcb5JwRHpckrns/B63NzFxmaB5BVVmhewSnCERQNa3gErgELoEIRCACvANcAkSACPgi
+GBFWaG6YABEgAkSACBABIkAEiAARIAJEgAgQASJABIgAESAC4McrwAAftQKFniKyqAAAAABJRU5E
+rkJggg==" transform="matrix(1.0077 0 0 1.0071 492 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M495.5,381.476h124
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C492.5,382.819,493.843,381.476,495.5,381.476z"/>
+<text transform="matrix(1 0 0 1 512.7363 402.6162)" fill="#FFFFFF" font-family="'ArialMT'" font-size="16">ON</text>
+<g>
+	<defs>
+		<path id="SVGID_29_" d="M560.5,381.476h59c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+			C557.5,382.819,558.843,381.476,560.5,381.476z"/>
+	</defs>
+	<clipPath id="SVGID_30_">
+		<use xlink:href="#SVGID_29_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_30_)">
+		<defs>
+			<rect id="SVGID_31_" x="557" y="380.976" width="66" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_32_">
+			<use xlink:href="#SVGID_31_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 0 3.051758e-05)" clip-path="url(#SVGID_32_)">
+			
+				<image overflow="visible" width="65" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAhCAYAAACGA8YfAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGNJREFUeNrs08ENwCAMBEEM9N9S
+esJvcKTUkB9zJazm5lrraZcvMrNujzB7700EEUT4IowxRIgIEapKhL23COccEUgggQQSRHAHEkgg
+gQQSRHAHEkgggQQSRHAHEkiwP/YKMABgY1JV1GnN0gAAAABJRU5ErkJggg==" transform="matrix(1.0154 0 0 1.0071 557 380.9756)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M560.5,381.476h59
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C557.5,382.819,558.843,381.476,560.5,381.476z"/>
+<g>
+	<defs>
+		<path id="SVGID_33_" d="M199.5,381.815h124c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0
+			v-25.228C196.5,383.159,197.843,381.815,199.5,381.815z"/>
+	</defs>
+	<clipPath id="SVGID_34_">
+		<use xlink:href="#SVGID_33_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_34_)">
+		<defs>
+			<rect id="SVGID_35_" x="196" y="381.315" width="131" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_36_">
+			<use xlink:href="#SVGID_35_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_36_)">
+			
+				<image overflow="visible" width="130" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAAAhCAYAAAD+vMi+AAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHpJREFUeNrs19ENgDAIQMFK4d9u
+5DaOoaNr/HYD7pIuQF4g3c59XYPWMiJuY2geQVaZQvcISgQiEAHOATYBIuA7BykCm8AmEIEI8Dtg
+5JxhCs0pABEgAkSACBABIkAEiAARIAJEgAgQASJABIgAESACfuT7DmPo7RFgAFb0AsJ6d2DDAAAA
+AElFTkSuQmCC" transform="matrix(1.0077 0 0 1.0071 196 381.3154)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M199.5,381.815h124
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-124c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C196.5,383.159,197.843,381.815,199.5,381.815z"/>
+<text transform="matrix(1 0 0 1 278.5786 402.9561)" fill="#FFFFFF" font-family="'ArialMT'" font-size="16">OFF</text>
+<g>
+	<defs>
+		<path id="SVGID_37_" d="M199.5,381.815h59c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+			C196.5,383.159,197.843,381.815,199.5,381.815z"/>
+	</defs>
+	<clipPath id="SVGID_38_">
+		<use xlink:href="#SVGID_37_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_38_)">
+		<defs>
+			<rect id="SVGID_39_" x="196" y="381.315" width="66" height="32.228"/>
+		</defs>
+		<clipPath id="SVGID_40_">
+			<use xlink:href="#SVGID_39_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 0 0)" clip-path="url(#SVGID_40_)">
+			
+				<image overflow="visible" width="65" height="32" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAhCAYAAACGA8YfAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGxJREFUeNrs1LsNwCAMQEGCGCyb
+ZWdosfOp0kXpOUte4PTs1ns/yuKzjTHO1RFarbVAgAABAoR3CDwlRASEzISgBCUoQQkQnIMSlKCE
+D4Q5JwQlQPAYlaAEJShBCRCcgxKU8Afh3n11hEuAAQCj8E9X6+TctAAAAABJRU5ErkJggg==" transform="matrix(1.0154 0 0 1.0071 196 381.3154)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#666666" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M199.5,381.815h59
+	c1.657,0,3,1.344,3,3v25.228c0,1.657-1.343,3-3,3h-59c-1.657,0-3-1.343-3-3l0,0v-25.228
+	C196.5,383.159,197.843,381.815,199.5,381.815z"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="218.243" y1="151.406" x2="218.243" y2="173.266"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="192.258" y1="151.265" x2="192.258" y2="173.125"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="166.273" y1="151.265" x2="166.273" y2="173.125"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="140.288" y1="151.265" x2="140.288" y2="173.125"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="114.303" y1="151.265" x2="114.303" y2="173.125"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="88.318" y1="151.265" x2="88.318" y2="173.125"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="244.228" y1="151.265" x2="244.228" y2="173.125"/>
+<g>
+	<defs>
+		<path id="SVGID_41_" d="M61.701,160.265h209c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0
+			C57.201,162.279,59.216,160.265,61.701,160.265z"/>
+	</defs>
+	<clipPath id="SVGID_42_">
+		<use xlink:href="#SVGID_41_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_42_)">
+		<defs>
+			<rect id="SVGID_43_" x="56.701" y="159.765" width="219" height="10"/>
+		</defs>
+		<clipPath id="SVGID_44_">
+			<use xlink:href="#SVGID_43_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_44_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAALCAYAAAAUYeMWAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRJREFUeNrs1TENwDAMRFE3ymQC
+WcMkEE0p0Eqgaz29B+Gkr3uq6kTEDeBvd+69zQBN5lrLCtAVnIeDxuAy0wrQFdwYwwrQRG0gOBAc
+IDgA+PAKMACnfQSzOV3JCQAAAABJRU5ErkJggg==" transform="matrix(1.0046 0 0 1.1111 56.7012 159.7646)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M61.701,160.265h209
+	c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0C57.201,162.279,59.216,160.265,61.701,160.265z
+	"/>
+<rect x="109.909" y="160.265" opacity="0.75" fill="#001590" width="112.534" height="9"/>
+<g>
+	<defs>
+		<polygon id="SVGID_45_" points="109.197,173.265 119.234,173.265 119.234,160.665 114.215,155.265 109.15,160.72 		"/>
+	</defs>
+	<clipPath id="SVGID_46_">
+		<use xlink:href="#SVGID_45_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_46_)">
+		<defs>
+			<rect id="SVGID_47_" x="108.65" y="154.765" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_48_">
+			<use xlink:href="#SVGID_47_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_48_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAENJREFUeNpirK+vt2dgYDjAQBw4
+wMRAIhjVMDg0sLCxsZGmgZeXl8YaeHh4BpuTuLi4aOwHoA0fSMhxF0iNaAaAAAMAteoHJs4TNVIA
+AAAASUVORK5CYII=" transform="matrix(1.0076 0 0 1.0556 108.6499 154.7646)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	109.197,173.265 119.234,173.265 119.234,160.665 114.215,155.265 109.15,160.72 "/>
+<g>
+	<defs>
+		<polygon id="SVGID_49_" points="213.442,173.265 223.479,173.265 223.479,160.665 218.46,155.265 213.395,160.72 		"/>
+	</defs>
+	<clipPath id="SVGID_50_">
+		<use xlink:href="#SVGID_49_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_50_)">
+		<defs>
+			<rect id="SVGID_51_" x="212.895" y="154.765" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_52_">
+			<use xlink:href="#SVGID_51_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 -1.525879e-05 0)" clip-path="url(#SVGID_52_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD1JREFUeNpiZACC+vr6/wxEAiYG
+EsGohsGhgQVEsLGxkaaBl5eXxhp4eHgGm5O4uLho7AegDQcYaAUAAgwAbkUEphXSUQ8AAAAASUVO
+RK5CYII=" transform="matrix(1.0076 0 0 1.0556 212.895 154.7646)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	213.442,173.265 223.479,173.265 223.479,160.665 218.46,155.265 213.395,160.72 "/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="218.243" y1="237.416" x2="218.243" y2="259.276"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="192.258" y1="237.276" x2="192.258" y2="259.135"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="166.273" y1="237.276" x2="166.273" y2="259.135"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="140.288" y1="237.276" x2="140.288" y2="259.135"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="114.303" y1="237.276" x2="114.303" y2="259.135"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="88.318" y1="237.276" x2="88.318" y2="259.135"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="244.228" y1="237.276" x2="244.228" y2="259.135"/>
+<g>
+	<defs>
+		<path id="SVGID_53_" d="M61.701,246.276h209c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0
+			C57.201,248.291,59.216,246.276,61.701,246.276z"/>
+	</defs>
+	<clipPath id="SVGID_54_">
+		<use xlink:href="#SVGID_53_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_54_)">
+		<defs>
+			<rect id="SVGID_55_" x="56.701" y="245.776" width="219" height="10"/>
+		</defs>
+		<clipPath id="SVGID_56_">
+			<use xlink:href="#SVGID_55_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 0 -1.525879e-05)" clip-path="url(#SVGID_56_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAALCAYAAAAUYeMWAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFRJREFUeNrs1TENwDAMRFE3ymQC
+WcMkEE0p0Eqgaz29B+Gkr3uq6kTEDeBvd+69zQBN5lrLCtAVnIeDxuAy0wrQFdwYwwrQRG0gOBAc
+IDgA+PAKMACnfQSzOV3JCQAAAABJRU5ErkJggg==" transform="matrix(1.0046 0 0 1.1111 56.7012 245.7759)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M61.701,246.276h209
+	c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0C57.201,248.291,59.216,246.276,61.701,246.276z
+	"/>
+<rect x="114.303" y="246.276" opacity="0.75" fill="#001590" width="52.97" height="9"/>
+<g>
+	<defs>
+		<polygon id="SVGID_57_" points="109.197,259.276 119.234,259.276 119.234,246.676 114.215,241.276 109.15,246.731 		"/>
+	</defs>
+	<clipPath id="SVGID_58_">
+		<use xlink:href="#SVGID_57_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_58_)">
+		<defs>
+			<rect id="SVGID_59_" x="108.65" y="240.776" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_60_">
+			<use xlink:href="#SVGID_59_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_60_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAENJREFUeNpirK+vt2dgYDjAQBw4
+wMRAIhjVMDg0sLCxsZGmgZeXl8YaeHh4BpuTuLi4aOwHoA0fSMhxF0iNaAaAAAMAteoHJs4TNVIA
+AAAASUVORK5CYII=" transform="matrix(1.0076 0 0 1.0556 108.6499 240.7759)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	109.197,259.276 119.234,259.276 119.234,246.676 114.215,241.276 109.15,246.731 "/>
+<rect x="166.273" y="246.276" opacity="0.75" fill="#428D0C" width="52.97" height="9"/>
+<g>
+	<defs>
+		<polygon id="SVGID_61_" points="213.442,259.276 223.479,259.276 223.479,246.676 218.46,241.276 213.395,246.731 		"/>
+	</defs>
+	<clipPath id="SVGID_62_">
+		<use xlink:href="#SVGID_61_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_62_)">
+		<defs>
+			<rect id="SVGID_63_" x="212.895" y="240.776" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_64_">
+			<use xlink:href="#SVGID_63_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 -1.525879e-05 0)" clip-path="url(#SVGID_64_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD1JREFUeNpiZACC+vr6/wxEAiYG
+EsGohsGhgQVEsLGxkaaBl5eXxhp4eHgGm5O4uLho7AegDQcYaAUAAgwAbkUEphXSUQ8AAAAASUVO
+RK5CYII=" transform="matrix(1.0076 0 0 1.0556 212.895 240.7759)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	213.442,259.276 223.479,259.276 223.479,246.676 218.46,241.276 213.395,246.731 "/>
+<g>
+	<defs>
+		<polygon id="SVGID_65_" points="161.32,259.276 171.357,259.276 171.357,246.676 166.338,241.276 161.273,246.731 		"/>
+	</defs>
+	<clipPath id="SVGID_66_">
+		<use xlink:href="#SVGID_65_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_66_)">
+		<defs>
+			<rect id="SVGID_67_" x="160.773" y="240.776" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_68_">
+			<use xlink:href="#SVGID_67_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_68_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAENJREFUeNpirK+vt2dgYDjAQBw4
+wMRAIhjVMDg0sLCxsZGmgZeXl8YaeHh4BpuTuLi4aOwHoA0fSMhxF0iNaAaAAAMAteoHJs4TNVIA
+AAAASUVORK5CYII=" transform="matrix(1.0076 0 0 1.0556 160.7729 240.7759)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	161.32,259.276 171.357,259.276 171.357,246.676 166.338,241.276 161.273,246.731 "/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="218.243" y1="65.395" x2="218.243" y2="87.255"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="192.258" y1="65.255" x2="192.258" y2="87.115"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="166.273" y1="65.255" x2="166.273" y2="87.115"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="140.288" y1="65.255" x2="140.288" y2="87.115"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="114.303" y1="65.255" x2="114.303" y2="87.115"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="88.318" y1="65.255" x2="88.318" y2="87.115"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="244.228" y1="65.255" x2="244.228" y2="87.115"/>
+<g>
+	<defs>
+		<path id="SVGID_69_" d="M61.701,74.255h209c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0
+			C57.201,76.27,59.216,74.255,61.701,74.255z"/>
+	</defs>
+	<clipPath id="SVGID_70_">
+		<use xlink:href="#SVGID_69_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_70_)">
+		<defs>
+			<rect id="SVGID_71_" x="56.701" y="73.755" width="219" height="10"/>
+		</defs>
+		<clipPath id="SVGID_72_">
+			<use xlink:href="#SVGID_71_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_72_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAALCAYAAAAUYeMWAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFhJREFUeNrs1bEJwDAMRUHHuPIC
+arVJRtRKHi1ZIoLAXaP+w0NjAG2uqrrfe0wBnzsrM80ATVZEWAG6gvPhoDG4vbcVoCu4OacVoIna
+QHAgOEBw8B+PAAMAffsEs901NekAAAAASUVORK5CYII=" transform="matrix(1.0046 0 0 1.1111 56.7012 73.7549)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M61.701,74.255h209
+	c2.485,0,4.5,2.015,4.5,4.5s-2.015,4.5-4.5,4.5h-209c-2.485,0-4.5-2.015-4.5-4.5l0,0C57.201,76.27,59.216,74.255,61.701,74.255z"/>
+<g>
+	<defs>
+		<polygon id="SVGID_73_" points="161.192,87.255 171.229,87.255 171.229,74.655 166.21,69.255 161.145,74.71 		"/>
+	</defs>
+	<clipPath id="SVGID_74_">
+		<use xlink:href="#SVGID_73_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_74_)">
+		<defs>
+			<rect id="SVGID_75_" x="160.645" y="68.755" width="11.084" height="19"/>
+		</defs>
+		<clipPath id="SVGID_76_">
+			<use xlink:href="#SVGID_75_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_76_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAUCAYAAAC58NwRAAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEFJREFUeNpiYiARMNbX19sD6QNE
+qj/ARKoNoxoGhwYWNjY20jTw8vLSWAMPD89gcxIXFxeN/QC04QMJOe4CQIABAF9uBygmhRWOAAAA
+AElFTkSuQmCC" transform="matrix(1.0076 0 0 1.0556 160.645 68.7549)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	161.192,87.255 171.229,87.255 171.229,74.655 166.21,69.255 161.145,74.71 "/>
+<text transform="matrix(1 0 0 1 41 25.7598)" fill="#BFBFBF" font-family="'Helvetica'" font-size="30">Sliders</text>
+<g>
+	<defs>
+		<path id="SVGID_77_" d="M574.89,1.76h65c2.762,0,5,2.239,5,5v17c0,2.761-2.238,5-5,5h-65c-2.761,0-5-2.239-5-5l0,0v-17
+			C569.89,3.999,572.129,1.76,574.89,1.76z"/>
+	</defs>
+	<clipPath id="SVGID_78_">
+		<use xlink:href="#SVGID_77_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_78_)">
+		<defs>
+			<rect id="SVGID_79_" x="569.39" y="1.26" width="76" height="28"/>
+		</defs>
+		<clipPath id="SVGID_80_">
+			<use xlink:href="#SVGID_79_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 6.103516e-05 1.192093e-07)" clip-path="url(#SVGID_80_)">
+			
+				<image overflow="visible" width="75" height="27" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAdCAYAAAAARYp5AAAACXBIWXMAAArrAAAK6wGCiw1aAAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIdJREFUeNrs18kNgDAMBdEgUQ1Q
+DqXTDFtCOHA33ID3JaeAkSe2m1JKn1IakkQytfXpao1YhJJPYHutGYtQ9gvYgkUc2KbDwtl02IMO
+y7VWLOKfPiUfKAmYKWlKmpJvVlKHUZKSlLRW/AiY04iSlLRWOL4pKZS06VsrKPlFJQsWoWQIbuYQ
+YABea1LIfu7DoAAAAABJRU5ErkJggg==" transform="matrix(1.0133 0 0 1.037 569.3896 1.2598)">
+			</image>
+		</g>
+	</g>
+</g>
+<path opacity="0.1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M574.89,1.76h65c2.762,0,5,2.239,5,5v17c0,2.761-2.238,5-5,5h-65c-2.761,0-5-2.239-5-5l0,0v-17
+	C569.89,3.999,572.129,1.76,574.89,1.76z"/>
+<g>
+	<text transform="matrix(1 0 0 1 576.542 20.2598)" fill="#6371CD" font-family="'Helvetica'" font-size="14">YUI Code</text>
+</g>
+<g>
+	<defs>
+		<rect id="SVGID_81_" y="596.76" width="75.201" height="75.201"/>
+	</defs>
+	<clipPath id="SVGID_82_">
+		<use xlink:href="#SVGID_81_"  overflow="visible"/>
+	</clipPath>
+	<path clip-path="url(#SVGID_82_)" fill="#650F6C" d="M34.131,645.558c-9.84,0-16.711-5.147-16.711-12.523
+		c0-7.369,6.871-12.518,16.711-12.518c9.836,0,16.708,5.148,16.708,12.518C50.839,640.41,43.967,645.558,34.131,645.558z"/>
+	
+		<rect x="52.96" y="640.75" transform="matrix(0.9926 0.1215 -0.1215 0.9926 78.5257 -1.9502)" clip-path="url(#SVGID_82_)" fill="#650F6C" width="4.58" height="4.063"/>
+	<polygon clip-path="url(#SVGID_82_)" fill="#650F6C" points="54.076,619.954 54.104,637.949 57.437,638.358 61.809,620.931 	"/>
+	<path clip-path="url(#SVGID_82_)" fill="#FFFFFF" d="M43.88,629.944c-0.363,0.037-1.867,0.374-2.373,0.481
+		c-0.542,0.145-5.49,3.967-5.815,4.907c-0.072,0.325-0.108,0.824-0.108,1.294l-0.037,0.758c0,0.543,0.15,1.414,0.222,1.886
+		c0.325,0.071,2.68,0.009,3.112,0.081l-0.052,0.97c-0.423-0.029-3.413-0.022-5.121-0.022c-0.868,0-3.654,0.094-4.511,0.068
+		l0.162-0.923c0.47-0.037,2.413,0.084,2.841-0.367c0.213-0.225,0.145-0.464,0.145-1.764v-0.615c0-0.29,0-0.829-0.072-1.335
+		c-0.18-0.542-4.539-5.984-5.66-6.852c-0.324-0.108-2.361-0.312-2.867-0.42l-0.025-0.833c0.251-0.126,2.517,0.032,4.716-0.05
+		c1.444-0.054,4.741,0,5.148,0.048l-0.104,0.733c-0.435,0.109-2.521,0.149-3.063,0.294c1.408,2.094,3.638,4.791,4.359,5.838
+		c0.397-0.577,3.89-2.979,3.998-3.81c-0.542-0.107-2.337-0.368-2.625-0.368l-0.172-0.945c0.492-0.076,3.077,0,4.364,0
+		c1.109,0,3.479,0,4.153,0.056L43.88,629.944z"/>
+	<polygon clip-path="url(#SVGID_82_)" fill="#650F6C" points="58.988,641.03 58.614,641.03 58.614,640.818 59.593,640.818 
+		59.593,641.03 59.219,641.03 59.219,642.027 58.988,642.027 	"/>
+	<polygon clip-path="url(#SVGID_82_)" fill="#650F6C" points="59.852,640.818 60.099,640.818 60.465,641.392 60.83,640.818 
+		61.069,640.818 61.069,642.027 60.846,642.027 60.846,641.168 60.473,641.749 60.449,641.749 60.076,641.168 60.076,642.027 
+		59.852,642.027 	"/>
+</g>
+<text transform="matrix(1 0 0 1 70.2012 633.8594)" fill="#404040" font-family="'Arial-BoldMT'" font-size="21">DESIGN STENCILS</text>
+<text transform="matrix(1 0 0 1 70.2012 652.8594)" fill="#404040" font-family="'ArialMT'" font-size="16">http://design.yahoo.com</text>
+<text transform="matrix(1 0 0 1 569.5049 630.8594)" fill="#404040" font-family="'Arial-BoldMT'" font-size="18">Controls</text>
+<text transform="matrix(1 0 0 1 591.0234 649.8594)" fill="#404040" font-family="'ArialMT'" font-size="16">ver</text>
+<text transform="matrix(1 0 0 1 612.3672 649.8594)" fill="#404040" font-family="'ArialMT'" font-size="16">. 1.0</text>
+<line fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="14.5" y1="606.96" x2="656.5" y2="606.96"/>
+<text transform="matrix(1 0 0 1 41.1064 347.7598)" fill="#BFBFBF" font-family="'Helvetica'" font-size="30">Switches &amp; Knobs</text>
+<line fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="14.5" y1="301.26" x2="656.5" y2="301.26"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.069" y1="214.307" x2="478.209" y2="214.307"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="188.322" x2="478.349" y2="188.322"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="162.337" x2="478.349" y2="162.337"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="136.352" x2="478.349" y2="136.352"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="110.367" x2="478.349" y2="110.367"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="84.382" x2="478.349" y2="84.382"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="500.209" y1="240.292" x2="478.349" y2="240.292"/>
+<g>
+	<defs>
+		<path id="SVGID_83_" d="M491.209,57.765v209c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5
+			l0,0C489.194,53.265,491.209,55.279,491.209,57.765z"/>
+	</defs>
+	<clipPath id="SVGID_84_">
+		<use xlink:href="#SVGID_83_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_84_)">
+		<defs>
+			<rect id="SVGID_85_" x="481.709" y="52.765" width="10" height="219"/>
+		</defs>
+		<clipPath id="SVGID_86_">
+			<use xlink:href="#SVGID_85_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 -3.051758e-05 0)" clip-path="url(#SVGID_86_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAAAJCAIAAADb1aUNAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEVJREFUeNrs1EERgFAMQ0E+g4/W
+cZ1WA0jgmMOuhDeZnJm5IMPT3SqQMseqUoEQZ3dVIOUdPyoQ4pYAcwRzxBzhp1eAAQBoWwVXNPp6
+fwAAAABJRU5ErkJggg==" transform="matrix(-4.391190e-08 1.0046 -1.1111 0 491.709 52.7646)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M491.209,57.765v209
+	c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5l0,0
+	C489.194,53.265,491.209,55.279,491.209,57.765z"/>
+<rect x="482.209" y="105.973" opacity="0.75" fill="#001590" width="9" height="112.534"/>
+<g>
+	<defs>
+		<polygon id="SVGID_87_" points="478.209,105.261 478.209,115.298 490.809,115.298 496.209,110.279 490.754,105.214 		"/>
+	</defs>
+	<clipPath id="SVGID_88_">
+		<use xlink:href="#SVGID_87_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_88_)">
+		<defs>
+			<rect id="SVGID_89_" x="477.709" y="104.714" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_90_">
+			<use xlink:href="#SVGID_89_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 3.051758e-05 0)" clip-path="url(#SVGID_90_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 496.709 104.7139)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	478.209,105.261 478.209,115.298 490.809,115.298 496.209,110.279 490.754,105.214 "/>
+<g>
+	<defs>
+		<polygon id="SVGID_91_" points="478.209,209.507 478.209,219.544 490.809,219.544 496.209,214.525 490.754,209.46 		"/>
+	</defs>
+	<clipPath id="SVGID_92_">
+		<use xlink:href="#SVGID_91_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_92_)">
+		<defs>
+			<rect id="SVGID_93_" x="477.709" y="208.96" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_94_">
+			<use xlink:href="#SVGID_93_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 3.051758e-05 0)" clip-path="url(#SVGID_94_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 496.709 208.96)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	478.209,209.507 478.209,219.544 490.809,219.544 496.209,214.525 490.754,209.46 "/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.36" y1="214.307" x2="386.5" y2="214.307"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="188.322" x2="386.64" y2="188.322"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="162.337" x2="386.64" y2="162.337"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="136.352" x2="386.64" y2="136.352"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="110.367" x2="386.64" y2="110.367"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="84.382" x2="386.64" y2="84.382"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="408.5" y1="240.292" x2="386.64" y2="240.292"/>
+<g>
+	<defs>
+		<path id="SVGID_95_" d="M399.5,57.765v209c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5l0,0
+			C397.485,53.265,399.5,55.279,399.5,57.765z"/>
+	</defs>
+	<clipPath id="SVGID_96_">
+		<use xlink:href="#SVGID_95_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_96_)">
+		<defs>
+			<rect id="SVGID_97_" x="390" y="52.765" width="10" height="219"/>
+		</defs>
+		<clipPath id="SVGID_98_">
+			<use xlink:href="#SVGID_97_"  overflow="visible"/>
+		</clipPath>
+		<g transform="matrix(1 0 0 1 -3.051758e-05 0)" clip-path="url(#SVGID_98_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAAAJCAIAAADb1aUNAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEVJREFUeNrs1EERgFAMQ0E+g4/W
+cZ1WA0jgmMOuhDeZnJm5IMPT3SqQMseqUoEQZ3dVIOUdPyoQ4pYAcwRzxBzhp1eAAQBoWwVXNPp6
+fwAAAABJRU5ErkJggg==" transform="matrix(-4.391190e-08 1.0046 -1.1111 0 400 52.7646)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M399.5,57.765v209
+	c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5l0,0C397.485,53.265,399.5,55.279,399.5,57.765z"
+	/>
+<rect x="390.5" y="110.367" opacity="0.75" fill="#001590" width="9" height="52.97"/>
+<g>
+	<defs>
+		<polygon id="SVGID_99_" points="386.5,105.261 386.5,115.298 399.1,115.298 404.5,110.279 399.045,105.214 		"/>
+	</defs>
+	<clipPath id="SVGID_100_">
+		<use xlink:href="#SVGID_99_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_100_)">
+		<defs>
+			<rect id="SVGID_101_" x="386" y="104.714" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_102_">
+			<use xlink:href="#SVGID_101_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_102_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 405 104.7139)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	386.5,105.261 386.5,115.298 399.1,115.298 404.5,110.279 399.045,105.214 "/>
+<rect x="390.5" y="162.337" opacity="0.75" fill="#428D0C" width="9" height="52.97"/>
+<g>
+	<defs>
+		<polygon id="SVGID_103_" points="386.5,209.507 386.5,219.544 399.1,219.544 404.5,214.525 399.045,209.46 		"/>
+	</defs>
+	<clipPath id="SVGID_104_">
+		<use xlink:href="#SVGID_103_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_104_)">
+		<defs>
+			<rect id="SVGID_105_" x="386" y="208.96" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_106_">
+			<use xlink:href="#SVGID_105_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_106_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 405 208.96)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	386.5,209.507 386.5,219.544 399.1,219.544 404.5,214.525 399.045,209.46 "/>
+<g>
+	<defs>
+		<polygon id="SVGID_107_" points="386.5,157.385 386.5,167.422 399.1,167.422 404.5,162.403 399.045,157.338 		"/>
+	</defs>
+	<clipPath id="SVGID_108_">
+		<use xlink:href="#SVGID_107_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_108_)">
+		<defs>
+			<rect id="SVGID_109_" x="386" y="156.838" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_110_">
+			<use xlink:href="#SVGID_109_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_110_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 405 156.8379)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	386.5,157.385 386.5,167.422 399.1,167.422 404.5,162.403 399.045,157.338 "/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.779" y1="214.302" x2="569.919" y2="214.302"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="188.317" x2="570.059" y2="188.317"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="162.332" x2="570.059" y2="162.332"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="136.347" x2="570.059" y2="136.347"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="110.362" x2="570.059" y2="110.362"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="84.377" x2="570.059" y2="84.377"/>
+<line fill="none" stroke="#808080" stroke-linejoin="round" stroke-miterlimit="10" x1="591.919" y1="240.287" x2="570.059" y2="240.287"/>
+<g>
+	<defs>
+		<path id="SVGID_111_" d="M582.919,57.76v209c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5
+			l0,0C580.904,53.26,582.919,55.274,582.919,57.76z"/>
+	</defs>
+	<clipPath id="SVGID_112_">
+		<use xlink:href="#SVGID_111_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_112_)">
+		<defs>
+			<rect id="SVGID_113_" x="573.419" y="52.76" width="10" height="219"/>
+		</defs>
+		<clipPath id="SVGID_114_">
+			<use xlink:href="#SVGID_113_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_114_)">
+			
+				<image overflow="visible" width="218" height="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANoAAAAJCAIAAADb1aUNAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEVJREFUeNrs1EERgFAMQ0E+g4/W
+cZ1WA0jgmMOuhDeZnJm5IMPT3SqQMseqUoEQZ3dVIOUdPyoQ4pYAcwRzxBzhp1eAAQBoWwVXNPp6
+fwAAAABJRU5ErkJggg==" transform="matrix(-4.391190e-08 1.0046 -1.1111 0 583.4189 52.7598)">
+			</image>
+		</g>
+	</g>
+</g>
+<path fill="none" stroke="#808080" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M582.919,57.76v209
+	c0,2.485-2.015,4.5-4.5,4.5s-4.5-2.015-4.5-4.5l0,0v-209c0-2.485,2.015-4.5,4.5-4.5l0,0C580.904,53.26,582.919,55.274,582.919,57.76
+	z"/>
+<g>
+	<defs>
+		<polygon id="SVGID_115_" points="569.919,157.25 569.919,167.288 582.519,167.288 587.919,162.269 582.464,157.204 		"/>
+	</defs>
+	<clipPath id="SVGID_116_">
+		<use xlink:href="#SVGID_115_"  overflow="visible"/>
+	</clipPath>
+	<g clip-path="url(#SVGID_116_)">
+		<defs>
+			<rect id="SVGID_117_" x="569.419" y="156.704" width="19" height="11.084"/>
+		</defs>
+		<clipPath id="SVGID_118_">
+			<use xlink:href="#SVGID_117_"  overflow="visible"/>
+		</clipPath>
+		<g clip-path="url(#SVGID_118_)">
+			
+				<image overflow="visible" width="11" height="18" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAIAAAACF7MiAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACdJREFUeNpirK+vZ8ALmBgIgVEV
+qICFl5eXYhU8PDx0sIUu7gAIMAB39gLj/9jxUAAAAABJRU5ErkJggg==" transform="matrix(0 1.0076 -1.0556 0 588.4189 156.7036)">
+			</image>
+		</g>
+	</g>
+</g>
+<polygon fill="none" stroke="#404040" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+	569.919,157.25 569.919,167.288 582.519,167.288 587.919,162.269 582.464,157.204 "/>
+</svg>

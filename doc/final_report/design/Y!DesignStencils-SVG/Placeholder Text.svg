@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="783.5px" height="552.075px" viewBox="0 0 783.5 552.075" enable-background="new 0 0 783.5 552.075" xml:space="preserve">
+<text transform="matrix(1 0 0 1 36.228 18.874)" font-family="'Arial-BoldMT'" font-size="22">H1 Header Text</text>
+<text transform="matrix(1 0 0 1 36.4346 61.374)" font-family="'Arial-BoldMT'" font-size="20">H2 Header Text</text>
+<text transform="matrix(1 0 0 1 36.1411 100.874)" font-family="'Arial-BoldMT'" font-size="18">H3 Header Text</text>
+<text transform="matrix(1 0 0 1 36.3477 138.374)" font-family="'Arial-BoldMT'" font-size="16">H4 Header Text</text>
+<text transform="matrix(1 0 0 1 36.0542 173.874)" font-family="'Arial-BoldMT'" font-size="14">H5 Header Text</text>
+<text transform="matrix(1 0 0 1 36.2607 205.874)" font-family="'Arial-BoldMT'" font-size="12">H6 Header Text</text>
+<text transform="matrix(1 0 0 1 288.27 18.874)" font-family="'ArialMT'" font-size="13">Normal text</text>
+<text transform="matrix(1 0 0 1 288.1938 51.874)" font-family="'Arial-BoldMT'" font-size="13">Bold text</text>
+<text transform="matrix(1 0 0 1 288.3521 84.874)" font-family="'Arial-ItalicMT'" font-size="13">Italic text</text>
+<text transform="matrix(1 0 0 1 288.293 116.874)" font-family="'Courier'" font-size="12">code snippet</text>
+<text transform="matrix(1 0 0 1 288 149.874)" font-family="'Arial-BoldMT'" font-size="13">Primary text</text>
+<text transform="matrix(1 0 0 1 288 162.874)" fill="#808080" font-family="'ArialMT'" font-size="11">Secondary text</text>
+<text transform="matrix(1 0 0 1 468.0762 18.874)" fill="#314AD7" font-family="'ArialMT'" font-size="13">Link</text>
+<line fill="none" stroke="#314AD7" stroke-miterlimit="10" x1="468.125" y1="53.874" x2="532.875" y2="53.874"/>
+<text transform="matrix(1 0 0 1 468.125 51.874)" fill="#314AD7" font-family="'ArialMT'" font-size="13">Link: Hover</text>
+<text transform="matrix(1 0 0 1 468.0723 84.874)" fill="#BF37B9" font-family="'ArialMT'" font-size="13">Link: Visited</text>
+<g>
+	<defs>
+		<rect id="SVGID_1_" y="476.874" width="75.201" height="75.201"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  overflow="visible"/>
+	</clipPath>
+	<path clip-path="url(#SVGID_2_)" fill="#650F6C" d="M34.131,525.672c-9.84,0-16.711-5.147-16.711-12.523
+		c0-7.369,6.871-12.518,16.711-12.518c9.836,0,16.708,5.148,16.708,12.518C50.839,520.524,43.967,525.672,34.131,525.672z"/>
+	
+		<rect x="52.96" y="520.864" transform="matrix(0.9926 0.1215 -0.1215 0.9926 63.9561 -2.8387)" clip-path="url(#SVGID_2_)" fill="#650F6C" width="4.58" height="4.063"/>
+	<polygon clip-path="url(#SVGID_2_)" fill="#650F6C" points="54.076,500.068 54.104,518.063 57.437,518.473 61.809,501.045 	"/>
+	<path clip-path="url(#SVGID_2_)" fill="#FFFFFF" d="M43.88,510.059c-0.363,0.037-1.867,0.374-2.373,0.481
+		c-0.542,0.145-5.49,3.967-5.815,4.907c-0.072,0.325-0.108,0.824-0.108,1.294l-0.037,0.758c0,0.543,0.15,1.414,0.222,1.886
+		c0.325,0.071,2.68,0.009,3.112,0.081l-0.052,0.97c-0.423-0.029-3.413-0.022-5.121-0.022c-0.868,0-3.654,0.094-4.511,0.068
+		l0.162-0.923c0.47-0.037,2.413,0.084,2.841-0.367c0.213-0.225,0.145-0.464,0.145-1.764v-0.615c0-0.29,0-0.829-0.072-1.335
+		c-0.18-0.542-4.539-5.984-5.66-6.852c-0.324-0.108-2.361-0.312-2.867-0.42l-0.025-0.833c0.251-0.126,2.517,0.032,4.716-0.05
+		c1.444-0.054,4.741,0,5.148,0.048l-0.104,0.733c-0.435,0.109-2.521,0.149-3.063,0.294c1.408,2.094,3.638,4.791,4.359,5.838
+		c0.397-0.577,3.89-2.979,3.998-3.81c-0.542-0.107-2.337-0.368-2.625-0.368l-0.172-0.945c0.492-0.076,3.077,0,4.364,0
+		c1.109,0,3.479,0,4.153,0.056L43.88,510.059z"/>
+	<polygon clip-path="url(#SVGID_2_)" fill="#650F6C" points="58.988,521.145 58.614,521.145 58.614,520.933 59.593,520.933 
+		59.593,521.145 59.219,521.145 59.219,522.142 58.988,522.142 	"/>
+	<polygon clip-path="url(#SVGID_2_)" fill="#650F6C" points="59.852,520.933 60.099,520.933 60.465,521.506 60.83,520.933 
+		61.069,520.933 61.069,522.142 60.846,522.142 60.846,521.282 60.473,521.863 60.449,521.863 60.076,521.282 60.076,522.142 
+		59.852,522.142 	"/>
+</g>
+<text transform="matrix(1 0 0 1 70.2012 513.9736)" fill="#404040" font-family="'Arial-BoldMT'" font-size="21">DESIGN STENCILS</text>
+<text transform="matrix(1 0 0 1 70.2012 532.9736)" fill="#404040" font-family="'ArialMT'" font-size="16">http://design.yahoo.com</text>
+<text transform="matrix(1 0 0 1 616.2832 510.9736)" fill="#404040" font-family="'Arial-BoldMT'" font-size="18">Placeholder T</text>
+<text transform="matrix(1 0 0 1 732.9844 510.9736)" fill="#404040" font-family="'Arial-BoldMT'" font-size="18">ext</text>
+<text transform="matrix(1 0 0 1 706.5234 529.9736)" fill="#404040" font-family="'ArialMT'" font-size="16">ver</text>
+<text transform="matrix(1 0 0 1 727.8672 529.9736)" fill="#404040" font-family="'ArialMT'" font-size="16">. 1.0</text>
+<line fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="14.5" y1="487.074" x2="782.5" y2="487.074"/>
+<rect x="36" y="235.874" fill="none" width="731.5" height="219"/>
+<text transform="matrix(1 0 0 1 36.0005 244.4658)"><tspan x="0" y="0" font-family="'ArialMT'" font-size="12">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. In ac nisl quis ante varius tristique. In tincidunt mi a leo. Donec mattis pharetra </tspan><tspan x="0" y="14.4" font-family="'ArialMT'" font-size="12">orci. Nam congue nunc ac metus. Donec vulputate rhoncus mauris. Fusce pharetra mauris quis leo pulvinar ornare. Donec purus. Cras </tspan><tspan x="0" y="28.8" font-family="'ArialMT'" font-size="12">sagittis mollis libero. Donec neque. Curabitur at metus nec enim feugiat rutrum. Suspendisse lobortis libero at nisi. Nulla porta, nunc vitae </tspan><tspan x="0" y="43.2" font-family="'ArialMT'" font-size="12">dignissim tempor, sapien erat suscipit tellus, sit amet vulputate turpis velit eget mi. Nam enim. Integer viverra, libero aliquet porttitor </tspan><tspan x="0" y="57.6" font-family="'ArialMT'" font-size="12">pellentesque, eros arcu pharetra felis, et varius mauris nibh sed arcu.</tspan><tspan x="0" y="86.4" font-family="'ArialMT'" font-size="12">Integer ac purus quis odio tincidunt mollis. Vivamus varius facilisis eros. Mauris vehicula nunc a odio. Aliquam erat volutpat. Duis com</tspan><tspan x="708.322" y="86.4" font-family="'ArialMT'" font-size="12">-</tspan><tspan x="0" y="100.8" font-family="'ArialMT'" font-size="12">modo. Phasellus tristique, enim blandit dignissim egestas, elit nulla ultrices neque, eget aliquet nisi diam ut metus. Integer tellus arcu, </tspan><tspan x="0" y="115.2" font-family="'ArialMT'" font-size="12">volutpat a, vehicula sit amet, mollis ut, tortor. Nunc scelerisque, leo vel aliquam posuere, orci orci imperdiet nisl, eget posuere odio lectus </tspan><tspan x="0" y="129.6" font-family="'ArialMT'" font-size="12">nec velit. Cras vel nibh. Etiam nisi dolor, venenatis eget, tempus id, sodales quis, urna. Vestibulum nec dui. Vestibulum sollicitudin </tspan><tspan x="0" y="144" font-family="'ArialMT'" font-size="12">aliquam ligula. Sed blandit euismod mi.</tspan><tspan x="0" y="172.8" font-family="'ArialMT'" font-size="12">Proin pretium sodales est. Praesent vel justo. Vestibulum consequat eleifend quam. Integer lorem nibh, condimentum quis, elementum </tspan><tspan x="0" y="187.2" font-family="'ArialMT'" font-size="12">vitae, blandit eget, justo. Curabitur sed arcu. Duis nec nisl. Pellentesque posuere justo a tortor. Nullam eu mauris a dui pulvinar auctor. </tspan><tspan x="0" y="201.6" font-family="'ArialMT'" font-size="12">Duis varius interdum ligula. Sed sollicitudin, dolor eget posuere vestibulum, tortor ante posuere orci, non venenatis massa sem et lacus.</tspan></text>
+</svg>
