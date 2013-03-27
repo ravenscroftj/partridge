@@ -1,0 +1,41 @@
+\begin{verbatim}
+Hi All,
+
+I'm trying to build CRFSuite's python extension 
+(http://www.chokkan.org/software/crfsuite/) on an Arch Linux 64-bit 
+environment using Swig 2.0.8 (PCRE enabled).
+
+When I run SWIG, I get the following output:
+
+<<OUTPUT OMITTED FOR BREVITY>>
+
+Full output available at http://sourceforge.net/mailarchive/message.php?msg_id=30024209
+
+As far as I can see, all of these problems stem from this declaration in 
+the SWIG input file (http://pastebin.com/9JipJ1C1):
+%template(ItemSequence) std::vector<CRFSuite::Item>;
+
+I've had a look around on google and on this mailing list and the only 
+other "cannot copy typemap" errors I've encountered have been where 
+people have excluded the std namespace in favour of a 'using' statement. 
+As you can see, this example uses absolute class names so that isn't the 
+issue here. I haven't had any luck contacting the software maintainer 
+for CRFSuite yet either.
+
+As you might expect, if I continue to compile the extension without 
+heeding these errors, when I try to make use of the ItemSequence object 
+I get the following python error:
+TypeError: in method 'ItemSequence_append', argument 2 of type 
+'std::vector< CRFSuite::Item >::value_type const &'
+
+I'm going to keep trying to sort this out and if I find the solution 
+independantly, I'll make sure to post a follow-up email. However, if 
+anyone else has any ideas about what might be happening here, please let 
+me know.
+
+Thanks,
+
+James Ravenscroft
+AI & Robotics Undergraduate
+Aberystwyth University
+\end{verbatim}
