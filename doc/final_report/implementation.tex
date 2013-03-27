@@ -13,6 +13,11 @@ difficult to tackle.
 
 \section{Paper Preprocessor}
 
+Partridge's Paper Preprocessor module was the most difficult part of the
+project to implement. From acquiring papers for use in the project to teaching
+a machine learning system to recognise different types of scientific
+publication, a number of technical challenges were encountered.
+
 \subsection{ Sourcing and Acquiring Scientific Papers}
 
 In order to provide a useful service to researchers looking for papers, growing
@@ -105,7 +110,7 @@ to modify either of the whitespace sanitiser or sentence splitter routines. The
 process was much more successful and able to produce SAPIENTA-compatible
 documents from most of the PDF input files that were provided.
 
-\subsection{Pre-processing with SAPIENTA}
+\subsection{Annotating with SAPIENTA}
 
 With a successful PDF conversion script, the next step was to try and run
 SAPIENTA over the converted papers and annotate them, ready for inclusion in
@@ -135,7 +140,7 @@ SAPIENTA for Python also relies upon a package called CRFSuite which implements
 Conditional Random Fields, a method for segmenting and labelling sequence
 data\cite{CRFsuite}. This library did not compile properly on the test
 environment and its creator had to be contacted via a mailing list (See
-Appendix \ref{sec:crfemail}. After a few days, the owner responded and the
+Appendix \ref{sec:crfemail}). After a few days, the owner responded and the
 library was compiled successfully.  
 
 Once all the data files and libraries were successfully in place, the Python
@@ -160,7 +165,7 @@ between the classes. For example, to discriminate between cats and dogs,
 However, the noise that these animals make may be a good discriminative feature
 since cats tend to mew and dogs bark. 
 
-\subsubsection{ Feature Selection and Clustering}
+\subsubsection{Feature Selection and CoreSCs}
 
 There are several well established features used for classifying text within
 the NLP community. However, since Partridge has access to CoreSC annotations
@@ -174,35 +179,126 @@ the types of paper and the proportions of each CoreSC within them.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.6\textwidth]{images/implementation/review_corescs.png}
+\begin{subfigure}[b]{0.6\textwidth}
+\includegraphics[width=\textwidth]{images/implementation/review_corescs.png}
+\caption{CoreSC content for a sample review paper}
+\end{subfigure}
+\begin{subfigure}[b]{0.6\textwidth}
+\includegraphics[width=\textwidth]{images/implementation/report_corescs.png}
+\caption{CoreSC content for a sample research paper}
+\end{subfigure}
+
 \caption{Contrasting CoreSC content of Review and Research Papers}
 \label{fig:coresc_pies}
 \end{figure}
 
-Figure \ref{fig:coresc_pies} shows the CoreSC content of a review aper and a
+Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a
 research paper randomly selected from the corpus. The review papers tend to be
 made up almost entirely from Background CoreSC sentences. However, research
 papers are much more evenly spread, made up of several different types of
 CoreSC. This investigation suggested that there is almost certainly a discriminative
 relationship between CoreSC categories and a paper's type. 
 
-Although all of the CoreSC types could be influential in determining a paper's
-type, it was likely that some were more important than others. A further
-investigation was carried out to discover the most effective features for
-categorising the data. Since no classifier model had been trained at this
-point, the data was clustered into three unlabelled groups using the K-means
-clustering algorithm. This algorithm was run with three CoreSC 
+\subsubsection{ K-means clustering}
 
+Before working with supervised learning systems, a preliminary experiment was
+carried out to see whether clustering papers using the K-means algorithm could
+successfully identify the paper types, thus removing the need to train and
+maintain a supervised model. This was also an excellent opportunity to explore
+the data and try and detect any inherent patterns within the papers.
+
+K-means clustering uses the Euclidean distance between each data sample to
+decide which cluster it is closest to and should belong to. K is the number of
+clusters that are used and is decided ahead of execution. K-means clustering is
+often run multiple times using a range of K values when the number of clusters
+in the data is unknown. The performance of the clustering algorithm is often
+evaluated using the K-means silhouette which is a measurement of how tightly
+the data is clustered. A low silhouette value ($K \approx 0$) suggests loose
+clustering and therefore little correlation, a high silhouette value ($K
+\approx 1$) corresponds with very tight clustering and good correlation.
+
+All of the papers were manually identified as either a ``Case Study", a
+``Review Paper" or a ``Research Paper." They were then loaded into a script and
+clustered using their CoreSC respective compositions. K-Means silhouettes were
+used as a measure of how effective the clustering process was. This was
+repeated for $ K \in [2..8] $ and the best silhouette measurement and value for
+K retained. The algorithm consistently showed that K=3 was the best K value.
+However, the silhouette value was consistently low. It was suggested that this
+may have been because all CoreSC types were considered equally; the less
+discriminative CoreSCs may have been offsetting the effect of the highly
+discriminative ones.
+
+To remedy this, all papers were again clustered, but using only three CoreSC
+labels at a time: reducing the noise from the less important types. The
+algorithm was run for all combinations of 3 CoreSC labels, again retaining only
+the most successful combination of features and K value based upon the K
+silhouette value. This returned a set of much stronger K silhouette values in
+general. The algorithm also determined that the combination of ``Background",
+``Motivation" and ``Method" CoreSC labels seemed to be the most
+discriminative, providing a silhouette value of 0.63. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\textwidth]{implementation/cluster.png}
+\caption{Paper types rendered using Bac, Met and Mot CoreSCs}
+\label{fig:clusters}
+\end{figure}
+
+Figure \ref{fig:clusters} shows the papers from the corpus rendered in 3
+dimensions using their Background, Method and Motivation CoreSC makeup.
+Although the data does not cluster perfectly by class, these three categories
+do provide fairly clear discrimination between the three types of paper. 
+
+Clustering the papers did not seem to provide a reliable way to classify them
+by type and it was decided that better results could be obtained through the
+use of a supervised learning classifier instead. However, the three most
+discriminative CoreSC types were chosen as features for the learner.
+
+\subsubsection{Random Forest Learner}
+
+To classify the papers, a Random Forest Learner was trained using a subset of
+the Partridge corpus using Background, Method and Motivation CoreSC information
+from the papers. The classifier was found to be highly accurate, correctly
+predicting a paper's type in 87.9\% of cases. The classifier's accuracy and
+evaluation are further discussed in Section \ref{sec:evaluation_learners}
+below. 
+
+The new classifier was incorporated into the paper preprocessor and triggered
+after SAPIENTA annotation for each new paper. It was also called
+retrospectively for papers in the Farnsworth Partridge instance that were not yet
+classified.
 
 
 \subsection{ Paper Processing Notifications }
 
+Providing notifications to users when a paper has been processed was not part
+of the original design for Partridge. The feature was added to the system after
+being raised as a potential improvement by one of the test users. Previously,
+users to added papers to the Partridge corpus did not know whether the
+operation was a success unless they ran a search and the paper appeared in
+their results. Adding email notifications to Partridge significantly improved
+the user experience for paper uploaders. The uploader is given the option to
+provide their email address when they send the paper to the Partridge server.
+Once the preprocessor has converted, annotated and classified a paper, an email
+is sent to the uploader informing them that the paper has been added to the
+database and containing a direct link to the paper's profile page.
+
+The system also emails users upon failure, allowing them to report the error to
+the GitHub page if required and also providing closure for users who are unsure
+why their paper isn't appearing in Partridge queries.
 
 
 
 \section{ Web Backend }
 
+The Partridge web backend was much easier to implement than the preprocessor.
+The web framework Flask was used to do a lot of the hard work such as routing
+requests and encoding data into browser-compatible formats.
+
 \subsection{ Server Views }
+
+Flask provides a model-view-controller style framework in which specific web
+URLS are represented by `view' functions.
 
 \subsection{Database Interaction \& SQLAlchemy}
 
@@ -213,11 +309,41 @@ store the papers changed a lot due to modifications to the ORM modules as
 discussed above. These structural changes meant that the production database at
 \url{http://farnsworth.papro.org.uk/} and the development database were not
 compatible and that updates to the code on the development server would break
-the application on the prodution server unless the database structure was also
+the application on the production server unless the database structure was also
 updated. 
+
+To prevent this from happening, a Python utility called
+Alembic\cite{alembic2013} was used for keeping the Database structure under
+Version Control. Alembic is executed when Partridge's ORM models are modified
+and can detect differences in database structure between the SQLAlchemy model
+in Partridge's source code and the live database. It generates sets of SQL
+commands that are used to synchronise the database structure with the most
+recent program structure. This allowed the Farnsworth database to be updated
+automatically when a new change to Partridge's data structures was made rather
+than having to be purge and repopulate it.
 
 \subsection{WSGI and Apache Integration}
 
+Flask provides a test server that can be used for developing your web
+application. However, it is written in python and is not designed to be as
+stable or scalable as a full web server application such as Apache. Once
+Partridge's basic web interface was complete and the application ready to be
+deployed, it had to be integrated into Apache to provide stable web server
+support.
+
+By default, Apache only serves static HTML content and image/data files. It makes
+use of plugins to support dynamic web pages, in languages such as PHP and
+Python. A plugin called WSGI is used to allow Apache to serve Python
+applications. WSGI requires that the Python program exposes an
+\emph{application} object which implements a common interface in order to
+communicate with Apache.
+
+After thorough investigation, it was discovered that Flask provides a WSGI
+compatible \emph{application} object. A small wrapper was written that exposes
+the Flask app to WSGI and the server began to work as expected. Unfortunately,
+the WSGI interface didn't allow the preprocessor daemon to be run in the
+background. Therefore, a second wrapper was created that allowed the execution
+of the Paper daemon as a standalone process.
 
 \section{Web Frontend}
 
