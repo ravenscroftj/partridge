@@ -298,7 +298,19 @@ requests and encoding data into browser-compatible formats.
 \subsection{ Server Views }
 
 Flask provides a model-view-controller style framework in which specific web
-URLS are represented by `view' functions.
+URLS are represented by `view' functions. The behaviour of these views changes
+dependent upon data from the incoming HTTP request. Their return value is
+encoded as an HTTP response and sent back to the browser that made the request.
+
+The implementation of the server views was for the most part straight forward
+with the exception of some of the responses to the interactive web elements in
+the HTML markup. It was determined that the best way to communicate between
+frontend and backend elements interactively was to encode responses as
+JavaScript Object Notation JSON - a common notation used to describe arbitrary
+data structures\cite{jsonRFC}. Despite its name, JSON encoders and decoders are available for
+most common programming languages.  Flask even has an inbuilt method called
+jsonify which can be used to automatically encode arbitrary Python objects as
+JSON and send it back to the browser for parsing by the frontend scripts.
 
 \subsection{Database Interaction \& SQLAlchemy}
 
