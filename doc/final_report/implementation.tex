@@ -307,12 +307,36 @@ with the exception of some of the responses to the interactive web elements in
 the HTML markup. It was determined that the best way to communicate between
 frontend and backend elements interactively was to encode responses as
 JavaScript Object Notation JSON - a common notation used to describe arbitrary
-data structures\cite{jsonRFC}. Despite its name, JSON encoders and decoders are available for
-most common programming languages.  Flask even has an inbuilt method called
-jsonify which can be used to automatically encode arbitrary Python objects as
-JSON and send it back to the browser for parsing by the frontend scripts.
+data structures\cite{jsonRFC}. Despite its name, JSON encoders and decoders are
+available for most common programming languages, not just JavaScript.  Flask
+even has an inbuilt method called jsonify which can be used to automatically
+encode arbitrary Python objects as JSON and send it back to the browser for
+parsing by the frontend scripts\cite{flask2012}.
+
+Some of the frontend scripts such as the Query Form rely upon the server to
+return dynamically generated HTML markup containing data about the papers being
+processed. In line with its model-view-controller architecture, flask provides
+a templating module that can be used to populate pre-coded HTML templates with
+data from the database on the fly. Templates for each of the views are stored
+within the \emph{templates/} subdirectory within Partridge and are populated
+using data retrieved from the relational database when a call to one of the
+view functions is made\cite{flask2012}.
 
 \subsection{Database Interaction \& SQLAlchemy}
+
+Partridge makes extensive use of a relational database system for storage and
+retrieval of paper data and metadata. It uses an SQL database server and
+initially the schema listed in Section \ref{sec:db_layout}. Rather than using
+raw SQL calls to communicate with the database, It was determined that the use
+of an Object-Relation-Mapper (ORM) library such as SQLAlchemy could
+significantly speed up development time. SQLAlchemy and ORM wrappers are used
+to abstract database entities into language constructs. 
+
+SQLAlchemy enables the representation of papers, authors and other entities as
+Python objects. These objects can also be extended and custom methods added to
+them, enabling the creation of specific entity methods such as calculating
+CoreSC makeup of papers and computing first, middle and last names from a
+single input string of an author's full name.
 
 \subsection{Data version control \& Alembic}
 
@@ -359,7 +383,36 @@ of the Paper daemon as a standalone process.
 
 \section{Web Frontend}
 
-\subsection{Query Interface}
+Partridge's web frontend required the least procedural programming and mainly
+consists of HTML markup with some JavaScript. The layouts were based upon the
+interface designs discussed in Section \ref{sec:web_frontend}. However, some
+changes were made to the original designs during implementation to improve
+usability functionality.
+
+As discussed above, the HTML layouts were stored as templates in the
+Partridge system and were evaluated and expanded using data from the SQL
+server at runtime. Flask's database engine supports object oriented templates
+that inherit properties from each other. This allowed the main page layout to
+be designed once and reused for each specific view. 
+
+Bootstrap, a powerful design framework was used to help build the frontend
+pages and forms. Bootstrap offers a set of standard CSS and JavaScript
+utilities that assist the developer in designing page layouts and provide
+commonly used boilerplate code and interface elements\cite{bootstrap2013}. This
+allowed the page layouts and forms used in Partridge to be implemented a lot
+quicker than if they had been implemented from scratch. jQuery, a library for
+manipulating HTML page layouts using JavaScript and providing utility functions
+for server communication, was also used to save time in writing the interactive
+aspects of frontend code. 
+
+Whilst these libraries did not provide any assistance specific to the domains
+of information retrieval or machine learning, they did help accelerate the
+design of the frontend interfaces and provide cross-browser compatible HTML5
+interfaces. Other javascript libraries providing multiple file upload
+capability and browser history manipulation were incorporated into specific
+user interface modules.
+
+\subsection{Query Interface \& Results View}
 
 \subsection{ Paper Upload Interface }
 
