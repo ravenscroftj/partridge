@@ -60,7 +60,7 @@ The time tracker explained that the project was precisely 17 days behind and
 highlighted the set of tasks that needed to be completed to bring the project
 back up to speed.
 
-\section{ Initial Plan and Project Timeline }
+\subsection{ Initial Plan and Project Timeline }
 
 During the early stages of the Partridge project, an initial system design was
 drawn up and a set of tasks that covered the system's implementation were
@@ -68,3 +68,27 @@ formulated. These tasks were divided up into iterations and added to the
 project planner on GitHub. Each task's dependencies were carefully considered
 in order to prioritise tasks properly. The initial project plan can be seen in
 Appendix \ref{sec:timeline}. 
+
+\subsection{Support and Version Control Tools}
+
+Partridge made heavy use of GitHub and the Git version control system. Git,
+developed by Linus Torvalds, is a distributed Version Control System (VCS) that
+offers many of the features of centralised VCSes such as Subversion and CVS.
+However, unlike these centralised products, Git repositories are
+self-contained, requiring no connection to a central server, with each copy of
+the repository containing the complete project history. Copies of the
+repositories are stored on the development machine, the production machine and
+the GitHub server. This makes GIT more reliable than centralised repositories
+since all code is accessible regardless of whether the repository hosted with
+GitHub is online.
+
+GitHub's hosted project management tools and wiki were used to store project
+tasks, notes and metadata during development.
+
+\section{Summary}
+
+Having analysed some of the existing development methodologies and determined
+that most of the common methodologies were not suitable for Partridge. A custom
+methodology was formulated and support tools chosen. Task analysis was then
+performed and a project timeline generated. With a timeline in place, the
+initial design phase for Partridge and its subsystems could begin.
