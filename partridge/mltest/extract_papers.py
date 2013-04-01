@@ -93,12 +93,23 @@ def get_best_k(paper_table):
 
 #----------------------------------------------------------------------------
 
+
+
+#set up data domain
+class_var = Orange.feature.Discrete("type")
+class_var.add_value("Research")
+class_var.add_value("Review")
+class_var.add_value("Case Study")
+
+
 def build_table( papers, features):
+
+
     #set up orange domain
-    domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in features])
+    domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in
+    features], class_var)
 
     paper_table = Orange.data.Table(domain)
-
     for key in ['source','title']:
         newid = Orange.feature.Descriptor.new_meta_id()
         domain.add_meta(newid, Orange.feature.String(key))
@@ -108,10 +119,16 @@ def build_table( papers, features):
         if len(paper.sentences) < 1:
             continue
 
+        if(paper.type == None):
+            continue
+
+
         inst_list = []
         sentdist = paper.sentenceDistribution(True)
         for f in features:
             inst_list.append( sentdist[f] * 100 / len(paper.sentences) )
+
+        inst_list.append(str(paper.type))
             
         inst = Orange.data.Instance(domain, inst_list)
 

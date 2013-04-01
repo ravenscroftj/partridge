@@ -67,7 +67,7 @@ for features in combinations(corescs, 3):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    colours = ['r','g','b']
+    colours = {"Research" : 'r', "Review" : 'g', "Case Study" : 'b'}
     j = 0
 
     clusters = km.clusters
@@ -75,17 +75,13 @@ for features in combinations(corescs, 3):
     for i in range(0, len(paper_table)):
 
         ax.scatter(paper_table[i][0],paper_table[i][1],paper_table[i][2],
-        c=colours[clusters[i]])
-
-        j += 1
+        c=colours[str(paper_table[i]["type"])])
 
     ax.set_xlabel(features[0])
     ax.set_ylabel(features[1])
     ax.set_zlabel(features[2])
     fig.savefig(filename)
     plt.close()
-
-
 
 
 
