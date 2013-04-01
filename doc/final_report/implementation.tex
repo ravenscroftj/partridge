@@ -11,6 +11,11 @@ implementation time was spent working on the paper preprocessor module.
 However, some aspects of the web interface and backend were also quite
 difficult to tackle. 
 
+Several libraries were used to accelerate the development and implementation of
+Partridge and avoid `reinventing the wheel.' Whenever code libraries were used,
+the role of the engineer was to be aware of the available solutions and deduce
+which was aposite to the purpose intended.
+
 \section{Paper Preprocessor}
 
 Partridge's Paper Preprocessor module was the most difficult part of the
@@ -24,7 +29,7 @@ In order to provide a useful service to researchers looking for papers, growing
 a large corpus of scientific literature was made a high priority during the
 project. This was especially important when training the Machine Learning
 models since training data sets need to be statistically significant in order
-to provide any meaninful results. Users are given the option, and actively
+to provide any meaningful results. Users are given the option, and actively
 encouraged, to upload papers that they own or publish on another author's
 behalf to the Partridge instance. However, to speed up this process, a number
 of papers were acquired from various open access sources.
@@ -407,14 +412,85 @@ aspects of frontend code.
 
 Whilst these libraries did not provide any assistance specific to the domains
 of information retrieval or machine learning, they did help accelerate the
-design of the frontend interfaces and provide cross-browser compatible HTML5
+implementation of the frontend interfaces and provide cross-browser compatible HTML5
 interfaces. Other javascript libraries providing multiple file upload
 capability and browser history manipulation were incorporated into specific
 user interface modules.
 
 \subsection{Query Interface \& Results View}
 
+After the project had been running for approximately 1 iteration, it was
+decided that the query and results views were confusing and provided a
+disjointed user experience for those trying to query the system. The results
+view was initially designed as a separate page to the query view and
+consequentially, users found it quite confusing when trying to relate the
+results from the system to the query they had provided on the previous page and
+it was inconvenient to have to keep changing the page when manipulating the
+query. 
+
+To improve the Partridge user experience, the query and results views were
+combined into a single interactive page that used JavaScript to retrieve
+results from the backend system and simply append them to the current page
+using a jQuery function.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{images/implementation/queryform_actual.png}
+\caption{The updated query form with integrated results}
+\label{fig:queryform_actual}
+\end{figure}
+
+The redesigned query form, as shown in Figure \ref{fig:queryform_actual},
+allows the user to add constraints to the query one at a time using the input
+field at the top of the page. These constraints are then listed on the left
+hand side and can be removed by clicking on the relevant cross icon next to the
+term to be removed. Filters such as paper type and topic are available in the
+left toolbar and be manipulating using the relevant dropdown box. Changing any
+of the filters or constraints automatically triggers the JavaScript routine to
+retrieve new results from the server.
+
+Using JavaScript to update the results and manage the query on a single page
+provides a significantly better user experience. Unfortunately, it does
+interfere with how browser handle a user's history, breaking the Back and
+Forward buttons in all browsers and preventing users from linking to their
+query results and posting them to friends or colleagues.
+
+The jQuery BBQ (jqBBQ) library was used to restore this functionality
+\cite{jqbbq2013}. The library allows the scripted manipulation of the URI
+fragment, a string that forms part of a page's URI but does not change the HTTP
+request made to the server\cite{urifragment2013}. The fragment can be used to
+serialise the the state of the user interface, allowing users to share links to
+search results and restoring browser history functionality. A javascript
+function was set up to fire when the interface was fully loaded and examine the
+URL fragment, converting key, value pairs into search constraints. A
+serialisation function was also set up to trigger whenever search constraints
+and filters were added and removed from the query and update the fragment
+string accordingly.
+
 \subsection{ Paper Upload Interface }
+
+The paper upload interface was initially designed to allow authors of papers to
+submit their work to be analysed by Partridge and display the upload progress
+in the form of a horizontal progress bar on the page. Normally, web browsers
+only allow the selection of one file at a time for upload and makes an HTTP
+request with the file data, without telling the user how long it might take or
+providing any information on the upload progress. To implement multiple file
+uploads and a progress bar, a significant amount of JavaScript code is
+required. 
+
+jQuery HTML5 Upload was used to speed up implementing this feature. This
+library provides an interface for uploading files asynchronously within the
+user's web browser and triggering a callback method when progress is made
+during an upload and when a file ha finished uploading. This allowed the
+implementation of a progress bar and text readout of the upload progress
+without forcing the browser to refresh the page.
+
+After reviewing the design of the page, a new checkbox was added to the upload
+form that forces the user to verify that they have permission to upload the
+paper in an attempt to prevent problems with copyright and ownership issues.
+The users are also linked to \url{http://www.sherpa.ac.uk/romeo/}, a service
+that can be used to identify the copyright policy of paper authors and
+journals and whether specific papers can be used by Partridge. 
 
 \subsection{ Bookmarklet }
 
@@ -426,12 +502,34 @@ users browsing sites such as PubMed Central and PlosOne to add papers that
 interest them to Partridge without having to download the paper from the
 journal and upload it to the Partridge server manually. 
 
-The system is implemented as a standard web page wrapped inside a javascript
-bootstrap module that can be added as a bookmark to a user's web browser. When
-the user finds a paper that they wish to add to Partridge on one of the
-compatible journal sites, they click the bookmark, loading an embedded frame in
-their current browser window and automatically uploading the paper that the
-user is looking at to Partridge's server. 
+The system is implemented as a standard web page wrapped inside a JavaScript
+module that can be added as a bookmark to a user's web browser. When the user
+finds a paper that they wish to add to Partridge on one of the compatible
+journal sites, they click the bookmark, loading an embedded frame in their
+current browser window and automatically uploading the paper that the user is
+looking at to Partridge's server. 
 
 The bookmarklet trivialises the act of adding new papers to Partridge and this
-should help to encourage users to help grow Partridge's paper corpus. 
+should help to encourage users to help grow Partridge's paper corpus as quickly
+as possible. It should also remove complications surrouding the rights of authors and
+publishers of papers since it is only compatible with sites that publish open
+access articles and cannot be used to add papers to Partridge that may be
+copyright protected.
+
+\section{Summary}
+
+Partridge's implementation took place over a period of many weeks, with
+incremental improvements, often stemming from user suggestions, being
+incorporated throughout. There were several deviations from the original
+project designs. Nonetheless, most of the designs were appropriate and provided
+an excellent starting point for implementation of the project.
+
+The effective and appropriate use of libraries within Partridge helped in
+speeding up the development of the project using well tested and maintained
+code from other developers. This required a different skillset which could be
+considered equally or more important than just writing new code
+\emph{vis-à-vis} a holistic understanding of the nature of the project and the
+relationships of the core modules. Working with libraries requires
+comprehensive conceptualisation of the task at hand whereas programming
+requires focus on a specific subset of the component's behaviour and attaining
+expected outputs for given inputs to the routine under construction.
