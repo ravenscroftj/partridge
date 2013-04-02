@@ -472,6 +472,23 @@ serialisation function was also set up to trigger whenever search constraints
 and filters were added and removed from the query and update the fragment
 string accordingly.
 
+\subsection{ Paper Profile Page }
+
+For the most part, the Paper Profile page was quite simple to implement,
+requiring only minimal Javascript and HTML. However, rendering the CoreSC
+makeup chart for the paper was less trivial. Rather than rendering the chart
+using the server and serving a static image to the user, an interactive
+JavaScript chart was generated using jqPlot. jqPlot is a javascript extension
+of jQuery designed to help render interactive charts and graphs within a web
+browser\cite{jqplot2013}. The CoreSC makeup of the paper is calculated by the
+web backend and encoded as JSON in the profile page markup. The jqPlot code is
+then called and the CoreSC values read from the page structure, producing an
+interactive chart in the user's browser window. 
+
+A pie chart was used instead of a bar chart, since it was a more concise and
+expressive way of showing the paper's CoreSC makeup within the space available
+on the page.
+
 \subsection{ Paper Upload Interface }
 
 The paper upload interface was initially designed to allow authors of papers to
