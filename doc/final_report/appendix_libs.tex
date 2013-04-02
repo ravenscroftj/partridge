@@ -1,0 +1,408 @@
+%----------------------------------------------------------------
+%
+%  Listings of libraries used and where
+%
+%
+%----------------------------------------------------------------
+
+Below is a listing of third party libraries and frameworks used in Partridge, along with a
+brief description of their functionality and their usage within the project.
+Dependencies of the libraries are not listed, but can be found on the specific
+library's home page
+
+\section{Alembic}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{https://bitbucket.org/zzzeek/alembic} \\
+
+\textbf{ Author } & Mike Bayer \\
+
+\textbf{ License } & MIT License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+Alembic is a database version control system that keeps production RDBMS
+servers synchronised with the internal data structure of the application.
+
+\subsection{Usage in Partridge}
+
+Alembic was used to maintain the database at
+\url{http://farnsworth.papro.org.uk} and keep its structure synchronised with
+the development database as changes were made to Partridge.
+
+
+\section{Bootstrap}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{https://github.com/twitter/bootstrap} \\
+
+\textbf{ Author } & Mark Otto \& Jacob Thornton \\
+
+\textbf{ License } & Apache Public License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+Bootstrap is a design framework that uses CSS and Javascript to provide
+boilerplate code and functionality so that developers don't have to `reinvent
+the wheel'.
+
+\subsection{Usage in Partridge}
+
+Bootstrap was used to accelerate the development of the frontend interface by
+providing a basic framework to build the interface on top of.
+
+
+\section{CRFSuite}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://www.chokkan.org/software/crfsuite/} \\
+
+\textbf{ Author } & Naoaki Okazaki  \\
+
+\textbf{ License } & Modified BSD License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+CRFSuite is an implementation of Conditional Random Fields, a technique used in
+machine learning for labelling sequential features, rather than assuming that
+features are conditionally independent as in Naive Bayesian Models.
+
+\subsection{Usage in Partridge}
+
+CRFSuite is used primarily in the Python version of SAPIENTA which I spent a
+great deal of time working with and integrating, despite not using it in the
+final submission of the project. I had to make some slight modifications to the
+library to get it to compile and run as discussed in Section
+\ref{sec:sapienta_implementation}. 
+
+\section{Flask}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://flask.pocoo.org/} \\
+
+\textbf{ Author } & Armin Ronacher \\
+
+\textbf{ License } & BSD License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+Flask is a web framework and utility library for the development of Python web
+applications. It provides wrappers for low level TCP communication and templating
+functionality from within a model-view-controller architecture.
+
+\subsection{Usage in Partridge}
+Flask is used extensively in Partridge as a platform for serving the paper
+content and interfaces to the user web browser. The templating library is used
+to insert data into the user interface at run time and the JSON encoder is used
+to provide communication between the JavaScript running in the user's browser
+and the web backend.
+
+
+\section{Flask-SQLAlchemy}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://pythonhosted.org/Flask-SQLAlchemy/} \\
+
+\textbf{ Author } & Armin Ronacher \\
+
+\textbf{ License } & BSD License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+Flask-SQLAlchemy provides a bridge between Flask-based applications and the
+SQLAlchemy library, it is quite lightweight and mainly used to prevent
+reimplementation of boilerplate database connection code.
+
+\subsection{Usage in Partridge}
+
+Flask-SQLAlchemy is used in Partridge to establish a connection to the SQL
+database used to store the paper data and to provide a convenient way to access
+the database from the preprocessor and testing utilities.
+
+\section{jQuery}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://jquery.com} \\
+
+\textbf{ Author } & jQuery Foundation\\
+
+\textbf{ License } & MIT License \\
+\hlinea
+
+\end{tabular}
+
+\subsection{Description}
+
+jQuery is a javascript library containing sets of utilities for manipulating
+HTML web pages and managing Javascript HTTP requests to web servers. It
+assists in helping developers write cross-platform compatible, stable code.
+
+\subsection{Usage in Partridge}
+
+jQuery is used extensively in Partridge's frontend. It is used for manipulating
+the user interfaces once they have been loaded and rendered in the web browser
+and to facilitate browser-server calls during search queries and file uploads.
+
+
+\section{jQuery-BBQ}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://benalman.com/projects/jquery-bbq-plugin/} \\
+
+\textbf{ Author } & Ben Alman \\
+
+\textbf{ License } & Dual License: MIT and GPL \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+jQuery-BBQ is a plugin to the jQuery library that facilitates the manipulation
+of a web page's URI fragment through the use of JavaScript. This allows pages
+that carry out a lot of clientside processing to store the application state in
+the fragment and use the Browser History for navigating through changes.
+
+\subsection{Usage in Partridge}
+
+Partridge uses jQuery-BBQ to serialise paper queries into the URI fragment of
+the query page and therefore share query results and use their browser history
+to undo query constraints.
+
+
+\section{jQuery-HTML5-Upload}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{https://github.com/mihaild/jquery-html5-upload} \\
+
+\textbf{ Author } & Mikhail Dektyarev \\
+
+\textbf{ License } & Unspecified/Public Domain \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+jQuery HTML5 Upload is a small plugin to the jQuery library that provides a
+simple JavaScript interface for asynchronously uploading files using HTML POST
+requests and providing progress notifications.
+
+\subsection{Usage in Partridge}
+
+This library is used in the Partridge Paper Uploader view for sending papers to
+the server and the progress notifier used to set up a progress bar to inform
+the user of how many of the papers have been uploaded.
+
+
+\section{MatPlotLib}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://matplotlib.org/} \\
+
+\textbf{ Author } & John Hunter \\
+
+\textbf{ License } & Python Software Foundation License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+MatPlotLib is a library for rendering 2D and 3D graphs from the Python
+programming language. It provides a simple programming interface that allows
+the generation of a wide number of different types of graph and also provides
+functions for exporting the graphs as image files and storing them on the
+user's hard disk.
+
+\subsection{Usage in Partridge}
+
+MatPlotLib was used during the implementation and testing of Partridge,
+specifically when working on the Machine Learning elements of the system. It
+was not used in the live Partridge system, but it was used in some of the test
+scripts. Some of the graphics included in this dissertation were generated with
+MatPlotLib.
+
+
+\section{NLTK}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://nltk.org/} \\
+
+\textbf{ Author } & Steven Bird, Edward Loper and Ewan Klein\\
+
+\textbf{ License } & Apache Public License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+NLTK or the Natural Language Toolkit is a library for Python that provides
+implementations of commonly used Natural Language Processing tools and
+utilities. NLTK comes with sets of test data and pre-trained models for
+convenience.
+
+\subsection{Usage in Partridge}
+
+The NLTK is used in Partridge's preprocessor during the Sentence Splitting
+stage. It is not used in any of the other subsystems, but would have been used
+to implement the Paper Topic and Paper Result classifiers had there been time.
+
+
+\section{Orange}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://orange.biolab.si/} \\
+
+\textbf{ Author } & Tomaž Curk et al. \\
+
+\textbf{ License } & GNU General Public License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+
+Orange is a data mining library for Python, providing implementations of
+commonly used machine learning algorithms. The underlying implementations are
+written using native code to increase the speed of the algorithms.
+
+\subsection{Usage in Partridge}
+
+Orange's Random Forest Classifier is used to provide paper type classification
+within the preprocessor module. It was also used for clustering the papers
+during the investigation into the most effective features for classification.
+
+
+\section{PDFX}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://pdfx.cs.man.ac.uk/} \\
+
+\textbf{ Author } & Alex Constantin \\
+
+\textbf{ License } & Other \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+PDFX is a web service that converts PDF documents into SciXML compatible
+markup. The author provides a REST API which is documented on the home page.
+No code is provided, all computations are executed by the server.
+
+\subsection{Usage in Partridge}
+
+PDFX is used by the paper preprocessor to convert uploaded PDF documents into
+XML for SAPIENTA to annotate. The PDFs are uploaded to the PDFX server using
+HTTP requests.
+
+\section{SAPIENTA}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://www.sapientaproject.com/} \\
+
+\textbf{ Author } & Maria Liakata \\
+
+\textbf{ License } & Other \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+SAPIENTA is a machine learning application that provides CoreSC annotations for
+papers formatted in SciXML and PubMed Central compatible markup. Although a
+SAPIENTA Python library is available, it is not ready for general use, and the
+web service is more reliable for paper annotation.
+
+\subsection{Usage in Partridge}
+
+SAPIENTA is key in paper processing. It is used to annotate the papers stored
+in Partridge using CoreSC labels. Like PDFX, no SAPIENTA code is used on the
+client side and communication with the remote system is carried out through
+HTTP requests.
+
+
+\section{SQLAlchemy}
+
+\begin{tabular}{ | l | l | }
+
+\hline
+\textbf{ Home Page } &
+\burl{http://www.sqlalchemy.org/} \\
+
+\textbf{ Author } & Michael Bayer \\
+
+\textbf{ License } & MIT License \\
+\hline
+
+\end{tabular}
+
+\subsection{Description}
+SQLAlchemy provides a set of functions and utilities for connecting to and
+communicating with SQL database systems from the Python programming language.
+It also offers an extensive Object Relation Mapper which allows the abstraction
+of database entities into Python Data structures for the convenience of
+developers.
+
+\subsection{Usage in Partridge}
+
+SQLAlchemy is used by Partridge to communicate with the paper database. A set
+of data structures that derrive properties provided by this library allow
+Partridge to use native Python objects to refer to entities in the database.
+SQLAlchemy also carries out data encoding conversion and input sanitisation
+capabilities transparently.
