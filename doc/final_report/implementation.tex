@@ -295,6 +295,7 @@ why their paper isn't appearing in Partridge queries.
 
 
 \section{ Web Backend }
+\label{sec:backend}
 
 The Partridge web backend was much easier to implement than the preprocessor.
 The web framework Flask was used to do a lot of the hard work such as routing
@@ -328,6 +329,7 @@ using data retrieved from the relational database when a call to one of the
 view functions is made\cite{flask2012}.
 
 \subsection{Database Interaction \& SQLAlchemy}
+\label{sec:dbandsqlalchemy}
 
 Partridge makes extensive use of a relational database system for storage and
 retrieval of paper data and metadata. It uses an SQL database server and
@@ -341,7 +343,10 @@ SQLAlchemy enables the representation of papers, authors and other entities as
 Python objects. These objects can also be extended and custom methods added to
 them, enabling the creation of specific entity methods such as calculating
 CoreSC makeup of papers and computing first, middle and last names from a
-single input string of an author's full name.
+single input string of an author's full name. SQLAlchemy also takes care of
+data sanitisation and conversion transparently, making sure that users cannot
+input malicious SQL code and storing special characters using relevant text
+encoding.
 
 \subsection{Data version control \& Alembic}
 

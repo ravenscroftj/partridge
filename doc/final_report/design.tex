@@ -16,14 +16,16 @@ the target audience and the programming environment are also discussed.
 
 \subsection{Use Case Analysis}
 
-Given the project objectives identified above, four primary use cases were
-identified for Partridge as shown in Figure \ref{fig:use_cases}. Users can be
-identified as researchers and people interested in finding and reading
-scientific papers that interested them. This would involve querying the
-database for relevant papers, viewing metrics on the papers that have been used
-to classify them and also downloading the original paper for reading. A subset
-of users were identified as authors who might be interested in adding their own
-papers to the Partridge instance.
+Given the project objectives identified in \ref{sec:objectives}, four primary
+use cases were identified for Partridge as shown in Figure \ref{fig:use_cases}.
+Users of Partridge are likely to be researchers who want to find and read
+scientific papers. This would involve querying the database for relevant
+papers, viewing metrics on the papers that have been used to classify them and
+also downloading the original paper for reading. 
+
+Authors are the subset of users who may remain interested in using the query
+functionality of Partridge, but also may wish to upload papers to Partridge and
+add them to the corpus.
 
 \begin{figure}[!h]
 \centering
@@ -53,15 +55,15 @@ intelligent systems to classify, filter and query papers using some of the NLP
 techniques discussed previously.
 
 One of the main requirements for a web server is that it responds to requests
-relatively quickly, ideally within 10 seconds or less. If they don't, the user
-may get impatient and give up trying to use the system, or in some cases, their
-web browser may timeout and stop trying to load the page. Many of the processes
-involved in extracting meaningful CoreSC information from papers are very slow
-slow. This means that processing papers during web requests is not really
-feasible, since it may take several minutes for a single paper to be annotated
-and classified. Therefore, a third core component was identified: a paper
-preprocessor service that runs on the server and converts, annotates and
-classifies papers as soon as they are uploaded.
+relatively quickly, ideally within 10 seconds or less. If the response is any
+slower than this, the user may get impatient and give up trying to use the
+system, or in some cases, their web browser may timeout and stop trying to load
+the page. Many of the processes involved in extracting meaningful CoreSC
+information from papers are very slow. This means that processing papers
+during web requests is not really feasible, since it may take several minutes
+for a single paper to be annotated and classified. Therefore, a third core
+component was identified: a paper preprocessor service that runs on the server
+and converts, annotates and classifies papers as soon as they are uploaded.
 
 \subsection{ Programming and Development Environment }
 
@@ -81,8 +83,13 @@ libraries allowing intensive processing  and number crunching to be offloaded
 to native plugins, increasing application processing speed.
 
 To further increase development speed, a Python framework for developing web
-applications called \emph{Flask\cite{flask2012}} would be used to build the web
-backend.
+applications called \emph{Flask} would be used to build the web backend. Flask
+is a ``...micro webdevelopment framework for Python.\cite{flask2012}" It
+contains a set of utilities and tools for building web applications quickly and
+effectively in Python, taking care of low level behaviours such as TCP socket
+communication and HTTP requests. These capabilities are presented in a
+Model-View-Controller pattern. Flask's capabilities and use within Partridge is
+discussed further in Section \ref{sec:backend}.
 
 The development of the application would be carried out on a Linux desktop
 computer. However, the portable nature of Python, Apache and the required
@@ -102,10 +109,11 @@ and logic separate a lot easier.
 
 Due to the large number of popular web browsers on the market, implementing
 JavaScript in a slightly different way, Javascript can be very difficult to
-write in a cross-browser compatible way.  To maximise compatibility and reduce
-development time, it was decided that libraries such as jQuery which are
-designed to carry out HTML manipulation behaviours in a uniform way cross all
-compatible browsers.  As of February 2013, it is estimated that Chrome and
+write in a cross-browser compatible way. To maximise compatibility and reduce
+development time, it was decided jQuery would be used in developing the
+JavaScript frontend behaviours. jQuery is a library of utility functions
+designed for manipulating HTML documents in a uniform way across all compatible
+browsers \cite{jquery2013}. As of February 2013, it is estimated that Chrome and
 Firefox are currently the most popular web browsers, holding 50\% and 29.6\% of
 the market share respectively\cite{browserstats2013}. Internet Explorer is the
 third most popular browser. However, there are several well known compatibility
@@ -120,7 +128,7 @@ was allocated to ensuring compatibility of Partridge with Internet Explorer.
 
 \begin{figure}[!ht]
 \center
-\includegraphics[width=0.9\textwidth]{images/design/components_high_level.png}
+\includegraphics[width=0.6\textwidth]{images/design/components_high_level.png}
 \caption{High Level Component Layout for Partridge}
 \label{fig:high_level_components}
 \end{figure}
@@ -156,7 +164,7 @@ in the database. These processes are illustrated in Figure
 \label{fig:flow_preprocessor}
 \end{figure}
 
-\subsubsection{PDF Conversion}
+\subsubsection{PDF to XML Conversion}
 
 The first process in the processing pipeline is conversion of the papers to a
 format that can be analysed by SAPIENTA. Currently, SAPIENTA supports the
@@ -178,7 +186,7 @@ to split the sentences within the document and then adds the necessary
 \subsubsection{SAPIENTA Annotation}
 
 Once the paper has been split, SAPIENTA is used to annotate each sentence with
-a relevant CoreSC allocation. These labels are calculated based upon the
+a relevant CoreSC label. These labels are calculated based upon the
 sentence's location within the paper as well pairs and triplets of words found
 consecutively within the sentence. After this stage, the paper is passed
 forwards to be further classified by Partridge.
@@ -187,14 +195,14 @@ forwards to be further classified by Partridge.
 \subsubsection{Feature Extraction and Classifiers}
 
 The final stage in the preprocessor pipeline is paper classification. During
-this stage, features are extracted from the papers and used to classify the
+this stage, features wil be extracted from the papers and used to classify the
 paper in three different ways. The paper's type: case study or review paper
-etc. is determined using the presence or absence of different CoreSC labels
-within the paper and their relative proportions. The type of paper is
+etc. will be determined using the presence or absence of different CoreSC labels
+within the paper and their relative proportions. The subject of paper will be
 determined by the presence of domain specific nouns and adjectives within the
 paper. For example, a biology paper might contain words such as enzyme or amino
 acid. The result of the paper, i.e. whether the paper was conclusive and if the
-results were positive or negative, are detected through the presence or absense
+results were positive or negative, will be detected through the presence or absense
 of words with a strong sentiment polarity as discussed by Wilson et al
 (2005)\cite{Wilson05Polarity}. The results from the whole process are then
 passed into the data store and saved.
@@ -207,9 +215,9 @@ Once a paper analysis cycle has finished, the preprocessor triggers a cleanup
 operation that removes intermediate files from the system, storing only the
 initially uploaded file (which may be a PDF) and the final annotated file in a
 permanent location on the filesystem.  The whole analysis process for a single
-paper is also wrapped within an error handling block that automatically run the
-cleanup routine if something goes wrong. This prevents the system filling up
-with invalid files. This mechanism is shown in Figure
+paper is also wrapped within an error handling block that automatically
+executes the cleanup routine if something goes wrong. This prevents the system
+filling up with invalid files. This mechanism is shown in Figure
 \ref{fig:preprocessor_overview}.
 
 \begin{figure}[!h]
@@ -224,7 +232,7 @@ with invalid files. This mechanism is shown in Figure
 \subsection{ Data Storage }
 \label{sec:db_layout}
 It is expected that a given Partridge instance may grow in size to contain
-thousands of individual papers that have been annotated and are available to
+tens of thousands of individual papers that have been annotated and are available to
 the web backend for inclusion into a user's search results. Reading in and
 parsing each individual XML file stored in the system is not really feasible
 when handling a HTTP request from the web frontend, this sort of process would
@@ -258,7 +266,7 @@ contains a boolean field used to indicate whether an author linked to a
 specific paper was the primary author on that paper.
 
 As discussed above, two or more files per paper are always stored within
-partridge so that a user can retrieve them for reading. Therefore files are
+Partridge so that a user can retrieve them for reading. Therefore files are
 kept in their own table along with a record of their type (eg. XML or PDF). 
 
 \subsection{ Web Backend }
@@ -280,7 +288,7 @@ in Figure \ref{fig:backend_sequence}.
 The Flask web framework uses a model view controller-like architecture. Each
 behaviour of the server: handling paper uploads, displaying paper query
 results, allowing users to download papers, can be considered a `view'. Views
-register themselves with Flask under a specific URL. When flask receives a
+register themselves with Flask under a specific URL. When Flask receives a
 request to any such URL, it automatically routes the request through to the
 View object\cite{flask2012}.
 
@@ -294,11 +302,12 @@ into search queries, retrieve a set of papers from the RDBMS  and return human
 readable results to the user. One of the most important steps in this process
 is to cleanse the incoming data and prevent SQL injection attacks that
 unscrupulous users may attempt to use to damage or purge the Partridge
-database. The system must also be capable of interpreting data retrieved from
-the database into HTML to be returned to the user's browser. The server
-mechanism utilises Flask's built in templating mechanism in order to quickly
-transform Python-specific data structures into valid HTML markup and return it
-to the user\cite{flask2012}.
+database. These are handled transparently by the SQLAlchemy library as
+discussed in Section \ref{sec:dbandsqlalchemy}. The system must also be capable
+of interpreting data retrieved from the database into HTML to be returned to
+the user's browser. The server mechanism utilises Flask's built in templating
+mechanism in order to quickly transform Python-specific data structures into
+valid HTML markup and return it to the user\cite{flask2012}.
 
 \subsubsection{Paper Upload View Backend}
 
@@ -360,7 +369,7 @@ The search or `Keywords' section of the form shows a set of controls for
 specifying terms that must appear within sections of a document for it to show
 up in the search results. The user enters a search term in the input box on the
 top right of the form and then selects which section of the paper the term
-should appear within. This could be any of the CoreSC zones within the paper or
+should appear within. This could be any of the CoreSC labels within the paper or
 within the abstract. The user could also specify a specific author's name. Once
 they are happy with their keywords and section, they click ``Add" and the
 keyword/section pair are inserted into the table on the bottom right. If they
@@ -412,7 +421,8 @@ can be seen in Figure \ref{fig:paper_profile}
 The paper's title and author are displayed prominently in the top left hand
 corner of the page. The full abstract text is shown so that the user can read
 it and determine the paper's relevance to them. There is also a graph showing
-each of the CoreSC types and proportion within the paper. If the user is
+each of the CoreSC types and proportion within the paper (the example chart only
+shows three CoreSC label types for brevity). If the user is
 interested in the paper, they can click the Download link at the top of the
 page to access the annotated XML file stored in the system.
 
@@ -454,6 +464,6 @@ users whilst effectively encoding the complicated nature of Partridge's
 internal processes in a set of HTML forms.
 
 Partridge has been developed using an iterative methodology and therefore some
-of the designs descussed in this chapter have been modified during the
+of the designs discussed in this chapter have been modified during the
 development of the project. However, these designs did provide an excellent
 starting point for the implementation of the project.
