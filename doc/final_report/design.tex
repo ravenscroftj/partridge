@@ -5,10 +5,10 @@
 %%----------------------------------------------
 
 Despite the use of an iterative development methodology, some of the key
-components within Partridge were designed up front in order to accelerate
-implementation and reduce time overheads when adding new components to the
+components within Partridge were designed 'up front' in order to accelerate
+implementation and reduce the time needed to add new components to the
 system. The components that make up Partridge and the ways in which they react
-are described and analysed below. Choices regarding the type of application,
+are described and analysed below; choices regarding the type of application,
 the target audience and the programming environment are also discussed.
 
 
@@ -36,19 +36,19 @@ add them to the corpus.
 
 \subsection{Target Platform}
 
-It was decided from the outset that Partridge would be a web-based tool.
+From the outset, the aim was that Partridge would be a web-based tool.
 Web-based systems can generally be run on any computer with access to the
 internet and a modern web browser. This also means that there is no need for
 the end user to install or configure extra software on their computers, making
 Partridge accessible to non-technical users and those who have aggressive
-software restrictions on their computers, such as GPs and users of public
+software restrictions on their computers, such as GPs and the users of public
 computers in libraries or on academic sites.
 
 In order to function as a website, Partridge needed to be developed as a server
-application that produced Hyper Text Markup Language (HTML) output that a web
+application that produced Hyper Text Markup Language (HTML) output with which a web
 browser could interpret and display. The browser rendering the forms must then
 communicate with a backend system capable of querying and returning papers to
-the user based on their input. This lead to the decision to split development
+the user based on their input. This lead to the decision to split the development
 of Partridge into two core components: the Web Frontend comprising of user
 interface elements and presentation logic and the Web Backend comprising of
 intelligent systems to classify, filter and query papers using some of the NLP
@@ -58,7 +58,7 @@ One of the main requirements for a web server is that it responds to requests
 relatively quickly, ideally within 10 seconds or less. If the response is any
 slower than this, the user may get impatient and give up trying to use the
 system, or in some cases, their web browser may timeout and stop trying to load
-the page. Many of the processes involved in extracting meaningful CoreSC
+the page. Unfortunately, many of the processes involved in extracting meaningful CoreSC
 information from papers are very slow. This means that processing papers
 during web requests is not really feasible, since it may take several minutes
 for a single paper to be annotated and classified. Therefore, a third core
@@ -70,15 +70,15 @@ and converts, annotates and classifies papers as soon as they are uploaded.
 Rather than building a web server from the ground up, most modern web
 applications are written in higher level languages that run on top of standard,
 open source web servers such as Apache or nginx. Common language choices
-include PHP, Python, Perl and Java, all of these languages supported by large
+include PHP, Python, Perl and Java; all of these languages are supported by large
 communities of developers and users who provide with excellent documentation
-and support if required.  For the implementation of Partridge, Python was
-selected as the programming language of choice. This was partially due to the
+and support if required.  Python was
+selected to implement Partidge. This was partially due to the
 author's familiarity with the language and also due to the availability of
 stable data mining\cite{curk05} and natural language
 processing\cite{bird2009natural} libraries for the Python programming
 environment. Python is an interpreted cross-platform language, minimising
-deployment problems and supports natively compiled C and C++ extension
+deployment problems and supports natively-compiled C and C++ extension
 libraries allowing intensive processing  and number crunching to be offloaded
 to native plugins, increasing application processing speed.
 
@@ -96,30 +96,28 @@ computer. However, the portable nature of Python, Apache and the required
 libraries meant that Partridge could theoretically be deployed to Windows and
 Mac computer systems if required.
 
-The Web Frontend for the system would need to be written using a combination of
+The Web Frontend for the system had to be written using a combination of
 HTML markup and JavaScript. HTML is not a programming language in itself and
 doesn't contain any logic. It is merely a code representation of the interface
 to be rendered in the browser window which is interpreted once it has been
 downloaded from the web server. In order to carry out actions on the HTML such
 as validating user input and manipulating parts of the display, JavaScript is
 also downloaded from the web server and interpreted by the browser. Although
-this requires the developer to have knowledge of two extra technologies on top
-of Python, it also makes enforcing the design principle of keeping presentation
+this requires the developer to have knowledge of two extra technologies in addition to Python, it also makes enforcing the design principle of keeping presentation
 and logic separate a lot easier.
 
 Due to the large number of popular web browsers on the market, implementing
 JavaScript in a slightly different way, Javascript can be very difficult to
 write in a cross-browser compatible way. To maximise compatibility and reduce
-development time, it was decided jQuery would be used in developing the
+development time, it was decided that jQuery would be used in developing the
 JavaScript frontend behaviours. jQuery is a library of utility functions
 designed for manipulating HTML documents in a uniform way across all compatible
 browsers \cite{jquery2013}. As of February 2013, it is estimated that Chrome and
 Firefox are currently the most popular web browsers, holding 50\% and 29.6\% of
 the market share respectively\cite{browserstats2013}. Internet Explorer is the
-third most popular browser. However, there are several well known compatibility
-issues with Internet Explorer, Microsoft themselves condemning version 6.0 of
-their browser\cite{ie6death}. For this reason, it was decided that Partridge
-would only support Firefox and Chrome. A working interface in modern editions
+third most popular browser. However, there are several well-known compatibility
+issues with Internet Explorer, Microsoft themselves condemning version 6.0\cite{ie6death}. For this reason, it was decided that Partridge
+would initially only support Firefox and Chrome; a working interface in modern editions
 of the Internet Explorer family of browsers would be a bonus.  However, no time
 was allocated to ensuring compatibility of Partridge with Internet Explorer.
 
@@ -140,7 +138,7 @@ components is carried out via HTTP requests to the underlying Apache server.
 Communication between the web backend and the paper preprocessor is implicit
 via the data storage system. Direct communication between these components is
 redundant since the web backend cannot gain any extra information from the
-paper preprocessor while a paper is still being analysed and all finished
+paper preprocessor while a paper is still being analysed. Furthermore, all finished
 papers are added to the database which the web backend has full access to
 anyway.
 
@@ -200,9 +198,9 @@ paper in three different ways. The paper's type: case study or review paper
 etc. will be determined using the presence or absence of different CoreSC labels
 within the paper and their relative proportions. The subject of paper will be
 determined by the presence of domain specific nouns and adjectives within the
-paper. For example, a biology paper might contain words such as enzyme or amino
-acid. The result of the paper, i.e. whether the paper was conclusive and if the
-results were positive or negative, will be detected through the presence or absense
+paper. For example, a biology paper might contain words such as 'enzyme' or 'amino
+acid.' The result of the paper, i.e. whether the paper was conclusive and if the
+results were positive or negative, will be detected through the presence or absence
 of words with a strong sentiment polarity as discussed by Wilson et al
 (2005)\cite{Wilson05Polarity}. The results from the whole process are then
 passed into the data store and saved.
@@ -231,9 +229,9 @@ filling up with invalid files. This mechanism is shown in Figure
 
 \subsection{ Data Storage }
 \label{sec:db_layout}
-It is expected that a given Partridge instance may grow in size to contain
+It is expected that Partridge may grow in size to contain
 tens of thousands of individual papers that have been annotated and are available to
-the web backend for inclusion into a user's search results. Reading in and
+the web backend for inclusion into a user's search results. Reading and
 parsing each individual XML file stored in the system is not really feasible
 when handling a HTTP request from the web frontend, this sort of process would
 take a long time to execute. To provide fast search and retrieval of paper
@@ -251,8 +249,8 @@ overview of the database schema is illustrated in Figure \ref{fig:e-r-diagram}.
 
 Partridge's database is required to keep track of all of the papers that have
 been added to the system. The Paper entity represents a single paper stored in
-Partridge. Information extracted by the classifiers such as the paper's type,
-topic and result are stored as part of the main paper entity. The title and
+Partridge. Information is extracted and classified by indicators such as the paper's type,
+topic and resul. This is are stored as part of the main paper entity. The title and
 topic are also stored for easy retrieval. One of the key requirements of
 Partridge is querying within a CoreSC field of a paper. Therefore, all
 sentences are stored as entities along with their CoreSC annotation. The sentence
@@ -262,7 +260,7 @@ It is probable that any given author may have contributed to multiple papers
 stored within the system.  Therefore authors are treated as entities within the
 RDBMS and the many to many relationship between papers and authors is
 facilitated using the intermediary table PaperAuthors. A PaperAuthor record
-contains a boolean field used to indicate whether an author linked to a
+contains a boolean field used to indicate whether the author that is linked to a
 specific paper was the primary author on that paper.
 
 As discussed above, two or more files per paper are always stored within
@@ -286,8 +284,8 @@ in Figure \ref{fig:backend_sequence}.
 \end{figure}
 
 The Flask web framework uses a model view controller-like architecture. Each
-behaviour of the server: handling paper uploads, displaying paper query
-results, allowing users to download papers, can be considered a `view'. Views
+behaviour of the server, handling paper uploads, displaying paper query
+results and allowing users to download papers, can be considered a `view'. Views
 register themselves with Flask under a specific URL. When Flask receives a
 request to any such URL, it automatically routes the request through to the
 View object\cite{flask2012}.
@@ -366,28 +364,28 @@ their search results on the right. The user selects items from each list and
 can use the arrow buttons in between to move them depending on their query.
 
 The search or `Keywords' section of the form shows a set of controls for
-specifying terms that must appear within sections of a document for it to show
+specifying terms that must appear within sections of a document in order to show
 up in the search results. The user enters a search term in the input box on the
 top right of the form and then selects which section of the paper the term
 should appear within. This could be any of the CoreSC labels within the paper or
 within the abstract. The user could also specify a specific author's name. Once
-they are happy with their keywords and section, they click ``Add" and the
+they are happy with their keywords and section, they click `Add' and the
 keyword/section pair are inserted into the table on the bottom right. If they
 wish to remove a query constraint from this table, they can select it and click
-the ``Delete" button. 
+the `Delete' button. 
 
-Once the user is happy with their search, they can click the ``Search" button
+Once the user is happy with their search, they can click the `Search' button
 at the extreme top right of the form to carry out the query and see the
 results.
 
 \subsubsection{ Results Page }
 
-Once a user has made their query, the results are displayed for them to peruse
-and find relevant papers to read. Figure \ref{fig:results_mockup} shows a
-mockup of the results view. This simplistic page lists all of the papers found
-during the query in relevence order. The results are paginated so that the user
+After the user has made their query, the results are displayed for them
+to find relevant papers to read. Figure \ref{fig:results_mockup} shows a
+mockup of the results view. This page clearly lists all of the papers found
+during the query in order of relevence. The results are paginated so that the user
 does not have to wait for a large page to render. It is hoped that users will
-run specific queries that do not return a high number of results. There is a
+run such specific queries that they do not return a high number of results. There is a
 prominent link at the top of the page that allows the user to go back to the
 query form and amend their query if the results are not satisfactory.
 
@@ -419,17 +417,16 @@ can be seen in Figure \ref{fig:paper_profile}
 \end{figure}
 
 The paper's title and author are displayed prominently in the top left hand
-corner of the page. The full abstract text is shown so that the user can read
-it and determine the paper's relevance to them. There is also a graph showing
+corner of the page. The full text of the abstract is shown so that the user can determine the paper's relevance to them. There is also a graph showing
 each of the CoreSC types and proportion within the paper (the example chart only
 shows three CoreSC label types for brevity). If the user is
 interested in the paper, they can click the Download link at the top of the
 page to access the annotated XML file stored in the system.
 
 \subsubsection{Paper Upload Form}
-Paper uploading is another highly important user activity within Partridge.
+Paper uploading is another very important user activity within Partridge.
 Without users uploading papers, Partridge has no data to work with. It was
-therefore, very important to make paper uploading as simplistic as possible to
+therefore, very important to make paper uploading as easy as possible to
 the end user. Figure \ref{fig:paper_upload} shows Partridge's main paper upload
 form. 
 

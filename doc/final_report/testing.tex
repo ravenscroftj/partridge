@@ -7,22 +7,21 @@
 %introduction to testing
 Throughout the implementation of the project, verifying that systems provide
 reliable, expected outputs for given inputs has remained a very important part
-of the overall development process, necessary in Partridge's development.  A
+of the overall development process necessary to Partridge's development.  A
 number of testing techniques have been used in order to evaluate the individual
-behaviours of Partridge's key components both separately and the system as a
+behaviours of Partridge's key components, both separately and the system as a
 whole. This chapter discusses the techniques used to test Partridge, the
-results from these tests and any implications that these results have had upon
+results of these tests and any implications that these results have for further
 development of the project. Combining all of these testing and evaluation
-techniques provides an in depth view of how useful Partridge is and how it can
-be improved upon.
+techniques provides an in-depth view of how useful Partridge is and how it could
+be improved.
 
 \section{ Unit Testing }
 
 At the beginning of the project, Unit tests for Patridge's server and paper
-preprocessing components were written in order to test that the main bulk of
-the application worked before it was deployed to the production system at
-\url{http://farnsworth.papro.org.uk}. These tests were written and maintained
-throughout the project and occasionally had to be changed as code was
+preprocessing components were written in order to test that the main application worked before it was deployed to the production system at
+\url{http://farnsworth.papro.org.uk}. These tests were maintained
+throughout the project and occasionally had to be changed as the code was
 refactored. As each new feature was added to the system, the whole suite of
 tests was executed to provide integration coverage and make sure that new
 features did not break existing code. 
@@ -44,7 +43,7 @@ called correctly instead.  \emph{Mock} allows the arbitrary replacement of
 Python routines and objects with `mock' objects that mimic the behaviour of the
 original routine and store information on how they were called or used. This
 meant that calls to long-running routines and functions that already have tests
-can be validated and a fake return value sent back to the caller, without
+can be validated and a fake return value sent back to the caller without
 having to actually execute the code. This technique also allows the isolation
 of problems within the caller code and its commmunication with the target
 functions and will pass even if the target code is broken provided that the
@@ -93,18 +92,18 @@ and in some cases formally proven to behave uniformly at
 runtime\cite{filliatre2007formal}, supervised learning algorithms are imperfect
 systems that build `working models' from known data. This makes the performance
 of supervised learning systems much more difficult to assess. Russell and
-Norvig(2010) suggest that ``a learning system is good if it produces hypotheses
+Norvig(2010) suggest that ``...a learning system is good if it produces hypotheses
 that do a good job of predicting the classification of unseen
 examples\cite{russell2010artificial}." It is suggested that when training a
 supervised learning system, some of the example data should be kept back when
-during the training phase and instead, used as `unseen examples' and classified
+during the training phase and instead, used as `...unseen examples' and classified
 by the newly trained system to judge its accuracy
 \cite{alpaydin2004introduction}\cite{russell2010artificial}.
 
 A common technique for partitioning data into `seen' and `unseen' or training
 and test data sets is to simply split the data into two sets through the use of
 random sampling.  A 60:40 divide between training and test data is common.
-Witten explains that ``it is better to use more than half the data for
+Witten explains that ``...it is better to use more than half the data for
 training, even at the expense of test data\cite{witten2005data}." 
 
 \subsection{ Three Fold Validation }
@@ -149,8 +148,8 @@ measures of performance for machine learning classifiers.
 
 Receiver Operating Characteristics (ROC) Charts are used to visually represent
 the trade-off between True Positives(TP) and False Positives(FP) as identified
-by the classifier under evaluation. Witten(2005) explains that ROC is a method
-reappropriated from signal processing analysts who use it to visualise ``...hit
+by the classifier under evaluation. Witten (2005) explains that ROC is a method
+reappropriated from signal processing analysts who use it to visualise the ``...hit
 rate and false alarm rate over noisy communication
 channels\cite{witten2005data}." The ratio of TP to FP classifications is
 measured with increasing numbers of test samples from left to right. 
@@ -179,11 +178,11 @@ the trade-off between true positive and false positive classification. It is a
 percentage measurement, where 100\% indicates a high TP-FP ratio. AUC is often
 used instead of visualising a ROC graph for brevity or where average
 performance of a classifier over several train-test cycles is to be calculated.
-The average AUC for Partridge's Random Tree Paper Type classifier after is
-96.6\% after three fold validation is executed over the whole set of papers.
+The average AUC for Partridge's Random Tree Paper Type classifier is
+96.6\% after three-fold validation is executed over the whole set of papers.
 
-Comparison of this result with the above graph does show discrepancies between
-simple 60:40 proportional validation and 3-fold validation - the average
+A comparison of this result with the above graph does show discrepancies between
+simple 60:40 proportional validation and 3-fold validation; the average
 performance of the latter seems to be slightly more accurate. This may be
 because a slightly higher number of training examples (66\% rather than 60\%)
 were used to train the classifiers during 3-fold validation and that the errors
@@ -191,7 +190,7 @@ were averaged out at the end of the process.
 
 \subsection{ Confusion Matrices}
 
-Confusion Matrices are a way of showing comprehensively which classes a machine
+Confusion Matrices are a way of comprehensively showing which classes a machine
 learning system struggles to discriminate between the most. Known classes are
 shown on the vertical axis of the matrix and predicted classes are shown across
 the horizontal. This allows inference of which data classes a trained
@@ -264,9 +263,9 @@ in Partridge can be seen in Figure \ref{fig:conf_matrices} below.
 \end{figure}
 
 These results show that Partridge's decision tree is very effective at
-classifying the three document types in its database. It is also clear however,
-that whilst the classifier is outstanding at recognising Research papers, it
-sometimes struggles to discriminate between Case Study and review papers. This
+classifying the three document types in its database. It is also clear, however,
+that whilst the classifier is outstanding at recognising research papers, it
+sometimes struggles to discriminate between case study and review papers. This
 may be because case studies can be considered a specific type of review paper
 and the two classes share more similar CoreSC features than they do with
 research papers.  
@@ -333,12 +332,12 @@ F-Measure = \frac{ 2 \times Recall \times Precision} { Recall + Precision } =
 Recall, Precision and F-Measure was calculated for each of the classes and in
 each iteration of the three fold validation sequence. The results in Figure
 \ref{fig:fmeasure_table} show good recall, precision and f-measure for all
-three document types within Partridge. These results verify that Case Study is
+three document types within Partridge. These results verify that case study is
 the hardest document type to classify as discussed above.
 
 \section{ User Testing } 
 
-Raymond(1999) suggests that for developers of open source projects, ``Treating
+Raymond (1999) suggests that for developers of open source projects, ``...treating
 your users as co-developers is your least-hassle route to rapid code
 improvement and effective debugging\cite{raymond1999cathedral}." Partridge
 hasn't been developed using an open methodology since, as a dissertation
@@ -347,12 +346,10 @@ However, Raymond's notion that software should be released early and often and
 tested on its user-base is an effective one and has been widely adopted by both
 open and closed source developers\cite{linux2013}\cite{unity2013}.
 
-A publicly available instance of Partridge that can be accessed at
-(\url{http://farnsworth.papro.org.uk/}) was made available as soon as iteration
-1 was complete and advertised using several social media streams. This was an
-effort to attract as many users to Partridge as possible in the early stages of
-the project in order to provide user testing. It was made clear to any early
-adopting users that the system was still in development and they were
+A publicly-available version of Partridge that can be accessed at
+(\url{http://farnsworth.papro.org.uk/}). This was made available as soon as iteration
+1 was complete and advertised using several social media stream to attract as many users to Partridge as possible in the early stages of
+the project in order to provide user testing. It was made clear to any early-adopting users that the system was still in development and they were
 encouraged to submit bug reports if they experienced any problems whilst using
 the site. This was a great success and a number of bugs and suggested
 improvements were raised both via the GitHub repository and in conversation,
@@ -374,7 +371,7 @@ interface is for non-technical users.
 Most users who commented on the system found that the query form made a lot of
 sense and helped them to identify relevant papers very quickly. 
 
-There were a few comments on how the uploader system could be improved. Users
+There were a few comments as to how the uploader system could be improved. For example, users
 were confused by the preprocessor and wondered why their paper didn't appear in
 the corpus as soon as they submitted it. The most popular solution to this was
 to add an email field to the uploader so that people who submit papers to the
@@ -391,8 +388,8 @@ system.
 \subsection{Extrinsic Feedback}
 
 As well as finding out how Partridge performs as a system, it was interesting
-to find out how Partridge blended in to the information retrieval ecosystem around
-it and how effectively it could be used day to day or in combination with any other
+to find out how Partridge blended into the information retrieval ecosystem around
+it and how it could be effectively used day-to-day or in combination with any other
 online tools.
 
 One of the most important suggestions made was the addition of the Bookmarklet
@@ -411,7 +408,7 @@ Evaluation has ensured that an accurate and precise paper type classification
 mechanism has been developed and User Testing has ensured that non-technical
 users are able to use Partridge effectively.
 
-Testing has been highly effective throughout the project and any potential
+Testing throughout the project has meant that any potential
 issues with the system were identified very early on and resolved due to the
 `open-source-esque' development lifecycle used during the project.  Testing
 Partridge has helped in understanding the system's limitations and raised a

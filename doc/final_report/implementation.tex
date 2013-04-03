@@ -71,7 +71,7 @@ XML markup and uses the CoreSC schema by Soldatova and
 Liakata\cite{liakata2008guidelines} for annotation. Therefore some spike work
 was carried out to determine the feasibility of converting papers published as
 PDF documents into XML documents. Townsend \emph{et al.} (2009) liken
-converting PDF to XML to ``converting hamburgers into cows," they go on to
+converting PDF to XML to ``converting hamburgers into cows." They go on to
 explain that PDF documents do not contain any semantic data and documents lose
 much of their explicit structure when they are formatted in this way
 \cite{Townsend2009}.  Therefore, to convert PDF documents into an NLP-friendly
@@ -163,17 +163,17 @@ yet. Therefore, it was necessary to switch bak to remote annotation.
 
 Once a large number of papers had been acquired from ART, PlosOne and PubMed
 Central, work could begin on implementing a paper type classifier able to
-discriminate between ``Case Study", ``Research" and ``Review" papers. However,
+discriminate between `Case Study,' `Research' and `Review' papers. However,
 for a machine learning classifier to discriminate between classes of data, it
 is necessary to choose a set of features that differ as much as possible
 between the classes. For example, to discriminate between cats and dogs,
-``number of legs" is a poor feature since both species normally have 4.
+``number of legs" is a poor feature since both species normally have four.
 However, the noise that these animals make may be a good discriminative feature
 since cats tend to mew and dogs bark. 
 
 \subsubsection{Feature Selection and CoreSCs}
 
-There are several well established features used for classifying text within
+There are several well-established features used for classifying text within
 the NLP community. However, since Partridge has access to CoreSC annotations
 for each paper, an investigation was carried out into how useful CoreSC data
 can be as a feature for paper type discrimination. Every sentence in a given
@@ -223,8 +223,8 @@ the data is clustered. A low silhouette value ($K \approx 0$) suggests loose
 clustering and therefore little correlation, a high silhouette value ($K
 \approx 1$) corresponds with very tight clustering and good correlation.
 
-All of the papers were manually identified as either a ``Case Study", a
-``Review Paper" or a ``Research Paper." They were then loaded into a script and
+All of the papers were manually identified as either a `Case Study,' a
+`Review Paper' or a `Research Paper.' They were then loaded into a script and
 clustered using their CoreSC respective compositions. K-Means silhouettes were
 used as a measure of how effective the clustering process was. This was
 repeated for $ K \in [2..8] $ and the best silhouette measurement and value for
@@ -239,8 +239,8 @@ labels at a time: reducing the noise from the less important types. The
 algorithm was run for all combinations of 3 CoreSC labels, again retaining only
 the most successful combination of features and K value based upon the K
 silhouette value. This returned a set of much stronger K silhouette values in
-general. The algorithm also determined that the combination of ``Background",
-``Motivation" and ``Method" CoreSC labels seemed to be the most
+general. The algorithm also determined that the combination of `Background,'
+`Motivation' and `Method' CoreSC labels seemed to be the most
 discriminative, providing a silhouette value of 0.63. 
 
 \begin{figure}[!ht]

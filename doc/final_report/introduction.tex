@@ -16,7 +16,7 @@ providing scientists and researchers with an even larger volume of information
 to be processed. As available information increases, relevant material becomes
 progressively more difficult to find manually and the need for an automated
 information retrieval tool more apparent. The problem is even more vital for
-General Practitioners. Goldacre (2008:97) points out that ``there have been an
+General Practitioners. Goldacre (2008:97) points out that ``...there have been an
 estimated 15 million medical academic articles published so far, and 5000
 journals published every month... picking out what's relevant is a gargantuan
 task."\cite{goldacre2008bad}.
@@ -25,7 +25,40 @@ To assist in information processing and knowledge acquisition within the domain
 of scientific research, a new web-based tool named Partridge was designed. Its
 creation and implementation are discussed in this document.
 
-\section{Background}
+\section{Objectives}
+\label{sec:objectives}
+Partridge's main objective is to provide reading recommendations and
+information retrieval for scientists and researchers. This should reduce the
+amount of extraneous information that users have to read for themselves by
+helping them to quickly find information specific to their interests.
+Partridge will achieve this through the use of several existing techniques in
+Natural Language Processing and utilisation of SAPIENTA as discussed above.
+
+Partridge is designed to help and facilitate researchers and authors of
+scientific papers in the following principal ways:
+
+\begin{itemize}
+\item The system should provide search within specific CoreSC regions of a given
+paper. This would allow users to find the most relevant papers to them. For
+example, a user may search for "mass spectrometer" within the methodology
+section of a paper.
+\item Partridge should allow authors and rightsholders of scientific papers to
+upload their papers to the system for inclusion into the search system. This
+would give Partridge itself more utility and would make involved authors more
+accessible.
+\item The system should provide filtering of papers based upon their
+specific domain (i.e. is the paper primarily concerned with methodology within
+an experiment in chemistry or is it about ethics in psychological studies?) and
+their results, whether the paper yielded positive, negative or inconclusive
+evidence for a hypothesis. 
+\item Depending upon the time constraints of the
+project, it was hoped that Partridge will also offer a user 'profiling' system
+that provides recommendations for researchers based on their reading history.
+This feature should help users find relevant papers more quickly or find
+research that they may have otherwise overlooked.
+\end{itemize}
+
+\section{Background \& Literature Review}
 
 \subsection{ Related Works }
 
@@ -133,8 +166,6 @@ between papers and facilitate `intelligent' behaviour. It is hoped that by
 making full use of the content within scientific papers, Patridge will offer a
 novel, reliable way of displaying relevant papers to users.
 
-\section{ Literature Review}
-
 \subsection{Natural Language Processing}
 
 Natural Language Processing (NLP)  is a branch of Artificial Intelligence that
@@ -167,47 +198,15 @@ they describe (e.g. a sentence can be categorised as a hypothesis, background
 information, a method or similar)\cite{citeulike:10444769}. SAPIENTA
 (\url{http://www.sapientaproject.com}) is a machine learning application,
 trained using a corpus of physical chemistry and biochemistry research papers
-that were pre-processed and annotated using Core Information about Scientific
-Papers (CISP)\cite{LIAKATA10.644}. 
+that were manually annotated using the Core Information about Scientific
+Papers (CISP)\cite{LIAKATA10.644} schema. 
 
 CISP, Soldatova and Liakata (2007), is a way to formally represent core
 scientific concepts (CoreSC), e.g. background, hypothesis, method etc., that
 should be present in the articles in a logical
 ontology\cite{soldatova2007ontology}. Subsequent work implements this set of
 concepts as a three layered sentence based annotation scheme (CoreSC scheme)
-where annotations are encoded in Extended Markup Language
+where annotations are encoded pin Extended Markup Language
 (XML)\cite{LIAKATA10.644}.
 
-\section{Objectives}
-\label{sec:objectives}
-Partridge's main objective is to provide reading recommendations and
-information retrieval for scientists and researchers. This should reduce the
-amount of extraneous information that users have to read for themselves by
-helping them find information specific to their interests more quickly.
-Partridge will achieve this through the use of several existing techniques in
-Natural Language Processing and utilisation of SAPIENTA as discussed above.
-
-Partridge is designed to help and facilitate researchers and authors of
-scientific papers in the following principal ways:
-
-\begin{itemize}
-\item The system should provide search within specific CoreSC regions of a given
-paper. This would allow users to find the most relevant papers to them. For
-example a user may search for "mass spectrometer" within the methodology
-section of a paper.
-\item Partridge should allow authors and rightsholders of scientific papers to
-upload their papers to the system for inclusion into the search system. This
-would give Partridge itself more utility and would make involved authors more
-accessible.
-\item The system should provide filtering of papers based upon their
-specific domain (i.e. is the paper primarily concerned with methodology within
-an experiment in chemistry or is it about ethics in psychological studies?) and
-their result, whether the paper yielded positive, negative or inconclusive
-evidence for a hypothesis. 
-\item Depending upon the time constraints of the
-project, it was hoped that Partridge will also offer a user 'profiling' system
-that provides recommendations for researchers based on their reading history.
-This feature should help users find relevant papers more quickly or find
-research that they may have otherwise overlooked.a
-\end{itemize}
 
