@@ -18,14 +18,14 @@ the target audience and the programming environment are also discussed.
 
 Given the project objectives identified in \ref{sec:objectives}, four primary
 use cases were identified for Partridge as shown in Figure \ref{fig:use_cases}.
-Users of Partridge are likely to be researchers who want to find and read
+Users of Partridge were determined to be researchers who want to find and read
 scientific papers. This would involve querying the database for relevant
 papers, viewing metrics on the papers that have been used to classify them and
 also downloading the original paper for reading. 
 
-Authors are the subset of users who may remain interested in using the query
-functionality of Partridge, but also may wish to upload papers to Partridge and
-add them to the corpus.
+Authors were defined as the subset of users who may remain interested in using
+the query functionality of Partridge, but also may wish to upload papers to
+Partridge and add them to the corpus.
 
 \begin{figure}[!h]
 \centering
@@ -38,7 +38,7 @@ add them to the corpus.
 
 From the outset, the aim was that Partridge would be a web-based tool.
 Web-based systems can generally be run on any computer with access to the
-internet and a modern web browser. This also means that there is no need for
+internet and a modern web browser. This also means that there would be no need for
 the end user to install or configure extra software on their computers, making
 Partridge accessible to non-technical users and those who have aggressive
 software restrictions on their computers, such as GPs and the users of public
@@ -46,9 +46,9 @@ computers in libraries or on academic sites.
 
 In order to function as a website, Partridge needed to be developed as a server
 application that produced Hyper Text Markup Language (HTML) output with which a web
-browser could interpret and display. The browser rendering the forms must then
+browser could interpret and display. The browser rendering the forms would then
 communicate with a backend system capable of querying and returning papers to
-the user based on their input. This lead to the decision to split the development
+the user based on their input. This led to the decision to split the development
 of Partridge into two core components: the Web Frontend comprising of user
 interface elements and presentation logic and the Web Backend comprising of
 intelligent systems to classify, filter and query papers using some of the NLP
@@ -59,8 +59,8 @@ relatively quickly, ideally within 10 seconds or less. If the response is any
 slower than this, the user may get impatient and give up trying to use the
 system, or in some cases, their web browser may timeout and stop trying to load
 the page. Unfortunately, many of the processes involved in extracting meaningful CoreSC
-information from papers are very slow. This means that processing papers
-during web requests is not really feasible, since it may take several minutes
+information from papers are very slow. This meant that processing papers
+during web requests was not really feasible, since it may take several minutes
 for a single paper to be annotated and classified. Therefore, a third core
 component was identified: a paper preprocessor service that runs on the server
 and converts, annotates and classifies papers as soon as they are uploaded.
@@ -70,13 +70,12 @@ and converts, annotates and classifies papers as soon as they are uploaded.
 Rather than building a web server from the ground up, most modern web
 applications are written in higher level languages that run on top of standard,
 open source web servers such as Apache or nginx. Common language choices
-include PHP, Python, Perl and Java; all of these languages are supported by large
-communities of developers and users who provide with excellent documentation
-and support if required.  Python was
-selected to implement Partidge. This was partially due to the
-author's familiarity with the language and also due to the availability of
-stable data mining\cite{curk05} and natural language
-processing\cite{bird2009natural} libraries for the Python programming
+include PHP, Python, Perl and Java; all of these languages are supported by
+large communities of developers and users who provide with excellent
+documentation and support if required.  Python was selected to implement
+Partidge. This was partially due to the author's familiarity with the language
+and also due to the availability of stable data mining\cite{curk05} and natural
+language processing\cite{bird2009natural} libraries for the Python programming
 environment. Python is an interpreted cross-platform language, minimising
 deployment problems and supports natively-compiled C and C++ extension
 libraries allowing intensive processing  and number crunching to be offloaded
@@ -96,14 +95,15 @@ computer. However, the portable nature of Python, Apache and the required
 libraries meant that Partridge could theoretically be deployed to Windows and
 Mac computer systems if required.
 
-The Web Frontend for the system had to be written using a combination of
-HTML markup and JavaScript. HTML is not a programming language in itself and
-doesn't contain any logic. It is merely a code representation of the interface
-to be rendered in the browser window which is interpreted once it has been
-downloaded from the web server. In order to carry out actions on the HTML such
-as validating user input and manipulating parts of the display, JavaScript is
-also downloaded from the web server and interpreted by the browser. Although
-this requires the developer to have knowledge of two extra technologies in addition to Python, it also makes enforcing the design principle of keeping presentation
+The Web Frontend for the system had to be written using a combination of HTML
+markup and JavaScript. HTML is not a programming language in itself and doesn't
+contain any logic. It is merely a code representation of the interface to be
+rendered in the browser window which is interpreted once it has been downloaded
+from the web server. In order to carry out actions on the HTML such as
+validating user input and manipulating parts of the display, JavaScript is also
+downloaded from the web server and interpreted by the browser. Although this
+requires the developer to have knowledge of two extra technologies in addition
+to Python, it also makes enforcing the design principle of keeping presentation
 and logic separate a lot easier.
 
 Due to the large number of popular web browsers on the market, implementing
@@ -112,14 +112,16 @@ write in a cross-browser compatible way. To maximise compatibility and reduce
 development time, it was decided that jQuery would be used in developing the
 JavaScript frontend behaviours. jQuery is a library of utility functions
 designed for manipulating HTML documents in a uniform way across all compatible
-browsers \cite{jquery2013}. As of February 2013, it is estimated that Chrome and
-Firefox are currently the most popular web browsers, holding 50\% and 29.6\% of
-the market share respectively\cite{browserstats2013}. Internet Explorer is the
-third most popular browser. However, there are several well-known compatibility
-issues with Internet Explorer, Microsoft themselves condemning version 6.0\cite{ie6death}. For this reason, it was decided that Partridge
-would initially only support Firefox and Chrome; a working interface in modern editions
-of the Internet Explorer family of browsers would be a bonus.  However, no time
-was allocated to ensuring compatibility of Partridge with Internet Explorer.
+browsers \cite{jquery2013}. As of February 2013, it is estimated that Chrome
+and Firefox are currently the most popular web browsers, holding 50\% and
+29.6\% of the market share respectively\cite{browserstats2013}. Internet
+Explorer is the third most popular browser. However, there are several
+well-known compatibility issues with Internet Explorer, Microsoft themselves
+condemning version 6.0\cite{ie6death}. For this reason, it was decided that
+Partridge would initially only support Firefox and Chrome; a working interface
+in modern editions of the Internet Explorer family of browsers would be a
+bonus.  However, no time was allocated to ensuring compatibility of Partridge
+with Internet Explorer.
 
 \section{ System Architecture }
 
@@ -189,11 +191,10 @@ sentence's location within the paper as well pairs and triplets of words found
 consecutively within the sentence. After this stage, the paper is passed
 forwards to be further classified by Partridge.
 
-
 \subsubsection{Feature Extraction and Classifiers}
 
 The final stage in the preprocessor pipeline is paper classification. During
-this stage, features wil be extracted from the papers and used to classify the
+this stage, features will be extracted from the papers and used to classify the
 paper in three different ways. The paper's type: case study or review paper
 etc. will be determined using the presence or absence of different CoreSC labels
 within the paper and their relative proportions. The subject of paper will be
