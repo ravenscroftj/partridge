@@ -22,10 +22,10 @@ journals published every month... picking out what's relevant is a gargantuan
 task."\cite{goldacre2008bad}.
 
 To assist in information processing and knowledge acquisition within the domain
-of scientific research, a new web-based tool named Partridge was designed. Its
+of scientific research, a new web-based tool named Partridge has been designed. Its
 creation and implementation are discussed in this document.
 
-\section{Objectives}
+\section{Project Objectives}
 \label{sec:objectives}
 Partridge's main objective is to provide reading recommendations and
 information retrieval for scientists and researchers. This should reduce the
@@ -34,56 +34,91 @@ helping them to quickly find information specific to their interests.
 Partridge will achieve this through the use of several existing techniques in
 Natural Language Processing and utilisation of SAPIENTA as discussed above.
 
-Partridge is designed to help and facilitate researchers and authors of
+Partridge has been designed to help and facilitate researchers and authors of
 scientific papers in the following principal ways:
 
 \begin{itemize}
-\item The system should provide search within specific CoreSC regions of a given
+\item The system provides search within specific CoreSC regions of a given
 paper. This would allow users to find the most relevant papers to them. For
 example, a user may search for "mass spectrometer" within the methodology
 section of a paper.
-\item Partridge should allow authors and rightsholders of scientific papers to
+\item Partridge allows authors and rightsholders of scientific papers to
 upload their papers to the system for inclusion into the search system. This
 would give Partridge itself more utility and would make involved authors more
 accessible.
-\item The system should provide filtering of papers based upon their
+\item The system provides filtering of papers based upon their
 specific domain (i.e. is the paper primarily concerned with methodology within
 an experiment in chemistry or is it about ethics in psychological studies?) and
 their results, whether the paper yielded positive, negative or inconclusive
 evidence for a hypothesis. 
 \item Depending upon the time constraints of the
-project, it was hoped that Partridge will also offer a user 'profiling' system
+project, it was hoped that Partridge would also offer a user 'profiling' system
 that provides recommendations for researchers based on their reading history.
-This feature should help users find relevant papers more quickly or find
+This feature would help users find relevant papers more quickly or find
 research that they may have otherwise overlooked.
 \end{itemize}
 
 \section{Background \& Literature Review}
 
-\subsection{ Related Works }
+\subsection{ Why do we need Partridge? }
 
 There are already a large number of information retrieval and recommendation
-systems for scientific publications. A selection of these systems were
-evaluated to find out which features work well and to identify their
-shortcomings.
+systems for scientific publications.  Many of these systems, such as AGRICOLA
+(\url{http://agricola.nal.usda.gov/}), the Cochrane
+Library(\url{http://www.thecochranelibrary.com/}) and
+EconLit(\url{http://www.aeaweb.org/econlit/index.php}) index only publications
+from predefined journals or topics (for the above examples, Agriculture,
+Biology and Economics respectively). These sites can be very helpful for
+researchers looking for literature covering specific topics. Filtering ever
+smaller collections of academic literature allows for more precision; the
+narrow subject area facilitating specialised search and indexing features that
+help researchers locate relevant publications and articles even more quickly.
+Figure \ref{fig:agricola} shows the extra search and filter controls offered by
+the AGRICOLA repository which allow the user to filter papers by audience and
+specific fields within Agriculture such as ``Animals and Livestock" and ``Food
+and Nutrition".
 
-Several online search systems specifically index scientific papers and other
-publications. One of the most publicised and well known paper search systems is
-Google Scholar (\url{http://scholar.google.com}).  As can be seen in Figure
-\ref{fig:scholar_basic}, This is an adaptation of Google's general search
-engine to specifically index and search scientific papers.  Google offers
-advanced query options specific to Scholar that allow searching by author, year
-and for words that occur only in the document title as shown in figure
-\ref{fig:scholar_advanced}. Whilst this does deal with the problem of
-`information overload' by providing fine control over the information returned
-from searches,  the user is still required to have a very good idea of what
-they are looking for in terms of keywords and/or specific authors. It is
-possible that a user would not know what they are looking for until they've
-seen it. Even if the user has a set of keywords to search for, they can only
-search the title of the paper or the content as a whole. This means that users
-who want to find a particular phrase within a CoreSC part of the paper (e.g.
-only look for this phrase in the `Result' section of the paper) are unable to
-get results at their desired level of detail.
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{images/litreview/agricola.png}
+\caption{The specific search controls and filters offered by AGRICOLA}
+\label{fig:agricola}
+\end{figure}
+
+Unfortunately, these domain specific indexing systems usually only contain a
+small subset of papers, excluding potentially crucial literature because it
+does not quite fit into the subject domain. This problem is often exacerbated
+by the decision to leave out some papers and articles because the system
+administrators do not have permission from the author or publisher to include
+them. The value of these systems to their users is often restricted by the
+small proportion of available literature that they index, forcing researchers
+to use multiple, domain specific, search engines for their queries.
+
+In contrast, there are also a number of interdisciplinary indexing system
+systems such as arXiv( \url{http://arxiv.org/}), Mendeley
+(\url{http://www.mendeley.com/research-papers/}) and JSTOR
+(\url{http://www.jstor.org/}), that try to incorporate wide ranges of papers
+from as many disciplines as possible. The traits of these systems often
+complement those of their domain-specific counterparts; they provide a
+comprehensive collection of literature but insufficient filtering and indexing
+capabilities.
+
+One of the most publicised and well known interdisciplinery scientific
+literature search systems is Google Scholar (\url{http://scholar.google.com}).
+As can be seen in Figure \ref{fig:scholar_basic}, This is an adaptation of
+Google's general search engine to specifically index and search scientific
+papers.  Google offers advanced query options specific to Scholar that allow
+searching by author, year and for words that occur only in the document title
+as shown in figure \ref{fig:scholar_advanced}. Whilst this does deal with the
+problem of `information overload' by providing fine control over the
+information returned from searches,  the user is still required to have a very
+good idea of what they are looking for in terms of keywords and/or specific
+authors. It is possible that a user would not know what they are looking for
+until they've seen it. Even if the user has a set of keywords to search for,
+they can only search the title of the paper or the content as a whole. This
+means that users who want to find a particular phrase within a CoreSC part of
+the paper (e.g.  only look for this phrase in the `Result' section of the
+paper) are unable to get results at their desired level of detail.
 
 \begin{figure}[!hbt]
         \centering
@@ -104,13 +139,30 @@ get results at their desired level of detail.
         \label{fig:scholar_interface}
 \end{figure}
 
-Social citation and recommendation engines also provide a partial solution to
-the `information overload' problem.  Services like Goodreads
+Search engines such as those discussed above are fairly useful for helping
+people to find relevant literature and information when they have some idea of
+what they are looking for. However, they demand precision in the use of
+keywords and phrases which is unattainable by most researchers. Moreover, users
+can get completely different result sets by entering synonyms. In comparison,
+Recommender Systems may perform with more accuracy and better inclusion when
+a search term cannot be clearly defined.
+
+\subsection{Recommender Systems}
+
+Adomavicius and Tuzhilin(2005) define three main types of recommender systems:
+Collaborative systems that rely upon \emph{user} data to make recommendations,
+Content-based systems that use \emph{content} indexing and feature-extraction
+to make recommendations and Hybrid systems that exploit both of these
+techniques\cite{adomavicius2005toward}. 
+
+\subsubsection{Collaborative Recommender Systems}
+
+Collaborative Recommender Services like Goodreads
 (\url{http://www.goodreads.com/}) and CiteUlike
-(\url{http://www.citeulike.org/}) allow you to register your interest in
+(\url{http://www.citeulike.org/}) allow users to register their interest in
 specific authors and subjects. This allows the sites to build up a profile of
-the sorts of materials that you might be interested in and provide lists of
-recommendations as in Figure \ref{fig:social_indexes}.
+the sorts of materials that its users might be interested in and provide lists
+of recommendations as in Figure \ref{fig:social_indexes}.
 
 \begin{figure}[!hbt]
         \centering
@@ -127,7 +179,7 @@ recommendations as in Figure \ref{fig:social_indexes}.
                 \label{fig:citeulike_index}
         \end{subfigure}
 
-        \caption{Goodreads and citeulike social recommendation systems}
+        \caption{Goodreads and citeulike social Recommender systems}
         \label{fig:social_indexes}
 \end{figure}
 
@@ -159,19 +211,64 @@ content is overlooked completely.
         \label{fig:social_searches}
 \end{figure}
 
-None of these systems make full use of the content within the research papers
-that they index. Those systems with filtering and recommendation capabilities
-rely upon users and their activities to provide discriminatory information
-between papers and facilitate `intelligent' behaviour. It is hoped that by
-making full use of the content within scientific papers, Patridge will offer a
-novel, reliable way of displaying relevant papers to users.
 
-\subsection{Natural Language Processing}
+\subsubsection{ Content-based Recommender Systems}
 
-Natural Language Processing (NLP)  is a branch of Artificial Intelligence that
-enables the automated extraction of meaningful information from texts written
-in human languages such as French or English. Liddy (2001) defines Natural
-Language Processing as:
+Unlike Collaborative Recommender Systems, which have become commonplace on
+today's World Wide Web, there are very few examples of Content-based
+Recommender Systems in common use and most of them use metadata. 
+
+More generally, metadata can be said to be extra data that is used to describe
+a record but is not contained within it. In the case of literature, metadata is
+used to describe attributes of a document such as its title, author and topic.
+Although commonly used in content-based recommender systems, metadata does not
+contain enough information about its associated document to be used to draw any
+meaningful conclusions about whether the paper should recommended. There are
+also many discrepancies in the quality of metadata provided by different
+scientific journals, thus reducing the reliability of any analysis carried out
+on sets of documents from different sources\cite{palepumeta}. A better system
+should take into account the content of the whole document.
+
+One example of this comes from Mooney and Loriene(2000) who describe a
+content-based book recommender system that use Natural Language Processing
+techniques to process full text passages in order to determine similarity
+between books\cite{Mooney:2000:CBR:336597.336662}. With a sample of 20,000
+books of various genres, this system was found to give accurate
+reccomendations. Their work provides an excellent foundation for further
+research in this area.
+
+\subsubsection{ Hybrid Recommender Systems }
+
+Hybrid Recommender Systems are designed to combine the Content-based and
+Collaboration-based models, employing aspects of both techniques. Huang
+\emph{et al.}(2002) describe a graph-based approach to combine content and
+collaborative data from books, customers and transactions taken from an online
+bookseller\cite{Huang:2002:GRS:544220.544231}. Combining both sources of
+information boosted the effectiveness of the recommendation engine and
+\emph{'...the system gained improvement with respect to both precision and
+recall...' (Ibid.)} A scientific literature recommender system could make use
+of a similar hybrid technique in order to provide effective recommendations to
+researchers.
+
+
+\subsection{Why Does Partridge Need Natural Language Processing?}
+
+Human literature is generally written in human languages for the consumption of
+other humans. Chomsky (1956) defines a hierarchy for the classification of
+formal grammars that describe languages \cite{chomsky1956three}. Although it
+can be debated where exactly on the hierarchy human language fits (
+Reich(1969)\cite{reich1969finiteness} argues that Natural Languages can be
+considered finite state and Matthews(1979)\cite{matthews1979grammatical} argues
+that Natural Languages cannot even be considered recursively enumerable, cited
+in Kornai(1985)\cite{kornai1985}) it is clear that they are not in the same
+category as most forms of machine language. Literature written for humans must
+be interpretted for machines and this is where Natural Language Parsing is
+useful.
+
+Natural Language Processing (NLP)  is a branch of Artificial
+Intelligence that enables the automated extraction of meaningful information
+from texts written in human languages such as French or English. Liddy (2001)
+defines Natural Language Processing as:
 
 \begin{quotation} 
 A theoretically motivated range of computational techniques for analyzing and
@@ -187,10 +284,10 @@ engineering of systems for querying databases using natural languages
 communicate with their users in a human-like way\cite{Alfonsi2006}.
 More recently, NLP has been used for text classification purposes such as
 classifying emotions within phrases and sentences \cite{Wilson05Polarity} and
-even within suicide notes \cite{citeulike:11077287}.
+even within suicide notes \cite{citeulike:11077287}. Laterly, NLP has been
+used to detect core scientific concepts within scientific literature.
 
-
-\subsection{CISP, CoreSC and SAPIENTA}
+\subsection{Natural Language Processing in Scientific Papers}
 
 Liakata \emph{et al.} (2012) describe a system for automatically processing and
 classifying sentences in a research paper according to the scientific concept
@@ -206,7 +303,22 @@ scientific concepts (CoreSC), e.g. background, hypothesis, method etc., that
 should be present in the articles in a logical
 ontology\cite{soldatova2007ontology}. Subsequent work implements this set of
 concepts as a three layered sentence based annotation scheme (CoreSC scheme)
-where annotations are encoded pin Extended Markup Language
-(XML)\cite{LIAKATA10.644}.
+where annotations are encoded in Extended Markup Language
+(XML)\cite{LIAKATA10.644}. An intelligent academic information retrieval system
+could utilise this information in order to provide better filtering and search
+capabilities for researchers.
 
 
+\section{Summary}
+
+After establishing the context and objectives of the Partridge Project, a
+number of existing information retrieval and recommendation tools for
+scientific literature were examined. A set of academic and general purpose
+search engines were critically evaluated; academic search engines found to be
+better for precision and general search engines for having a wider variety of
+indexed materials. The three core types of recommendation engines,
+Content-based, Collaboration-based and Hybrid, were discussed and it was
+concluded that much much could be gained through the use of a Hybrid
+recommendation system in Partridge. With a clear image of Partridge's
+objectives, the next section deals with choosing an effective design
+methodology.
