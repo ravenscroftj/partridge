@@ -21,7 +21,7 @@ from matplotlib import pyplot as plt
 
 from itertools import combinations
 
-from extract_papers import get_best_k,build_table
+from extract_papers import get_best_k,build_table, find_paper_ids
 
 #----------------------------------------------------------------------------
 
@@ -41,13 +41,44 @@ best_features = None
 
 pone_ids = []
 art_ids = []
+pubmed_ids = []
 
+print "finding paper sources..."
 
+art_dir = "/home/james/dissertation/papers/art"
+papers_dir = "/home/james/dissertation/data/processed"
+
+for root,dirs,files in os.walk(papers_dir):
+    for file in files:
+        name,ext = os.path.splitext(file)
+
+        if ext == ".xml":
+            pfile = PaperFile.query.filter(
+                    PaperFile.path.like("%%%s%%" % name)).first()
+
+            if(pfile != None):
+
+                if name.startswith("journal.p"):
+                    pone_ids.append(pfile.paper_id)
+                elif name.startswith("pmc"):
+                    pubmed_ids.append(pfile.paper_id)
+                elif os.path.exists( os.path.join(art_dir, name.split("_")[0] +
+                ".xml")):
+                    art_ids.append(pfile.paper_id)
+
+art_ids = set(art_ids)
+pubmed_ids = set(pubmed_ids)
+pone_ids = set(pone_ids)
+
+print "Found %d art papers, %d PMC papers and %d PloSOne papers" % (
+len(art_ids), len(pubmed_ids), len(pone_ids))
+
+corescs = ["Bac","Met","Mot"]
 for features in combinations(corescs, 3):
    
 
     print "Testing with features %s" % str(features)
-    paper_table = build_table(papers, features)
+    paper_table = build_table(papers, features, pone_ids, art_ids, pubmed_ids)
 
     k,score = get_best_k(paper_table)
 
@@ -67,7 +98,7 @@ for features in combinations(corescs, 3):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    colours = {"Research" : 'r', "Review" : 'g', "Case Study" : 'b'}
+    colours = {"pone" : 'r', "art" : 'g', "pubmed" : 'b', "other" : 'y'}
     j = 0
 
     clusters = km.clusters
@@ -75,7 +106,7 @@ for features in combinations(corescs, 3):
     for i in range(0, len(paper_table)):
 
         ax.scatter(paper_table[i][0],paper_table[i][1],paper_table[i][2],
-        c=colours[str(paper_table[i]["type"])])
+        c=colours[str(paper_table[i]["source"])])
 
     ax.set_xlabel(features[0])
     ax.set_ylabel(features[1])

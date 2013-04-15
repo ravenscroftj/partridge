@@ -101,8 +101,13 @@ class_var.add_value("Research")
 class_var.add_value("Review")
 class_var.add_value("Case Study")
 
+src_var = Orange.feature.Discrete("source")
+src_var.add_value("pone")
+src_var.add_value("art")
+src_var.add_value("pubmed")
+src_var.add_value("other")
 
-def build_table( papers, features):
+def build_table( papers, features, pone_ids, art_ids, pubmed_ids):
 
 
     #set up orange domain
@@ -129,15 +134,21 @@ def build_table( papers, features):
             inst_list.append( sentdist[f] * 100 / len(paper.sentences) )
 
         inst_list.append(str(paper.type))
+
+
             
         inst = Orange.data.Instance(domain, inst_list)
 
         inst['title'] = str(paper.title.encode('ascii', 'ignore'))
-
-        #if( paper.id in pone_ids):
-        #    inst['source'] = "pone"
-        #elif( paper.id in art_ids):
-        #    inst['source'] = "art"
+        
+        if( paper.id in pone_ids):
+            inst['source'] = "pone"
+        elif( paper.id in art_ids):
+            inst['source'] = "art"
+        elif (paper.id in pubmed_ids):
+            inst['source'] = "pubmed"
+        else:
+            inst['source'] = "other"
 
         paper_table.append(inst)
 

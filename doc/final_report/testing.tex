@@ -147,7 +147,9 @@ measures of performance for machine learning classifiers.
 \subsection{ Receiver Operating Characteristics Chart}
 
 Receiver Operating Characteristics (ROC) Charts are used to visually represent
-the trade-off between True Positives(TP) and False Positives(FP) as identified
+the trade-off between True Positives(TP); items that are correctly identified
+as a given class and False Positives(FP); items that are identified as a given
+class but are actually of aother class as identified
 by the classifier under evaluation. Witten (2005) explains that ROC is a method
 reappropriated from signal processing analysts who use it to visualise the ``...hit
 rate and false alarm rate over noisy communication
@@ -263,12 +265,11 @@ in Partridge can be seen in Figure \ref{fig:conf_matrices} below.
 \end{figure}
 
 These results show that Partridge's decision tree is very effective at
-classifying the three document types in its database. It is also clear, however,
-that whilst the classifier is outstanding at recognising research papers, it
-sometimes struggles to discriminate between case study and review papers. This
-may be because case studies can be considered a specific type of review paper
-and the two classes share more similar CoreSC features than they do with
-research papers.  
+classifying the three document types in its database. It is also clear,
+however, that whilst the classifier is outstanding at recognising research
+papers, it sometimes struggles to discriminate between case study and review
+papers. This may be because case studies share more similar CoreSC features
+with review papers than they do with research papers.  
 
 \subsection{ Precision, Recall and F-Measure }
 
@@ -336,7 +337,7 @@ three document types within Partridge. These results verify that case study is
 the hardest document type to classify as discussed above.
 
 \section{ User Testing } 
-
+\label{sec:user_testing}
 Raymond (1999) suggests that for developers of open source projects, ``...treating
 your users as co-developers is your least-hassle route to rapid code
 improvement and effective debugging\cite{raymond1999cathedral}." Partridge
@@ -347,9 +348,11 @@ tested on its user-base is an effective one and has been widely adopted by both
 open and closed source developers\cite{linux2013}\cite{unity2013}.
 
 A publicly-available version of Partridge that can be accessed at
-(\url{http://farnsworth.papro.org.uk/}). This was made available as soon as iteration
-1 was complete and advertised using several social media stream to attract as many users to Partridge as possible in the early stages of
-the project in order to provide user testing. It was made clear to any early-adopting users that the system was still in development and they were
+(\url{http://farnsworth.papro.org.uk/}). This was made available as soon as
+iteration 1 was complete and advertised using several social media stream to
+attract as many users to Partridge as possible in the early stages of the
+project in order to provide user testing. It was made clear to any
+early-adopting users that the system was still in development and they were
 encouraged to submit bug reports if they experienced any problems whilst using
 the site. This was a great success and a number of bugs and suggested
 improvements were raised both via the GitHub repository and in conversation,

@@ -4,7 +4,7 @@
 %
 %------------------------------------------------------
 
-Why write in first person in this chapter?
+Why write in the first person in this chapter?
 
 Burrows et al. (2000) suggest that writing in a reflective style enhances the
 author's learning\cite{JEE:JEE657}. Coombs (2001) identified introspection and
@@ -39,25 +39,29 @@ required a lot of investigative work and reading to help me to understand the
 processes and how they should be applied.
 
 Working with the Python implementation of SAPIENTA demonstrated the importance
-of machine learning evaluation methods for testing classifiers rather than
-making assumptions about `sensible looking' output. When the application was
-run on a set of papers acquired for Partridge's corpus, it seemed to give
-sensible CoreSC classifications for the papers. However, upon further analysis
-and calculation of Python SAPIENTA's Classifier Accuracy, it was determined
-that the system was only getting 44\% of CoreSC annotations correct, an
-unacceptably low success rate. If I hadn't have run the evaluation functions on
-SAPIENTA, it would have been easy to assume that it was correctly classifying
-the papers, tainting the input papers and potentially disrupting the
-investigation into CoreSC makeup and paper type.
+of machine learning evaluation methods for testing classifiers, which are
+discussed in depth in Chapter \ref{chapter:testing}, rather than making
+assumptions about `sensible looking' output. Then the application was run on a
+set of papers acquired for Partridge's corpus, it seemed to give sensible
+CoreSC classifications for the papers. However, upon further analysis and
+calculation of Python SAPIENTA's Classifier Accuracy, it was determined that
+the system was only getting 44\% of CoreSC annotations correct, an unacceptably
+low success rate. If I hadn't have run the evaluation functions on SAPIENTA, it
+would have been easy to assume that it was correctly classifying the papers,
+tainting the input papers and potentially disrupting the investigation into
+CoreSC makeup and paper type.
 
 
-\subsection{User Interface}
+\subsection{User Interface} 
+
 The Partridge user interface is also a great success, providing a highly usable
 and intuitive representation of the relatively complicated processes that are
-used to classify and organise the papers. The use of HTML and JavaScript
+used to classify and organise the papers. The interface took a great deal of
+tweaking and user feedback, as discussed in Section \ref{sec:user_testing}, in
+order to make it as user friendly as possible. The use of HTML and JavaScript
 interactive elements instead of static pages and synchronous calls to the web
 server was certainly a good idea, providing a modern system that keeps the user
-informed at all times. The decision to use the jqBBQ library to add browser
+informed at all times.  The decision to use the jqBBQ library to add browser
 history support further enhanced the user experience, allowing users of
 Partridge to share links to specific search results over social media channels
 and potentially bookmark significant results.
@@ -149,15 +153,15 @@ Dr Liakata concedes that it is purely an experimental system and was not
 intended for large scale analysis of batches of papers in the way that it is
 utilised by Partridge. During the development of the paper type classifier,
 there were several short delays when the SAPIENTA server stopped working and
-had to be restarted. For this reason, it took several weeks to collect enough data for machine
-learning. 
+had to be restarted. For this reason, it took several weeks to collect enough
+data for machine learning. 
 
-Unfortunately, SAPIENTA is not scheduled for improvement work until the summer
-and that means that Partridge's paper preprocessor is still not very
-scalable. If further work to Partridge is carried out, I hope to improve the
-accuracy of the Python SAPIENTA implementation to be comparable with the
-current, experimental version of the system and run paper annotations locally
-on the Partridge server.
+Over the summer, I will be working with Dr Liakata to improve the Python
+implementation of SAPIENTA. We aim to match or even surpass the performance of
+the Perl SAPIENTA implementation and build a new web service using the Python
+backend. It is possible that Partridge will use a local implementation of the
+Python SAPIENTA implementation to process and annotate large volumes of new
+papers as they are added to the corpus.
 
 \subsection{ Scalability }
 
@@ -214,7 +218,7 @@ potential for further research. During the development of Partridge, this
 relationship was only tested using Research, Review and Case Study papers since
 there were a large number such papers published in open access journals,
 available for analysis. From the analysis in Section
-\ref{sec:evaluaton_learners}, it is clear that a paper's CoreSC makeup can be
+\ref{sec:evaluation_learners}, it is clear that a paper's CoreSC makeup can be
 very effective in determining which of these three classes it belongs to. The
 most discriminative features were specifically Background, Method and
 Motivation. However, this relationship was only tested with the three paper

@@ -4,26 +4,15 @@
 %
 %------------------------------------------------------
 
-Implementing Partridge from a set of initial designs proved to be a
-challenging but rewarding process. There were a great number of technical
-challenges involved in building the system, a large proportion of the
-implementation time was spent working on the paper preprocessor module.
-However, some aspects of the web interface and backend were also quite
-difficult to tackle. 
+Implementing Partridge from a set of initial designs proved to be a challenging
+but rewarding process. Initially, a set of research papers to be used as for
+Partridge were sourced from a number of open access journals and the Paper
+Preprocessor system constructed. The backend infrastructure for the project was
+then constructed and the web interface set up. After some initial suggestions
+from early users, a web bookmarklet was developed to allow papers to be easily
+imported from online journals such as PlOS ONE.
 
-Several libraries were used to accelerate the development and implementation of
-Partridge and avoid `reinventing the wheel.' Whenever code libraries were used,
-the role of the engineer was to be aware of the available solutions and deduce
-which was aposite to the purpose intended.
-
-\section{Paper Preprocessor}
-
-Partridge's Paper Preprocessor module was the most difficult part of the
-project to implement. From acquiring papers for use in the project to teaching
-a machine learning system to recognise different types of scientific
-publication, a number of technical challenges were encountered.
-
-\subsection{ Sourcing and Acquiring Scientific Papers}
+\section{ Sourcing and Acquiring Scientific Papers}
 
 In order to provide a useful service to researchers looking for papers, growing
 a large corpus of scientific literature was made a high priority during the
@@ -32,50 +21,74 @@ models since training data sets need to be statistically significant in order
 to provide any meaningful results. Users are given the option, and actively
 encouraged, to upload papers that they own or publish on another author's
 behalf to the Partridge instance. However, to speed up this process, a number
-of papers were acquired from various open access sources.
+of papers were acquired from a variety of sources.
 
 The most convenient and accessible source was the ART corpus that SAPIENTA was
-trained with\cite{citeulike:11077287}. This corpus was already stored using the
+trained with\cite{LIAKATA10.644}. This corpus was already stored using the
 CoreSC schema and had been pre-annotated. This meant that Partridge would not
 need to do any conversion or pre-processing on the papers. The papers in this
 corpus were all of a similar type and covered similar subject areas within the
-domain of Biochemistry. There were also approximately 260 papers in the
-collection. These papers were used to help establish a conversion process from
-PDF to annotated XML. However, they only formed part of the final corpus.
-Including a large number of papers from other sources provided a more
-comprehensive collection of data for Partridge to learn from.
+domain of Biochemistry. There were 265 papers in the collection. These papers
+were used to help establish a conversion process from PDF to annotated XML.
+However, they only formed part of the final corpus.  Including a large number
+of papers from other sources provided a more comprehensive collection of data
+for Partridge to learn from. A much larger number of papers had to be acquired
+for training and testing of the machine learning systems in the paper
+preprocessor.
 
-The `mega-journals' PLOSOne \url{http://www.plosone.org/} and arXiv
+Open Access (OA) journals are research journals that provide their papers free
+to read online, often making revenue by charging authors to publish their
+articles \cite{solomon2012study}. Many OA journals provide free read access to
+their papers, but do not permit the user of articles for data mining purposes.
+However, there are a number of large online journals that provide papers under
+Creative Commons licenses, allowing data mining, provided that attribution of
+the paper's author is provided in any derivative works. OA is a growing trend
+and it is hoped that there will soon be enough permissively licensed, OA
+literature generally available to allow Partridge to become a wide reaching and
+useful research tool.
+
+The `mega-journals' PLoSOne \url{http://www.plosone.org/} and arXiv
 \url{http://www.arxiv.org/} were suggested as sources for more open access
 articles that could be added to Partridge. Both of these sites were found to
-contain large volumes of open access papers. Most of the articles stored on the
-arXiv site were in PDF format which, as discussed below, are difficult to
-convert and annotate. However, PLOSOne use the SciXML markup language for
-papers published through their journal, which made converting and annotating
-them a lot simpler for Patridge. PLOSOne also publish all of their papers under
-the Creative Commons Share-Alike-By-Attribution license\cite{ccbyattr}. This
-meant that as long as the author information was left intact, all of the papers
-could be used for data mining purposes.
+contain large volumes of OA literature under a permissive license that allowed
+data mining. Most of the articles stored on the arXiv site were in PDF format
+which, as discussed below, are difficult to convert and annotate. However,
+PLoSOne use the Pubmed Central markup schema, which is compatible with
+SAPIENTA, for papers published through their journal, which made converting and
+annotating them for inclusion into Partridge's corpus.  PLoSOne also publish
+all of their papers under the Creative Commons Share-Alike-By-Attribution
+license\cite{ccbyattr}. As mentioned above, this meant that as long as the
+author information was left intact, all of the papers could be used for data
+mining purposes.
 
-A third mega-journal used for downloading papers was the PubMed Centrala (PMC)
+A third mega-journal used for downloading papers was the PubMed Central (PMC)
 repository \url{http://www.ncbi.nlm.nih.gov/pmc/}. Not all of
 the papers available for viewing at the PMC website are open access. However,
-they do offer a listing for the subset of open access papers available on their
+they do offer a listing for the subset of OA papers available on their
 website. The PubMed Central format is also very similar to the SciXML format
 and compatible with SAPIENTA. Therefore, a large number of PubMed papers were
 also used for the initial training of Partridge.
 
+\section{Paper Preprocessor}
+
+With a number of papers available to use to form an initial corpus for the
+system, work on the Paper Preprocessor could begin. Partridge's Paper
+Preprocessor module was the most difficult part of the project to implement.
+From acquiring papers for use in the project to teaching a machine learning
+system to recognise different types of scientific publication, a number of
+technical challenges were encountered.
+
 \subsection{Format Conversion} Most scientific papers available on the internet
 are formatted as PDF documents. However, Partridge uses and stores documents as
-XML markup and uses the CoreSC schema by Soldatova and
-Liakata\cite{liakata2008guidelines} for annotation. Therefore some spike work
-was carried out to determine the feasibility of converting papers published as
-PDF documents into XML documents. Townsend \emph{et al.} (2009) liken
-converting PDF to XML to ``converting hamburgers into cows." They go on to
-explain that PDF documents do not contain any semantic data and documents lose
-much of their explicit structure when they are formatted in this way
-\cite{Townsend2009}.  Therefore, to convert PDF documents into an NLP-friendly
-format, some heuristics must be used to detect the document's
+XML markup and uses the CoreSC
+schema\cite{LIAKATA10.644}\cite{citeulike:10444769} for annotation.  Therefore
+some spike work was carried out to determine the feasibility of converting
+papers published as PDF documents into XML documents. Townsend \emph{et al.}
+(2009) liken converting PDF to XML to ``converting hamburgers into cows." They
+go on to explain that PDF documents do not contain any semantic data and
+documents lose much of their explicit structure when they are formatted in this
+way \cite{Townsend2009}.  Therefore, to convert PDF documents into an
+NLP-friendly format, some heuristics must be used to detect the document's
 structure\cite{pdfminer}.
 
 This was the first big challenge in the project. A prototype script was written
@@ -90,7 +103,8 @@ subroutine to trim whitespace and newlines was added to the script to resolve
 this problem. 
 
 The next stage was to split the text into sentences in preparation for
-processing with SAPIENTA. With the assistance of the NLTK library, a sentence
+processing with SAPIENTA, the classifier for CoreSC zones as discussed in
+Section \ref{sec:nlpsapienta}. With the assistance of the NLTK library, a sentence
 splitting subroutine was implemented. This used a machine learning algorithm
 that had been trained to recognise sentence boundaries to split the text. Each
 sentence was then added to a CoreSC compatible XML document for processing by
@@ -155,18 +169,23 @@ This appeared to have been successful. However, after applying some machine
 learning evaluation techniques as discussed in Chapter \ref{chapter:testing},
 it was clear that the Python version of SAPIENTA was not accurate enough to
 provide CoreSC annotations, scoring 44\% accuracy on average. After discussion
-with its author, it became apparent that some of the features provided in the
+with its authors, it became apparent that some of the features provided in the
 server-side version of SAPIENTA had not been implemented in the Python code
-yet. Therefore, it was necessary to switch bak to remote annotation.
+yet. It is intended that I will be employed to fix the Python SAPIENTA
+implementation during the summer. However, until it is repaired, it was
+necessary to switch back to remote annotation. 
 
 \subsection{Paper Type Classification}
 
 Once a large number of papers had been acquired from ART, PlosOne and PubMed
 Central, work could begin on implementing a paper type classifier able to
-discriminate between `Case Study,' `Research' and `Review' papers. However,
-for a machine learning classifier to discriminate between classes of data, it
+discriminate between `Case Study,' `Research' and `Review' papers. This would
+allow researchers to filter papers into types, providing them with more search
+precision and hopefully better results from using Partride. 
+
+For a machine learning classifier to discriminate between classes of data, it
 is necessary to choose a set of features that differ as much as possible
-between the classes. For example, to discriminate between cats and dogs,
+between the classes.  For example, to discriminate between cats and dogs,
 ``number of legs" is a poor feature since both species normally have four.
 However, the noise that these animals make may be a good discriminative feature
 since cats tend to mew and dogs bark. 
@@ -176,12 +195,17 @@ since cats tend to mew and dogs bark.
 There are several well-established features used for classifying text within
 the NLP community. However, since Partridge has access to CoreSC annotations
 for each paper, an investigation was carried out into how useful CoreSC data
-can be as a feature for paper type discrimination. Every sentence in a given
-annotated paper has an associated CoreSC label. It is therefore trivial to
-calculate the proportion of a paper made up of sentences with a specified
-CoreSC type. Several papers were manually inspected and the proportions of each
-CoreSC represented within were calculated. A pattern quickly emerged between
-the types of paper and the proportions of each CoreSC within them. 
+can be as a feature for paper type discrimination. As discussed in Section
+\ref{sec:nlpsapienta}, CoreSC information can be used to help users find
+phrases within very specific contexts in the paper, vastly improving the
+precision and accuracy of Partridge's search facility. Every sentence in a given
+annotated paper has an associated CoreSC label. 
+
+It is therefore trivial to calculate the proportion of a paper made up of
+sentences with a specified CoreSC type. Several papers were manually inspected
+and the proportions of each CoreSC represented within were calculated. A
+pattern quickly emerged between the types of paper and the proportions of each
+CoreSC within them. 
 
 \begin{figure}[!h]
 \centering
@@ -208,24 +232,48 @@ relationship between CoreSC categories and a paper's type.
 \subsubsection{ K-means clustering}
 
 Before working with supervised learning systems, a preliminary experiment was
-carried out to see whether clustering papers using the K-means algorithm could
-successfully identify the paper types, thus removing the need to train and
-maintain a supervised model. This was also an excellent opportunity to explore
-the data and try and detect any inherent patterns within the papers.
+carried out to see whether clustering papers using CoreSC tags as features for
+the K-means algorithm could successfully identify the paper types, thus
+removing the need to train and maintain a supervised model. This was also an
+excellent opportunity to explore the data and try and detect any inherent
+patterns within the papers.
 
 K-means clustering uses the Euclidean distance between each data sample to
 decide which cluster it is closest to and should belong to. K is the number of
 clusters that are used and is decided ahead of execution. K-means clustering is
 often run multiple times using a range of K values when the number of clusters
-in the data is unknown. The performance of the clustering algorithm is often
+in the data is unknown. 
+
+The performance of the clustering algorithm is often
 evaluated using the K-means silhouette which is a measurement of how tightly
-the data is clustered. A low silhouette value ($K \approx 0$) suggests loose
-clustering and therefore little correlation, a high silhouette value ($K
-\approx 1$) corresponds with very tight clustering and good correlation.
+the data is clustered\cite{Rousseeuw198753}. An $s(i)$ value is calculated for
+each datum $i$ in the dataset. This is defined as:
+
+\begin{displaymath}
+s(i) = \frac{ b(i) - a(i) }{ max\{a(i), b(i)\} }
+\end{displaymath}
+
+For each $s(i)$, $a(i)$ denotes the dissimilarity of the data item to its
+neighbours in the cluster it belongs to. It is defined using a distance
+measure, in this case euclidean. Similarly, $b(i)$ denotes the lowest average dissimilarity of $i$ to
+any cluster (i.e. neighbouring clusters too). This constrains $s(i)$ such that
+$ -1 < s(i) < 1$. The average $s(i)$ for a cluster provides the cluster's
+silhouette value and an indication of how appropriately data has been
+clustered\cite{Rousseeuw198753}.
+
+A low silhouette value ($K \approx
+0$) suggests loose clustering and therefore little correlation, a high
+silhouette value ($K \approx 1$) corresponds with very tight clustering and
+good correlation. 
 
 All of the papers were manually identified as either a `Case Study,' a
 `Review Paper' or a `Research Paper.' They were then loaded into a script and
-clustered using their CoreSC respective compositions. K-Means silhouettes were
+clustered using their CoreSC respective compositions. 
+
+K-Means clustering relies upon the knowledge of how many clusters the data
+should fit into before the algorithm starts. However silhouettes can be used to
+evaluate a number of different $K$ values and determine which number of
+clusters best fits the data. Since there are three classes, silhouettes were
 used as a measure of how effective the clustering process was. This was
 repeated for $ K \in [2..8] $ and the best silhouette measurement and value for
 K retained. The algorithm consistently showed that K=3 was the best K value.
@@ -246,17 +294,38 @@ discriminative, providing a silhouette value of 0.63.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width=0.8\textwidth]{implementation/cluster.png}
-\caption{Paper types rendered using Bac, Met and Mot CoreSCs}
+\caption{Paper types rendered using Bac, Met and Mot CoreSCs; Research papers
+are red, Review papers green and Case Studies blue.}
 \label{fig:clusters}
 \end{figure}
 
 Figure \ref{fig:clusters} shows the papers from the corpus rendered in 3
 dimensions using their Background, Method and Motivation CoreSC makeup.
 Although the data does not cluster perfectly by class, these three categories
-do provide fairly clear discrimination between the three types of paper. 
+do provide fairly clear discrimination between the three types of paper.
 
-Clustering the papers did not seem to provide a reliable way to classify them
-by type and it was decided that better results could be obtained through the
+Due to its unsupervised behaviour, Clustering can produce very unpredictable
+results. Beyond specifying how many clusters to generate and the features to
+use in discriminating between data items, the developer has no control over
+behaviour of the k-means algorithm. In this case, there is no way to tell what
+the three categories that have been generated correspond to. It was considered
+that the clusters may correspond to the three main paper sources used: PloSONE,
+Pubmed Central and the ART Corpus. However, the clusters did not match the
+paper sources precisely either as can be seen in Figure
+\ref{fig:cluster_sources}
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.8\textwidth]{implementation/cluster_sources.png}
+\caption{Paper sources rendered using Bac, Met and Mot CoreSCs; PlosONE papers
+are red, ART papers green and PubMed Central papers blue}
+\label{fig:cluster_sources}
+\end{figure}
+
+
+Since clustering the papers did not seem to provide a reliable way to classify them
+by type, it was decided that better results could be obtained through the
 use of a supervised learning classifier instead. However, the three most
 discriminative CoreSC types were chosen as features for the learner.
 

@@ -101,18 +101,33 @@ recommendation tool that uses Natural Language Processing and Machine Learning
 techniques to present the most relevant scientific papers to a user based upon
 their search criteria and preferences.
 
-A preprocessing system system that exploits existing tools such as SAPIENTA and
-PDFX was used to analyse a large sample of research papers, labelling the
-presence of core scientific concepts (CoreSCs) within each paper and extracting
-metadata. Decision trees were also trained to classify papers into categories
-such as `Research Paper', `Review Paper' and `Case Study' based upon the
-relative proportions of core scientific concepts in the papers.
+A preprocessing system that exploits existing Natural Language Processing tools
+was used to analyse a large sample of research papers, labelling the presence
+of conceptual zones within each paper and extracting metadata.  Decision trees
+were also trained to classify papers into well established type categories
+based upon the relative proportions of the types of conceptual zones
+present within the papers. 
 
-A web interface was built to facilitate user search of papers based upon the
-contents of specific CoreSCs. Filtering of papers using their type as
-determined by the preprocessor was also built in and a page allowing authors and
-rightsholders to submit their own papers for analysis was created to allow
-the scientific community to extend the utility of the system.
+A web interface was built to facilitate fine grain search, making use of the
+zone information captured during preprocessing. Filtering of papers using their
+type as determined by the preprocessor was also built in. Individual papers
+returned during searches are presented in their own profile page that provides
+charts and extra metadata to help researchers to understand the paper's
+content. A page allowing authors and rightsholders to submit their own papers
+for analysis was also created to allow the scientific community to extend the
+impact and utility of the system.
+
+The machine learning systems used within the project have been evaluated and
+found to be accurate to 87.9\% when classifying a paper's type. The possibility
+of extending the machine learning capabilities of the system to categorise
+papers by subject domain and outcome of experimental results is discussed as
+well as the potential for further improvements to the user interface.
+
+A working version of the software has been made generally available at
+\url{http://farnsworth.papro.org.uk} and can be explored and used by the
+general public. It is hoped that over the coming months, the system will grow
+to become a far reaching, widely used tool for academic research.
+
 
 \tableofcontents
 
@@ -136,7 +151,7 @@ the scientific community to extend the utility of the system.
 \label{chapter:testing}
 \input{testing}
 
-\chapter{Evaluation}
+\chapter{Critical Evaluation}
 \input{evaluation}
 
 \pagebreak
@@ -144,6 +159,6 @@ the scientific community to extend the utility of the system.
 \bibliography{report}
 
 \appendix
-%\input{appendix}
+\input{appendix}
 
 \end{document}

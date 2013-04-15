@@ -5,7 +5,7 @@
 %%%%------------------------------------------------
 \section{Context}
 
-Since the advent of the 'Digital Age' and the ability of computers to copy and
+Since the advent of the `Digital Age' and the ability of computers to copy and
 reproduce information for a negligible cost, the amount of information
 available to researchers has been increasing drastically.  B-C Bj\"{o}rk (2009)
 estimates that approximately 1.4 Million papers were published in the year 2006
@@ -32,27 +32,31 @@ information retrieval for scientists and researchers. This should reduce the
 amount of extraneous information that users have to read for themselves by
 helping them to quickly find information specific to their interests.
 Partridge will achieve this through the use of several existing techniques in
-Natural Language Processing and utilisation of SAPIENTA as discussed above.
+Natural Language Processing.
 
 Partridge has been designed to help and facilitate researchers and authors of
 scientific papers in the following principal ways:
 
 \begin{itemize}
-\item The system provides search within specific CoreSC regions of a given
+\item The system provides search within specific sentence-based zones of a given
 paper. This would allow users to find the most relevant papers to them. For
-example, a user may search for "mass spectrometer" within the methodology
+example, a user may search for ``mass spectrometer" within the methodology
 section of a paper.
 \item Partridge allows authors and rightsholders of scientific papers to
 upload their papers to the system for inclusion into the search system. This
-would give Partridge itself more utility and would make involved authors more
-accessible.
-\item The system provides filtering of papers based upon their
-specific domain (i.e. is the paper primarily concerned with methodology within
+would give Partridge itself more utility and would make the works of involved authors more
+accessible to researchers.
+\item The system provides filtering of papers based upon their type (i.e Review
+Papers, Research Papers and Case Studies). It also was hoped that Partridge would
+also provide filtering by subject domain (i.e. is the paper primarily concerned with methodology within
 an experiment in chemistry or is it about ethics in psychological studies?) and
 their results, whether the paper yielded positive, negative or inconclusive
 evidence for a hypothesis. 
+\item A `paper profile' page is generated for each paper included in Partridge
+which provides graphical representation of some of the analysis carried out on
+the paper and helps the user to begin to judge the paper's content.
 \item Depending upon the time constraints of the
-project, it was hoped that Partridge would also offer a user 'profiling' system
+project, it was hoped that Partridge would also offer a user `profiling' system
 that provides recommendations for researchers based on their reading history.
 This feature would help users find relevant papers more quickly or find
 research that they may have otherwise overlooked.
@@ -66,9 +70,9 @@ There are already a large number of information retrieval and recommendation
 systems for scientific publications.  Many of these systems, such as AGRICOLA
 (\url{http://agricola.nal.usda.gov/}), the Cochrane
 Library(\url{http://www.thecochranelibrary.com/}) and
-EconLit(\url{http://www.aeaweb.org/econlit/index.php}) index only publications
+Textpresso (\url{http://www.textpresso.org/}) index only publications
 from predefined journals or topics (for the above examples, Agriculture,
-Biology and Economics respectively). These sites can be very helpful for
+Biology and Bioinformatics respectively). These sites can be very helpful for
 researchers looking for literature covering specific topics. Filtering ever
 smaller collections of academic literature allows for more precision; the
 narrow subject area facilitating specialised search and indexing features that
@@ -94,14 +98,13 @@ them. The value of these systems to their users is often restricted by the
 small proportion of available literature that they index, forcing researchers
 to use multiple, domain specific, search engines for their queries.
 
-In contrast, there are also a number of interdisciplinary indexing system
-systems such as arXiv( \url{http://arxiv.org/}), Mendeley
-(\url{http://www.mendeley.com/research-papers/}) and JSTOR
-(\url{http://www.jstor.org/}), that try to incorporate wide ranges of papers
-from as many disciplines as possible. The traits of these systems often
-complement those of their domain-specific counterparts; they provide a
-comprehensive collection of literature but insufficient filtering and indexing
-capabilities.
+In contrast, there are also a number of interdisciplinary indexing systems and
+online journals such as arXiv( \url{http://arxiv.org/}),
+PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}),
+that try to incorporate wide ranges of papers from as many disciplines as
+possible. The traits of these systems often complement those of their
+domain-specific counterparts; they provide a comprehensive collection of
+literature but insufficient filtering and indexing capabilities.
 
 One of the most publicised and well known interdisciplinery scientific
 literature search systems is Google Scholar (\url{http://scholar.google.com}).
@@ -116,9 +119,10 @@ good idea of what they are looking for in terms of keywords and/or specific
 authors. It is possible that a user would not know what they are looking for
 until they've seen it. Even if the user has a set of keywords to search for,
 they can only search the title of the paper or the content as a whole. This
-means that users who want to find a particular phrase within a CoreSC part of
-the paper (e.g.  only look for this phrase in the `Result' section of the
-paper) are unable to get results at their desired level of detail.
+means that users who want to find a particular phrase within a specific
+subsection of the paper (e.g.  only look for this phrase in the `Result'
+section of the paper) are unable to get results at their desired level of
+detail.
 
 \begin{figure}[!hbt]
         \centering
@@ -142,10 +146,11 @@ paper) are unable to get results at their desired level of detail.
 Search engines such as those discussed above are fairly useful for helping
 people to find relevant literature and information when they have some idea of
 what they are looking for. However, they demand precision in the use of
-keywords and phrases which is unattainable by most researchers. Moreover, users
-can get completely different result sets by entering synonyms. In comparison,
-Recommender Systems may perform with more accuracy and better inclusion when
-a search term cannot be clearly defined.
+keywords and phrases, often leaving researchers looking for literature on highly
+specific topics frustrated. Moreover, users can get completely different result
+sets by entering synonyms. In comparison, Recommender Systems may perform with
+more accuracy and better inclusion when a search term cannot be clearly
+defined.
 
 \subsection{Recommender Systems}
 
@@ -157,60 +162,22 @@ techniques\cite{adomavicius2005toward}.
 
 \subsubsection{Collaborative Recommender Systems}
 
-Collaborative Recommender Services like Goodreads
-(\url{http://www.goodreads.com/}) and CiteUlike
+Collaborative Recommender Services like Mendeley
+(\url{http://www.mendeley.com/}), ResearchGate
+(\url{http://www.researchgate.net/})  and CiteUlike
 (\url{http://www.citeulike.org/}) allow users to register their interest in
 specific authors and subjects. This allows the sites to build up a profile of
 the sorts of materials that its users might be interested in and provide lists
-of recommendations as in Figure \ref{fig:social_indexes}.
-
-\begin{figure}[!hbt]
-        \centering
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/goodreads_index.png}
-                \caption{Goodreads user profile page}
-                \label{fig:goodreads_index}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/citeulike_index.png}
-                \caption{a CiteULike user profile page}
-                \label{fig:citeulike_index}
-        \end{subfigure}
-
-        \caption{Goodreads and citeulike social Recommender systems}
-        \label{fig:social_indexes}
-\end{figure}
+of recommendations.
 
 These systems have the ability to make recommendations to the user without
 requiring specific keywords or search terms. They do this by learning the
-user's profile and taking into account the preferences of their 'friends' and
+user's profile and taking into account the preferences of their `friends' and
 their browsing history. However, the above-named systems do not take into
-account the content of the paper or book. They only deal with metadata as can
-be seen in Figure \ref{fig:social_searches}. This means that important
+account the content of the paper or book. They only deal with the relationships
+between users and their reading history. This means that important
 discriminatory information that could be contained within the actual document
 content is overlooked completely. 
-
-\begin{figure}[!hbt]
-        \centering
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/goodreads_search.png}
-                \caption{Goodreads advanced search page}
-                \label{fig:goodreads_search}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.50\textwidth}
-                \centering
-                \includegraphics[width=\textwidth]{images/citeulike_search.png}
-                \caption{CiteULike advanced search options}
-                \label{fig:citeulike_search}
-        \end{subfigure}
-
-        \caption{Goodreads and citeulike search only deal with metadata.}
-        \label{fig:social_searches}
-\end{figure}
-
 
 \subsubsection{ Content-based Recommender Systems}
 
@@ -245,8 +212,8 @@ Collaboration-based models, employing aspects of both techniques. Huang
 collaborative data from books, customers and transactions taken from an online
 bookseller\cite{Huang:2002:GRS:544220.544231}. Combining both sources of
 information boosted the effectiveness of the recommendation engine and
-\emph{'...the system gained improvement with respect to both precision and
-recall...' (Ibid.)} A scientific literature recommender system could make use
+the system gained improvement with respect to both precision and
+recall \emph{(Ibid.).} A scientific literature recommender system could make use
 of a similar hybrid technique in order to provide effective recommendations to
 researchers.
 
@@ -260,7 +227,7 @@ can be debated where exactly on the hierarchy human language fits (
 Reich(1969)\cite{reich1969finiteness} argues that Natural Languages can be
 considered finite state and Matthews(1979)\cite{matthews1979grammatical} argues
 that Natural Languages cannot even be considered recursively enumerable, cited
-in Kornai(1985)\cite{kornai1985}) it is clear that they are not in the same
+in Kornai(1985)\cite{kornai1985natural}) it is clear that they are not in the same
 category as most forms of machine language. Literature written for humans must
 be interpretted for machines and this is where Natural Language Parsing is
 useful.
@@ -288,6 +255,7 @@ even within suicide notes \cite{citeulike:11077287}. Laterly, NLP has been
 used to detect core scientific concepts within scientific literature.
 
 \subsection{Natural Language Processing in Scientific Papers}
+\label{sec:nlpsapienta}
 
 Liakata \emph{et al.} (2012) describe a system for automatically processing and
 classifying sentences in a research paper according to the scientific concept
@@ -295,19 +263,47 @@ they describe (e.g. a sentence can be categorised as a hypothesis, background
 information, a method or similar)\cite{citeulike:10444769}. SAPIENTA
 (\url{http://www.sapientaproject.com}) is a machine learning application,
 trained using a corpus of physical chemistry and biochemistry research papers
-that were manually annotated using the Core Information about Scientific
-Papers (CISP)\cite{LIAKATA10.644} schema. 
+that were manually annotated using the Core Scientific Concepts
+(CoreSC)\cite{LIAKATA10.644} scheme. 
 
-CISP, Soldatova and Liakata (2007), is a way to formally represent core
-scientific concepts (CoreSC), e.g. background, hypothesis, method etc., that
-should be present in the articles in a logical
-ontology\cite{soldatova2007ontology}. Subsequent work implements this set of
-concepts as a three layered sentence based annotation scheme (CoreSC scheme)
-where annotations are encoded in Extended Markup Language
-(XML)\cite{LIAKATA10.644}. An intelligent academic information retrieval system
-could utilise this information in order to provide better filtering and search
-capabilities for researchers.
+CoreSC Liakata \emph{et al.} (2010), derived from earlier work in which Core
+Information about Scientific Papers (CISP) is formalised as a way of improving
+better metadata for papers\cite{soldatova2007ontology}, is a way to formally
+represent core scientific concepts (CoreSC), e.g. background, hypothesis,
+method etc., that should be present in scientific articles in a logical
+ontology\cite{LIAKATA10.644}. It is implemented as a three layered sentence
+based annotation scheme  where annotations are encoded in Extended Markup
+Language (XML). CoreSC labels can be allocated to all sentences in a
+scientific paper in order to identify which scientific concept each sentence
+encapsulates. For example, a sentence with the CoreSC label ``Hypothesis"
+conveys some expectation of an experiment or action. An example ``Hypothesis"
+identified in a Bioinformatics paper used for testing is:
 
+\begin{quotation}
+We assume that, as in the HACA process, condensation is initiated by radical
+formation, and then consider reactions of phenyl, naphthyl and anthracenyl with
+another PAH to yield for example fluoranthene or
+perylene\cite{unterreiner2004reaction}.
+\end{quotation}
+
+Alternatively, a ``Background'' CoreSC sentence may refer to prior work or
+merely declare a point of interest to the reader. An example from the same
+paper is:
+
+\begin{quotation}
+The central issue is here the formation of polycyclic aromatic hydrocarbons
+(PAHs), which are the main constituents of soot; the PAHs are also health
+hazards since they are carcinogenic\cite{unterreiner2004reaction}.
+\end{quotation}
+
+An intelligent academic information retrieval system could utilise this
+information in order to provide better filtering and search capabilities for
+researchers. The ability to search for phrases and keywords by CoreSC would
+facilitate context-aware keyword search, that allows researchers to only accept
+papers where a term appears in sentences with a specific CoreSC label. This
+could be used to greatly improve both the precision with which researchers are
+able to perform searches for scientific literature and the accuracy of those
+searches in terms of relevance to the reader.
 
 \section{Summary}
 
