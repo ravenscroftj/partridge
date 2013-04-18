@@ -41,9 +41,10 @@ Partridge has several dependencies that it requires to run successfully. These a
   * [Alembic](https://bitbucket.org/zzzeek/alembic)
   * [Orange](http://orange.biolab.si/)
 
-** Please note: You will need to make sure that the relevant database backend is installed for SQLAlchemy 
+**Please note: You will need to make sure that the relevant database backend is installed for SQLAlchemy 
 to be able to communicate with your database. This is not done automatically. Python was built and tested 
-with MySQL. However, there is a full list of supported [SQL dialects and respective libraries here](http://docs.sqlalchemy.org/en/rel_0_8/dialects/). **
+with MySQL. However, there is a full list of supported 
+[SQL dialects and respective libraries here](http://docs.sqlalchemy.org/en/rel_0_8/dialects/).**
 
 Partridge has a distutils boostrap script that will try and install these libraries (and their respective 
 dependencies) when you build the system. However, it will compile them from source which is a slow process. 
