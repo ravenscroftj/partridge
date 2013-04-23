@@ -33,11 +33,59 @@ labels = {
 "plos_physics" : "Physics"
 }
 
+interesting_tags = ['NNP', 'NN', 'JJ']
+
+def parse_paper( (filename, label, data) ):
+    
+    print "Parsing %s" % filename
+
+    paperstring = zlib.decompress(data)
+
+    p = PaperParser()
+    p.parseString(paperstring)
+
+    features = extract_features(p)
+
+    return (filename, label, features)
 
 
 
+def extract_features( paper_parser ):
+    """Use the paper parser object to extract features"""
+    wordfreq = {}
+    
+    print "Extracting sentences from paper..." 
+
+    for sentence in paper_parser.extractRawSentences():
+        tokens = nltk.word_tokenize(sentence)
+        tagged = nltk.pos_tag(tokens)
+
+        for word,tag in tagged:
+            
+            if (tag in interesting_tags) & (len(word) > 1):
+                if word not in wordfreq:
+                    wordfreq[word] = 1
+                else:
+                    wordfreq[word] += 1
+
+    return wordfreq
 
 
+def parse_paper_file( filename ):
+
+    print "Parsing %s..." % filename
+
+    dirname = os.path.basename(os.path.dirname(filename))
+    label = labels[dirname]
+
+    p = PaperParser()
+    p.parsePaper(filename)
+
+    features = extract_features(p)
+
+    return (filename, label, features)
+    
+                
 
 
 def process_file( file ):
@@ -45,7 +93,7 @@ def process_file( file ):
 
     if file.endswith("_split.xml"):
         print "Found a paper %s" % file
-        parse_paper( file )
+        parse_paper_file( file )
 
     elif file.endswith(".xml"):
         print "Found an unsplit paper"
@@ -60,7 +108,7 @@ def process_file( file ):
             s = SentenceSplitter()
             s.split(file, splitfile)
 
-            parse_paper( splitfile)
+            parse_paper_file( splitfile)
 
 
 if __name__ == "__main__":

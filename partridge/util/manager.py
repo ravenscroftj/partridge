@@ -34,16 +34,31 @@ def get_uptox_items( x, queue):
 
         i += 1
 
-        work.append( ( filename, label, data) )
+        work.append( ( os.path.basename(filename), label, data) )
 
     return cPickle.dumps(work)
+
+resultdir = "/home/james/dissertation/results"
+
+def done_papers( zippedlist ):
+        results = cPickle.loads(zlib.decompress(zippedlist))
+
+        for result in results:
+            print "Storing results for %s" % result[0]
+            with open(os.path.join(resultdir, result[0]), 'wb') as f:
+                cPickle.dump(result, f)
+                
 
 
 if __name__ == "__main__":
     
     queue = Queue()
+    done = Queue()
+
+
     QueueManager.register("qsize", lambda:queue.qsize())
     QueueManager.register("get_work", lambda x: get_uptox_items(x, queue))
+    QueueManager.register("return_result", lambda: done_papers)
     qm = QueueManager(address=("", 1234), authkey="icecream")
 
 
@@ -55,7 +70,10 @@ if __name__ == "__main__":
             if file.endswith("_split.xml"):
                 print "Found a paper %s" % file
 
-                queue.put(os.path.join(root,file))
+                if( os.path.exists( os.path.join(resultdir, file))):
+                    print "Already have a result for %s. Skipping..." % file
+                else:
+                    queue.put(os.path.join(root,file))
 
             elif file.endswith(".xml"):
                 print "Found an unsplit paper"

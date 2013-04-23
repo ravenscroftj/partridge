@@ -2,6 +2,7 @@ from partridge.util.subjects import parse_paper
 
 from multiprocessing import Pool
 import cPickle
+import zlib
 
 from multiprocessing.managers import BaseManager
 
@@ -12,6 +13,8 @@ if __name__ == "__main__":
 
     QueueManager.register("qsize")
     QueueManager.register("get_work")
+    QueueManager.register("return_result")
+
     qm = QueueManager(address=("",1234), authkey="icecream")
     qm.connect()
 
@@ -29,6 +32,14 @@ if __name__ == "__main__":
 
         batch = cPickle.loads(qm.get_work(batch_size)._getvalue())
         
-        print len(batch)
+        results = p.map(parse_paper, batch)
 
-        p.map(parse_paper, batch)
+        print "Returning results of batch to server"
+
+        zippedlist = zlib.compress(cPickle.dumps(results))
+
+        qm.return_result(zippedlist)
+
+
+
+
