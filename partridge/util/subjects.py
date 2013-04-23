@@ -15,7 +15,10 @@ from partridge.tools.split import SentenceSplitter
 
 from flask import Flask
 
-from collections import Counter
+try:
+    from collections import Counter
+except:
+    from partridge.utils.counter import Counter
 
 app = Flask(__name__)
 app.config.update(config)
