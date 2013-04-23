@@ -28,6 +28,8 @@ class PaperParser:
     def parseFileObject(self, f):
         self.doc = xml.dom.minidom.parse(f)
 
+    def parseString(self, s):
+        self.doc = xml.dom.minidom.parseString(s)
 
     def parsePaper(self, filename):
         """Parse a paper but don't store it"""
@@ -47,9 +49,13 @@ class PaperParser:
 
         #add authors
         paper.authors.extend(self.extractAuthors())
-        
-        #get sentence information
-        paper.sentences.extend( self.extractSentences() )
+
+        sentences = self.extractSentences()
+
+        for text,coresc in sentences:
+            sent = Sentence(text=text,coresc=coresc)
+            db.session.add(sent)
+            paper.sentences.append(sent)
 
         #store the updated database info
         db.session.add(paper)
@@ -66,13 +72,14 @@ class PaperParser:
             s = annoEl.parentNode
             annoType = annoEl.getAttribute("type")
 
-            #store sentence information
-            sent = Sentence(text=self.extractText(s),
-                coresc=annoType)
+            yield (self.extractText(s), annoType)
 
-            db.session.add(sent)
+    def extractRawSentences(self):
+        """Extract sentence data without coresc information"""
+        
+        for s in self.doc.getElementsByTagName("s"):
+            yield self.extractText(s)
 
-            yield sent
 
     def extractAbstract(self):
         """Extract the paper abstract from xml"""
