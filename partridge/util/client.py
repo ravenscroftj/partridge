@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     print qm.qsize()._getvalue()
 
-    while qm.qsize() > 0:
+    while qm.qsize()._getvalue() > 0:
         print "Trying to get %d papers" % batch_size
 
         batch = cPickle.loads(qm.get_work(batch_size)._getvalue())

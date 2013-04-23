@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     QueueManager.register("qsize", lambda:queue.qsize())
     QueueManager.register("get_work", lambda x: get_uptox_items(x, queue))
-    QueueManager.register("return_result", lambda: done_papers)
+    QueueManager.register("return_result", done_papers)
     qm = QueueManager(address=("", 1234), authkey="icecream")
 
 
