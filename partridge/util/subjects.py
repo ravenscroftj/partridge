@@ -18,7 +18,7 @@ from flask import Flask
 try:
     from collections import Counter
 except:
-    from partridge.utils.counter import Counter
+    from partridge.util.counter import Counter
 
 app = Flask(__name__)
 app.config.update(config)
