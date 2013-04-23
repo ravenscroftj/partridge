@@ -43,9 +43,22 @@ def parse_paper( (filename, label, data) ):
     p = PaperParser()
     p.parseString(data)
 
-    features = extract_features(p)
+    sentences = []
 
-    return (filename, label, features)
+    #return pos tagged sentences
+    for sentence in p.extractRawSentences():
+        tokens = nltk.word_tokenize(sentence)
+        tagged = nltk.pos_tag(tokens)
+
+        sentences.append(tagged)
+
+    print "Found %d sentences in %s" %(len(sentences), filename)
+
+    return (filename,sentences)
+
+
+    #features = extract_features(p)
+    #return (filename, label, features)
 
 
 def collect_test_samples():
