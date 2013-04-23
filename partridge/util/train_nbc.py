@@ -35,15 +35,14 @@ def get_label_probdist(labelled_features):
 def get_feature_probdist(labelled_features):
     feature_freqdist = defaultdict(FreqDist)
     feature_values = defaultdict(set)
-    num_samples = samplecount / 2
+    num_samples = samplecount
     for token, counts in labelled_features.items():
         for label in labels.values():
             feature_freqdist[label, token].inc(True, count=counts[label])
             feature_freqdist[label, token].inc(None, num_samples - counts[label])
             feature_values[token].add(None)
             feature_values[token].add(True)
-    for item in feature_freqdist.items():
-        print item[0],item[1]
+
     feature_probdist = {}
     for ((label, fname), freqdist) in feature_freqdist.items():
         probdist = ELEProbDist(freqdist, bins=len(feature_values[fname]))
@@ -79,9 +78,9 @@ if __name__ == "__main__":
             for word in features:
                 
                 if word not in labelled_features:
-                    labelled_features[word] = label_count
+                    labelled_features[word.lower()] = label_count
                 
-                labelled_features[word][label] += 1
+                labelled_features[word.lower()][label] += features[word]
 
             print "Currently at %d distinct tokens and %d papers" % (
                 len(labelled_features), samplecount)

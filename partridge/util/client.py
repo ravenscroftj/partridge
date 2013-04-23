@@ -30,7 +30,7 @@ if __name__ == "__main__":
     while qm.qsize()._getvalue() > 0:
         print "Trying to get %d papers" % batch_size
 
-        batch = cPickle.loads(qm.get_work(batch_size)._getvalue())
+        batch = cPickle.loads(zlib.decompress(qm.get_work(batch_size)._getvalue()))
         
         results = p.map(parse_paper, batch)
 

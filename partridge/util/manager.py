@@ -30,13 +30,13 @@ def get_uptox_items( x, queue):
         label = labels[dirname]
         
         with open(filename,'rb') as f:
-            data = zlib.compress(f.read())
+            data = f.read()
 
         i += 1
 
         work.append( ( os.path.basename(filename), label, data) )
 
-    return cPickle.dumps(work)
+    return zlib.compress(cPickle.dumps(work))
 
 
 def done_papers( zippedlist ):

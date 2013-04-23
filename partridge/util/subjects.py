@@ -40,10 +40,8 @@ def parse_paper( (filename, label, data) ):
     
     print "Parsing %s" % filename
 
-    paperstring = zlib.decompress(data)
-
     p = PaperParser()
-    p.parseString(paperstring)
+    p.parseString(data)
 
     features = extract_features(p)
 
@@ -80,6 +78,7 @@ def extract_features( paper_parser ):
         for word,tag in tagged:
             
             if (tag in interesting_tags) & (len(word) > 1):
+                
                 if word not in wordfreq:
                     wordfreq[word] = 1
                 else:
