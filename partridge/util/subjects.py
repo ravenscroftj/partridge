@@ -26,6 +26,7 @@ db.init_app(app)
 corescs = C_ABRV.keys()
 
 paper_root = "/home/james/dissertation/papers"
+resultdir = "/home/james/dissertation/results"
 
 labels = {
 "plos_maths" : "Mathematics", 
@@ -47,6 +48,22 @@ def parse_paper( (filename, label, data) ):
     features = extract_features(p)
 
     return (filename, label, features)
+
+
+def collect_test_samples():
+
+    results = []
+    
+    for root, dirs, files in os.walk(paper_root):
+        
+        for file in files:
+
+            if file.endswith("_split.xml"):
+                #see if there is a results file for this file
+                if not os.path.exists( os.path.join(resultdir, file)):
+                    results.append( os.path.join(root,file) )
+
+    return results
 
 
 

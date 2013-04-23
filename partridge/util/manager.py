@@ -10,7 +10,7 @@ import zlib
 from multiprocessing import Queue
 from multiprocessing.managers import BaseManager
 
-from partridge.util.subjects import labels
+from partridge.util.subjects import labels, resultdir
 
 from partridge.tools.split import SentenceSplitter
 
@@ -38,7 +38,6 @@ def get_uptox_items( x, queue):
 
     return cPickle.dumps(work)
 
-resultdir = "/home/james/dissertation/results"
 
 def done_papers( zippedlist ):
         results = cPickle.loads(zlib.decompress(zippedlist))
