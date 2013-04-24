@@ -17,7 +17,7 @@ from partridge.tools.split import SentenceSplitter
 class QueueManager(BaseManager):
     pass
 
-paper_root = "/home/james/dissertation/papers"
+paper_root = "/home/james/partridge/papers"
 
 def get_uptox_items( x, queue):
     

@@ -28,13 +28,17 @@ db.init_app(app)
 
 corescs = C_ABRV.keys()
 
-paper_root = "/home/james/dissertation/papers"
-resultdir = "/home/james/dissertation/results"
+paper_root = "/home/james/partridge/papers"
+resultdir = "/home/james/partridge/results"
 
 labels = {
 "plos_maths" : "Mathematics", 
 "plos_compsci" : "Information Technology",
-"plos_physics" : "Physics"
+"plos_physics" : "Physics",
+"plos_dna" : "DNA",
+"plos_zoology" : "Zoology",
+"plos_genetics" : "Genetics",
+"plos_sociology" : "Sociology",
 }
 
 interesting_tags = ['NNP', 'NN', 'JJ']
