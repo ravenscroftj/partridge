@@ -34,10 +34,10 @@ resultdir = "/home/james/dissertation/results"
 labels = {
 "plos_maths" : "Mathematics", 
 "plos_compsci" : "Information Technology",
-"plos_physics" : "Physics"
+"plos_physics" : "Physics",
+"plos_biochem" :" Biochemistry"
 }
 
-interesting_tags = ['NNP', 'NN', 'JJ']
 
 def parse_paper( (filename, label, data) ):
     
