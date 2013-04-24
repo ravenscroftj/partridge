@@ -15,7 +15,7 @@ if __name__ == "__main__":
     QueueManager.register("get_work")
     QueueManager.register("return_result")
 
-    qm = QueueManager(address=("",1234), authkey="icecream")
+    qm = QueueManager(address=("ravey.zapto.org",1234), authkey="icecream")
     qm.connect()
 
 
