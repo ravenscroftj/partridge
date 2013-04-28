@@ -35,7 +35,7 @@ labels = {
 "plos_maths" : "Mathematics", 
 "plos_compsci" : "Information Technology",
 "plos_physics" : "Physics",
-"plos_biochem" :" Biochemistry"
+"plos_biochem" :" Biochemistry",
 "plos_dna" : "DNA",
 "plos_zoology" : "Zoology",
 "plos_genetics" : "Genetics",
