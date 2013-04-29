@@ -1,0 +1,219 @@
+<!doctype html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title> Partridge | A tool for automatic classification and recommendation
+    of scientific literature. | by James Ravenscroft</title>
+    
+    <meta name="description" content="Partridge is an AI system for classifying
+    scientific papers using their Core Scientific Concepts." />
+    <meta name="author" content="James Ravenscroft" />
+
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+
+    <!--Add stylesheet -->
+    <link href="impress/css/impress-demo.css" rel="stylesheet" type="text/css"
+    />
+
+    <link href="presentation.css" rel="stylesheet" type="text/css"/>
+
+
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+<!--  
+********************* CONTENT STARTS HERE ****************************  
+-->
+
+    <div id="start" class="step slide" data-x="-1000" data-y="-1500">
+        <img src="images/partridge.png" width="600px" alt="Partridge" >
+        <h1>Partridge: An Intelligent Literature Analysis And Recommendation
+        Suite</h1>
+    </div>
+
+    <div id="goldacre" class="step slide" data-x="0" data-y="-1500">
+        <q><em>“...there have been an estimated 15 million medical academic articles
+    published so far, and 5000 journals published every month... picking out
+    what’s relevant is a gargantuan task.”</em> </q>
+    Ben Goldacre, Bad Science,
+    2008, p97
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="1">
+        <span class="try">That's where</span>
+        <h1>Partridge</h1>
+        <span class="footnotes">can help...</span>
+    </div>
+
+  <div id="diagram" class="step" data-x="150" data-y="150" data-rotate="90"
+  data-scale="0.1">
+
+    <ol>
+        <li><span class="float-left">Papers go in...</span><img class="float-right" width="200px" src="images/papers.png" alt="papers"></li>
+        <li><img width="200px" class="float-left" src="images/robot.png"
+        alt="Partridge"><span class="float-right">...Partridge
+        analyses them...</span></li>
+        <li><span class="float-right">
+
+        ...and helps researchers find relevant
+        information more quickly...
+        
+        <img width="200px" src="images/happy.png" class="float-right" alt="happy person">
+        </span>
+                </li>
+    </ol>
+
+    </div>
+
+
+    <div class="step slide" data-x="500" data-y="750" data-rotate="270">
+        <h1>How it works</h1>
+
+        <q>Partridge processes papers in a three part process...</q>
+    </div>
+
+
+    <div class="step slide blue pslide" data-x="700" data-y="1000" data-scale="0.25" data-rotate="270">
+        <h1>Upload and Convert...</h1>
+
+        
+        <ul>
+            <li>Acceptable paper formats are uploaded: PDF and SciXML.</li>
+            <li>PDF files are converted to SciXML using <a
+            href="http://pdfx.cs.man.ac.uk/" target="_blank">PDFx</a></li>
+            <li>Sentences are split using an unsupervised machine learning
+            model.</li>
+        </ul>
+
+        <img width="200" src="images/network-server.png" alt="Upload..." />
+        <img width="200" src="images/pdf.png" alt="PDF Documents..." />
+        <img width="200" src="images/scissors.png" alt="Scissors..." />
+
+    </div>
+
+    <div class="step slide pslide red" data-x="700" data-y="750" data-scale="0.25" data-rotate="270">
+        <h1>Machine Learning...</h1>
+
+        <ul>
+            <li>Core scientific concepts within the paper annotated on a
+            sentence by sentence basis using <a
+            href="http://www.sapientaproject.com/">SAPIENTA</a>.</li>
+            <li>Annotations used to classify the paper type using Random
+            Decision Forest.</li>
+            <li>(Upcoming feature) Naive Bayes Classifier used to classify
+            paper subject</li>
+        </ul>
+
+        <img width="200" src="images/atom.png" alt="Scientific Concepts..." />
+        <img width="200" src="images/forest.png" alt="Forest.." />
+        <img width="200" src="images/probability.png" alt="Bayes..." />
+
+    </div>
+
+    <div class="step slide pslide green" data-x="700" data-y="500" data-scale="0.25" data-rotate="270">
+        <h1>Storage</h1>
+
+        <ul>
+            <li>Annotations, sentences and classifications are saved to the
+            database</li>
+            <li>PDF and XML files are retained, intermediate files are purged</li>
+            <li>The user who uploaded the paper to the system is sent an email
+            alert</li>
+        </ul>
+        <img width="200" src="images/db.png" alt="Database storage..." />
+        <img width="200" src="images/file.png" alt="File storage.." />
+        <img width="200" src="images/email.png" alt="Bayes..." />
+    </div>
+
+
+    <div id="coresc" data-rotate="180" data-x="1500" data-y="1500" class="step
+    slide pslide">
+    
+        <h1>Core Scientific Concepts</h1>
+
+        <ul>
+            <li>Identified by Dr Liakata as <em>"...zones of
+            conceptualisation, reflecting the information structure and
+            knowledge types which constitute a scientific
+            investigation..."</em>[1]
+            </li>
+
+            <li>CoreSC concepts:Hypothesis, Motivation, Goal, Object,
+            Background, Method, Experiment, Model, Observation, Result and
+            Conclusion
+            </li>
+
+            <li>Helps to us to understand the makeup of a paper and get a feel
+            for what it contains</li>
+        </ul>
+
+        <div class="footnote">
+        <p>[1] Liakata, Maria. "Zones of conceptualisation in scientific
+        papers: a window to negative and speculative statements." Proceedings
+        of the Workshop on Negation and Speculation in Natural Language
+        Processing. Association for Computational Linguistics, 2010.</p>
+        </div>
+
+    </div>
+
+    <div id="coresc_examples" class="step pslide slide" data-x="2500" data-y="500"
+    data-rotate="90">
+
+        <h1>Core Scientific Concepts (contd.)</h1>
+
+        <span>An example hypothesis sentence:</span>
+        <p> We assume that, as in the HACA process, condensation is initiated
+        by radical formation, and then consider reactions of phenyl, naphthyl
+        and anthracenyl with another PAH to yield for example fluoranthene or
+        perylene[57].  </p>
+
+        <p>&nbsp;</p>
+
+        <span>An example background sentence:</span> 
+        
+        <p>The central issue is here the formation of polycyclic aromatic
+        hydrocarbons (PAHs), which are the main constituents of soot; the PAHs
+        are also health hazards since they are carcinogenic[57].</p>
+
+    </div>
+
+    <div id="queryslide" data-x="1500" data-y="0" class="step pslide slide">
+        <h1>Partridge provides a query interface.</h1>
+
+        <ul>
+            <li>Context sensitive full text search.</li>
+            <li>Filter by Paper Type:- Research, Review, Case Study</li>
+            <li>Paper Profile page - details CoreSC makeup of a paper.</li>
+        </ul>
+
+        <a href="http://farnsworth.papro.org.uk/query" target="_blank">
+        Farnsworth Query Interface
+        </a>
+    </div>
+<!--  
+******************** CONTENT ENDS HERE **************************** 
+-->
+</div>
+
+<!--Add impress js-->
+<script src="impress/js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+
+</html>
