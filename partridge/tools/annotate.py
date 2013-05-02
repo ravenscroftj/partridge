@@ -3,9 +3,11 @@
 Take a known, split paper and annotate it using Sapienta remotely
 
 '''
+import sys
 import os
 import pycurl
 import codecs
+import subprocess
 import logging
 from urllib import urlencode
 
@@ -25,9 +27,119 @@ SAPIENTA_URL="http://www.ebi.ac.uk/Rebholz-srv/sapienta/CoreSCWeb/submitRPC"
 
 MODEL_PATH = str(os.path.join(config['MODELS_DIR'], "a.model"))
 
-class Annotator:
+class SapientaException(Exception):
+    pass
+
+
+class BaseAnnotator(object):
+    """Basic annotator with some boilerplate stuff in it"""
+
+    def addDummyAbstract(self):
+        """If no abstract is found, insert one"""
+
+        dummytext = "No abstract available for this paper"
+
+        print "Adding dummy abstract..."
+
+        if(len(self.doc.getElementsByTagName("TITLE")) > 0):
+            title = self.doc.getElementsByTagName("TITLE")[0]
+            nextEl = title.nextSibling
+            paperEl = title.parentNode
+            #create abstract
+            el = self.doc.createElement("ABSTRACT")
+            text = self.doc.createTextNode(dummytext)
+            el.appendChild(text)
+            paperEl.insertBefore(el, nextEl)
+
+        if(len(self.doc.getElementsByTagName("front")) > 0):
+            #get the element
+            front = self.doc.getElementsByTagName("front")[0]
+            fundEl = self.doc.getElementsByTagName("funding-group")[0]
+            abstractEl = self.doc.createElement("abstract")
+            titleEl = self.doc.createElement("title")
+            absec = self.doc.createElement("sec")
+            abp = self.doc.createElement("p")
+
+            abstractEl.appendChild(absec)
+            absec.appendChild(titleEl)
+            absec.appendChild(abp)
+            abp.appendChild(self.doc.createTextNode(dummytext))
+
+            front.insertBefore(abstractEl,fundEl)
+
+    def _annotateXML(self, labels):
+        """Read in the xml document and add labels to it
+        """
+
+        c = Counter()
+
+        for s in self.doc.getElementsByTagName("s"):
+            if s.parentNode.localName == "article-title": continue 
+
+            label = labels.pop(0)
+
+            c[label] += 1
+
+            annoEl = self.doc.createElement("CoreSc1")
+            annoEl.setAttribute("type", label)
+            annoEl.setAttribute("conceptID", label + str(c[label]))
+            annoEl.setAttribute("novelty", "None")
+            annoEl.setAttribute("advantage","None")
+
+            s.insertBefore(annoEl, s.firstChild)
+
+
+    def __upgradeXML(self):
+        """When passed in an old annotation format doc, upgrade the format
+        
+        This method takes an XML document and replaces old fashioned 
+        annotationART style elements with the new CoreSC style.
+        """
+
+        for annoEl in self.doc.getElementsByTagName("annotationART"):
+            sentEl = annoEl.parentNode
+
+            #remove annotation element from tree
+            sentEl.removeChild(annoEl)
+
+            #create the CoreSC element
+            coreEl = self.doc.createElement("CoreSc1")
+
+
+            for key in ['type', 'advantage', 'conceptID', 'novelty']:
+                coreEl.setAttribute(key, annoEl.getAttribute(key))
+
+            for child in annoEl.childNodes:
+                sentEl.appendChild(child.cloneNode(True))
+                child.unlink()
+
+            sentEl.insertBefore( coreEl, sentEl.firstChild)
+
+
+
+    def annotate(self, infile, outfile):
+        """Do the actual annotation work"""
+
+        #parse doc to see if annotations already present
+        with open(infile,"rb") as f:
+            self.doc = minidom.parse(f)
+
+        #make sure there is an abstract or else create one
+        
+        if ( (len(self.doc.getElementsByTagName("abstract")) < 1 ) &
+        (len(self.doc.getElementsByTagName("ABSTRACT")) < 1) ):
+            #add abstract to paper
+            self.addDummyAbstract()
+
+        if len(self.doc.getElementsByTagName("annotationART")) > 0:
+            self.__upgradeXML()
+
+
+
+class LocalPythonAnnotator:
     #------------------------------------------------------------------------- 
     def annotate(self, filename, outfilename):
+        """This is still a WIP, need python SAPIENTA first"""
         print MODEL_PATH
         tagger = Tagger(MODEL_PATH)
         parser = SciXML()
@@ -67,9 +179,44 @@ class Annotator:
         with codecs.open(outfilename,'w', encoding='utf-8') as f:
             self.indoc.writexml(f)
 
-    #------------------------------------------------------------------------- 
+    #-------------------------------------------------------------------------
 
-class RemoteAnnotator(CURLUploader):
+class LocalPerlAnnotator(BaseAnnotator):
+    """Uses Perl version of sapienta to annotate the given paper"""
+
+    perldir = """/run/media/james/Charismatic/sapienta/Project/sidePrograms/Code_for_svn/perl_code"""
+
+    resultdir = """/home/james/public_html/sapienta/queue/processing/output/All/Test/Feature/"""
+
+    def annotate(self,infile,outfile):
+        """Start a local instance of Sapienta and annotate the file"""
+
+        #call parent annotation class
+        BaseAnnotator.annotate(self,infile,outfile)
+
+        #parse doc to see if annotations already present
+        if len(self.doc.getElementsByTagName("CoreSc1")) < 1:
+            args = ["perl", "pipeline_for_sapient_crfsuite.perl", 
+                os.path.abspath(infile)]
+            p = subprocess.Popen(args, cwd=self.perldir, stdout=sys.stdout)
+            p.wait()
+
+            #now open the results file and recombine
+            result = os.path.join(self.resultdir, infile, "result.txt")
+
+            with open(result,'r') as f:
+                labels = f.read().split(">")
+
+            self._annotateXML(labels)
+
+        with codecs.open(outfile,'w', encoding='utf-8') as f:
+            self.doc.writexml(f)
+                
+
+
+#------------------------------------------------------------------            
+
+class RemoteAnnotator(BaseAnnotator, CURLUploader):
     """Class that submits a remote annotation job to sapienta servers and saves
     results
     """
@@ -80,15 +227,10 @@ class RemoteAnnotator(CURLUploader):
     def annotate(self, infile, outfile):
         """Do the actual annotation work"""
 
+        BaseAnnotator.annotate(self, infile, outfile)
+
         #parse doc to see if annotations already present
-        with open(infile,"rb") as f:
-            self.doc = minidom.parse(f)
-
-
-        if len(self.doc.getElementsByTagName("annotationART")) > 0:
-            self.__upgradeXML()
-
-        elif len(self.doc.getElementsByTagName("CoreSc1")) < 1:
+        if len(self.doc.getElementsByTagName("CoreSc1")) < 1:
 
             pdata = [('paper', (pycurl.FORM_FILE, infile) )]
 
@@ -100,68 +242,25 @@ class RemoteAnnotator(CURLUploader):
             logging.info("Uploading %s to annotation server", infile)
 
             self.perform(c)
-
-            tmpnam, sents = self.result.split(":")
+            try:
+                tmpnam, sents = self.result.split(":")
+            except Exception as e:
+                raise SapientaException("Empty response from SAPIENTA")
 
             labels = sents.split(">")
 
-            self.__annotateXML( labels )
+            self._annotateXML( labels )
 
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.doc.writexml(f)
 
 
-    def __upgradeXML(self):
-        """When passed in an old annotation format doc, upgrade the format
-        
-        This method takes an XML document and replaces old fashioned 
-        annotationART style elements with the new CoreSC style.
-        """
-
-        for annoEl in self.doc.getElementsByTagName("annotationART"):
-            sentEl = annoEl.parentNode
-
-            #remove annotation element from tree
-            sentEl.removeChild(annoEl)
-
-            #create the CoreSC element
-            coreEl = self.doc.createElement("CoreSc1")
-
-
-            for key in ['type', 'advantage', 'conceptID', 'novelty']:
-                coreEl.setAttribute(key, annoEl.getAttribute(key))
-
-            for child in annoEl.childNodes:
-                sentEl.appendChild(child.cloneNode(True))
-                child.unlink()
-
-            sentEl.insertBefore( coreEl, sentEl.firstChild)
 
 
 
 
-    def __annotateXML(self, labels):
-        """Read in the xml document and add labels to it
-        """
-
-        c = Counter()
-
-        for s in self.doc.getElementsByTagName("s"):
-            if s.parentNode.localName == "article-title": continue 
-
-            label = labels.pop(0)
-
-            c[label] += 1
-
-            annoEl = self.doc.createElement("CoreSc1")
-            annoEl.setAttribute("type", label)
-            annoEl.setAttribute("conceptID", label + str(c[label]))
-            annoEl.setAttribute("novelty", "None")
-            annoEl.setAttribute("advantage","None")
-
-            s.insertBefore(annoEl, s.firstChild)
-
-        
+#Set annotator to remote annotator for now
+Annotator = LocalPerlAnnotator
 
 if __name__ == "__main__":
     r = RemoteAnnotator()

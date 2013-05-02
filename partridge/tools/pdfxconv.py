@@ -9,7 +9,8 @@ import logging
 
 from optparse import OptionParser
 from converter import PDFXConverter
-from annotate import Annotator, RemoteAnnotator
+#annotator is an alias for the 'recommended' annotator at this time
+from annotate import Annotator
 from split import SentenceSplitter
 
 
@@ -74,7 +75,7 @@ def main():
             anno_infile = outfile
 
         if(options.annotate):
-            a = RemoteAnnotator()
+            a = Annotator()
 
             #build annotated filename
             name,ext = os.path.splitext(anno_infile)
