@@ -8,6 +8,7 @@ import os
 import pycurl
 import codecs
 import subprocess
+import tempfile
 import logging
 from urllib import urlencode
 
@@ -194,23 +195,39 @@ class LocalPerlAnnotator(BaseAnnotator):
         #call parent annotation class
         BaseAnnotator.annotate(self,infile,outfile)
 
+        logging.info("Running local Perl annotator using SAPIENTA pipeline")
+
         #parse doc to see if annotations already present
         if len(self.doc.getElementsByTagName("CoreSc1")) < 1:
             args = ["perl", "pipeline_for_sapient_crfsuite.perl", 
                 os.path.abspath(infile)]
-            p = subprocess.Popen(args, cwd=self.perldir, stdout=sys.stdout)
+
+            f = tempfile.TemporaryFile()
+
+
+            logging.info("Calling %s", str(args))
+            p = subprocess.Popen(args, cwd=self.perldir, 
+                stdout=f, stderr=f)
+            logging.info("Waiting for SAPIENTA...")
             p.wait()
+            logging.info("SAPIENTA is finished...")
+
+            f.close()
 
             #now open the results file and recombine
-            result = os.path.join(self.resultdir, infile, "result.txt")
+            result = os.path.join(self.resultdir, os.path.basename(infile), "result.txt")
 
             with open(result,'r') as f:
                 labels = f.read().split(">")
 
             self._annotateXML(labels)
 
+            #delete the result file
+            os.unlink(result)
+
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.doc.writexml(f)
+
                 
 
 
@@ -263,6 +280,6 @@ class RemoteAnnotator(BaseAnnotator, CURLUploader):
 Annotator = LocalPerlAnnotator
 
 if __name__ == "__main__":
-    r = RemoteAnnotator()
+    r = Annotator()
     r.annotate("test.xml", "test_output.xml")
 

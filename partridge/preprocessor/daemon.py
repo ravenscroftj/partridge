@@ -20,7 +20,7 @@ from partridge.models.doc import PaperFile, PaperWatcher
 
 from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
-from partridge.tools.annotate import RemoteAnnotator
+from partridge.tools.annotate import Annotator
 from partridge.tools.split import SentenceSplitter
 from partridge.tools.papertype import PaperClassifier
 
@@ -199,7 +199,7 @@ class PaperDaemon(Thread):
         
         self.logger.info("Annotating paper %s", infile)
 
-        a = RemoteAnnotator()
+        a = Annotator()
         a.annotate( infile, outfile )
         self.paper_files.append( (outfile, 'keep') )
 
