@@ -15,6 +15,8 @@ from urllib import urlencode
 #from sapienta.docparser import SciXML
 #from sapienta.crf import Tagger
 
+from partridge.config import config
+
 from progressbar import ProgressBar
 from xml.dom import minidom
 
@@ -185,9 +187,9 @@ class LocalPythonAnnotator:
 class LocalPerlAnnotator(BaseAnnotator):
     """Uses Perl version of sapienta to annotate the given paper"""
 
-    perldir = """/run/media/james/Charismatic/sapienta/Project/sidePrograms/Code_for_svn/perl_code"""
+    perldir = config['SAPIENTA_PERL_DIR']
 
-    resultdir = """/home/james/public_html/sapienta/queue/processing/output/All/Test/Feature/"""
+    resultdir = config['SAPIENTA_RESULT_DIR']
 
     def annotate(self,infile,outfile):
         """Start a local instance of Sapienta and annotate the file"""
