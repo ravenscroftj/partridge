@@ -37,39 +37,6 @@ class SapientaException(Exception):
 class BaseAnnotator(object):
     """Basic annotator with some boilerplate stuff in it"""
 
-    def addDummyAbstract(self):
-        """If no abstract is found, insert one"""
-
-        dummytext = "No abstract available for this paper"
-
-        print "Adding dummy abstract..."
-
-        if(len(self.doc.getElementsByTagName("TITLE")) > 0):
-            title = self.doc.getElementsByTagName("TITLE")[0]
-            nextEl = title.nextSibling
-            paperEl = title.parentNode
-            #create abstract
-            el = self.doc.createElement("ABSTRACT")
-            text = self.doc.createTextNode(dummytext)
-            el.appendChild(text)
-            paperEl.insertBefore(el, nextEl)
-
-        if(len(self.doc.getElementsByTagName("front")) > 0):
-            #get the element
-            front = self.doc.getElementsByTagName("front")[0]
-            fundEl = self.doc.getElementsByTagName("funding-group")[0]
-            abstractEl = self.doc.createElement("abstract")
-            titleEl = self.doc.createElement("title")
-            absec = self.doc.createElement("sec")
-            abp = self.doc.createElement("p")
-
-            abstractEl.appendChild(absec)
-            absec.appendChild(titleEl)
-            absec.appendChild(abp)
-            abp.appendChild(self.doc.createTextNode(dummytext))
-
-            front.insertBefore(abstractEl,fundEl)
-
     def _annotateXML(self, labels):
         """Read in the xml document and add labels to it
         """
@@ -126,13 +93,6 @@ class BaseAnnotator(object):
         #parse doc to see if annotations already present
         with open(infile,"rb") as f:
             self.doc = minidom.parse(f)
-
-        #make sure there is an abstract or else create one
-        
-        if ( (len(self.doc.getElementsByTagName("abstract")) < 1 ) &
-        (len(self.doc.getElementsByTagName("ABSTRACT")) < 1) ):
-            #add abstract to paper
-            self.addDummyAbstract()
 
         if len(self.doc.getElementsByTagName("annotationART")) > 0:
             self.__upgradeXML()
