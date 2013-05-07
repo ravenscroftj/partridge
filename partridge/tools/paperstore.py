@@ -44,6 +44,7 @@ class PaperParser:
         paper = Paper()
         paper.title    = self.extractTitle()
         paper.abstract = self.extractAbstract()
+        paper.doi      = self.extractDOI()
 
         #add authors
         paper.authors.extend(self.extractAuthors())
