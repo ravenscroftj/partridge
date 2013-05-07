@@ -59,11 +59,32 @@ class PaperParser:
 
     def extractDOI(self):
         """Extract a paper's DOI from the XML"""
-        ids = self.doc.getElementsByTagName("article-id")
 
+        #first try extracting SciXML article ID style
+        ids = self.doc.getElementsByTagName("article-id")
         for id in ids:
             if id.getAttribute("pub-id-type") == "doi":
                 return self.extractText(id)
+
+        #now try the ART format style
+        mdlist = self.doc.getElementsByTagName("METADATA")
+
+        if len(mdlist) > 0:
+            for node in mdlist[0].childNodes:
+                if ( (node.nodeType == self.doc.ELEMENT_NODE) and
+                    (node.localName == "DOI") ):
+                    return self.extractText(node)
+                elif( (node.nodeType == self.doc.TEXT_NODE) and
+                    (node.wholeText.find("/") > -1)):
+
+                    doi = node.wholeText
+
+                    if(doi.endswith("article")):
+                        return doi[:-7]
+                    else:
+                        return doi
+
+        return None
             
 
     def extractSentences(self):

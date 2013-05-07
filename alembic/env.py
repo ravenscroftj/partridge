@@ -3,13 +3,21 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
-config = context.config
+from flask import Flask
+
+from partridge.models import db
+from partridge.config import config
+
+##connect alembic to the db 
+app = Flask(__name__)
+app.config.update(config)
+
+db.app = app
+db.init_app(app)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(config.config_file_name)
+fileConfig(context.config.config_file_name)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
@@ -35,7 +43,7 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = context.config.get_main_option("sqlalchemy.url")
     context.configure(url=url)
 
     with context.begin_transaction():
@@ -48,12 +56,8 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    engine = engine_from_config(
-                config.get_section(config.config_ini_section),
-                prefix='sqlalchemy.',
-                poolclass=pool.NullPool)
-
-    connection = engine.connect()
+    #engine = db.engine
+    connection = db.engine.connect()
     context.configure(
                 connection=connection,
                 target_metadata=target_metadata
