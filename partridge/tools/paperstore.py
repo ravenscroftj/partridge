@@ -57,6 +57,15 @@ class PaperParser:
 
         return paper
 
+    def extractDOI(self):
+        """Extract a paper's DOI from the XML"""
+        ids = self.doc.getElementsByTagName("article-id")
+
+        for id in ids:
+            if id.getAttribute("pub-id-type") == "doi":
+                return self.extractText(id)
+            
+
     def extractSentences(self):
         """Extract sentences and relative coresc concept from xml"""
 

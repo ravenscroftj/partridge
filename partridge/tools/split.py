@@ -15,7 +15,7 @@ from partridge.config import config
 
 blacklist = set(['journal-id', 'journal-meta','article-id','article-categories'
 'contrib','contrib-group', 'aff','pub-date','volume','issue','elocation-id', 
-'history','author-notes', 'copyright-statement',
+'history','author-notes', 'copyright-statement', 'funding-group',
 'copyright-year','counts','s', 'subj-group','author-notes', 'alt-title',
 'title','ref-list','ack','meta','permissions', 'custom-meta-group'])
 
