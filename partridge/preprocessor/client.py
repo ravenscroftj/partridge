@@ -82,7 +82,7 @@ def main():
         port     = sys.argv[2]
         password = sys.argv[3] 
 
-    if(len(sys.argv) == 5):
+    if(len(sys.argv) > 4):
         processes = int(sys.argv[4])
     else:
         processes = None
@@ -92,6 +92,9 @@ def main():
     QueueManager.register("get_work")
     QueueManager.register("return_result")
 
+    logger.info("Connecting to %s:%d with password %s", server,int(port),
+        password)
+
     qm = QueueManager(address=(server,int(port)), authkey=password)
     qm.connect()
 
@@ -99,7 +102,7 @@ def main():
 
     logger.info("Starting worker with %d threads", len(p._pool))
 
-    batch_size = 1
+    batch_size = len(p._pool)
 
     running = True
     try:
