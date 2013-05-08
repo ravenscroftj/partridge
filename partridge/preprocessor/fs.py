@@ -1,4 +1,4 @@
-from multiprocessing import Queue, Pool
+from multiprocessing import Queue, Pool, Process
 from pyinotify import WatchManager, Notifier, ThreadedNotifier, EventsCodes,ProcessEvent
 import logging
 import os
@@ -14,7 +14,7 @@ class PaperProcesser(ProcessEvent):
         if evt.name.endswith("pdf") or evt.name.endswith("xml"):
             self.logger.info( "Adding %s to queue",
                 os.path.join(evt.path,evt.name))
-            self.queue.put(os.path.join(evt.path,evt.name))
+            self.queue.put( (os.path.join(evt.path,evt.name),False))
 
 
 class FilesystemWatcher:
@@ -52,7 +52,7 @@ class FilesystemWatcher:
             for file in files:
                 if file.endswith("pdf") or file.endswith("xml"):
                     self.logger.info("Adding %s to queue", file)
-                    self.paper_queue.put(os.path.join(root, file))
+                    self.paper_queue.put((os.path.join(root, file), False))
 
 
     def start(self):
