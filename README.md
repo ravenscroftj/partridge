@@ -4,10 +4,40 @@ Partridge
 Partridge is an automated scientific literature retrieval and recommendation suite. 
 It was my dissertation project during 2012-2013 at Aberystwyth University, Wales.
 
+Partridge provides a full pipeline for conversion, annotation and
+classification of scientific papers. It uses some external tools but also a
+fair amount of novel behaviour during this process. A web interface is also
+provided so that papers can be indexed and searched. The long term goal is to
+provide content-based recommendations for users of the system.
+
+PDF Conversion
+----------------
+Partridge uses [PDFX](http://pdfx.cs.man.ac.uk/), a tool provided by Alexander
+Constantin at the University of Manchester, for extracting
+[JATS](http://jats.nlm.nih.gov/archiving/) compatible XML for processing and
+annotation. 
+
+Scientific Concept Annotation
+------------------------------
+Partridge makes use of [SAPIENTA](http://sapientaproject.com/), a machine
+learning classifier written by Maria Liakata et al., to annotate the scientific
+concepts within papers sentence-by-sentence. This allows a deeper understanding
+of the structure of the papers and is also used for paper type classification.
+
+Paper Type Classification
+---------------------------
+Paper type classification is novel behaviour within Partridge. A Random Forest
+classifier has been trained to recognise types of paper (Research Article,
+Review, Case Study etc.) based on a paper's scientific concept annotations.
+
+
+Installing Partridge
+=======================
+
 If you want to use Partridge to find a paper, you don't need to download and install
 this package. There is an instance running at http://farnsworth.papro.org.uk/
 
-These instructions are for those interested in setting up their own instance of Partridge
+The following instructions are for those interested in setting up their own instance of Partridge
 or for modifying my code.
 
 System Requirements
