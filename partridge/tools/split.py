@@ -19,8 +19,6 @@ blacklist = set(['journal-id', 'journal-meta','article-id','article-categories'
 'copyright-year','counts','s', 'subj-group','author-notes', 'alt-title',
 'title','ref-list','ack','meta','permissions', 'custom-meta-group'])
 
-logging.basicConfig(level=logging.DEBUG)
-
 SPLITTER_PATH = str(os.path.join(config['MODELS_DIR'], "splitter.dat"))
 
 class SentenceSplitter:
