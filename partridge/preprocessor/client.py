@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 def process_paper( incoming):
     
-    filename, data, ispdf = incoming
+    filename, data = incoming
 
     workdir = tempfile.mkdtemp()
 
@@ -50,7 +50,7 @@ def process_paper( incoming):
             for dir in dirs:
                 os.rmdir(os.path.join(root,dir))
 
-        return filename, data, ispdf
+        return filename, data
 
     except Exception as e:
 

@@ -13,15 +13,15 @@ from partridge.models import db
 
 def create_daemon( config ):
 
-    from partridge.preprocessor.server import main as server_main
-    from partridge.preprocessor.client import main as client_main
+    from partridge.preprocessor.daemon import PaperDaemon
 
     """Factory function that sets up a paper daemon given a config object"""   
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
 
-    qm,rh,fsw = server_main(config['PAPER_UPLOAD_DIR'],
-            config['PAPER_PROC_DIR'],
-            logger)
+    pdaemon = PaperDaemon(config['PAPER_UPLOAD_DIR'], config['PAPER_WORK_DIR'],
+        config['PAPER_PROC_DIR'], logger)
 
-    return qm,rh,fsw
+    pdaemon.start()
+
+    return pdaemon

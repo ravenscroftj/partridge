@@ -191,8 +191,6 @@ class ResultHandler(Thread):
             self.logger.info("Keeping PDF file")
 
 
-            
-
         outfile = os.path.join(self.outdir, name+"_final.xml")
 
         with open(outfile,'wb') as f:

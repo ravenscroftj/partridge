@@ -100,15 +100,12 @@ def run():
 
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
-    qm, pdaemon, fsw =  create_daemon( config )
+    pdaemon =  create_daemon( config )
 
     if not opts.paperdaemon:
         app.debug = opts.debug
         app.run(host="0.0.0.0", port=int(opts.port))
         pdaemon.stop()
-        qm.shutdown()
-        qm.join()
-        fsw.stop()
     else:
         try:
             while 1:

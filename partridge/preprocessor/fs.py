@@ -14,7 +14,7 @@ class PaperProcesser(ProcessEvent):
         if evt.name.endswith("pdf") or evt.name.endswith("xml"):
             self.logger.info( "Adding %s to queue",
                 os.path.join(evt.path,evt.name))
-            self.queue.put( (os.path.join(evt.path,evt.name),False))
+            self.queue.put( ("QUEUE", os.path.join(evt.path,evt.name)) )
 
 
 class FilesystemWatcher:
@@ -52,7 +52,8 @@ class FilesystemWatcher:
             for file in files:
                 if file.endswith("pdf") or file.endswith("xml"):
                     self.logger.info("Adding %s to queue", file)
-                    self.paper_queue.put((os.path.join(root, file), False))
+
+                    self.paper_queue.put( ("QUEUE", os.path.join(root,file)) )
 
 
     def start(self):
