@@ -37,7 +37,7 @@ class PartridgePaperWorker:
         infile = self.annotateXML(infile)
 
         #classify the paper
-        type = self.classifyPaper(infile)
+        #type = self.classifyPaper(infile)
 
         with open(infile,'rb') as f:
             data = f.read()
