@@ -125,9 +125,9 @@ class PaperDaemon(Thread):
     def store(self, result):
         """Once a document has been handled, store it in file"""
         
-        print "RESULT: ", result
         if(isinstance(result, PreprocessingException)):
             self.handleProcessingException(result)
+            print result.files
         else:
             filename, outfile = result
 
@@ -191,17 +191,18 @@ class PaperDaemon(Thread):
 
 
         inform_watcher(self.logger, result.paper, exception=result)
-
-        self.cleanup(result.paper)
     
         try:
             print result.files
             #send the error report
             send_error_report(result, result.traceback, 
-                result.files)
+                [result.paper])
 
         except Exception as e:
             self.logger.error("ERROR SENDING EMAIL: %s", e)
+
+
+        self.cleanup(result.paper)
 
 #---------------------------------------------------------------------
         
@@ -266,7 +267,6 @@ class PaperDaemon(Thread):
             
             self.logger.info("%s has been converted and re-queued for paper check", 
             self.convertPDF(file))
-
 
         else:
             if(self.paperExists(file)):

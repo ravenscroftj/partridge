@@ -33,7 +33,7 @@ def inform_watcher(logger, papername, **kwargs):
 
             e = kwargs['exception']
             send_error_report( e, e.traceback,
-                e.files, w.email)
+                [papername], w.email)
 
         db.session.delete(w)
         db.session.commit()

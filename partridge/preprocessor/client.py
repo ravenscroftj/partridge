@@ -44,8 +44,6 @@ def process_paper( incoming):
         with open(resultfile,'rb') as f:
             data = f.read()
 
-
-
         r = filename, data
 
     except Exception as e:
@@ -60,15 +58,7 @@ def process_paper( incoming):
 
         p = PreprocessingException(e)
         p.traceback = traceback.format_exc()
-        p.paper = filename
-
-        for root,dirs,files in os.walk(workdir):
-            
-            for file in files:
-                logger.info( "Adding dump of file %s to error report",file) 
-                with open(os.path.join(root,file),'rb') as f:
-                    p.files.append( (file, f.read() ) )
-        
+        p.paper = filename        
         r = p
 
     finally:

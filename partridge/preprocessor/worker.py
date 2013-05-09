@@ -24,12 +24,6 @@ class PartridgePaperWorker:
 
         infile = filename
 
-        #if required, convert to PDF
-        if( basename.endswith("pdf")):
-            infile = self.convertPDF(infile)
-        else:
-            self.logger.debug("No conversion necessary on file %s", filename)
-
         #run XML splitter
         infile = self.splitXML(infile)
 
