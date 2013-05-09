@@ -10,3 +10,9 @@ PAPER_UPLOAD_DIR = "/home/james/dissertation/data/upload"
 PAPER_PROC_DIR  =  "/home/james/dissertation/data/processed"
 #set the model directory
 MODELS_DIR = "/home/james/dissertation/models"
+
+#Processing server stuff
+PP_LISTEN_ADDRESS = "0.0.0.0"
+PP_LISTEN_PORT = 1234
+PP_AUTH_KEY = "topsecretkey"
+
