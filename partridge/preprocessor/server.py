@@ -102,7 +102,7 @@ def main(watchdir, outdir, logger=logging):
     
 
     qm = QueueManager(address=(config['PP_LISTEN_ADDRESS'],  
-    config['PP_LISTEN_PORT']),  config['PP_AUTH_KEY'])
+    config['PP_LISTEN_PORT']),  authkey=config['PP_AUTH_KEY'])
     
     logger.info("Listening for paper workers on %s:%d auth=%s",
         config['PP_LISTEN_ADDRESS'], config['PP_LISTEN_PORT'],
