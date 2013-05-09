@@ -37,6 +37,26 @@ def _get_uptox_items( x, queue):
 
     return zlib.compress(cPickle.dumps(work))
 
+def store_result(x, queue, outdir, logger):
+    
+    results = cPickle.loads(zlib.decompress(x))
+
+    for result in results:
+        if(isinstance(result, Exception)):
+            queue.put(("STORE",result))
+        else:
+
+            
+            basename = os.path.basename(result[0])
+            name,ext = os.path.splitext(basename)
+            outfile = os.path.join(outdir,name+"_final.xml")
+
+            logger.info("Storing document %s", outfile)
+            with open(outfile,'wb') as f:
+                f.write(result[1])
+
+            queue.put(("STORE", (result[0], outfile)))
+                
 
 
 class QueueManager(BaseManager):

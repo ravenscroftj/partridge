@@ -10,7 +10,7 @@ class PaperProcesser(ProcessEvent):
         self.queue = queue
 
     def process_IN_CLOSE_WRITE(self, evt):
-        
+
         if evt.name.endswith("pdf") or evt.name.endswith("xml"):
             self.logger.info( "Adding %s to queue",
                 os.path.join(evt.path,evt.name))

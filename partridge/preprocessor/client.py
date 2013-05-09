@@ -36,21 +36,17 @@ def process_paper( incoming):
     with open(name, 'wb') as f:
         f.write(data)
 
+    r = None
+
     try:
         resultfile = w.process(name)
 
         with open(resultfile,'rb') as f:
             data = f.read()
 
-        logger.info("Cleaning up work directory %s", workdir)
-        for root,dirs,files in os.walk(workdir):
-            for file in files:
-                os.unlink(os.path.join(root,file))
 
-            for dir in dirs:
-                os.rmdir(os.path.join(root,dir))
 
-        return filename, data
+        r = filename, data
 
     except Exception as e:
 
@@ -69,10 +65,22 @@ def process_paper( incoming):
         for root,dirs,files in os.walk(workdir):
             
             for file in files:
+                logger.info( "Adding dump of file %s to error report",file) 
                 with open(os.path.join(root,file),'rb') as f:
                     p.files.append( (file, f.read() ) )
         
-        return p
+        r = p
+
+    finally:
+        logger.info("Cleaning up work directory %s", workdir)
+        for root,dirs,files in os.walk(workdir):
+            for file in files:
+                os.unlink(os.path.join(root,file))
+
+            for dir in dirs:
+                os.rmdir(os.path.join(root,dir))
+
+    return r
 
 def init_worker():
     signal.signal(signal.SIGINT, signal.SIG_IGN)
