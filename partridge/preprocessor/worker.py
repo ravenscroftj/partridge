@@ -16,7 +16,7 @@ class PartridgePaperWorker:
     def __init__(self, logger, outdir):
         self.logger = logger
         self.outdir = outdir
-        self.paper_classifier = RawPaperClassifier()
+        #self.paper_classifier = RawPaperClassifier()
     
     def process(self, filename):
         basename = os.path.basename(filename)
