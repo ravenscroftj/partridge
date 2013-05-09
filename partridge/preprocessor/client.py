@@ -37,12 +37,12 @@ def process_paper( incoming):
         f.write(data)
 
     try:
-        resultfile, type = w.process(name)
+        resultfile = w.process(name)
 
         with open(resultfile,'rb') as f:
             data = f.read()
 
-        return filename, data, type, ispdf
+        return filename, data, ispdf
 
     except Exception as e:
 

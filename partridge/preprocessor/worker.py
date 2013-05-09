@@ -9,7 +9,7 @@ from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
 from partridge.tools.annotate import Annotator
 from partridge.tools.split import SentenceSplitter
-from partridge.tools.papertype import RawPaperClassifier
+#from partridge.tools.papertype import RawPaperClassifier
 
 class PartridgePaperWorker:
 
@@ -42,7 +42,8 @@ class PartridgePaperWorker:
         with open(infile,'rb') as f:
             data = f.read()
 
-        return infile, type
+        return infile
+        #return infile, type
 
     def annotateXML(self, infile):
         """Routine to start the SAPIENTA process call"""
@@ -81,11 +82,11 @@ class PartridgePaperWorker:
 
         return outfile
 
-    def classifyPaper(self, paper):
-        """Decide what 'type' the paper is - case study, research or review"""
-        
-        type = str(self.paper_classifier.classify_paper(paper))
-        self.logger.info("Determined paper %s is of type %s", paper,
-            type)
-
-        return type
+#    def classifyPaper(self, paper):
+#        """Decide what 'type' the paper is - case study, research or review"""
+#        
+#        type = str(self.paper_classifier.classify_paper(paper))
+#        self.logger.info("Determined paper %s is of type %s", paper,
+#            type)
+#
+#        return type

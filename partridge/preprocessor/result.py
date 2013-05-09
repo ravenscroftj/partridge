@@ -13,6 +13,8 @@ from partridge.models import db
 
 from partridge.models.doc import PaperFile, PaperWatcher
 
+from partridge.tools.papertype import PaperClassifier
+
 from partridge.tools.paperstore import PaperParser
 from partridge.preprocessor.notification import inform_watcher, \
 send_error_report, send_success_report
@@ -33,7 +35,7 @@ class ResultHandler(Thread):
 
     def _process_paper(self, result):
         
-        filename, data, type, ispdf = result
+        filename, data, ispdf = result
 
         #if is the result of a PDF conversion, we want to keep the pdf
         if(ispdf):
@@ -52,10 +54,20 @@ class ResultHandler(Thread):
         paperObj = self.storePaperData(outfile)
 
         #add paper classification to database
-        paperObj.type = type
-        paperObj = db.session.merge(paperObj)
+        paperObj = self.classifyPaper(paperObj)
 
         return paperObj
+
+    def classifyPaper(self, paper):
+        """Decide what 'type' the paper is - case study, research or review"""
+        
+        type = str(self.paper_classifier.classify_paper(paper))
+        self.logger.info("Determined paper %s is of type %s", paper.title,
+            type)
+
+        paper.type = type
+
+        return db.session.merge(paper)
 
     def run(self):
         """This is the main event loop for the result handler"""
