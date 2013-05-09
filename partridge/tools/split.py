@@ -17,7 +17,8 @@ blacklist = set(['journal-id', 'journal-meta','article-id','article-categories'
 'contrib','contrib-group', 'aff','pub-date','volume','issue','elocation-id', 
 'history','author-notes', 'copyright-statement', 'funding-group',
 'copyright-year','counts','s', 'subj-group','author-notes', 'alt-title',
-'title','ref-list','ack','meta','permissions', 'custom-meta-group'])
+'title','ref-list','ack','meta','permissions', 'custom-meta-group',
+'responseDate','request','header'])
 
 SPLITTER_PATH = str(os.path.join(config['MODELS_DIR'], "splitter.dat"))
 
