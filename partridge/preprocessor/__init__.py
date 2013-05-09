@@ -10,10 +10,12 @@ from Queue import Empty
 
 from partridge.models import db
 
-from partridge.preprocessor.server import main as server_main
-from partridge.preprocessor.client import main as client_main
 
 def create_daemon( config ):
+
+    from partridge.preprocessor.server import main as server_main
+    from partridge.preprocessor.client import main as client_main
+
     """Factory function that sets up a paper daemon given a config object"""   
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
