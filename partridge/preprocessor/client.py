@@ -45,10 +45,10 @@ def process_paper( incoming):
         logger.info("Cleaning up work directory %s", workdir)
         for root,dirs,files in os.walk(workdir):
             for file in files:
-                os.unlink(os.join(root,file))
+                os.unlink(os.path.join(root,file))
 
             for dir in dirs:
-                os.rmdir(os.join(root,dir))
+                os.rmdir(os.path.join(root,dir))
 
         return filename, data, ispdf
 
