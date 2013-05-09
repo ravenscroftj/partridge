@@ -110,11 +110,15 @@ def main():
 
     logger.info("Starting worker with %d threads", len(p._pool))
 
-    batch_size = len(p._pool)
+    batch_size = len(p._pool) * 2
 
     running = True
     try:
         while running:
+            
+            logger.info("Trying to get %s jobs from %s:%d",
+                batch_size,server,int(port))
+
             batch = cPickle.loads(zlib.decompress(
                 qm.get_work(batch_size)._getvalue()))
 

@@ -10,6 +10,8 @@ import zlib
 from multiprocessing import Queue, Process, log_to_stderr, SUBDEBUG
 from multiprocessing.managers import BaseManager
 
+
+from partridge.config import config
 from partridge.preprocessor.result import ResultHandler
 from partridge.preprocessor.fs import FilesystemWatcher
 from partridge.tools.paperstore import PaperParser
@@ -97,7 +99,14 @@ def main(watchdir, outdir, logger=logging):
     QueueManager.register("return_result", 
     lambda x: done_papers(x,doneq, logger) )
 
-    qm = QueueManager(address=("", 1234), authkey="icecream")
+    
+
+    qm = QueueManager(address=(config['PP_LISTEN_ADDRESS'],  
+    config['PP_LISTEN_PORT']),  config['PP_AUTH_KEY'])
+    
+    logger.info("Listening for paper workers on %s:%d auth=%s",
+        config['PP_LISTEN_ADDRESS'], config['PP_LISTEN_PORT'],
+        config['PP_AUTH_KEY'])
 
     rh = ResultHandler(outdir, watchdir, doneq, logger)
 

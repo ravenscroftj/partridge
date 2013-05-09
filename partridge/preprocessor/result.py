@@ -29,6 +29,9 @@ class ResultHandler(Thread):
         self.queue = queue
         self.logger = logger
         self.outdir = outdir
+        self.paper_classifier = PaperClassifier()
+
+        self.dbsession = db.create_scoped_session()
 
     def stop(self):
         self.running = False
@@ -67,7 +70,7 @@ class ResultHandler(Thread):
 
         paper.type = type
 
-        return db.session.merge(paper)
+        return self.dbsession.merge(paper)
 
     def run(self):
         """This is the main event loop for the result handler"""
@@ -144,13 +147,13 @@ class ResultHandler(Thread):
             self.logger.warn("Paper was not processed, removing files")
         else:
             #make sure the paper is bound to the session
-            db.session.add(paper)
+            self.dbsession.add(paper)
 
         def keep_file( filename ):
             fileObj = PaperFile( path=filename )
-            db.session.add(fileObj)
+            self.dbsession.add(fileObj)
             paper.files.append(fileObj)
-            db.session.commit()
+            self.dbsession.commit()
 
 
         for filename, action in self.paper_files:
