@@ -42,6 +42,14 @@ def process_paper( incoming):
         with open(resultfile,'rb') as f:
             data = f.read()
 
+        logger.info("Cleaning up work directory %s", workdir)
+        for root,dirs,files in os.walk(workdir):
+            for file in files:
+                os.unlink(os.join(root,file))
+
+            for dir in dirs:
+                os.rmdir(os.join(root,dir))
+
         return filename, data, ispdf
 
     except Exception as e:
