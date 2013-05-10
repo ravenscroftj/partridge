@@ -179,7 +179,8 @@ def main():
     pevt = threading.Event()
 
     try:
-        p = Process(target=lambda: run_worker(server,port,pw,proc,pevt))
+        p = Process(target=lambda:
+        run_worker(server,port,password,options.processes,pevt))
         p.start()
         while 1:
             raw_input()
