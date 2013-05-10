@@ -23,12 +23,15 @@ def create_app( config ):
     import views.paper
     import views.query
     import views.remote
+    import views.queue
 
     app.url_map.converters["paper"] = PaperConverter
     app.url_map.converters["file"] = FileConverter
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query.query)
+
+    app.add_url_rule("/queue", view_func = views.queue.show)
 
     app.add_url_rule("/upload", methods=['GET','POST'], 
         view_func = views.upload.upload)

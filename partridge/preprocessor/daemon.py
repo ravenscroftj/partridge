@@ -26,7 +26,7 @@ from partridge.config import config
 from partridge.tools.paperstore import PaperParser
 from partridge.tools.papertype import PaperClassifier
 from partridge.preprocessor.server import _get_uptox_items, \
-store_result
+store_result,load_pp_stats, save_pp_stats
 
 
 from partridge.tools.converter import PDFXConverter
@@ -55,8 +55,15 @@ class PaperDaemon(Thread):
         self.logger = logger
         self.paper_classifier = PaperClassifier()
         self.processq = Queue()
+        self.workercount = 0
 
 #---------------------------------------------------------------------
+
+    def register_worker_pool(self, size):
+        self.workercount += size
+
+    def unregister_worker_pool(self, size):
+        self.workercount -= size
 
     def setup_server(self):
 
@@ -67,9 +74,21 @@ class PaperDaemon(Thread):
             logRequests=False,
             allow_none=True)
 
+        #load preprocessing stats from disk
+        self.stats = load_pp_stats(self.outdir)
+
         self.qm.register_function(lambda:self.processq.qsize(),"qsize")
 
         self.qm.register_function(lambda x: _get_uptox_items(x, self.processq),             "get_work")
+
+        self.qm.register_function(self.register_worker_pool, "register_pool")
+
+        self.qm.register_function(lambda: self.workercount, "poolsize")
+
+        self.qm.register_function(self.unregister_worker_pool,
+        "unregister_pool")
+
+        self.qm.register_function(lambda: self.stats[0] , "average")
 
         self.qm.register_function(
         lambda x: store_result(x,self.fsw.paper_queue, self.outdir,
@@ -140,6 +159,8 @@ class PaperDaemon(Thread):
         self.logger.info("Shutting down XML-RPC server...")
         self.qm.shutdown()
 
+
+
 #---------------------------------------------------------------------
 
     def store(self, result):
@@ -149,7 +170,7 @@ class PaperDaemon(Thread):
             self.handleProcessingException(result)
             print result.files
         else:
-            filename, outfile = result
+            filename, outfile, timetaken = result
 
             #store the paper object in database
             paperObj = self.storePaperData(outfile)
@@ -176,6 +197,21 @@ class PaperDaemon(Thread):
             except Exception as e:
                 self.logger.warn("Failed to inform watcher about paper"
                 +" success: %s", e)
+
+
+            #finally update stats
+            average = self.stats[0]
+
+            total = self.stats[1] +  1
+
+            if(average == 0.0):
+                self.stats = (timetaken,total)
+            else:
+                self.stats = (average + ( (timetaken - average)
+                / self.stats[1]), total)
+
+            #save the preprocessing stats to disk
+            save_pp_stats(self.stats, self.outdir)
 
             return paperObj
 

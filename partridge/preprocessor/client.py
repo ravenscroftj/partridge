@@ -26,6 +26,9 @@ logger = logging.getLogger(__name__)
 
 def process_paper( incoming):
     
+    tstart = time.time()
+
+
     filename, data = incoming
 
     workdir = tempfile.mkdtemp()
@@ -73,7 +76,14 @@ def process_paper( incoming):
 
         os.rmdir(workdir)
 
-    return r
+    tend = time.time()
+
+    tdiff = tend - tstart
+
+
+    logger.info("Took %d seconds to process paper",tdiff) 
+
+    return r, tdiff
 
 def init_worker():
     signal.signal(signal.SIGINT, signal.SIG_IGN)
@@ -98,6 +108,9 @@ def run_worker(server, port, password="", processes=None, evt=None):
 
     batch_size = len(p._pool) * 2
     
+    logger.info("Registering with server")
+
+    qm.register_pool(len(p._pool))
 
     while not evt.is_set():
         try:
@@ -122,6 +135,9 @@ def run_worker(server, port, password="", processes=None, evt=None):
             logger.warn("Interrupted client")
             break;
 
+
+    #unregister workers
+    qm.unregister_pool(len(p._pool))
 
     p.terminate()
     p.join()

@@ -1,6 +1,7 @@
 """
 Server daemon for parallel processing papers
 """
+from __future__ import division
 
 import os
 import logging
@@ -18,6 +19,23 @@ from partridge.preprocessor.result import ResultHandler
 from partridge.preprocessor.fs import FilesystemWatcher
 from partridge.tools.paperstore import PaperParser
 from partridge.tools.converter import PDFXConverter
+
+_average = 0.0
+_totalhandled = 0
+
+def load_pp_stats(dirname):
+    stats = os.path.join(dirname,"stats.pickle")
+    try:
+        with open(stats,'rb') as f:
+            return cPickle.load(f)
+    except IOError:
+        return 0.0,0      
+
+def save_pp_stats(stats, dirname):
+    statfile = os.path.join(dirname,"stats.pickle")
+
+    with open(statfile,'wb') as f:
+        cPickle.dump(stats,f)
 
 
 def _get_uptox_items( x, queue):
@@ -43,12 +61,11 @@ def store_result(x, queue, outdir, logger):
     
     results = cPickle.loads(zlib.decompress(x.data))
 
-    for result in results:
+    for result,time in results:
+
         if(isinstance(result, Exception)):
             queue.put(("STORE",result))
         else:
-
-            
             basename = os.path.basename(result[0])
             name,ext = os.path.splitext(basename)
             outfile = os.path.join(outdir,name+"_final.xml")
@@ -57,6 +74,6 @@ def store_result(x, queue, outdir, logger):
             with open(outfile,'wb') as f:
                 f.write(result[1])
 
-            queue.put(("STORE", (result[0], outfile)))
-                
+            queue.put(("STORE", (result[0], outfile, time)))
+
 
