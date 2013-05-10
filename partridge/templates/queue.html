@@ -21,11 +21,16 @@ var page_limit = {{ limit }};
 <div class="span8">
 <p>This page shows information about Partridge's paper preprocessor.</p>
 
+<p><em>If you upload a paper, it will be added to the database in approx. 
+{% if qsize < poolsize %}{{average}}{% else %}{{qsize * average / poolsize}}{% endif %} minutes.</em></p>
+
+
 <p>There are currently {{qsize}} jobs on the processing queue.</p>
 
 <p>Average processing time is {{average}} minutes</p>
 
-<p>There are currently {{poolsize}} workers annnotating papers</p>
+<p>There are currently {{poolsize}} workers annotating papers</p>
+
 
 </div>
 
