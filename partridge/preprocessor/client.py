@@ -11,9 +11,12 @@ import logging
 import traceback
 import signal
 import sys
+import threading
 
+from optparse import OptionParser
 
 from multiprocessing.managers import BaseManager
+from multiprocessing import Process
 
 from partridge.preprocessor.common import PreprocessingException
 from partridge.preprocessor.worker import PartridgePaperWorker
@@ -70,29 +73,17 @@ def process_paper( incoming):
             for dir in dirs:
                 os.rmdir(os.path.join(root,dir))
 
+        os.rmdir(workdir)
+
     return r
 
 def init_worker():
     signal.signal(signal.SIGINT, signal.SIG_IGN)
         
 
-def main():
 
-    usage = "usage: %s <server> <port> <password> [processes]"
-
-    if(len(sys.argv) < 4):
-        print usage % sys.argv[0]
-        sys.exit()
-    else:
-        server   = sys.argv[1]
-        port     = sys.argv[2]
-        password = sys.argv[3] 
-
-    if(len(sys.argv) > 4):
-        processes = int(sys.argv[4])
-    else:
-        processes = None
-
+def run_worker(server, port, password="", processes=None, evt=None):
+    """This is an infinite looping method for running a worker pool"""
 
     QueueManager.register("qsize")
     QueueManager.register("get_work")
@@ -109,12 +100,12 @@ def main():
     logger.info("Starting worker with %d threads", len(p._pool))
 
     batch_size = len(p._pool) * 2
+    
 
-    running = True
-    try:
-        while running:
+    while not evt.is_set():
+        try:
             
-            logger.info("Trying to get %s jobs from %s:%d",
+            logger.debug("Trying to get %s jobs from %s:%d",
                 batch_size,server,int(port))
 
             batch = cPickle.loads(zlib.decompress(
@@ -128,13 +119,74 @@ def main():
                 results = p.map(process_paper, batch)
                 zippedlist = zlib.compress(cPickle.dumps(results))
                 qm.return_result(zippedlist)
+        except KeyboardInterrupt as e:
+            logger.warn("Interrupted client")
+            break;
+
+
+    p.terminate()
+    p.join()
+
+#--------------------------------------------------------------------------
+
+def create_client( config, pevt ):
+    
+    #create process that runs the pool (so many threads *shudder*)
+    server = config['PP_LISTEN_ADDRESS']
+    port   = config['PP_LISTEN_PORT']
+    pw     = config['PP_AUTH_KEY']
+    proc   = config['PP_WORKERS']
+
+    p = Process(target=lambda: run_worker(server,port,pw,proc,pevt))
+    p.start()
+
+    return p
+
+    
+
+#--------------------------------------------------------------------------
+
+def main():
+
+    usage = "usage: %prog [options] <server> <port> <password>"
+
+    parser = OptionParser(usage=usage)
+
+    parser.add_option("-v", "--verbose", action="store_true", dest="verbose",
+        help="If set, run the client in verbose mode")
+
+    parser.add_option("-p", "--processes", action="store", dest="processes",
+        default=None, help="Number of threads to run, defaults to number of cores on your CPU")
+
+
+    (options, args) = parser.parse_args()
+
+
+    if(options.verbose):
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+    if(len(args) < 3):
+        parser.print_help()
+        sys.exit(1)
+    else:
+        server   = args[0]
+        port     = args[1]
+        password = args[2] 
+
+
+    pevt = threading.Event()
+
+    try:
+        p = Process(target=lambda: run_worker(server,port,pw,proc,pevt))
+        p.start()
+        while 1:
+            raw_input()
     except KeyboardInterrupt:
-        print "Shutting down..."
-        p.terminate()
-        p.join()
+        pevt.set()
+
+#--------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-
-
     main()
