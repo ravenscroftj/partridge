@@ -97,8 +97,7 @@ def run():
         
         
     #set up logger
-    logging.basicConfig(level=logLevel)
-
+    logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(message)s")
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
