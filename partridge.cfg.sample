@@ -8,5 +8,31 @@ SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
 PAPER_UPLOAD_DIR = "/home/james/dissertation/data/upload"
 #Processed paper directory
 PAPER_PROC_DIR  =  "/home/james/dissertation/data/processed"
+#work directory - where papers being processed currently are stored
+PAPER_WORK_DIR = "/home/james/dissertation/data/working"
 #set the model directory
 MODELS_DIR = "/home/james/dissertation/models"
+
+#
+#
+# Configuration values for preprocessor notifications
+#
+NOTIFICATION_SMTP_SERVER = "smtp.yourdomain.com"
+NOTIFICATION_SMTP_USER   = "uploadbot@yourdomain.com"
+NOTIFICATION_SMTP_PASWD  = "top_secret_password"
+NOTIFICATION_ADDRESS = "youremail@host.com"
+NOTIFICATION_FROM    = "uploadbot@papro.org.uk"
+
+#sapienta processor values
+SAPIENTA_PERL_DIR = "/run/media/james/Charismatic/sapienta/Project/sidePrograms/Code_for_svn/perl_code"
+SAPIENTA_RESULT_DIR = "/home/james/public_html/sapienta/queue/processing/output/All/Test/Feature/"
+
+#Processing server stuff
+PP_LISTEN_ADDRESS = "0.0.0.0"
+PP_LISTEN_PORT = 1234
+PP_AUTH_KEY = "topsecretkey"
+
+#number of paper processing threads to run
+PP_LOCAL_WORKER = True #if true, runs a set of local workers for processing
+PP_WORKERS = 1 #set to None to automatically match your CPU cores
+

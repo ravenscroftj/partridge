@@ -18,6 +18,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from partridge.models import db
 from partridge.models.doc import Paper, C_ABRV
 
+from partridge.tools.paperstore import PaperParser
+
 PAPER_TYPE_MODEL_PATH = os.path.join(config['MODELS_DIR'], "paper_types.model")
 
 FEATURES = C_ABRV.keys()
@@ -51,6 +53,39 @@ class PaperClassifier:
         inst_list.append("")
 
         return Orange.data.Instance(self.classifier.domain, inst_list)
+
+class RawPaperClassifier(PaperClassifier):
+    """Classify paper file rather than using db connection"""
+
+    def classify_paper(self, filename):
+        """Read a paper, find all sentences and then classify"""
+
+        p = PaperParser()
+        p.parsePaper(filename)
+
+        types = {x:0 for x in FEATURES}
+
+        sentenceCount = 0
+
+        for sent, annotype in p.extractSentences():
+            sentenceCount += 1
+            types[annotype] += 1
+
+
+        inst_list = []
+
+        for feature in FEATURES:
+            inst_list.append( types[feature] * 100 / sentenceCount)
+
+        inst_list.append("")
+
+        inst = Orange.data.Instance(self.classifier.domain, inst_list)
+
+        return self.classifier(inst)
+
+      
+
+
 
 
 if __name__ == "__main__":

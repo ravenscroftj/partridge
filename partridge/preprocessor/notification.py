@@ -9,8 +9,36 @@ from partridge.config import config
 from flask import url_for
 
 from partridge.models import db
+from partridge.models.doc import PaperFile, PaperWatcher
 
 app = db.app
+
+#---------------------------------------------------------------
+
+def inform_watcher(logger, papername, **kwargs):
+    """Informa watchers of papers and what happened to them"""
+    
+    basename = os.path.basename(papername)
+
+    q = PaperWatcher.query.filter(PaperWatcher.filename == basename)
+
+    if(q.count() > 0):
+        w = q.first()
+
+        logger.info("Informing %s about paper %s", w.email, w.filename) 
+
+        if "paperObj" in kwargs:
+            send_success_report( kwargs['paperObj'], w.email)
+        else:
+
+            e = kwargs['exception']
+            send_error_report( e, e.traceback,
+                [papername], w.email)
+
+        db.session.delete(w)
+        db.session.commit()
+
+#---------------------------------------------------------------
 
 def send_error_report( error, tb, paper_files, to=config['NOTIFICATION_ADDRESS']):
     """ Send an email report when a paper fails to process
@@ -38,7 +66,7 @@ The Partridge Paper Processing Monkey
     
 Failed to process a paper because %s \n""" % error
 
-    for line in traceback.format_tb(tb):
+    for line in tb:
         text += line
 
     txtmsg = MIMEText(text)

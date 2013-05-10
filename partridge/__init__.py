@@ -1,5 +1,6 @@
 import sys
 import logging
+import threading
 
 from optparse import OptionParser
 from flask import Config,Flask
@@ -101,17 +102,36 @@ def run():
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
-    pdaemon.start()
+
+    if(config['PP_LOCAL_WORKER']):
+        logging.info("Setting up local worker")
+        from partridge.preprocessor.client import create_client
+
+        clientevt = threading.Event()
+        pclient = create_client( config, clientevt )
 
     if not opts.paperdaemon:
         app.debug = opts.debug
-        app.run(host="0.0.0.0", port=int(opts.port))
-        pdaemon.stop()
+        try:
+            app.run(host="0.0.0.0", port=int(opts.port))
+        except KeyboardInterrupt as e:
+            logging.info("Interrupted by user...")
+
     else:
         try:
             while 1:
                 raw_input()
         except KeyboardInterrupt as e:
-            print "Shutting down paper daemon..."
+            logging.info("Interrupted by user...")
+
         
-        pdaemon.stop()
+    if(config['PP_LOCAL_WORKER']):
+        logging.info("Waiting for client to finish work...")
+        clientevt.set()
+        pclient.join()
+
+    
+    logging.info("Shutting down paper daemon...")
+    pdaemon.stop()
+
+
