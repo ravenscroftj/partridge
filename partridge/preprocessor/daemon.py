@@ -10,7 +10,10 @@ import tempfile
 import shutil
 
 
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+
 from partridge.preprocessor.fs import FilesystemWatcher
+
 from threading import Thread
 from multiprocessing import Queue
 from Queue import Empty
@@ -22,7 +25,7 @@ from partridge.models.doc import PaperFile, PaperWatcher
 from partridge.config import config
 from partridge.tools.paperstore import PaperParser
 from partridge.tools.papertype import PaperClassifier
-from partridge.preprocessor.server import QueueManager, _get_uptox_items, \
+from partridge.preprocessor.server import _get_uptox_items, \
 store_result
 
 
@@ -59,23 +62,25 @@ class PaperDaemon(Thread):
 
         self.logger.info("Establishing queue management server")
 
-        QueueManager.register("qsize", 
-            lambda:self.processq.qsize())
+        self.qm = SimpleXMLRPCServer((config['PP_LISTEN_ADDRESS'],  
+            config['PP_LISTEN_PORT']), 
+            logRequests=False,
+            allow_none=True)
 
-        QueueManager.register("get_work", 
-            lambda x: _get_uptox_items(x, self.processq))
+        self.qm.register_function(lambda:self.processq.qsize(),"qsize")
 
-        QueueManager.register("return_result", 
-        lambda x: store_result(x,self.fsw.paper_queue, self.outdir, self.logger))
+        self.qm.register_function(lambda x: _get_uptox_items(x, self.processq),             "get_work")
 
-        self.qm = QueueManager(address=(config['PP_LISTEN_ADDRESS'],  
-            config['PP_LISTEN_PORT']),  authkey=config['PP_AUTH_KEY'])
-
+        self.qm.register_function(
+        lambda x: store_result(x,self.fsw.paper_queue, self.outdir,
+        self.logger), "return_result")
+        
         self.logger.info("Listening for paper workers on %s:%d auth=%s",
             config['PP_LISTEN_ADDRESS'], config['PP_LISTEN_PORT'],
             config['PP_AUTH_KEY'])
 
-        self.qm.start()
+        t = Thread(target=lambda:self.qm.serve_forever())
+        t.start()
 
 #---------------------------------------------------------------------
 
@@ -94,13 +99,14 @@ class PaperDaemon(Thread):
 
         self.logger.info("Found %d files in the 'working' dir queued for annotation", self.processq.qsize())
 
-
-
         while self.running:
             
             self.task_files = []
-
-            task = self.fsw.paper_queue.get()
+            
+            try:
+                task = self.fsw.paper_queue.get()
+            except:
+                continue
 
             try:
                 if task[0] == 'STOP':
@@ -127,9 +133,12 @@ class PaperDaemon(Thread):
                 for line in traceback.format_tb(exc_tb):
                     self.logger.error(line)
 
-
+        self.logger.info("Exited main loop. Shutting down...")
         #when we come out of the loop kill the filesystem watcher
+        self.logger.info("Shutting down filesystem watcher...")
         self.fsw.stop()
+        self.logger.info("Shutting down XML-RPC server...")
+        self.qm.shutdown()
 
 #---------------------------------------------------------------------
 
@@ -258,8 +267,8 @@ class PaperDaemon(Thread):
 
     def stop(self):
         self.logger.info("Sending stop command to task queue")
-        self.fsw.paper_queue.put(("STOP",))
         self.running = False
+        self.fsw.paper_queue.put(("STOP",))
         self.join()
 
 #---------------------------------------------------------------------

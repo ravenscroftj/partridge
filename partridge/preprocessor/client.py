@@ -12,17 +12,15 @@ import traceback
 import signal
 import sys
 import threading
+import xmlrpclib
 
 from optparse import OptionParser
 
-from multiprocessing.managers import BaseManager
 from multiprocessing import Process
 
 from partridge.preprocessor.common import PreprocessingException
 from partridge.preprocessor.worker import PartridgePaperWorker
 
-class QueueManager(BaseManager):
-    pass
 
 logger = logging.getLogger(__name__)
 
@@ -85,15 +83,14 @@ def init_worker():
 def run_worker(server, port, password="", processes=None, evt=None):
     """This is an infinite looping method for running a worker pool"""
 
-    QueueManager.register("qsize")
-    QueueManager.register("get_work")
-    QueueManager.register("return_result")
-
     logger.info("Connecting to %s:%d with password %s", server,int(port),
         password)
 
-    qm = QueueManager(address=(server,int(port)), authkey=password)
-    qm.connect()
+    uri = "http://%s:%d/" % (server,int(port))
+
+    logger.info("Connecting to XML-RPC server on '%s'", uri)
+
+    qm = xmlrpclib.ServerProxy(uri)
 
     p = Pool(processes=processes, initializer=init_worker)
 
@@ -109,7 +106,7 @@ def run_worker(server, port, password="", processes=None, evt=None):
                 batch_size,server,int(port))
 
             batch = cPickle.loads(zlib.decompress(
-                qm.get_work(batch_size)._getvalue()))
+                qm.get_work(batch_size).data))
 
             if( len(batch) < 1):
                 logger.debug("Nothing to do, sleeping")
@@ -118,7 +115,9 @@ def run_worker(server, port, password="", processes=None, evt=None):
             else:
                 results = p.map(process_paper, batch)
                 zippedlist = zlib.compress(cPickle.dumps(results))
-                qm.return_result(zippedlist)
+
+                if zippedlist != None:
+                    qm.return_result(xmlrpclib.Binary(zippedlist))
         except KeyboardInterrupt as e:
             logger.warn("Interrupted client")
             break;
@@ -175,12 +174,11 @@ def main():
         port     = args[1]
         password = args[2] 
 
-
     pevt = threading.Event()
 
     try:
         p = Process(target=lambda:
-        run_worker(server,port,password,options.processes,pevt))
+        run_worker(server,port,password,int(options.processes),pevt))
         p.start()
         while 1:
             raw_input()
