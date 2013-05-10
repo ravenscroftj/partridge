@@ -85,6 +85,17 @@ class PaperDaemon(Thread):
         self.setup_server()
         self.fsw.start()
 
+        #enqueue any xml papers in the working directory
+        for root,dirs,files in os.walk(self.pdir):
+
+            for file in files:
+                if(file.endswith(".xml")):
+                    self.processq.put(os.path.join(root,file))
+
+        self.logger.info("Found %d files in the 'working' dir queued for annotation", self.processq.qsize())
+
+
+
         while self.running:
             
             self.task_files = []
