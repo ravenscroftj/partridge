@@ -1,183 +1,351 @@
+""" This is the partridge preprocessor daemon
 """
-Daemon that handles paper uploads and processes new data
-"""
+
 import sys
 import logging
 import os
 import time
 import traceback
+import tempfile
+import shutil
+
+
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+
+from partridge.preprocessor.fs import FilesystemWatcher
 
 from threading import Thread
 from multiprocessing import Queue
 from Queue import Empty
 
-from partridge.preprocessor.fs import FilesystemWatcher
-from partridge.preprocessor.notification import send_error_report, \
-send_success_report
 
 from partridge.models import db
 from partridge.models.doc import PaperFile, PaperWatcher
 
+from partridge.config import config
 from partridge.tools.paperstore import PaperParser
-from partridge.tools.converter import PDFXConverter
-from partridge.tools.annotate import RemoteAnnotator
-from partridge.tools.split import SentenceSplitter
 from partridge.tools.papertype import PaperClassifier
+from partridge.preprocessor.server import _get_uptox_items, \
+store_result,load_pp_stats, save_pp_stats
+
+
+from partridge.tools.converter import PDFXConverter
+
+from partridge.preprocessor.notification import inform_watcher, \
+send_error_report, send_success_report
+from partridge.preprocessor.common import PreprocessingException
+
 
 class PaperExistsException(Exception):
     pass
 
-
 class PaperDaemon(Thread):
-    """The paper daemon handles conversion and preprocessing of papers
+    """This system checks, converts and stores
     """
-    
+
     running = False
 
-    def __init__(self, watchdir, outdir, logger):
+    def __init__(self, indir, pdir, outdir, logger):
         Thread.__init__(self)
         self.fsw = FilesystemWatcher(logger)
-        self.fsw.watch_directory(watchdir)
+        self.fsw.watch_directory(indir)
+        self.watchdir = indir
+        self.pdir   = pdir
         self.outdir = outdir
         self.logger = logger
         self.paper_classifier = PaperClassifier()
+        self.processq = Queue()
+        self.workercount = 0
+
+#---------------------------------------------------------------------
+
+    def register_worker_pool(self, size):
+        self.workercount += size
+
+    def unregister_worker_pool(self, size):
+        self.workercount -= size
+
+    def setup_server(self):
+
+        self.logger.info("Establishing queue management server")
+
+        self.qm = SimpleXMLRPCServer((config['PP_LISTEN_ADDRESS'],  
+            config['PP_LISTEN_PORT']), 
+            logRequests=False,
+            allow_none=True)
+
+        #load preprocessing stats from disk
+        self.stats = load_pp_stats(self.outdir)
+
+        self.qm.register_function(lambda:self.processq.qsize(),"qsize")
+
+        self.qm.register_function(lambda x: _get_uptox_items(x, self.processq),             "get_work")
+
+        self.qm.register_function(self.register_worker_pool, "register_pool")
+
+        self.qm.register_function(lambda: self.workercount, "poolsize")
+
+        self.qm.register_function(self.unregister_worker_pool,
+        "unregister_pool")
+
+        self.qm.register_function(lambda: self.stats[0] , "average")
+
+        self.qm.register_function(
+        lambda x: store_result(x,self.fsw.paper_queue, self.outdir,
+        self.logger), "return_result")
+        
+        self.logger.info("Listening for paper workers on %s:%d auth=%s",
+            config['PP_LISTEN_ADDRESS'], config['PP_LISTEN_PORT'],
+            config['PP_AUTH_KEY'])
+
+        t = Thread(target=lambda:self.qm.serve_forever())
+        t.start()
+
+#---------------------------------------------------------------------
 
     def run(self):
-        """This is the main loop for the paper daemon"""
         self.running = True
 
+        self.setup_server()
         self.fsw.start()
 
+        #enqueue any xml papers in the working directory
+        for root,dirs,files in os.walk(self.pdir):
+
+            for file in files:
+                if(file.endswith(".xml")):
+                    self.processq.put(os.path.join(root,file))
+
+        self.logger.info("Found %d files in the 'working' dir queued for annotation", self.processq.qsize())
+
         while self.running:
+            
+            self.task_files = []
+            
             try:
-                paper = self.fsw.paper_queue.get(block=False)
-                self.logger.info("Processing %s", paper)
-                try:
-                    paperObj = self._process_paper(paper)
-                    
+                task = self.fsw.paper_queue.get()
+            except:
+                continue
+
+            try:
+                if task[0] == 'STOP':
+                    print "Stopping..."
+                    break
+                elif task[0] == "QUEUE":
+                    #Add paper to queue and convert from PDF if required
+                    self.logger.info("Checking if %s exists", task[1])
                     try:
-                        self.informWatcher( paper,paperObj=paperObj)
-                    except Exception as e:
-                        self.logger.warn("Watcher couldn't be informed: %s", e)
-                        exc_type, exc_obj, exc_tb = sys.exc_info()
-                        for line in traceback.format_tb(exc_tb):
-                            self.logger.error(line)
+                        self.enqueue(task[1])
 
-                except Exception as e:
-                    #get exception information and dump to user
-                    exc_type, exc_obj, exc_tb = sys.exc_info()
-                    self.logger.error("Error processing paper %s: %s",
-                        paper,e)
-                    
-                    for line in traceback.format_tb(exc_tb):
-                        self.logger.error(line)
+                    except PaperExistsException:
+                        print "Paper Already exists, cleaning up"
+                        self.cleanup(task[1])
 
-                    try:
-                        self.informWatcher( paper, 
-                            exception=e, 
-                            tb=exc_tb,
-                            files=[file for file,action in self.paper_files])
-                    except Exception as emailError:
-                        self.logger.error("Error sending message %s",
-                            emailError)
+                elif task[0] == "STORE":
+                    self.store(task[1])
 
+            except Exception as e:
+                #get exception information and dump to user
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                self.logger.error("Error processing paper: %s" ,e)
+                
+                for line in traceback.format_tb(exc_tb):
+                    self.logger.error(line)
 
-
-                    if not isinstance(e, PaperExistsException):
-                    
-                        try:
-                            #send the error report
-                            send_error_report( e, exc_tb, 
-                                [file for file,action in self.paper_files])
-
-                        except Exception as e:
-                            self.logger.error("ERROR SENDING EMAIL: %s", e)
-
-                    #set paperObj to none for file cleanup
-                    paperObj = None
-
-                finally:
-
-                    self.cleanupFiles(paperObj)
-
-            except Empty:
-                self.logger.debug("No work to do.. going back to sleep")
-                time.sleep(1)
-
-        # stop the filesystem watcher
+        self.logger.info("Exited main loop. Shutting down...")
+        #when we come out of the loop kill the filesystem watcher
+        self.logger.info("Shutting down filesystem watcher...")
         self.fsw.stop()
+        self.logger.info("Shutting down XML-RPC server...")
+        self.qm.shutdown()
 
-    def informWatcher(self, papername, **kwargs):
-        '''Inform watchers of papers what happened to them''' 
 
-        basename = os.path.basename(papername)
 
-        q = PaperWatcher.query.filter(PaperWatcher.filename == basename)
+#---------------------------------------------------------------------
 
-        if(q.count() > 0):
-            w = q.first()
+    def store(self, result):
+        """Once a document has been handled, store it in file"""
+        
+        if(isinstance(result, PreprocessingException)):
+            self.handleProcessingException(result)
+            print result.files
+        else:
+            filename, outfile, timetaken = result
 
-            self.logger.info("Informing %s about paper %s", w.email, w.filename) 
+            #store the paper object in database
+            paperObj = self.storePaperData(outfile)
 
-            if "paperObj" in kwargs:
-                send_success_report( kwargs['paperObj'], w.email)
+            #add paper classification to database
+            paperObj = self.classifyPaper(paperObj)
+
+            filenames = [filename,outfile]
+
+            basename = os.path.basename(filename)
+            name,ext  = os.path.splitext(basename)
+            pdf = os.path.join(self.watchdir,name + ".pdf")
+
+            if os.path.exists(pdf):
+                filenames.append(pdf)
+
+            #add the related files to the db
+            self.savePaperFiles(filenames, paperObj)
+
+            self.logger.info("Paper has been added successfully")
+
+            try:
+                inform_watcher(self.logger, filename, paperObj=paperObj)
+            except Exception as e:
+                self.logger.warn("Failed to inform watcher about paper"
+                +" success: %s", e)
+
+
+            #finally update stats
+            average = self.stats[0]
+
+            total = self.stats[1] +  1
+
+            if(average == 0.0):
+                self.stats = (timetaken,total)
             else:
-                send_error_report( kwargs['exception'], kwargs['tb'],
-                    kwargs['files'], w.email)
+                self.stats = (average + ( (timetaken - average)
+                / self.stats[1]), total)
 
-            db.session.delete(w)
-            db.session.commit()
+            #save the preprocessing stats to disk
+            save_pp_stats(self.stats, self.outdir)
+
+            return paperObj
+
+#---------------------------------------------------------------------
+    def savePaperFiles(self, filenames, paper):
         
 
+        for file in filenames:
+
+            dirname = os.path.dirname(file)
+            basename = os.path.basename(file)
+
+            final_path = os.path.join(self.outdir,basename)
+
+            self.logger.info("Saving file %s", final_path)
+
+            if(file != final_path):
+                os.rename(file, final_path)
+
+            fileObj = PaperFile(path=final_path)
+            db.session.add(fileObj)
+            paper.files.append(fileObj)
+        
+        db.session.commit()
+
+#---------------------------------------------------------------------
+
+    def handleProcessingException(self, result):
+        """Method for handling processing exceptions"""
+        #get exception information and dump to user
+        self.logger.error("Error processing paper %s: %s",
+            result.paper,result)
+
+
+        inform_watcher(self.logger, result.paper, exception=result)
+    
+        try:
+            print result.files
+            #send the error report
+            send_error_report(result, result.traceback, 
+                [result.paper])
+
+        except Exception as e:
+            self.logger.error("ERROR SENDING EMAIL: %s", e)
+
+
+        self.cleanup(result.paper)
+
+#---------------------------------------------------------------------
+        
+    def storeFile(self, filename, data):
+        """Store file data retrieved from a remote worker"""
+
+        self.logger.info("Results are in for %s, storing to disk...",
+        filename)
+
+        basename = os.path.basename(filename)
+        name,ext = os.path.splitext(basename)
+
+        outfile = os.path.join(self.outdir, name+"_final.xml")
+
+        with open(outfile,'wb') as f:
+            f.write(data)
+
+        return outfile
+            
+
+#---------------------------------------------------------------------
+
+    def cleanup(self, filename):
+        """If something went wrong, clean up mess"""
+
+        basename = os.path.basename(filename)
+        dirname  = os.path.dirname(filename)
+        name,ext = os.path.splitext(basename)
+
+        #delete the file
+        self.logger.info("Removing file %s", filename)
+        os.unlink(filename)
+
+        pdf = os.path.join(self.watchdir, basename)
+
+        if(os.path.exists(pdf)):
+            self.logger.info("Removing PDF file %s", pdf)
+
+            os.unlink(pdf)
+
+#---------------------------------------------------------------------
+
     def stop(self):
+        self.logger.info("Sending stop command to task queue")
         self.running = False
+        self.fsw.paper_queue.put(("STOP",))
+        self.join()
 
-    def _process_paper(self, papername):
-        """Single method for handling a paper"""
+#---------------------------------------------------------------------
 
-        # set up a list of files that need moving to the processed folder
-        # and recording in the db
-        self.paper_files = [ (papername, 'move'),  ]
+    def enqueue(self, file):
+        """Check if a file is a PDF and if it is, convert"""
 
-        basename = os.path.basename(papername)
+        self.logger.info("Checking format of file %s", file)
 
-        self.name,ext= os.path.splitext(basename)
+        basename = os.path.basename(file)
+        name,ext = os.path.splitext(basename)
 
-        infile = papername
+        pdf = False
 
-        #carry out pdf conversion if necessary
-        if( papername.endswith("pdf")):
-            infile = self.convertPDF(infile)
+        if(basename.endswith(".pdf")):
+            
+            self.logger.info("%s has been converted and re-queued for paper check", 
+            self.convertPDF(file))
+
         else:
-            self.logger.debug("No conversion necessary on file %s", papername)
+            if(self.paperExists(file)):
+                raise PaperExistsException("Paper Already Exists")
 
-        #see if the paper already exists
-        if(self.paperExists(infile)):
-            raise PaperExistsException("Paper already exists")
+            basename = os.path.basename(file)
+            newname = os.path.join(self.pdir, basename)
+            os.rename(file, newname)
 
-        #run XML splitting and annotating
-        infile = self.splitXML(infile)
+            self.processq.put(newname)
 
-        #run XML annotation
-        infile = self.annotateXML(infile)
+            #enqueue the file to be annotated
+            self.logger.info("%s has been enqueued for annotation", basename)
+        
 
-        #do some analysis and store the paper in the DB
-        paper = self.storePaperData(infile)
-
-        #finally add paper type to the database
-        return self.classifyPaper(paper)
-
+#---------------------------------------------------------------------
+        
     def paperExists(self, infile):
         """Return true if paper with same authors and title already in db"""
         parser = PaperParser()
         return parser.paperExists(infile)
 
-    def storePaperData(self, infile):
-        """Call the metadata parser and return DB id for this paper"""
-        parser = PaperParser()
-        paper = parser.storePaper(infile)
-        self.logger.info("Added paper '%s' to database", paper.title)
-        return paper
+#---------------------------------------------------------------------
 
     def classifyPaper(self, paper):
         """Decide what 'type' the paper is - case study, research or review"""
@@ -189,36 +357,19 @@ class PaperDaemon(Thread):
         paper.type = type
 
         return db.session.merge(paper)
-        
-
-    
-    def annotateXML(self, infile):
-        """Routine to start the SAPIENTA process call"""
-        
-        outfile = os.path.join(self.outdir,  self.name + "_final.xml")
-        
-        self.logger.info("Annotating paper %s", infile)
-
-        a = RemoteAnnotator()
-        a.annotate( infile, outfile )
-        self.paper_files.append( (outfile, 'keep') )
-
-        return outfile
 
 
-    def splitXML(self, infile):
-        """Routine for starting XML splitter call"""
+#---------------------------------------------------------------------
 
-        self.logger.info("Splitting sentences in %s",  infile)
-        
-        outfile = os.path.join(self.outdir,  self.name + "_split.xml")
+    def storePaperData(self, infile):
+        """Call the metadata parser and return DB id for this paper"""
+        parser = PaperParser()
+        paper = parser.storePaper(infile)
+        self.logger.info("Added paper '%s' to database", paper.title)
+        return paper
 
-        s = SentenceSplitter()
-        s.split(infile, outfile)
-        self.paper_files.append( (outfile, 'delete') )
 
-        return outfile
-
+#---------------------------------------------------------------------
 
     def convertPDF(self, infile):
         """Small routine for starting the PDF conversion call
@@ -227,46 +378,13 @@ class PaperDaemon(Thread):
         self.logger.info("Converting %s to xml", infile)
 
         p = PDFXConverter()
-        outfile = os.path.join(self.outdir, self.name + ".xml")
-        p.convert(infile, outfile)
 
-        self.paper_files.append( (outfile, 'keep') )
+        basename = os.path.basename(infile)
 
-        return outfile
+        name,ext= os.path.splitext(basename)
 
-    def cleanupFiles(self, paper):
-        """Move or delete all files involved in the conversion"""
+        outname = os.path.join(self.watchdir,name + ".xml")
 
-        if(paper == None):
-            self.logger.warn("Paper was not processed, removing files")
-        else:
-            #make sure the paper is bound to the session
-            db.session.add(paper)
+        p.convert(infile, outname)
 
-        def keep_file( filename ):
-            fileObj = PaperFile( path=filename )
-            db.session.add(fileObj)
-            paper.files.append(fileObj)
-            db.session.commit()
-
-
-        for filename, action in self.paper_files:
-
-            if paper == None or action == "delete":
-                self.logger.debug("Deleting file %s", filename) 
-                os.unlink(filename)
-
-            elif action == "move":
-                self.logger.debug("Moving file %s", filename)
-                bname = os.path.basename(filename)
-                newname = os.path.join(self.outdir, bname)
-                os.rename(filename, newname)
-                keep_file(newname)
-
-            elif action == "keep":
-                self.logger.debug("Keeping file %s", filename)
-                keep_file(filename)
-    
-#-----------------------------------------------------------------------------
-
-
+        return outname

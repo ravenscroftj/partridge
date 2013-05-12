@@ -28,6 +28,8 @@ class PaperParser:
     def parseFileObject(self, f):
         self.doc = xml.dom.minidom.parse(f)
 
+    def parseString(self, s):
+        self.doc = xml.dom.minidom.parseString(s)
 
     def parsePaper(self, filename):
         """Parse a paper but don't store it"""
@@ -44,18 +46,53 @@ class PaperParser:
         paper = Paper()
         paper.title    = self.extractTitle()
         paper.abstract = self.extractAbstract()
+        paper.doi      = self.extractDOI()
 
         #add authors
         paper.authors.extend(self.extractAuthors())
-        
-        #get sentence information
-        paper.sentences.extend( self.extractSentences() )
+
+        sentences = self.extractSentences()
+
+        for text,coresc in sentences:
+            sent = Sentence(text=text,coresc=coresc)
+            db.session.add(sent)
+            paper.sentences.append(sent)
 
         #store the updated database info
         db.session.add(paper)
         db.session.commit()
 
         return paper
+
+    def extractDOI(self):
+        """Extract a paper's DOI from the XML"""
+
+        #first try extracting SciXML article ID style
+        ids = self.doc.getElementsByTagName("article-id")
+        for id in ids:
+            if id.getAttribute("pub-id-type") == "doi":
+                return self.extractText(id)
+
+        #now try the ART format style
+        mdlist = self.doc.getElementsByTagName("METADATA")
+
+        if len(mdlist) > 0:
+            for node in mdlist[0].childNodes:
+                if ( (node.nodeType == self.doc.ELEMENT_NODE) and
+                    (node.localName == "DOI") ):
+                    return self.extractText(node)
+                elif( (node.nodeType == self.doc.TEXT_NODE) and
+                    (node.wholeText.find("/") > -1)):
+
+                    doi = node.wholeText
+
+                    if(doi.endswith("article")):
+                        return doi[:-7]
+                    else:
+                        return doi
+
+        return None
+            
 
     def extractSentences(self):
         """Extract sentences and relative coresc concept from xml"""
@@ -66,13 +103,14 @@ class PaperParser:
             s = annoEl.parentNode
             annoType = annoEl.getAttribute("type")
 
-            #store sentence information
-            sent = Sentence(text=self.extractText(s),
-                coresc=annoType)
+            yield (self.extractText(s), annoType)
 
-            db.session.add(sent)
+    def extractRawSentences(self):
+        """Extract sentence data without coresc information"""
+        
+        for s in self.doc.getElementsByTagName("s"):
+            yield self.extractText(s)
 
-            yield sent
 
     def extractAbstract(self):
         """Extract the paper abstract from xml"""

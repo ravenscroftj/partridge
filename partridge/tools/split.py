@@ -13,12 +13,12 @@ from sets import Set
 
 from partridge.config import config
 
-blacklist = Set(['journal-id', 'journal-meta','article-id','article-categories'
-'contrib','aff','pub-date','volume','issue','elocation-id','history',
-'copyright-statement', 'copyright-year','counts','s','subj-group','author-notes'
-'title','ref-list','ack','meta'])
-
-logging.basicConfig(level=logging.DEBUG)
+blacklist = set(['journal-id', 'journal-meta','article-id','article-categories'
+'contrib','contrib-group', 'aff','pub-date','volume','issue','elocation-id',
+'history','author-notes', 'copyright-statement', 'funding-group',
+'copyright-year','counts','s', 'subj-group','author-notes', 'alt-title',
+'title','ref-list','ack','meta','permissions', 'custom-meta-group',
+'responseDate','request','header'])
 
 SPLITTER_PATH = str(os.path.join(config['MODELS_DIR'], "splitter.dat"))
 
@@ -47,12 +47,52 @@ class SentenceSplitter:
         if(len(self.indoc.getElementsByTagName("s")) > 0):
             logging.debug("Skipped splitting document... already split!")
         else:
+            #make sure there is an abstract or else create one
+            
+            if ( (len(self.indoc.getElementsByTagName("abstract")) < 1 ) &
+            (len(self.indoc.getElementsByTagName("ABSTRACT")) < 1) ):
+                #add abstract to paper
+                self.addDummyAbstract()
+
+            #do the annotating
             self.splitElement(self.indoc)
 
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.indoc.writexml(f)
 
+    def addDummyAbstract(self):
+        """If no abstract is found, insert one"""
 
+        dummytext = "No abstract available for this paper"
+
+        logging.info("Adding dummy abstract...")
+
+        if(len(self.indoc.getElementsByTagName("TITLE")) > 0):
+            title = self.indoc.getElementsByTagName("TITLE")[0]
+            nextEl = title.nextSibling
+            paperEl = title.parentNode
+            #create abstract
+            el = self.indoc.createElement("ABSTRACT")
+            text = self.indoc.createTextNode(dummytext)
+            el.appendChild(text)
+            paperEl.insertBefore(el, nextEl)
+
+        if(len(self.indoc.getElementsByTagName("front")) > 0):
+            #get the element
+            front = self.indoc.getElementsByTagName("front")[0]
+            nextEl = self.indoc.getElementsByTagName("permissions")[0].nextSibling
+            abstractEl = self.indoc.createElement("abstract")
+            parentEl = nextEl.parentNode
+            titleEl = self.indoc.createElement("title")
+            absec = self.indoc.createElement("sec")
+            abp = self.indoc.createElement("p")
+
+            abstractEl.appendChild(absec)
+            absec.appendChild(titleEl)
+            absec.appendChild(abp)
+            abp.appendChild(self.indoc.createTextNode(dummytext))
+
+            parentEl.insertBefore(abstractEl,nextEl)
     
     def splitElement(self, element):
         '''Split text found within element into sentences

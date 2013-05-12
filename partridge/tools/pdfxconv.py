@@ -9,7 +9,8 @@ import logging
 
 from optparse import OptionParser
 from converter import PDFXConverter
-from annotate import Annotator, RemoteAnnotator
+#annotator is an alias for the 'recommended' annotator at this time
+from annotate import Annotator
 from split import SentenceSplitter
 
 
@@ -30,6 +31,8 @@ def main():
     if(options.verbose):
         logging.basicConfig(level=logging.DEBUG)
         logging.debug("Verbose mode on.")
+    else:
+        logging.basicConfig(level=logging.INFO)
 
     if( len(args) < 1):
         parser.print_help()
@@ -53,7 +56,7 @@ def main():
                 
         if(ext == ".pdf"):
 
-            print "Converting %s" % infile
+            logging.info("Converting %s", infile)
             
             p.convert(infile, outfile)
             split_infile = outfile
@@ -63,10 +66,10 @@ def main():
             split_infile = infile
 
         else:
-            print "Unrecognised format for file %s" % infile
+            logging.info("Unrecognised format for file %s", infile)
 
         if(options.split):
-            print "Splitting sentences in %s" % infile
+            logging.info("Splitting sentences in %s", infile)
             
             s = SentenceSplitter()
             s.split(split_infile, outfile)
@@ -74,11 +77,12 @@ def main():
             anno_infile = outfile
 
         if(options.annotate):
-            a = RemoteAnnotator()
+            a = Annotator()
 
             #build annotated filename
             name,ext = os.path.splitext(anno_infile)
             outfile = name + "_annotated" + ext
+            logging.info("Annotating file and saving to %s", outfile)
             a.annotate( anno_infile, outfile )
 
 

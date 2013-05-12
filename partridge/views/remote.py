@@ -93,8 +93,9 @@ def do_scan( url ):
     if type.startswith("text/html"):
 
         #see if its a PLOS page and whether we can harvest links
+        m = re.search
 
-        if( url.find("www.plosone.org/article/info") > -1):
+        if( re.search("https?://www\.(plos.+)\.org/article/info", url) != None):
             #try extracting links to XML doc
             path = find_paper_plos_page( u.read() )
             u.close()

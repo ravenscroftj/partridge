@@ -1,0 +1,45 @@
+{% extends "mainpage.html" %}
+{% block title %}Preprocessing Queue{% endblock %}
+{% block extrascripts %}
+<script src="http://code.jquery.com/jquery-migrate-1.1.0.js"></script>
+<script src="/static/js/jquery.ba-bbq.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+var loader_image = "/static/img/loader.gif";
+var page_limit = {{ limit }};
+</script>
+<script src="/static/js/queryform.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+<div class="row">
+
+<div class="span8 contentbox">
+
+<h2>Preprocessor Information</h2>
+
+<div class="row">
+
+<div class="span8">
+<p>This page shows information about Partridge's paper preprocessor.</p>
+
+<p><em>If you upload a paper, it will be added to the database in approx. 
+{% if qsize < poolsize %}{{average}}{% else %}{{qsize * average / poolsize}}{% endif %} minutes.</em></p>
+
+
+<p>There are currently {{qsize}} jobs on the processing queue.</p>
+
+<p>Average processing time is {{average}} minutes</p>
+
+<p>There are currently {{poolsize}} workers annotating papers</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+{% endblock %}
+

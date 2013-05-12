@@ -1,5 +1,6 @@
 import sys
 import logging
+import threading
 
 from optparse import OptionParser
 from flask import Config,Flask
@@ -22,12 +23,15 @@ def create_app( config ):
     import views.paper
     import views.query
     import views.remote
+    import views.queue
 
     app.url_map.converters["paper"] = PaperConverter
     app.url_map.converters["file"] = FileConverter
 
     app.add_url_rule("/",view_func = views.index)
     app.add_url_rule("/query", view_func = views.query.query)
+
+    app.add_url_rule("/queue", view_func = views.queue.show)
 
     app.add_url_rule("/upload", methods=['GET','POST'], 
         view_func = views.upload.upload)
@@ -96,22 +100,40 @@ def run():
         
         
     #set up logger
-    logging.basicConfig(level=logLevel)
-
+    logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
-    pdaemon.start()
+
+    if(config['PP_LOCAL_WORKER']):
+        logging.info("Setting up local worker")
+        from partridge.preprocessor.client import create_client
+
+        clientevt = threading.Event()
+        pclient = create_client( config, clientevt )
 
     if not opts.paperdaemon:
         app.debug = opts.debug
-        app.run(host="0.0.0.0", port=int(opts.port))
-        pdaemon.stop()
+        try:
+            app.run(host="0.0.0.0", port=int(opts.port))
+        except KeyboardInterrupt as e:
+            logging.info("Interrupted by user...")
+
     else:
         try:
             while 1:
                 raw_input()
         except KeyboardInterrupt as e:
-            print "Shutting down paper daemon..."
+            logging.info("Interrupted by user...")
+
         
-        pdaemon.stop()
+    if(config['PP_LOCAL_WORKER']):
+        logging.info("Waiting for client to finish work...")
+        clientevt.set()
+        pclient.join()
+
+    
+    logging.info("Shutting down paper daemon...")
+    pdaemon.stop()
+
+

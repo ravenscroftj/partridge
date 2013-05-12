@@ -35,10 +35,10 @@ class Paper( db.Model ):
   __tablename__ = "papers"
 
   id = Column(Integer, primary_key=True)
+  doi   = Column(String(50))
   title = Column(String(250)) 
   authors = relationship("Author", secondary=paper_authors, backref="papers")
   abstract = Column(Text())
-
   type = Column(String(25))
 
   def sentenceDistribution(self, returnCounter=False):

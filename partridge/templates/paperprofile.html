@@ -24,6 +24,15 @@
 {% endif %}
 </h3>
 
+<h4>DOI</h4>
+<p>
+{% if paper.doi != None %}
+<a href="http://dx.doi.org/{{paper.doi}}">{{paper.doi}}</a>
+{% else %}
+Unknown DOI
+{% endif %}
+</p>
+
 <h4>Abstract</h4>
 <div id="paperAbstract">
 {{ paper.abstract }}
