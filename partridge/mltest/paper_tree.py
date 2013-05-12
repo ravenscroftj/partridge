@@ -78,37 +78,42 @@ app.config.update(config)
 db.app = app
 db.init_app(app)
 
-#find paper sources
-REVIEW_DIR   = "/home/james/dissertation/papers/training/review"
-RESEARCH_DIR = "/home/james/dissertation/papers/training/research"
-CASE_DIR     = "/home/james/dissertation/papers/training/case"
+TYPE_DIRS = {
+    "Review"     : "/home/james/dissertation/papers_for_type/review",
+    "Research"   : "/home/james/dissertation/papers_for_type/research",
+    "Case Study" : "/home/james/dissertation/papers_for_type/case", 
+    "Essay"      : "/home/james/dissertation/papers_for_type/essay",
+    "Opinion"    : "/home/james/dissertation/papers_for_type/opinion",
+    "Perspective": "/home/james/dissertation/papers_for_type/perspective",
+}
 
+types = {}
+for paper_type in TYPE_DIRS:
+    types[paper_type] = set(find_paper_ids(TYPE_DIRS[paper_type]))
+    
+    print "Found %d %s papers" % (len(types[paper_type]), paper_type)
+    
 
-research_ids = set( find_paper_ids( RESEARCH_DIR ) )
-print "Found %d research papers" % len(research_ids)
+all_ids = set()
 
-review_ids   = set( find_paper_ids( REVIEW_DIR ) )
-print "Found %d review papers" % len(review_ids)
+for type in types:
+    all_ids |= types[type]
 
+print "Found %d papers in total" % len(all_ids)
 
-case_ids   = set( find_paper_ids( CASE_DIR ) )
-print "Found %d case study papers" % len(case_ids)
-
-all_ids = review_ids.union(research_ids).union(case_ids)
 
 papers = Paper.query.filter(Paper.id.in_(all_ids)).all()
 
 #set up data domain
 class_var = Orange.feature.Discrete("type")
-class_var.add_value("Research")
-class_var.add_value("Review")
-class_var.add_value("Case Study")
+
+for type in types:
+    class_var.add_value(type)
 
 FEATURES = C_ABRV.keys()
 
 domain = Orange.data.Domain([Orange.feature.Continuous(x) for x in FEATURES], 
 class_var)
-
 
 paper_table = Orange.data.Table(domain)
 print "Loading Data..."
@@ -123,14 +128,12 @@ for paper in papers:
     sentdist = paper.sentenceDistribution(True)
     for coresc in FEATURES:
         inst_list.append( sentdist[coresc] * 100 / len(paper.sentences) )
-        
-    if(paper.id in review_ids):
-        inst_list.append("Review")
-    elif( paper.id in research_ids):
-        inst_list.append("Research")
-    elif( paper.id in case_ids):
-        inst_list.append("Case Study")
 
+    for type in types:
+        if paper.id in types[type]:
+            inst_list.append(type)
+            break
+        
     inst = Orange.data.Instance(domain, inst_list)
 
     paper_table.append(inst)
@@ -192,7 +195,7 @@ for i in range(len(learners)):
     Orange.evaluation.scoring.AUC(results)[i])
 
     for k in range(0,3):
-        printResults(paper_table, results.classifiers[k][i], ["Review","Research","Case Study"])
+        printResults(paper_table, results.classifiers[k][i], types.keys())
 
 print "Storing tree learned from data"
 
