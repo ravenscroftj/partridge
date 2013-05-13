@@ -3,6 +3,7 @@ from __future__ import division
 import Orange,orngTree
 import os
 import sys
+import random
 
 
 from partridge.config import config
@@ -50,8 +51,21 @@ def printMeasures( confusion ):
 
     for c in confusion:
         recall  = confusion[c][c] / sum(confusion[c].values())
-        prec = confusion[c][c] / sum( [ klass[c] for klass in confusion.values()] )
-        fm     = (2 * prec * recall) / (prec + recall)
+
+
+        fp = sum( [ klass[c] for klass in confusion.values()])
+
+        
+        if( (confusion[c][c] > 0) and (fp > 0) ):
+            prec = confusion[c][c] / fp
+        else:
+            prec = 0
+
+        
+        if( (prec > 0) or (recall > 0)):
+            fm     = (2 * prec * recall) / (prec + recall)
+        else:
+            fm     = 0
 
         print "%s\t\t%f\t\t%f\t\t%f" % ( c, recall, prec, fm)
     
@@ -72,6 +86,22 @@ def printResults(tabledata, tree, classes):
     printMeasures( confusion )
 
 
+class SimpleTreeLearnerSetProb():
+    """
+    Orange.classification.tree.SimpleTreeLearner which sets the skip_prob
+    so that on average a square root of the attributes will be 
+    randomly choosen for each split.
+    """
+    def __init__(self, wrapped):
+        self.wrapped = wrapped
+
+    def __call__(self, examples, weight=0):
+        self.wrapped.skip_prob = 1-len(examples.domain.attributes)**0.5/len(examples.domain.attributes)
+        return self.wrapped(examples)
+
+#----------------------------------------------------------
+
+
 app = Flask(__name__)
 app.config.update(config)
 
@@ -85,6 +115,8 @@ TYPE_DIRS = {
     "Essay"      : "/home/james/dissertation/papers_for_type/essay",
     "Opinion"    : "/home/james/dissertation/papers_for_type/opinion",
     "Perspective": "/home/james/dissertation/papers_for_type/perspective",
+    "Viewpoint"  : "/home/james/dissertation/papers_for_type/viewpoints",
+    "Synopsis"   : "/home/james/dissertation/papers_for_type/synopsis",
 }
 
 types = {}
@@ -101,9 +133,6 @@ for type in types:
 
 print "Found %d papers in total" % len(all_ids)
 
-
-papers = Paper.query.filter(Paper.id.in_(all_ids)).all()
-
 #set up data domain
 class_var = Orange.feature.Discrete("type")
 
@@ -118,43 +147,42 @@ class_var)
 paper_table = Orange.data.Table(domain)
 print "Loading Data..."
 
-for paper in papers:
-    
+offset = 0
+limit = 50
 
-    if len(paper.sentences) < 1:
-        continue
+q = Paper.query.filter(Paper.id.in_(all_ids))
 
-    inst_list = []
-    sentdist = paper.sentenceDistribution(True)
-    for coresc in FEATURES:
-        inst_list.append( sentdist[coresc] * 100 / len(paper.sentences) )
+while q.offset(offset).limit(limit).count() > 0:
 
-    for type in types:
-        if paper.id in types[type]:
-            inst_list.append(type)
-            break
-        
-    inst = Orange.data.Instance(domain, inst_list)
+    print "Downloading batch of %d papers..." % limit
 
-    paper_table.append(inst)
+    for paper in q.offset(offset).limit(limit).all():
+        if len(paper.sentences) < 1:
+            continue
 
-class SimpleTreeLearnerSetProb():
-    """
-    Orange.classification.tree.SimpleTreeLearner which sets the skip_prob
-    so that on average a square root of the attributes will be 
-    randomly choosen for each split.
-    """
-    def __init__(self, wrapped):
-        self.wrapped = wrapped
+        inst_list = []
+        sentdist = paper.sentenceDistribution(True)
+        for coresc in FEATURES:
+            inst_list.append( sentdist[coresc] * 100 / len(paper.sentences) )
 
-    def __call__(self, examples, weight=0):
-        self.wrapped.skip_prob = 1-len(examples.domain.attributes)**0.5/len(examples.domain.attributes)
-        return self.wrapped(examples)
+        for type in types:
+            if paper.id in types[type]:
+                inst_list.append(type)
+                break
+            
+        inst = Orange.data.Instance(domain, inst_list)
+        paper_table.append(inst)
+
+        del paper
+
+    offset += limit
 
 
 
-tree = Orange.classification.tree.TreeLearner(min_instances=5, measure="gainRatio")
-rf_def = Orange.ensemble.forest.RandomForestLearner(trees=50, base_learner=tree, name="for_gain")
+tree = Orange.classification.tree.TreeLearner(min_instances=5,
+measure="gainRatio", rand=random)
+rf_def = Orange.ensemble.forest.RandomForestLearner(trees=50,
+base_learner=tree, name="for_gain", rand=random)
 
 #random forests with simple trees - simple trees do random attribute selection by themselves
 st = Orange.classification.tree.SimpleTreeLearner(min_instances=5)
