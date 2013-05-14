@@ -199,7 +199,7 @@ class PaperDaemon(Thread):
                 self.logger.warn("Failed to inform watcher about paper"
                 +" success: %s", e)
 
-            if ( 'TWITTER_ENABLED' in config ) and config['TWITTER_ENABED']:
+            if config.has_key('TWITTER_ENABLED') and config['TWITTER_ENABLED']:
                 try:
                     tweet_paper(paperObj)
                 except Exception as e:
