@@ -28,6 +28,7 @@ from partridge.tools.papertype import PaperClassifier
 from partridge.preprocessor.server import _get_uptox_items, \
 store_result,load_pp_stats, save_pp_stats
 
+from partridge.preprocessor.tweet import tweet_paper
 
 from partridge.tools.converter import PDFXConverter
 
@@ -197,6 +198,12 @@ class PaperDaemon(Thread):
             except Exception as e:
                 self.logger.warn("Failed to inform watcher about paper"
                 +" success: %s", e)
+
+            if ( 'TWITTER_ENABLED' in config ) and config['TWITTER_ENABED']:
+                try:
+                    tweet_paper(paperObj)
+                except Exception as e:
+                    self.logger.warn("Could not tweet about paper %s", e)
 
 
             #finally update stats

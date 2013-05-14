@@ -36,3 +36,10 @@ PP_AUTH_KEY = "topsecretkey"
 PP_LOCAL_WORKER = True #if true, runs a set of local workers for processing
 PP_WORKERS = 1 #set to None to automatically match your CPU cores
 
+
+#Twitter stuff
+TWITTER_ENABLED = False
+TWITTER_CONSUMER_KEY    = "yourconsumerkey"
+TWITTER_CONSUMER_SECRET = "yoursecretkey" 
+TWITTER_OAUTH_TOKEN     = "twitteraccountoauth"
+TWITTER_OAUTH_SECRET    = "twitteraccountoauthsecret" 
