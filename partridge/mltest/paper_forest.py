@@ -117,6 +117,7 @@ TYPE_DIRS = {
     "Perspective": "/home/james/dissertation/papers_for_type/perspective",
     "Viewpoint"  : "/home/james/dissertation/papers_for_type/viewpoints",
     "Synopsis"   : "/home/james/dissertation/papers_for_type/synopsis",
+    "Correspondence" : "/home/james/dissertation/papers_for_type/correspondence"
 }
 
 types = {}
@@ -210,9 +211,11 @@ plt.savefig("ROC.png")
 print "--------------------3 Fold Cross Validation------------------------"
 
 results = Orange.evaluation.testing.cross_validation(learners, paper_table,
-        folds=3, storeClassifiers=1)
+        folds=3, storeClassifiers=1,
+        random_generator=Orange.misc.Random(int(random.random()*10)))
 
 
+import cPickle
 
 
 print "Learner  CA     Brier  AUC"
@@ -222,12 +225,18 @@ for i in range(len(learners)):
     Orange.evaluation.scoring.Brier_score(results)[i],
     Orange.evaluation.scoring.AUC(results)[i])
 
+
+    with open(("results_%d.pickle" % i), "wb") as f:
+        cPickle.dump(results, f)
+
+
     for k in range(0,3):
-        printResults(paper_table, results.classifiers[k][i], types.keys())
+        indices = [paper_table[x] for x in range(0,len(paper_table)) 
+            if results.results[x].iteration_number == k]
+        printResults(indices, results.classifiers[k][i], types.keys())
 
 print "Storing tree learned from data"
 
-import cPickle
 
 tree = rf_simple( paper_table)
 
