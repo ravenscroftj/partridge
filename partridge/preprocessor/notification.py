@@ -28,15 +28,61 @@ def inform_watcher(logger, papername, **kwargs):
         logger.info("Informing %s about paper %s", w.email, w.filename) 
 
         if "paperObj" in kwargs:
-            send_success_report( kwargs['paperObj'], w.email)
+            
+            if "exists" in kwargs:
+                send_exists_email( papername, kwargs['paperObj'], w.email)
+
+            else:
+                send_success_report( kwargs['paperObj'], w.email)
         else:
 
             e = kwargs['exception']
             send_error_report( e, e.traceback,
                 [papername], w.email)
 
+        logger.info("Message to %s was sent...", w.email)
+
         db.session.delete(w)
         db.session.commit()
+
+#---------------------------------------------------------------
+def send_exists_email(filename, paperObj, to):
+    """If a paper exists in the system, send the uploader an email"""
+
+    file = os.path.basename(filename)
+
+    ctx=app.test_request_context()
+    ctx.push()
+    url = url_for(".paper_profile", the_paper=paperObj, _external=True)
+    ctx.pop()
+ 
+    txt = """Hi There,
+
+Thanks for submitting your paper to Partridge. We've done some analysis and
+determined that we already have a paper with the same DOI or an identical title
+and set of authors in our database.
+
+Paper Title: %s
+DOI (If Available): %s
+
+You can view the paper at the following URL:
+%s
+
+Your uploaded paper file will be purged from the queue to prevent duplication.
+If you think this is an error, forward this email to queries@papro.org.uk and
+we will investigate.
+
+Thanks,
+
+The Partridge Paper Processing Robot """ % (paperObj.title, paperObj.doi, url)
+
+    msg = MIMEText(txt)
+    msg['Subject'] = "Partridge: Paper Already Exists!"
+    msg['From']  = config['NOTIFICATION_FROM']
+    msg['To'] = to
+
+    send_mail( msg, to )
+
 
 #---------------------------------------------------------------
 
@@ -118,7 +164,7 @@ The Partridge Paper Processing Monkey """ % (paperObj.title, paperObj.type, url)
 #-----------------------------------------------------------------------------
 
 def send_mail( msg, to ):
-    s = smtplib.SMTP(config['NOTIFICATION_SMTP_SERVER'])
+    s = smtplib.SMTP(config['NOTIFICATION_SMTP_SERVER'], timeout=10)
     s.login(config['NOTIFICATION_SMTP_USER'], 
         config['NOTIFICATION_SMTP_PASWD'])
     s.sendmail(config['NOTIFICATION_FROM'], to ,msg.as_string())
