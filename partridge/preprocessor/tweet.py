@@ -16,12 +16,20 @@ app = db.app
 
 
 # see "Authentication" section below for tokens and keys
-t = Twitter(
-            auth=OAuth(config['TWITTER_OAUTH_TOKEN'], config['TWITTER_OAUTH_SECRET'],
-                       config['TWITTER_CONSUMER_KEY'], config['TWITTER_CONSUMER_SECRET'])
-           )
+if config['TWITTER_ENABLED']:
+    t = Twitter(
+                auth=OAuth( config['TWITTER_OAUTH_TOKEN'],
+                            config['TWITTER_OAUTH_SECRET'],
+                            config['TWITTER_CONSUMER_KEY'], 
+                            config['TWITTER_CONSUMER_SECRET'])
+                )
 
-url_len = t.help.configuration()['short_url_length']
+
+    url_len = t.help.configuration()['short_url_length']
+else:
+    t = None
+    url_len = 0
+
 
 def tweet_paper( paperObj ):
 

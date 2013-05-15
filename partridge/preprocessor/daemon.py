@@ -350,7 +350,15 @@ class PaperDaemon(Thread):
     def paperExists(self, infile):
         """Return true if paper with same authors and title already in db"""
         parser = PaperParser()
-        return parser.paperExists(infile)
+
+
+        paper = parser.paperExists(infile)
+
+        if paper != None:
+            inform_watcher(self.logger, infile, exists=True, paperObj=paper)
+            
+
+        return paper != None
 
 #---------------------------------------------------------------------
 
