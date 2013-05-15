@@ -40,6 +40,8 @@ def inform_watcher(logger, papername, **kwargs):
             send_error_report( e, e.traceback,
                 [papername], w.email)
 
+        logger.info("Message to %s was sent...", w.email)
+
         db.session.delete(w)
         db.session.commit()
 
@@ -162,7 +164,7 @@ The Partridge Paper Processing Monkey """ % (paperObj.title, paperObj.type, url)
 #-----------------------------------------------------------------------------
 
 def send_mail( msg, to ):
-    s = smtplib.SMTP(config['NOTIFICATION_SMTP_SERVER'])
+    s = smtplib.SMTP(config['NOTIFICATION_SMTP_SERVER'], timeout=10)
     s.login(config['NOTIFICATION_SMTP_USER'], 
         config['NOTIFICATION_SMTP_PASWD'])
     s.sendmail(config['NOTIFICATION_FROM'], to ,msg.as_string())
