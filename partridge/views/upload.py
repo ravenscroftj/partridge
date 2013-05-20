@@ -27,21 +27,23 @@ def upload():
             name,ext = os.path.splitext(file.filename)
 
             if ext in ALLOWED_EXTENSIONS:
+
                 fname = str(uuid.uuid4()) + ext
-                file.save(os.path.join(destdir,fname))
 
-            if ("email" in request.args) & (request.args['email'] != ""):
+                if ("email" in request.args) & (request.args['email'] != ""):
+                    
+                    current_app.logger.info("Registering watcher for paper at email %s",
+                    request.args['email'])
+
+                    watcher = PaperWatcher()
+                    watcher.email = request.args['email']
+                    watcher.filename = fname
+
+                    db.session.add(watcher)
+                    db.session.commit()
                 
-                current_app.logger.info("Registering watcher for paper at email %s",
-                request.args['email'])
-
-                watcher = PaperWatcher()
-                watcher.email = request.args['email']
-                watcher.filename = fname
-
-                db.session.add(watcher)
-                db.session.commit()
-            
+                #now save the file
+                file.save(os.path.join(destdir,fname))
 
 
 

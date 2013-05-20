@@ -28,6 +28,7 @@ from partridge.tools.papertype import PaperClassifier
 from partridge.preprocessor.server import _get_uptox_items, \
 store_result,load_pp_stats, save_pp_stats
 
+from partridge.preprocessor.tweet import tweet_paper
 
 from partridge.tools.converter import PDFXConverter
 
@@ -198,6 +199,12 @@ class PaperDaemon(Thread):
                 self.logger.warn("Failed to inform watcher about paper"
                 +" success: %s", e)
 
+            if config.has_key('TWITTER_ENABLED') and config['TWITTER_ENABLED']:
+                try:
+                    tweet_paper(paperObj)
+                except Exception as e:
+                    self.logger.warn("Could not tweet about paper %s", e)
+
 
             #finally update stats
             average = self.stats[0]
@@ -343,7 +350,15 @@ class PaperDaemon(Thread):
     def paperExists(self, infile):
         """Return true if paper with same authors and title already in db"""
         parser = PaperParser()
-        return parser.paperExists(infile)
+
+
+        paper = parser.paperExists(infile)
+
+        if paper != None:
+            inform_watcher(self.logger, infile, exists=True, paperObj=paper)
+            
+
+        return paper != None
 
 #---------------------------------------------------------------------
 

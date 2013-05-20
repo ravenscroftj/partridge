@@ -13,16 +13,27 @@ class PaperParser:
         with open(filename, 'rb') as f:
             self.doc = xml.dom.minidom.parse(f)
 
-        title = self.extractTitle()
-        authors = self.extractAuthors()
 
-        author_surnames = [ x.surname for x in authors]
+        #first test with DOI
+        doi = self.extractDOI()
 
-        results = Paper.query.join("authors").filter(
-            Paper.title == title,
-            Author.surname.in_( author_surnames) )
+        results = Paper.query.filter(Paper.doi == doi)
 
-        return results.count() > 0
+        if(results.count() < 1):
+
+            title = self.extractTitle()
+            authors = self.extractAuthors()
+
+            author_surnames = [ x.surname for x in authors]
+
+            results = Paper.query.join("authors").filter(
+                Paper.title == title,
+                Author.surname.in_( author_surnames) )
+
+        if results.count() > 0:
+            return results.first()
+        else:
+            return None
 
     
     def parseFileObject(self, f):
