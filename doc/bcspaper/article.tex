@@ -54,7 +54,7 @@
 %
 \maketitle
 
-\abstract{Partridge is a system that enables intelligent search for academic papers. Here we describe how Partridge implements the automatic classification of the type of a publication. For each paper, Partridge automatically extracts the full paper content from PDF files, determines sentence boundaries, automatically labels the sentences with core scientific concepts, and then uses a random forest model to classify the paper type. We show that the type of a paper can be reliably predicted by a model which analyses the distribution of core scientific concepts within the sentences of the paper. We discuss the appropriateness of many of the existing paper types used by major journals, and their corresponding distributions. Partridge is online and available for use, includes a browser-friendly bookmarklet for new paper submission, and demonstrates a range of possibilities for more intelligent search in the scientific literature.}
+\abstract{Partridge is a system that enables intelligent search for academic papers. Here we describe how Partridge implements the automatic classification of the type of a publication. For each paper, Partridge automatically extracts the full paper content from PDF files, determines sentence boundaries, automatically labels the sentences with core scientific concepts, and then uses a random forest model to classify the paper type. We show that the type of a paper can be reliably predicted by a model which analyses the distribution of core scientific concepts within the sentences of the paper. We discuss the appropriateness of many of the existing paper types used by major journals, and their corresponding distributions. Partridge is online and available for use, includes a browser-friendly bookmarklet for new paper submission, and demonstrates a range of possibilities for more intelligent search in the scientific literature. The Partidge instance can be used at \url{http://farnsworth.papro.org.uk}, and further information about the project can be found at \url{http://papro.org.uk}}
 
 %\abstract*{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.
 %Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
@@ -103,20 +103,122 @@ We discuss the reliability of this model of paper types and the insights that ha
 \section{Methods}
 \label{sec:2}
 
-Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
+%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 
-how types were chosen,
+The first process in the processing pipeline is conversion of the papers to a format that can be analysed by SAPIENTA.
+Currently, SAPIENTA supports the SciXML and PubMed Central DTDs. 
+Papers in PDF format must be converted to XML in order to be processed. 
+For this, we use PDFX \cite{PDFX}, a free service hosted by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}). 
+PDFX also provides output that already has some metadata, such as title, author, and abstract, associated with it.
+SAPIENTA allocates each sentence within a paper a separate CoreSC label. 
+However, the sentence boundaries must be detected before the document is passed into SAPIENTA for annotation. 
+The sentence splitter uses a regular expression to split the sentences within the document and then adds the necessary \verb|<s>| tags to the markup to indicate the location of each sentence.
+Once the paper has been split, SAPIENTA is used to annotate each sentence with a relevant CoreSC label. 
+These labels are calculated based upon the sentence's location within the paper as well pairs and triplets of words found consecutively within the sentence. 
 
-how papers were acquired 
+%how types were chosen,
 
-how the machine learning is conducted (random forest using orange, features, validation methods).
+Open Access (OA) journals are research journals that provide their papers free to read online, often making revenue by charging authors to publish their articles \cite{solomon2012study}. 
+Many OA journals provide free read access to their papers, but do not permit the user of articles for data mining purposes.
+The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contains large volumes of OA literature under a permissive license that allows data mining. 
+PLoS use the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers published through their journal.
+The PLoS journals advanced search offers approximately 50 types of paper through which to restrict the search. Many of these paper type categories contain too few papers to be useful. Others are too specific (e.g.``Message from PLoS''). We chose to look at XX paper types (Essay, Correspondence, Synopsis, Perspective, Viewpoint, Opinion, Review, Research). These paper types represent a range of types, some of which we expect to overlap or have an unclear distinction. 
 
-% Always give a unique label
-% and use \ref{<label>} for cross-references
-% and \cite{<label>} for bibliographic references
-% use \sectionmark{}
-% to alter or adjust the section heading in the running head
+%how papers were acquired 
+The papers were downloaded from PLoS using XXX (bookmarklet? plosget.py using the PLoS restful search API? choosing first N available? or by keyword?)
+The number of papers downloaded per paper type category was as follows: 200 Essay, 99 Correspondence, 174 Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 312 Review, 200 Research.
+These formed a corpus of 1352 papers.
 
+Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a research paper randomly selected from the corpus. 
+The review papers tend to be made up almost entirely from Background CoreSC sentences. 
+However, research papers are much more evenly spread, made up of several different types of CoreSC. 
+This investigation suggested that there is almost certainly a discriminative relationship between CoreSC categories and a paper's type. 
+
+
+\begin{figure}[t]
+\sidecaption[t]
+% Use the relevant command for your figure-insertion program
+% to insert the figure file.
+% For example, with the option graphics use
+%\includegraphics[scale=.65]{figure}
+%
+% If no graphics program available, insert a blank space i.e. use
+%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
+%
+\caption{coresc pies}
+%\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
+\label{fig:coresc_pies} 
+\end{figure}
+
+%how the machine learning is conducted (random forest using orange, features, validation methods).
+
+Machine learning to build a classifer of paper type was conducted using random forest learning \cite{Breiman2001}. 
+A random forest learning algorithm was chosen because this is a fast, accurate and widely accepted learning technology, and because the underlying decision trees can be used to describe and inspect some of the reasoning behind the predictions made by the final paper type classifiers.
+The feature set consisted of the percentage composition of the CoreSC labels given to the sentences in each paper (the percentage of {\em Background} sentences, the percentage of {\em Hypothesis} sentences, etc.). 
+Thus there are XX features corresponding to the XX CoreSC labels.
+The random forest learning was conducted using the Orange data mining library for Python \cite{Curk2005}.
+The parameters for the random forest learner were XXX.  
+We used 10-fold cross validation to estimate the precision, recall and F-measure.
+
+
+\section{Results and Discussion}
+\label{sec:3}
+
+\begin{table}
+\caption{Per-class recall, precision and f-measure averaged over 10-fold cross validation}
+\label{tab:1}       % Give a unique label
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Classes & Recall & Precision & F-measure  \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+Case Study & 0.000 & 0.000 & 0.000 \\
+Correspondence & 0.000 & 0.000 & 0.000 \\
+Essay & 0.000 & 0.000 & 0.000 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Confusion matrix summed over 10-fold cross validation. Rows represent true classes, columns represent predicted classes.}
+\label{tab:2}       % Give a unique label
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+ & Case study & Essay & Correspondence  \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+Case Study & 1.000 & 0.000 & 0.000 \\
+Essay & 0.000 & 1.000 & 0.000 \\
+Correspondence & 0.000 & 0.000 & 1.000 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+
+
+Discuss which classes are predicted well and which are poorly recognised.
+
+Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
+
+Discuss which classes are confused and why. 
+
+
+
+\section{Conclusion}
+\label{sec:4}
+
+Summary of findings.
+
+Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
+
+\begin{acknowledgement}
+Thanks to the Leverhulme for Maria's funding....
+\end{acknowledgement}
+
+
+\bibliographystyle{plain}
+\bibliography{partridge}
+
+%\input{referenc}
+\end{document}
 
 %Use the standard \verb|equation| environment to typeset your equations, e.g.
 %
@@ -219,12 +321,6 @@ how the machine learning is conducted (random forest using orange, features, val
 %
 
 
-\section{Results and Discussion}
-\label{sec:3}
-
-Present the random forest results. Maybe also the clustering results. Include a few pie charts showing example distributions for typical papers from a few types. 
-
-Discuss why it's possible to predict type from CoreSC, which classes are confused and why, which types are well defined by CoreSC. 
 
 %\begin{description}[Type 1]
 %\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{sec:1}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
@@ -279,16 +375,6 @@ Discuss why it's possible to predict type from CoreSC, which classes are confuse
 %
 
 
-\section{Conclusion}
-\label{sec:4}
-
-Summary of findings.
-
-Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
-
-\begin{acknowledgement}
-Thanks to the Leverhulme for Maria's funding....
-\end{acknowledgement}
 %
 %\section*{Appendix}
 %\addcontentsline{toc}{section}{Appendix}
@@ -300,8 +386,3 @@ Thanks to the Leverhulme for Maria's funding....
 %a \times b = c
 %\end{equation}
 
-\bibliographystyle{plain}
-\bibliography{partridge}
-
-%\input{referenc}
-\end{document}
