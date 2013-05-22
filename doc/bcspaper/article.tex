@@ -7,8 +7,8 @@
 %%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[graybox]{svmult}
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{svmult}
 %
 %% choose options for [] as required from the list
 %% in the Reference Guide
@@ -28,7 +28,7 @@
 %% see the list of further useful packages
 %% in the Reference Guide
 %
-\makeindex             % used for the subject index
+%\makeindex             % used for the subject index
 %                       % please use the style svind.ist with
 %                       % your makeindex program
 %
@@ -36,15 +36,17 @@
 %
 \begin{document}
 
-\title{Partridge: An effective system for classifying academic papers based on the Core Scientific Concepts?}
+
+\title*{Partridge: An effective system for the automatic classification of the types of academic papers}
 \titlerunning{Partridge: classifying academic papers}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\author{Amanda Clare and Maria Liakata and James Ravenscroft}
+\author{James Ravenscroft \and Maria Liakata \and Amanda Clare}
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\institute{James Ravenscroft \at Aberystwyth University, Department of Computer Science, Llandinam Building, Aberystwyth University, Aberystwyth, Ceredigion, SY23 3DB  \email{jrr9@aber.ac.uk}
-\and Name of Second Author \at Name, Address of Institute \email{name@email.address}}
+\institute{James Ravenscroft, Amanda Clare \at Department of Computer Science, Aberystwyth University, Aberystwyth, SY23 3DB, UK  \email{jrr9@aber.ac.uk}
+\and Maria Liakata \at Name, Address of Institute \email{name@email.address}}
+
 %
 % Use the package "url.sty" to avoid
 % problems with special characters
@@ -52,233 +54,335 @@
 %
 \maketitle
 
-\abstract*{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.
-Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
+\abstract{Partridge is a system that enables intelligent search for academic papers. Here we describe how Partridge implements the automatic classification of the type of a publication. For each paper, Partridge automatically extracts the full paper content from PDF files, determines sentence boundaries, automatically labels the sentences with core scientific concepts, and then uses a random forest model to classify the paper type. We show that the type of a paper can be reliably predicted by a model which analyses the distribution of core scientific concepts within the sentences of the paper. We discuss the appropriateness of many of the existing paper types used by major journals, and their corresponding distributions. Partridge is online and available for use, includes a browser-friendly bookmarklet for new paper submission, and demonstrates a range of possibilities for more intelligent search in the scientific literature. The Partidge instance can be used at \url{http://farnsworth.papro.org.uk}, and further information about the project can be found at \url{http://papro.org.uk}}
 
-\abstract{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.\newline\indent
-Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
+%\abstract*{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.
+%Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
 
-\section{Section Heading}
+%\abstract{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.\newline\indent
+%Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
+
+\section{Introduction}
 \label{sec:1}
-Use the template \emph{chapter.tex} together with the Springer document class SVMono (monograph-type books) or SVMult (edited books) to style the various elements of your chapter content in the Springer layout.
+Since the advent of the `Digital Age' and the ability of computers to copy and reproduce information for a negligible cost, the amount of information available to researchers has been increasing drastically.  B-C Bj\"{o}rk (2009) estimates that approximately 1.4 Million papers were published in the year 2006 alone\cite{bjork2009}.
+As available information increases, relevant material becomes progressively more difficult to find manually and the need for an automated information retrieval tool more apparent.
+There are already a large number of information retrieval and recommendation systems for scientific publications.  Many of these systems, such as AGRICOLA (\url{http://agricola.nal.usda.gov/}), the Cochrane Library(\url{http://www.thecochranelibrary.com/}) and Textpresso (\url{http://www.textpresso.org/}) index only publications from predefined journals or topics (for the above examples, Agriculture, Biology and Bioinformatics respectively).
+Unfortunately, these domain specific indexing systems usually only contain a small subset of papers, excluding potentially crucial literature because it does not quite fit into the subject domain. 
+%This problem is often exacerbated by the decision to leave out some papers and articles because the system administrators do not have permission from the author or publisher to include them. 
+The value of these systems to their users is often restricted by the small proportion of available literature that they index, forcing researchers to use multiple, domain specific, search engines for their queries.
+In contrast, there are also a number of interdisciplinary indexing systems and online journals such as arXiv( \url{http://arxiv.org/}), PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}), that try to incorporate wide ranges of papers from as many disciplines as possible. The traits of these systems often complement those of their domain-specific counterparts; they provide a comprehensive collection of literature but insufficient filtering and indexing capabilities.
+One of the most publicised and well known interdisciplinery scientific literature search systems is Google Scholar (\url{http://scholar.google.com}). Google offers advanced query options specific to Scholar that allow searching by author, year and for words that occur only in the document title.
 
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations. And please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
+However, the document title is just one part of the important structure to be found within a scientific document.
+Liakata \emph{et al.} (2012) describe a system for automatically processing and classifying sentences in a research paper according to the core scientific concept (CoreSC) that they describe\cite{Liakata2012}. 
+There are 13 CoreSCs, including {\em hypothesis}, {\it background}, {\em result}, {\em method} and {\em conclusion}.
+CoreSC labels can be allocated to all sentences in a scientific paper in order to identify which scientific concept each sentence encapsulates.
+SAPIENTA (\url{http://www.sapientaproject.com}) is a machine learning application which can automatically annotate all sentences in a scientific paper with their CoreSC labels. It was trained using a corpus of physical chemistry and biochemistry research papers whose sentences were manually annotated using the CoreSC\cite{LIAKATA10.644} scheme. 
+An intelligent academic information retrieval system can use this information in order to provide better filtering and search capabilities for researchers. 
+The ability to search for phrases and keywords by CoreSC will facilitate context-aware keyword search, that allows researchers to only accept papers where a term appears in sentences with a specific CoreSC label.
+This can be used to greatly improve both the precision with which researchers are able to perform searches for scientific literature and the accuracy of those searches in terms of relevance to the reader.
 
-\section{Section Heading}
+The type of a paper ({\em review}, {\em case study}, {\em research}, {\em perspective}, etc) is another useful feature through which a user can narrow down the results of a search. 
+The type of a paper can then be used to augment queries.
+For example, a user may search for a {\em review} paper containing the keywords ``PCR microfluidics'', or a {\em research} paper with a {\em hypothesis} containing the keywords ``cerevisiae'' and ``glucose''.   
+Such paper types are not yet standardised by journals.
+We expect the structure of a paper to reflect its paper type. 
+For example, review papers would be expected to contain a large amount of background material.
+In this article, we describe the application of machine learning (using random forests) to create predictive models of a paper's type, using the distribution of CoreSC labels found in the full text of the paper. 
+
+This model of paper type is currently in use in our Partridge system, which has been created as an intelligent full-text search platform for scientific papers. 
+Partridge can make use of automatically derived CoreSC sentence labels and automatically derived paper types, to allow deeper information queries.  
+We discuss the reliability of this model of paper types and the insights that have been gained for the authorship of papers.
+
+
+
+%Use the template \emph{chapter.tex} together with the Springer document class SVMono (monograph-type books) or SVMult (edited books) to style the various elements of your chapter content in the Springer layout.
+
+%Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations. And please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
+
+\section{Methods}
 \label{sec:2}
-% Always give a unique label
-% and use \ref{<label>} for cross-references
-% and \cite{<label>} for bibliographic references
-% use \sectionmark{}
-% to alter or adjust the section heading in the running head
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations.
 
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
+%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 
-Use the standard \verb|equation| environment to typeset your equations, e.g.
-%
-\begin{equation}
-a \times b = c\;,
-\end{equation}
-%
-however, for multiline equations we recommend to use the \verb|eqnarray|
-environment\footnote{In physics texts please activate the class option
-\texttt{vecphys} to depict your vectors in \textbf{\itshape
-boldface-italic} type - as is customary for a wide range of physical
-subjects}.
-\begin{eqnarray}
-a \times b = c \nonumber\\
-\vec{a} \cdot \vec{b}=\vec{c}
-\label{eq:01}
-\end{eqnarray}
+The first process in the processing pipeline is conversion of the papers to a format that can be analysed by SAPIENTA.
+Currently, SAPIENTA supports the SciXML and PubMed Central DTDs. 
+Papers in PDF format must be converted to XML in order to be processed. 
+For this, we use PDFX \cite{PDFX}, a free service hosted by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}). 
+PDFX also provides output that already has some metadata, such as title, author, and abstract, associated with it.
+SAPIENTA allocates each sentence within a paper a separate CoreSC label. 
+However, the sentence boundaries must be detected before the document is passed into SAPIENTA for annotation. 
+The sentence splitter uses a regular expression to split the sentences within the document and then adds the necessary \verb|<s>| tags to the markup to indicate the location of each sentence.
+Once the paper has been split, SAPIENTA is used to annotate each sentence with a relevant CoreSC label. 
+These labels are calculated based upon the sentence's location within the paper as well pairs and triplets of words found consecutively within the sentence. 
 
-\subsection{Subsection Heading}
-\label{subsec:2}
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references\index{cross-references} and citations\index{citations} as has already been described in Sect.~\ref{sec:2}.
+%how types were chosen,
 
-\begin{quotation}
-Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
-\end{quotation}
+Open Access (OA) journals are research journals that provide their papers free to read online, often making revenue by charging authors to publish their articles \cite{solomon2012study}. 
+Many OA journals provide free read access to their papers, but do not permit the user of articles for data mining purposes.
+The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contains large volumes of OA literature under a permissive license that allows data mining. 
+PLoS use the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers published through their journal.
+The PLoS journals advanced search offers approximately 50 types of paper through which to restrict the search. Many of these paper type categories contain too few papers to be useful. Others are too specific (e.g.``Message from PLoS''). We chose to look at XX paper types (Essay, Correspondence, Synopsis, Perspective, Viewpoint, Opinion, Review, Research). These paper types represent a range of types, some of which we expect to overlap or have an unclear distinction. 
 
+%how papers were acquired 
+The papers were downloaded from PLoS using XXX (bookmarklet? plosget.py using the PLoS restful search API? choosing first N available? or by keyword?)
+The number of papers downloaded per paper type category was as follows: 200 Essay, 99 Correspondence, 174 Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 312 Review, 200 Research.
+These formed a corpus of 1352 papers.
 
-\subsubsection{Subsubsection Heading}
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{subsec:2}, see also Fig.~\ref{fig:1}\footnote{If you copy text passages, figures, or tables from other works, you must obtain \textit{permission} from the copyright holder (usually the original publisher). Please enclose the signed permission with the manucript. The sources\index{permission to print} must be acknowledged either in the captions, as footnotes or in a separate section of the book.}
+Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a research paper randomly selected from the corpus. 
+The review papers tend to be made up almost entirely from Background CoreSC sentences. 
+However, research papers are much more evenly spread, made up of several different types of CoreSC. 
+This investigation suggested that there is almost certainly a discriminative relationship between CoreSC categories and a paper's type. 
 
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-% For figures use
-%
-\begin{figure}[b]
-\sidecaption
-% Use the relevant command for your figure-insertion program
-% to insert the figure file.
-% For example, with the graphicx style use
-\includegraphics[scale=.65]{figure}
-%
-% If no graphics program available, insert a blank space i.e. use
-%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
-%
-\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
-\label{fig:1}       % Give a unique label
-\end{figure}
-
-
-\paragraph{Paragraph Heading} %
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
-
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\begin{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{enumerate}
-
-
-\subparagraph{Subparagraph Heading} In order to avoid simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}, see also Fig.~\ref{fig:2}.
-
-For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
-
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
-\begin{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
-\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
-\end{itemize}
 
 \begin{figure}[t]
 \sidecaption[t]
 % Use the relevant command for your figure-insertion program
 % to insert the figure file.
 % For example, with the option graphics use
-\includegraphics[scale=.65]{figure}
+%\includegraphics[scale=.65]{figure}
+%
+% If no graphics program available, insert a blank space i.e. use
+%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
+%
+\caption{coresc pies}
+%\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
+\label{fig:coresc_pies} 
+\end{figure}
+
+%how the machine learning is conducted (random forest using orange, features, validation methods).
+
+Machine learning to build a classifer of paper type was conducted using random forest learning \cite{Breiman2001}. 
+A random forest learning algorithm was chosen because this is a fast, accurate and widely accepted learning technology, and because the underlying decision trees can be used to describe and inspect some of the reasoning behind the predictions made by the final paper type classifiers.
+The feature set consisted of the percentage composition of the CoreSC labels given to the sentences in each paper (the percentage of {\em Background} sentences, the percentage of {\em Hypothesis} sentences, etc.). 
+Thus there are XX features corresponding to the XX CoreSC labels.
+The random forest learning was conducted using the Orange data mining library for Python \cite{Curk2005}.
+The parameters for the random forest learner were XXX.  
+We used 10-fold cross validation to estimate the precision, recall and F-measure.
+
+
+\section{Results and Discussion}
+\label{sec:3}
+
+\begin{table}
+\caption{Per-class recall, precision and f-measure averaged over 10-fold cross validation}
+\label{tab:1}       % Give a unique label
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+Classes & Recall & Precision & F-measure  \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+Case Study & 0.000 & 0.000 & 0.000 \\
+Correspondence & 0.000 & 0.000 & 0.000 \\
+Essay & 0.000 & 0.000 & 0.000 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Confusion matrix summed over 10-fold cross validation. Rows represent true classes, columns represent predicted classes.}
+\label{tab:2}       % Give a unique label
+\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\hline\noalign{\smallskip}
+ & Case study & Essay & Correspondence  \\
+\noalign{\smallskip}\svhline\noalign{\smallskip}
+Case Study & 1.000 & 0.000 & 0.000 \\
+Essay & 0.000 & 1.000 & 0.000 \\
+Correspondence & 0.000 & 0.000 & 1.000 \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+\end{tabular}
+\end{table}
+
+
+
+Discuss which classes are predicted well and which are poorly recognised.
+
+Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
+
+Discuss which classes are confused and why. 
+
+
+
+\section{Conclusion}
+\label{sec:4}
+
+Summary of findings.
+
+Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
+
+\begin{acknowledgement}
+Thanks to the Leverhulme for Maria's funding....
+\end{acknowledgement}
+
+
+\bibliographystyle{plain}
+\bibliography{partridge}
+
+%\input{referenc}
+\end{document}
+
+%Use the standard \verb|equation| environment to typeset your equations, e.g.
+%
+%\begin{equation}
+%a \times b = c\;,
+%\end{equation}
+%
+%however, for multiline equations we recommend to use the \verb|eqnarray|
+%environment\footnote{In physics texts please activate the class option
+%\texttt{vecphys} to depict your vectors in \textbf{\itshape
+%boldface-italic} type - as is customary for a wide range of physical
+%subjects}.
+%\begin{eqnarray}
+%a \times b = c \nonumber\\
+%\vec{a} \cdot \vec{b}=\vec{c}
+%\label{eq:01}
+%\end{eqnarray}
+
+%\subsection{Subsection Heading}
+%\label{subsec:2}
+%Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references\index{cross-references} and citations\index{citations} as has already been described in Sect.~\ref{sec:2}.
+
+%\begin{quotation}
+%Please do not use quotation marks when quoting texts! Simply use the \verb|quotation| environment -- it will automatically render Springer's preferred layout.
+%\end{quotation}
+
+
+%\subsubsection{Subsubsection Heading}
+%Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{subsec:2}, see also Fig.~\ref{fig:1}\footnote{If you copy text passages, figures, or tables from other works, you must obtain \textit{permission} from the copyright holder (usually the original publisher). Please enclose the signed permission with the manucript. The sources\index{permission to print} must be acknowledged either in the captions, as footnotes or in a separate section of the book.}
+
+
+
+
+%For typesetting numbered lists we recommend to use the \verb|enumerate| environment -- it will automatically render Springer's preferred layout.
+
+%\begin{enumerate}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\begin{enumerate}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\end{enumerate}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\end{enumerate}
+
+
+
+%For unnumbered list we recommend to use the \verb|itemize| environment -- it will automatically render Springer's preferred layout.
+
+%\begin{itemize}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development, cf. Table~\ref{tab:1}.}
+%\begin{itemize}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\end{itemize}
+%\item{Livelihood and survival mobility are oftentimes coutcomes of uneven socioeconomic development.}
+%\end{itemize}
+
+%\begin{figure}[t]
+%\sidecaption[t]
+% Use the relevant command for your figure-insertion program
+% to insert the figure file.
+% For example, with the option graphics use
+%\includegraphics[scale=.65]{figure}
 %
 % If no graphics program available, insert a blank space i.e. use
 %\picplace{5cm}{2cm} % Give the correct figure height and width in cm
 %
 %\caption{Please write your figure caption here}
-\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
-\label{fig:2}       % Give a unique label
-\end{figure}
+%\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
+%\label{fig:2}       % Give a unique label
+%\end{figure}
 
-\runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
+%\runinhead{Run-in Heading Boldface Version} Use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
 
-\subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your cross-refer\-ences and citations as has already been described in Sect.~\ref{sec:2}\index{paragraph}.
+%\subruninhead{Run-in Heading Italic Version} Use the \LaTeX\ automatism for all your cross-refer\-ences and citations as has already been described in Sect.~\ref{sec:2}\index{paragraph}.
+
+
 % Use the \index{} command to code your index words
 %
 % For tables use
 %
-\begin{table}
-\caption{Please write your table caption here}
-\label{tab:1}       % Give a unique label
+%\begin{table}
+%\caption{Please write your table caption here}
+%\label{tab:1}       % Give a unique label
 %
 % Follow this input for your own table layout
 %
-\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
-\hline\noalign{\smallskip}
-Classes & Subclass & Length & Action Mechanism  \\
-\noalign{\smallskip}\svhline\noalign{\smallskip}
-Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
-Translation & mRNA cleavage & 21 & mRNA cleavage\\
-Translation & mRNA  & 21--22 & mRNA cleavage\\
-Translation & mRNA  & 24--26 & Histone and DNA Modification\\
-\noalign{\smallskip}\hline\noalign{\smallskip}
-\end{tabular}
-$^a$ Table foot note (with superscript)
-\end{table}
+%\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+%\hline\noalign{\smallskip}
+%Classes & Subclass & Length & Action Mechanism  \\
+%\noalign{\smallskip}\svhline\noalign{\smallskip}
+%Translation & mRNA$^a$  & 22 (19--25) & Translation repression, mRNA cleavage\\
+%Translation & mRNA cleavage & 21 & mRNA cleavage\\
+%Translation & mRNA  & 21--22 & mRNA cleavage\\
+%Translation & mRNA  & 24--26 & Histone and DNA Modification\\
+%\noalign{\smallskip}\hline\noalign{\smallskip}
+%\end{tabular}
+%$^a$ Table foot note (with superscript)
+%\end{table}
 %
-\section{Section Heading}
-\label{sec:3}
-% Always give a unique label
-% and use \ref{<label>} for cross-references
-% and \cite{<label>} for bibliographic references
-% use \sectionmark{}
-% to alter or adjust the section heading in the running head
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-If you want to list definitions or the like we recommend to use the Springer-enhanced \verb|description| environment -- it will automatically render Springer's preferred layout.
-
-\begin{description}[Type 1]
-\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{sec:1}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\item[Type 2]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{subsec:2}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
-\end{description}
-
-\subsection{Subsection Heading} %
-In order to avoid simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Use the \LaTeX\ automatism for all your cross-references and citations citations as has already been described in Sect.~\ref{sec:2}.
-
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
-\begin{svgraybox}
-If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option \verb|graybox| and the newly defined environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
-
-If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option and environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
-\end{svgraybox}
 
 
-\subsubsection{Subsubsection Heading}
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
 
-Please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
+%\begin{description}[Type 1]
+%\item[Type 1]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{sec:1}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+%\item[Type 2]{That addresses central themes pertainng to migration, health, and disease. In Sect.~\ref{subsec:2}, Wilson discusses the role of human migration in infectious disease distributions and patterns.}
+%\end{description}
 
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
+
+%\begin{svgraybox}
+%If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option \verb|graybox| and the newly defined environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
+
+%If you want to emphasize complete paragraphs of texts we recommend to use the newly defined Springer class option and environment \verb|svgraybox|. This will produce a 15 percent screened box 'behind' your text.
+%\end{svgraybox}
+
+
+
+%\begin{theorem}
+%Theorem text goes here.
+%\end{theorem}
 %
 % or
 %
-\begin{definition}
-Definition text goes here.
-\end{definition}
+%\begin{definition}
+%Definition text goes here.
+%\end{definition}
 
-\begin{proof}
+%\begin{proof}
 %\smartqed
-Proof text goes here.
-\qed
-\end{proof}
+%Proof text goes here.
+%\qed
+%\end{proof}
 
-\paragraph{Paragraph Heading} %
-Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
+%\paragraph{Paragraph Heading} %
+%Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations as has already been described in Sect.~\ref{sec:2}.
 
-Note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
+%Note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
 %
 % For built-in environments use
 %
-\begin{theorem}
-Theorem text goes here.
-\end{theorem}
+%\begin{theorem}
+%Theorem text goes here.
+%\end{theorem}
 %
-\begin{definition}
-Definition text goes here.
-\end{definition}
+%\begin{definition}
+%Definition text goes here.
+%\end{definition}
 %
-\begin{proof}
-\smartqed
-Proof text goes here.
-\qed
-\end{proof}
+%\begin{proof}
+%\smartqed
+%Proof text goes here.
+%\qed
+%\end{proof}
 %
-\begin{acknowledgement}
-If you want to include acknowledgments of assistance and the like at the end of an individual chapter please use the \verb|acknowledgement| environment -- it will automatically render Springer's preferred layout.
-\end{acknowledgement}
-%
-\section*{Appendix}
-\addcontentsline{toc}{section}{Appendix}
-%
-%
-When placed at the end of a chapter or contribution (as opposed to at the end of the book), the numbering of tables, figures, and equations in the appendix section continues on from that in the main text. Hence please \textit{do not} use the \verb|appendix| command when writing an appendix at the end of your chapter or contribution. If there is only one the appendix is designated ``Appendix'', or ``Appendix 1'', or ``Appendix 2'', etc. if there is more than one.
 
-\begin{equation}
-a \times b = c
-\end{equation}
 
-\input{referenc}
-\end{document}
+%
+%\section*{Appendix}
+%\addcontentsline{toc}{section}{Appendix}
+%%
+%%
+%When placed at the end of a chapter or contribution (as opposed to at the end of the book), the numbering of tables, figures, and equations in the appendix section continues on from that in the main text. Hence please \textit{do not} use the \verb|appendix| command when writing an appendix at the end of your chapter or contribution. If there is only one the appendix is designated ``Appendix'', or ``Appendix 1'', or ``Appendix 2'', etc. if there is more than one.
+
+%\begin{equation}
+%a \times b = c
+%\end{equation}
+
