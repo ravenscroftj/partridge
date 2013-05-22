@@ -24,6 +24,8 @@
 %                             % when including figure files
 \usepackage{multicol}        % used for the two-column index
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 %
 %% see the list of further useful packages
 %% in the Reference Guide
@@ -54,45 +56,96 @@
 %
 \maketitle
 
-\abstract{Partridge is a system that enables intelligent search for academic papers. Here we describe how Partridge implements the automatic classification of the type of a publication. For each paper, Partridge automatically extracts the full paper content from PDF files, determines sentence boundaries, automatically labels the sentences with core scientific concepts, and then uses a random forest model to classify the paper type. We show that the type of a paper can be reliably predicted by a model which analyses the distribution of core scientific concepts within the sentences of the paper. We discuss the appropriateness of many of the existing paper types used by major journals, and their corresponding distributions. Partridge is online and available for use, includes a browser-friendly bookmarklet for new paper submission, and demonstrates a range of possibilities for more intelligent search in the scientific literature. The Partidge instance can be used at \url{http://farnsworth.papro.org.uk}, and further information about the project can be found at \url{http://papro.org.uk}}
+\abstract{Partridge is a system that enables intelligent search for academic
+papers. Here we describe how Partridge implements the automatic classification
+of the type of a publication. For each paper, Partridge automatically extracts
+the full paper content from PDF files, determines sentence boundaries,
+automatically labels the sentences with core scientific concepts, and then uses
+a random forest model to classify the paper type. We show that the type of a
+paper can be reliably predicted by a model which analyses the distribution of
+core scientific concepts within the sentences of the paper. We discuss the
+appropriateness of many of the existing paper types used by major journals, and
+their corresponding distributions. Partridge is online and available for use,
+includes a browser-friendly bookmarklet for new paper submission, and
+demonstrates a range of possibilities for more intelligent search in the
+scientific literature. The Partidge instance can be used at
+\url{http://farnsworth.papro.org.uk}, and further information about the project
+can be found at \url{http://papro.org.uk}}
 
-%\abstract*{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.
-%Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
+\section{Introduction} \label{sec:1} Since the advent of the `Digital Age' and
+the ability of computers to copy and reproduce information for a negligible
+cost, the amount of information available to researchers has been increasing
+drastically.  B-C Bj\"{o}rk (2009) estimates that approximately 1.4 Million
+papers were published in the year 2006 alone\cite{bjork2009}.  As available
+information increases, relevant material becomes progressively more difficult
+to find manually and the need for an automated information retrieval tool more
+apparent.  There are already a large number of information retrieval and
+recommendation systems for scientific publications.  Many of these systems,
+such as AGRICOLA (\url{http://agricola.nal.usda.gov/}), the Cochrane
+Library(\url{http://www.thecochranelibrary.com/}) and Textpresso
+(\url{http://www.textpresso.org/}) index only publications from predefined
+journals or topics (for the above examples, Agriculture, Biology and
+Bioinformatics respectively).  Unfortunately, these domain specific indexing
+systems usually only contain a small subset of papers, excluding potentially
+crucial literature because it does not quite fit into the subject domain. 
+%This problem is often exacerbated by the decision to leave out some papers and
+%articles because the system administrators do not have permission from the
+%author or publisher to include them. 
+The value of these systems to their users is often restricted by the small
+proportion of available literature that they index, forcing researchers to use
+multiple, domain specific, search engines for their queries.  In contrast,
+there are also a number of interdisciplinary indexing systems and online
+journals such as arXiv( \url{http://arxiv.org/}),
+PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}),
+that try to incorporate wide ranges of papers from as many disciplines as
+possible. The traits of these systems often complement those of their
+domain-specific counterparts; they provide a comprehensive collection of
+literature but insufficient filtering and indexing capabilities.  One of the
+most publicised and well known interdisciplinery scientific literature search
+systems is Google Scholar (\url{http://scholar.google.com}). Google offers
+advanced query options specific to Scholar that allow searching by author, year
+and for words that occur only in the document title.
 
-%\abstract{Each chapter should be preceded by an abstract (10--15 lines long) that summarizes the content. The abstract will appear \textit{online} at \url{www.SpringerLink.com} and be available with unrestricted access. This allows unregistered users to read the abstract as a teaser for the complete chapter. As a general rule the abstracts will not appear in the printed version of your book unless it is the style of your particular book or that of the series to which your book belongs.\newline\indent
-%Please use the 'starred' version of the new Springer \texttt{abstract} command for typesetting the text of the online abstracts (cf. source file of this chapter template \texttt{abstract}) and include them with the source files of your manuscript. Use the plain \texttt{abstract} command if the abstract is also to appear in the printed version of the book.}
+However, the document title is just one part of the important structure to be
+found within a scientific document.  Liakata \emph{et al.} (2012) describe a
+system for automatically processing and classifying sentences in a research
+paper according to the core scientific concept (CoreSC) that they
+describe\cite{Liakata2012}.  There are 13 CoreSCs, including {\em hypothesis},
+{\it background}, {\em result}, {\em method} and {\em conclusion}.  CoreSC
+labels can be allocated to all sentences in a scientific paper in order to
+identify which scientific concept each sentence encapsulates.  SAPIENTA
+(\url{http://www.sapientaproject.com}) is a machine learning application which
+can automatically annotate all sentences in a scientific paper with their
+CoreSC labels. It was trained using a corpus of physical chemistry and
+biochemistry research papers whose sentences were manually annotated using the
+CoreSC\cite{LIAKATA10.644} scheme.  An intelligent academic information
+retrieval system can use this information in order to provide better filtering
+and search capabilities for researchers.  The ability to search for phrases and
+keywords by CoreSC will facilitate context-aware keyword search, that allows
+researchers to only accept papers where a term appears in sentences with a
+specific CoreSC label.  This can be used to greatly improve both the precision
+with which researchers are able to perform searches for scientific literature
+and the accuracy of those searches in terms of relevance to the reader.
 
-\section{Introduction}
-\label{sec:1}
-Since the advent of the `Digital Age' and the ability of computers to copy and reproduce information for a negligible cost, the amount of information available to researchers has been increasing drastically.  B-C Bj\"{o}rk (2009) estimates that approximately 1.4 Million papers were published in the year 2006 alone\cite{bjork2009}.
-As available information increases, relevant material becomes progressively more difficult to find manually and the need for an automated information retrieval tool more apparent.
-There are already a large number of information retrieval and recommendation systems for scientific publications.  Many of these systems, such as AGRICOLA (\url{http://agricola.nal.usda.gov/}), the Cochrane Library(\url{http://www.thecochranelibrary.com/}) and Textpresso (\url{http://www.textpresso.org/}) index only publications from predefined journals or topics (for the above examples, Agriculture, Biology and Bioinformatics respectively).
-Unfortunately, these domain specific indexing systems usually only contain a small subset of papers, excluding potentially crucial literature because it does not quite fit into the subject domain. 
-%This problem is often exacerbated by the decision to leave out some papers and articles because the system administrators do not have permission from the author or publisher to include them. 
-The value of these systems to their users is often restricted by the small proportion of available literature that they index, forcing researchers to use multiple, domain specific, search engines for their queries.
-In contrast, there are also a number of interdisciplinary indexing systems and online journals such as arXiv( \url{http://arxiv.org/}), PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}), that try to incorporate wide ranges of papers from as many disciplines as possible. The traits of these systems often complement those of their domain-specific counterparts; they provide a comprehensive collection of literature but insufficient filtering and indexing capabilities.
-One of the most publicised and well known interdisciplinery scientific literature search systems is Google Scholar (\url{http://scholar.google.com}). Google offers advanced query options specific to Scholar that allow searching by author, year and for words that occur only in the document title.
+The type of a paper ({\em review}, {\em case study}, {\em research}, {\em
+perspective}, etc) is another useful feature through which a user can narrow
+down the results of a search.  The type of a paper can then be used to augment
+queries.  For example, a user may search for a {\em review} paper containing
+the keywords ``PCR microfluidics'', or a {\em research} paper with a {\em
+hypothesis} containing the keywords ``cerevisiae'' and ``glucose''.   Such
+paper types are not yet standardised by journals.  We expect the structure of a
+paper to reflect its paper type.  For example, review papers would be expected
+to contain a large amount of background material.  In this article, we describe
+the application of machine learning (using random forests) to create predictive
+models of a paper's type, using the distribution of CoreSC labels found in the
+full text of the paper. 
 
-However, the document title is just one part of the important structure to be found within a scientific document.
-Liakata \emph{et al.} (2012) describe a system for automatically processing and classifying sentences in a research paper according to the core scientific concept (CoreSC) that they describe\cite{Liakata2012}. 
-There are 13 CoreSCs, including {\em hypothesis}, {\it background}, {\em result}, {\em method} and {\em conclusion}.
-CoreSC labels can be allocated to all sentences in a scientific paper in order to identify which scientific concept each sentence encapsulates.
-SAPIENTA (\url{http://www.sapientaproject.com}) is a machine learning application which can automatically annotate all sentences in a scientific paper with their CoreSC labels. It was trained using a corpus of physical chemistry and biochemistry research papers whose sentences were manually annotated using the CoreSC\cite{LIAKATA10.644} scheme. 
-An intelligent academic information retrieval system can use this information in order to provide better filtering and search capabilities for researchers. 
-The ability to search for phrases and keywords by CoreSC will facilitate context-aware keyword search, that allows researchers to only accept papers where a term appears in sentences with a specific CoreSC label.
-This can be used to greatly improve both the precision with which researchers are able to perform searches for scientific literature and the accuracy of those searches in terms of relevance to the reader.
-
-The type of a paper ({\em review}, {\em case study}, {\em research}, {\em perspective}, etc) is another useful feature through which a user can narrow down the results of a search. 
-The type of a paper can then be used to augment queries.
-For example, a user may search for a {\em review} paper containing the keywords ``PCR microfluidics'', or a {\em research} paper with a {\em hypothesis} containing the keywords ``cerevisiae'' and ``glucose''.   
-Such paper types are not yet standardised by journals.
-We expect the structure of a paper to reflect its paper type. 
-For example, review papers would be expected to contain a large amount of background material.
-In this article, we describe the application of machine learning (using random forests) to create predictive models of a paper's type, using the distribution of CoreSC labels found in the full text of the paper. 
-
-This model of paper type is currently in use in our Partridge system, which has been created as an intelligent full-text search platform for scientific papers. 
-Partridge can make use of automatically derived CoreSC sentence labels and automatically derived paper types, to allow deeper information queries.  
-We discuss the reliability of this model of paper types and the insights that have been gained for the authorship of papers.
+This model of paper type is currently in use in our Partridge system, which has
+been created as an intelligent full-text search platform for scientific papers.
+Partridge can make use of automatically derived CoreSC sentence labels and
+automatically derived paper types, to allow deeper information queries.  We
+discuss the reliability of this model of paper types and the insights that have
+been gained for the authorship of papers.
 
 
 
@@ -105,34 +158,52 @@ We discuss the reliability of this model of paper types and the insights that ha
 
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 
-The first process in the processing pipeline is conversion of the papers to a format that can be analysed by SAPIENTA.
-Currently, SAPIENTA supports the SciXML and PubMed Central DTDs. 
-Papers in PDF format must be converted to XML in order to be processed. 
-For this, we use PDFX \cite{PDFX}, a free service hosted by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}). 
-PDFX also provides output that already has some metadata, such as title, author, and abstract, associated with it.
-SAPIENTA allocates each sentence within a paper a separate CoreSC label. 
-However, the sentence boundaries must be detected before the document is passed into SAPIENTA for annotation. 
-The sentence splitter uses a regular expression to split the sentences within the document and then adds the necessary \verb|<s>| tags to the markup to indicate the location of each sentence.
-Once the paper has been split, SAPIENTA is used to annotate each sentence with a relevant CoreSC label. 
-These labels are calculated based upon the sentence's location within the paper as well pairs and triplets of words found consecutively within the sentence. 
+The first process in the processing pipeline is conversion of the papers to a
+format that can be analysed by SAPIENTA.  Currently, SAPIENTA supports the
+SciXML and PubMed Central DTDs.  Papers in PDF format must be converted to XML
+in order to be processed.  For this, we use PDFX \cite{PDFX}, a free service
+hosted by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}).  PDFX
+also provides output that already has some metadata, such as title, author, and
+abstract, associated with it.  SAPIENTA allocates each sentence within a paper
+a separate CoreSC label.  However, the sentence boundaries must be detected
+before the document is passed into SAPIENTA for annotation.  The sentence
+splitter uses a regular expression to split the sentences within the document
+and then adds the necessary \verb|<s>| tags to the markup to indicate the
+location of each sentence.  Once the paper has been split, SAPIENTA is used to
+annotate each sentence with a relevant CoreSC label.  These labels are
+calculated based upon the sentence's location within the paper as well pairs
+and triplets of words found consecutively within the sentence. 
 
 %how types were chosen,
 
-Open Access (OA) journals are research journals that provide their papers free to read online, often making revenue by charging authors to publish their articles \cite{solomon2012study}. 
-Many OA journals provide free read access to their papers, but do not permit the user of articles for data mining purposes.
-The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contains large volumes of OA literature under a permissive license that allows data mining. 
-PLoS use the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers published through their journal.
-The PLoS journals advanced search offers approximately 50 types of paper through which to restrict the search. Many of these paper type categories contain too few papers to be useful. Others are too specific (e.g.``Message from PLoS''). We chose to look at XX paper types (Essay, Correspondence, Synopsis, Perspective, Viewpoint, Opinion, Review, Research). These paper types represent a range of types, some of which we expect to overlap or have an unclear distinction. 
+Open Access (OA) journals are research journals that provide their papers free
+to read online, often making revenue by charging authors to publish their
+articles \cite{solomon2012study}.  Many OA journals provide free read access to
+their papers, but do not permit the user of articles for data mining purposes.
+The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contains large
+volumes of OA literature under a permissive license that allows data mining.
+PLoS use the Pubmed Central markup schema, which is compatible with SAPIENTA,
+for papers published through their journal.  The PLoS journals advanced search
+offers approximately 50 types of paper through which to restrict the search.
+Many of these paper type categories contain too few papers to be useful. Others
+are too specific (e.g.``Message from PLoS''). We chose to look at XX paper
+types (Essay, Correspondence, Synopsis, Perspective, Viewpoint, Opinion,
+Review, Research). These paper types represent a range of types, some of which
+we expect to overlap or have an unclear distinction. 
 
 %how papers were acquired 
-The papers were downloaded from PLoS using XXX (bookmarklet? plosget.py using the PLoS restful search API? choosing first N available? or by keyword?)
-The number of papers downloaded per paper type category was as follows: 200 Essay, 99 Correspondence, 174 Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 312 Review, 200 Research.
-These formed a corpus of 1352 papers.
+The papers were downloaded from PLoS using {\em plosget.py}, a short python
+script that uses the PLoS restful search API. The number of papers downloaded
+per paper type category was as follows: 200 Essay, 99 Correspondence, 174
+Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 107, Case Study, 312
+Review, 200 Research.  These formed a corpus of 1459 papers.
 
-Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a research paper randomly selected from the corpus. 
-The review papers tend to be made up almost entirely from Background CoreSC sentences. 
-However, research papers are much more evenly spread, made up of several different types of CoreSC. 
-This investigation suggested that there is almost certainly a discriminative relationship between CoreSC categories and a paper's type. 
+Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a
+research paper randomly selected from the corpus.  The review papers tend to be
+made up almost entirely from Background CoreSC sentences.  However, research
+papers are much more evenly spread, made up of several different types of
+CoreSC.  This investigation suggested that there is almost certainly a
+discriminative relationship between CoreSC categories and a paper's type. 
 
 
 \begin{figure}[t]
@@ -145,6 +216,15 @@ This investigation suggested that there is almost certainly a discriminative rel
 % If no graphics program available, insert a blank space i.e. use
 %\picplace{5cm}{2cm} % Give the correct figure height and width in cm
 %
+\centering
+%\begin{subfigure}[b]{0.6\textwidth}
+\includegraphics[width=\textwidth]{figures/review_corescs.png}
+%\caption{CoreSC content for a sample review paper}
+%\end{subfigure}
+%\begin{subfigure}[b]{0.6\textwidth}
+\includegraphics[width=\textwidth]{figures/report_corescs.png}
+%\caption{CoreSC content for a sample research paper}
+%\end{subfigure}
 \caption{coresc pies}
 %\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
 \label{fig:coresc_pies} 
@@ -152,13 +232,19 @@ This investigation suggested that there is almost certainly a discriminative rel
 
 %how the machine learning is conducted (random forest using orange, features, validation methods).
 
-Machine learning to build a classifer of paper type was conducted using random forest learning \cite{Breiman2001}. 
-A random forest learning algorithm was chosen because this is a fast, accurate and widely accepted learning technology, and because the underlying decision trees can be used to describe and inspect some of the reasoning behind the predictions made by the final paper type classifiers.
-The feature set consisted of the percentage composition of the CoreSC labels given to the sentences in each paper (the percentage of {\em Background} sentences, the percentage of {\em Hypothesis} sentences, etc.). 
-Thus there are XX features corresponding to the XX CoreSC labels.
-The random forest learning was conducted using the Orange data mining library for Python \cite{Curk2005}.
-The parameters for the random forest learner were XXX.  
-We used 10-fold cross validation to estimate the precision, recall and F-measure.
+Machine learning to build a classifer of paper type was conducted using random
+forest learning \cite{Breiman2001}.  A random forest learning algorithm was
+chosen because this is a fast, accurate and widely accepted learning
+technology, and because the underlying decision trees can be used to describe
+and inspect some of the reasoning behind the predictions made by the final
+paper type classifiers.  The feature set consisted of the percentage
+composition of the CoreSC labels given to the sentences in each paper (the
+percentage of {\em Background} sentences, the percentage of {\em Hypothesis}
+sentences, etc.).  Thus there are XX features corresponding to the XX CoreSC
+labels.  The random forest learning was conducted using the Orange data mining
+library for Python \cite{Curk2005}.  The parameters for the random forest
+learner were XXX.  We used 10-fold cross validation to estimate the precision,
+recall and F-measure.
 
 
 \section{Results and Discussion}
