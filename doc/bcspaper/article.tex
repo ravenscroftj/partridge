@@ -84,22 +84,18 @@
 \section{Introduction} \label{sec:1} Since the advent of the `Digital Age' and
 the ability of computers to copy and reproduce information for a negligible
 cost, the amount of information available to researchers has been increasing
-drastically. \st{ B-C Bj\"{o}rk (2009) estimates that approximately 1.4 Million
-papers were published in the year 2006 alone\cite{bjork2009}}. As available
-information increases, relevant material becomes progressively more difficult
-to find manually and the need for an automated information retrieval tool more
-apparent.  There are already a large number of information retrieval and
-recommendation systems for scientific publications.  Many of these systems,
-such as AGRICOLA (\url{http://agricola.nal.usda.gov/}), the Cochrane
-Library(\url{http://www.thecochranelibrary.com/}) and Textpresso
+drastically. As available information increases, relevant material becomes
+progressively more difficult to find manually and the need for an automated
+information retrieval tool more apparent.  There are already a large number of
+information retrieval and recommendation systems for scientific publications.
+Many of these systems, such as AGRICOLA (\url{http://agricola.nal.usda.gov/}),
+the Cochrane Library(\url{http://www.thecochranelibrary.com/}) and Textpresso
 (\url{http://www.textpresso.org/}) index only publications from predefined
 journals or topics (for the above examples, Agriculture, Biology and
 Bioinformatics respectively).  Unfortunately, these domain specific indexing
 systems usually only contain a small subset of papers, excluding potentially
 crucial literature because it does not quite fit into the subject domain. 
-%This problem is often exacerbated by the decision to leave out some papers and
-%articles because the system administrators do not have permission from the
-%author or publisher to include them. 
+
 The value of these systems to their users is often restricted by the small
 proportion of available literature that they index, forcing researchers to use
 multiple, domain specific, search engines for their queries.  In contrast,
@@ -119,22 +115,24 @@ However, the document title is just one part of the important structure to be
 found within a scientific document.  Liakata \emph{et al.} (2012) describe a
 system for automatically processing and classifying sentences in a research
 paper according to the core scientific concept (CoreSC) that they
-describe\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis}, {\em Goal},
-{\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.  CoreSC
-labels can be allocated to all sentences in a scientific paper in order to
-identify which scientific concept each sentence encapsulates.  SAPIENTA
-(\url{http://www.sapientaproject.com}) is a publicly available machine learning application which
-can automatically annotate all sentences in a scientific paper with their
-CoreSC labels. It was trained using a corpus of physical chemistry and
-biochemistry research papers whose sentences were manually annotated using the
-CoreSC\cite{LIAKATA10.644} scheme.  An intelligent academic information
-retrieval system can use this information in order to provide better filtering
-and search capabilities for researchers.  Partridge {\st the ability to search for phrases and
-keywords by CoreSC will facilitate} implements such context-aware keyword search, by allowing
-researchers to search for papers where a term appears in sentences with a
-specific CoreSC label (e.g only in {\em Method} senetences). This can be used to greatly improve both the precision
-with which researchers are able to perform searches for scientific literature
-and the accuracy of those searches in terms of relevance to the reader.
+describe\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis},
+{\em Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
+CoreSC labels can be allocated to all sentences in a scientific paper in order
+to identify which scientific concept each sentence encapsulates.  SAPIENTA
+(\url{http://www.sapientaproject.com}) is a publicly available machine learning
+application which can automatically annotate all sentences in a scientific
+paper with their CoreSC labels. It was trained using a corpus of physical
+chemistry and biochemistry research papers whose sentences were manually
+annotated using the CoreSC\cite{LIAKATA10.644} scheme.  An intelligent academic
+information retrieval system can use this information in order to provide
+better filtering and search capabilities for researchers.  Partridge {\st the
+ability to search for phrases and keywords by CoreSC will facilitate}
+implements such context-aware keyword search, by allowing researchers to search
+for papers where a term appears in sentences with a specific CoreSC label (e.g
+only in {\em Method} senetences). This can be used to greatly improve both the
+precision with which researchers are able to perform searches for scientific
+literature and the accuracy of those searches in terms of relevance to the
+reader.
 
 The type of a paper ({\em review}, {\em case study}, {\em research}, {\em
 perspective}, etc) is another useful feature through which a user can narrow
@@ -157,37 +155,30 @@ discuss the reliability of this model of paper types and the insights that have
 been gained for the authorship of papers.
 
 
-
-%Use the template \emph{chapter.tex} together with the Springer document class SVMono (monograph-type books) or SVMult (edited books) to style the various elements of your chapter content in the Springer layout.
-
-%Instead of simply listing headings of different levels we recommend to let every heading be followed by at least a short passage of text. Further on please use the \LaTeX\ automatism for all your cross-references and citations. And please note that the first line of text that follows a heading is not indented, whereas the first lines of all subsequent paragraphs are.
-
 \section{Methods}
 \label{sec:2}
 %how types were chosen,
 
 
-\subsection*{Collection of scientific articles}
-Partridge allows users to upload any paper which is free of copyright restrictions.
-For the purpose of this study we needed a large set of papers that we could label with CoreSC
-to investigate how this information assists classification into paper type.
-Open Access (OA) journals \st{are research journals that provide their papers free
-to read online, often making revenue by charging authors to publish their
-articles \cite{solomon2012study}.  Many OA journals} provide free read access to
-their papers, but do not permit the user of articles for data mining purposes.
-The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contain large
-volumes of OA literature under a permissive license that allows data mining.
-They also use the Pubmed Central markup schema, which is compatible with SAPIENTA,
-for papers published through their journal.  The PLoS journals advanced search
-offers approximately 50 types of paper through which to restrict the search.
-Many of these paper type categories contain too few papers to be useful, others
-are too specific (e.g.``Message from PLoS'') or appear rather adhoc. 
-Indeed it is not clear how these paper types have been identified. % in conclusions add how this can give recommendations for Plos and other journals
-We chose to look at a range of types, some of which
-we expect to overlap or have an unclear distinction.
-These are namely: Essay, Correspondence, Case Study, Synopsis, Perspective, Viewpoint, Opinion,
-Review, Research). 
-%how papers were acquired 
+\subsection*{Collection of scientific articles} Partridge allows users to
+upload any paper which is free of copyright restrictions.  For the purpose of
+this study we needed a large set of papers that we could label with CoreSC to
+investigate how this information assists classification into paper type.  Open
+Access (OA) journals provide free read access to their papers, but many do not
+permit the user of articles for data mining purposes.  The PLoS
+journals\footnote{PLoS: \url{http://www.plos.org/}} contain large volumes of OA
+literature under a permissive license that allows data mining.  They also use
+the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers
+published through their journal.  The PLoS journals advanced search offers
+approximately 50 types of paper through which to restrict the search.  Many of
+these paper type categories contain too few papers to be useful, others are too
+specific (e.g.``Message from PLoS'') or appear rather adhoc.  Indeed it is not
+clear how these paper types have been identified. % in conclusions add how this
+can give recommendations for Plos and other journals We chose to look at a
+range of types, some of which we expect to overlap or have an unclear
+distinction.  These are namely: Essay, Correspondence, Case Study, Synopsis,
+Perspective, Viewpoint, Opinion, Review, Research). 
+
 The papers were downloaded from PLoS using {\em plosget.py}, a short python
 script that uses the PLoS restful search API. The number of papers downloaded
 per paper type category was as follows: 200 Essay, 99 Correspondence, 174
