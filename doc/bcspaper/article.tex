@@ -24,8 +24,10 @@
 %                             % when including figure files
 \usepackage{multicol}        % used for the two-column index
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
-\usepackage{subcaption}
-\captionsetup{compatibility=false}
+
+%\usepackage{subcaption}
+%\captionsetup{compatibility=false}
+
 %
 %% see the list of further useful packages
 %% in the Reference Guide
@@ -225,7 +227,7 @@ discriminative relationship between CoreSC categories and a paper's type.
 \includegraphics[width=\textwidth]{figures/report_corescs.png}
 %\caption{CoreSC content for a sample research paper}
 %\end{subfigure}
-\caption{coresc pies}
+\caption{The CoreSC content of a review paper and a research paper randomly selected from the corpus}
 %\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
 \label{fig:coresc_pies} 
 \end{figure}
@@ -243,57 +245,78 @@ percentage of {\em Background} sentences, the percentage of {\em Hypothesis}
 sentences, etc.).  Thus there are XX features corresponding to the XX CoreSC
 labels.  The random forest learning was conducted using the Orange data mining
 library for Python \cite{Curk2005}.  The parameters for the random forest
-learner were XXX.  We used 10-fold cross validation to estimate the precision,
+learner were as the defaults, except with min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross validation to estimate the precision,
 recall and F-measure.
 
 
 \section{Results and Discussion}
 \label{sec:3}
 
+We report the results of the random forest learning as recall, precision and F-measure for each paper type, averaged over a 10-fold cross validation in Table \ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em Correspondence} are the most accurate classes, and {\em Viewpoint} is the most difficult paper type to predict. 
+
 \begin{table}
-\caption{Per-class recall, precision and f-measure averaged over 10-fold cross validation}
-\label{tab:1}       % Give a unique label
+\caption{Per-class recall, precision and F-measure averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
+\label{tab:recallPrecision}       % Give a unique label
 \begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
 \hline\noalign{\smallskip}
 Classes & Recall & Precision & F-measure  \\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-Case Study & 0.000 & 0.000 & 0.000 \\
-Correspondence & 0.000 & 0.000 & 0.000 \\
-Essay & 0.000 & 0.000 & 0.000 \\
+Case Study   &     0.243    &    0.245     &   0.244 \\
+Correspondence  &      0.545    &    0.505    &    0.524 \\ 
+Essay     &   0.450     &   0.462    &    0.456 \\
+Opinion   &     0.247    &    0.235  &      0.241 \\   
+Perspective &       0.255  &      0.304  &       0.277 \\
+Research     &   0.700    &    0.619    &    0.657 \\
+Review      &  0.631     &   0.625     &   0.628 \\
+Viewpoint   &     0.149     &   0.157  &      0.153 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 \end{table}
+
+A confusion matrix for the paper types in given in Table \ref{tab:confusion}. Research papers are usually predicted to belong to the Research class, and are sometimes confused with Case Study. However, Case Study papers are often predicted to be Research or Review. There are fewer Case Study papers for the learning algorithm to train on, and many research papers, so we would expect this outcome. We might also expect that Research and Case Study would share similar paper structures. 
+We initially expected the classes Essay, Opinion, Perspective and Viewpoint to be confused, as the four labels all indicate a paper containing an author's personal thoughts on an issue, rather than traditional experiment-driven science. Opinion is confused with Perspective and Viewpoint. Perspective is confused with almost all classes, except Research. Viewpoint is a small class and mostly confused with Opinion and Perspective. From this it would seem that there is a clear grouping of paper types which are very similar, and could better be labelled as a single type: \{Opinion, Perspective, Viewpoint\}. However, Essay appears to be different.
+
+Essay is confused with Perspective and Review. Review is confused with Case Study and Essay, and a few others. They share overlapping aspects, but are not entirely synonymous. A review should cover a wide range of background material (which we might also expect to find in an Essay), and might make recommendations based on the material presented (which we might also expect to find in a Case Study). 
 
 \begin{table}
-\caption{Confusion matrix summed over 10-fold cross validation. Rows represent true classes, columns represent predicted classes.}
-\label{tab:2}       % Give a unique label
-\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\caption{Confusion matrix summed over 10-fold cross validation, reporting the results on the held-out validation segment. Rows represent true classes, columns represent predicted classes.}
+\label{tab:confusion}       % Give a unique label
+\begin{tabular}{lllllllll}
 \hline\noalign{\smallskip}
- & Case study & Essay & Correspondence  \\
+      &  Case Study   &     Corresp.      &   Essay  & Opinion &     Perspective    &     Research    &     Review  & Viewpoint \\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-Case Study & 1.000 & 0.000 & 0.000 \\
-Essay & 0.000 & 1.000 & 0.000 \\
-Correspondence & 0.000 & 0.000 & 1.000 \\
+Case Study    &    26   &     2     &   11    &    2  &      5 & 26       & 25 &       10 \\
+Correspondence  &      4  &      54   &     3    &    9     &   15 & 8   &     4 &       2 \\
+Essay      &  8     &   5    &   90    &    2 &       39      &  5 & 46    &    5 \\
+Opinion    &    4   &     7 &       2   &     23      &  27     &   10   &  3  &      17 \\
+Perspective &       11  &      16    &    49       & 30      &  51 & 6      &  26    &   11 \\
+Research      &  19    &    6 &       2 &       8    &    5      &  140  &   12    &    8\\
+Review       & 27     &   8     &   35    &    5      &  13    &    21   &  197 &       6\\
+Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  &      11 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 \end{table}
 
 
 
-Discuss which classes are predicted well and which are poorly recognised.
+%Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
 
-Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
+We inspected the detail of a single decision tree, grown on the entire dataset, to give further insight into which CoreSC class decisions were responsible for the paper type predictions. This was a very large tree, with a depth of 37 nodes in places.  The first decision was regarding the number of Background sentences in the article. A low Background percentage, of less than 0.694 indicates a Correspondence paper. 28 out of the 31 papers that were classified by this decision as Correpondence were correctly labelled. 
 
-Discuss which classes are confused and why. 
+The next decision, for higher amounts of Background, was based on the percentage of Experiment sentences in the paper. For a very low percentage of Experiment sentences ($<$ 0.061), the papers then branched into a long side chain of detailed classification decisions, to separate mostly the Opinion, Viewpoint and Perspective papers from other Correspondence papers, and a few examples of the remaining categories. For a higher percentage of Experiment sentences, Research papers were classified as those that had Observations $>$ 5.6\%, or Conclusions  $<=$ 1.4\%, whereas Case Studies had fewer Observations and more Conclusions.
 
-
+The largest node classifiying Essay did so via a route after the low Experiment decision that asked for a Background $>$ 48\%, but then low values for Goal, Hypothesis, Result, Observation, Model, Conclusion and Object. These decisions seem reasonable and agreed with our expectations of the content of an Essay.
 
 \section{Conclusion}
 \label{sec:4}
 
-Summary of findings.
+To summarise, we have demonstrated that paper type can largely be predicted from the distribution of the CoreSC sentence labels in the full text of a paper. The CoreSC labels themselves are automatically annotated. We have described some of the particular CoreSC features that determine a paper type, and discussed which of the paper types are not easily separable in this way. Analysis of an example tree shows the decision making process to be complex, but agrees with our general understanding of paper types. The Partridge online system now allows refinement of paper search using CoreSC and paper type, both of which can be intelligently determined using machine learning methods. 
 
-Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
+
+%Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
+
+The potential for automatic extraction of useful features from scientific papers to assist researchers in their knowledge queries is now an exciting area for research. Open Access journals that permit full text mining lead the way in allowing this research to expand and flourish. In future work we aim to develop and implement a range of further useful properties that will uncover more of the information that is hidden within the text of articles, and to use Partridge as a working engine to demonstrate their usefulness in practice.
+
 
 \begin{acknowledgement}
 Thanks to the Leverhulme for Maria's funding....
