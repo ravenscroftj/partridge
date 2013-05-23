@@ -164,47 +164,34 @@ been gained for the authorship of papers.
 
 \section{Methods}
 \label{sec:2}
-
-%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
-
-The first process in the processing pipeline is conversion of the papers to a
-format that can be analysed by SAPIENTA.  Currently, SAPIENTA supports the
-SciXML and PubMed Central DTDs.  Papers in PDF format must be converted to XML
-in order to be processed.  For this, we use PDFX \cite{PDFX}, a free service
-hosted by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}).  PDFX
-also provides output that already has some metadata, such as title, author, and
-abstract, associated with it.  SAPIENTA allocates each sentence within a paper
-a separate CoreSC label.  However, the sentence boundaries must be detected
-before the document is passed into SAPIENTA for annotation.  The sentence
-splitter uses a regular expression to split the sentences within the document
-and then adds the necessary \verb|<s>| tags to the markup to indicate the
-location of each sentence.  Once the paper has been split, SAPIENTA is used to
-annotate each sentence with a relevant CoreSC label.  These labels are
-calculated based upon the sentence's location within the paper as well pairs
-and triplets of words found consecutively within the sentence. 
-
 %how types were chosen,
 
-Open Access (OA) journals are research journals that provide their papers free
+
+\subsection*{Collection of scientific articles}
+Partridge allows users to upload any paper which is free of copyright restrictions.
+For the purpose of this study we needed a large set of papers that we could label with CoreSC
+to investigate how this information assists classification into paper type.
+Open Access (OA) journals \st{are research journals that provide their papers free
 to read online, often making revenue by charging authors to publish their
-articles \cite{solomon2012study}.  Many OA journals provide free read access to
+articles \cite{solomon2012study}.  Many OA journals} provide free read access to
 their papers, but do not permit the user of articles for data mining purposes.
-The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contains large
+The PLoS journals\footnote{PLoS: \url{http://www.plos.org/}} contain large
 volumes of OA literature under a permissive license that allows data mining.
-PLoS use the Pubmed Central markup schema, which is compatible with SAPIENTA,
+They also use the Pubmed Central markup schema, which is compatible with SAPIENTA,
 for papers published through their journal.  The PLoS journals advanced search
 offers approximately 50 types of paper through which to restrict the search.
-Many of these paper type categories contain too few papers to be useful. Others
-are too specific (e.g.``Message from PLoS''). We chose to look at XX paper
-types (Essay, Correspondence, Synopsis, Perspective, Viewpoint, Opinion,
-Review, Research). These paper types represent a range of types, some of which
-we expect to overlap or have an unclear distinction. 
-
+Many of these paper type categories contain too few papers to be useful, others
+are too specific (e.g.``Message from PLoS'') or appear rather adhoc. 
+Indeed it is not clear how these paper types have been identified. % in conclusions add how this can give recommendations for Plos and other journals
+We chose to look at a range of types, some of which
+we expect to overlap or have an unclear distinction.
+These are namely: Essay, Correspondence, Case Study, Synopsis, Perspective, Viewpoint, Opinion,
+Review, Research). 
 %how papers were acquired 
 The papers were downloaded from PLoS using {\em plosget.py}, a short python
 script that uses the PLoS restful search API. The number of papers downloaded
 per paper type category was as follows: 200 Essay, 99 Correspondence, 174
-Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 107, Case Study, 312
+Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 107 Case Study, 312
 Review, 200 Research.  These formed a corpus of 1459 papers.
 
 Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a
@@ -213,6 +200,31 @@ made up almost entirely from Background CoreSC sentences.  However, research
 papers are much more evenly spread, made up of several different types of
 CoreSC.  This investigation suggested that there is almost certainly a
 discriminative relationship between CoreSC categories and a paper's type. 
+
+\subsection*{Paper Processing and classification}
+%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
+In order to obtain automatic labeling of sentences in a paper with
+CoreSC concepts we first needed to convert the papers to a format that
+the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
+supports the SciXML and PubMed Central DTDs.  Papers in PDF format are
+first converted to XML using PDFX \cite{PDFX}, a free service hosted
+by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}).
+PDFX also provides output that already has some metadata, such as
+title, author, and abstract, associated with it.  SAPIENTA allocates
+each sentence within a paper a separate CoreSC label.  However, the
+sentence boundaries must be detected before the document is passed
+into SAPIENTA for annotation.  The sentence splitter uses a regular
+expression to split the sentences within the document and then adds
+the necessary \verb|<s>| tags to the markup to indicate the location
+of each sentence.  Once the paper has been split, SAPIENTA is used to
+annotate each sentence with a relevant CoreSC label.  These labels are
+assigned using a conditional random fields model based upon a number
+of features such as the sentence's location within the paper and pairs
+and triplets of words found consecutively within the sentence
+\cite{Liakata2012}.  The SAPIENTA system has been trained on a corpus
+of 265 chemistry and biochemistry papers and we have done no domain
+adaptation for the papers in PLoS.
+
 
 
 \begin{figure}[t]
@@ -247,12 +259,13 @@ chosen because this is a fast, accurate and widely accepted learning
 technology, and because the underlying decision trees can be used to describe
 and inspect some of the reasoning behind the predictions made by the final
 paper type classifiers.  The feature set consisted of the percentage
-composition of the CoreSC labels given to the sentences in each paper (the
+composition of the CoreSC labels given to the sentences in each paper i.e. (the
 percentage of {\em Background} sentences, the percentage of {\em Hypothesis}
-sentences, etc.).  Thus there are XX features corresponding to the XX CoreSC
+sentences, etc.).  Thus there are 11 features corresponding to the 11 CoreSC
 labels.  The random forest learning was conducted using the Orange data mining
 library for Python \cite{Curk2005}.  The parameters for the random forest
-learner were as the defaults, except with min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross validation to estimate the precision,
+learner were as the defaults, except with min\_subsets=5 and same\_majority\_pruning=true.  
+We used 10-fold cross validation to estimate the precision,
 recall and F-measure.
 
 
