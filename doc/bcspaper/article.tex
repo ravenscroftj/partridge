@@ -65,7 +65,7 @@
 %
 \maketitle
 
-\abstract*{Partridge is a system that enables intelligent search for
+\abstract{Partridge is a system that enables intelligent search for
   academic papers by allowing users to query terms within
   sentences designating a particular core scientific concept (e.g. Hypothesis, Result, etc). 
   The system also automatically classifies papers according to
@@ -86,10 +86,12 @@
   \url{http://farnsworth.papro.org.uk}, and further information about
   the project can be found at \url{http://papro.org.uk}}
 
-\section{Introduction} \label{sec:1} Since the advent of the `Digital Age' and
-the ability of computers to copy and reproduce information for a negligible
-cost, the amount of information available to researchers has been increasing
-drastically. As available information increases, relevant material becomes
+\vspace{-15pt}
+\section{Introduction} \label{sec:1}
+
+
+Since the advent of the `Digital Age', the amount of information available to
+researchers has been increasing drastically and relevant material is becoming
 progressively more difficult to find manually and the need for an automated
 information retrieval tool more apparent. There are already a large number of
 information retrieval and recommendation systems for scientific publications.
@@ -155,6 +157,7 @@ discuss the reliability of this model of paper types and the insights that have
 been gained for the authorship of papers.
 
 
+\vspace{-15pt}
 \section{Methods}
 \label{sec:2}
 %how types were chosen,
@@ -215,11 +218,11 @@ papers and we have done no domain adaptation for the papers in PLoS.
 
 \centering
 
-\subfloat[]{
-\includegraphics[width=0.48\textwidth]{figures/review_corescs.png}
+\subfloat{
+\includegraphics[width=0.45\textwidth]{figures/review_corescs.png}
 }
-\subfloat[]{
-\includegraphics[width=0.48\textwidth]{figures/report_corescs.png}
+\subfloat{
+\includegraphics[width=0.45\textwidth]{figures/report_corescs.png}
 }
 \caption{The CoreSC content of a review paper and a research paper randomly selected from the corpus}
 
@@ -243,17 +246,13 @@ min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross
 validation to estimate the precision, recall and F-measure.
 
 
+\vspace{-15pt}
 \section{Results and Discussion}
 \label{sec:3}
 
-The results of the random forest learning as recall, precision and F-measure
-for each paper type, averaged over a 10-fold cross validation are shown in Table
-\ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em
-Correspondence} are the most accurate classes, and {\em Viewpoint} is the most
-difficult paper type to predict. 
 
-\begin{wraptable}{l}{0.65\textwidth}
-\vspace{-20pt}
+
+\begin{table}
 
 \begin{tabular}{p{2.4cm}p{1.5cm}p{1.5cm}p{1.5cm}}
 \hline\noalign{\smallskip}
@@ -270,9 +269,16 @@ Viewpoint       &     14.9\verb|%|     &   15.7\verb|%|  &      15.3\verb|%| \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 \caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
+
+\vspace{-20pt}
 \label{tab:recallPrecision}       % Give a unique label
-\vspace{-30pt}
-\end{wraptable}
+\end{table}
+
+The results of the random forest learning as recall, precision and F-measure
+for each paper type, averaged over a 10-fold cross validation are shown in Table
+\ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em
+Correspondence} are the most accurate classes, and {\em Viewpoint} is the most
+difficult paper type to predict. 
 
 
 A confusion matrix for the paper types in given in Table
@@ -299,8 +305,12 @@ OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
 Correspondence: 46 abd Case Study 24.8.
 
 \begin{table}
+
+\vspace{-10pt}
+
 \caption{Confusion matrix summed over 10-fold cross validation, reporting the results on the held-out validation segment. Rows represent true classes, columns represent predicted classes.}
-\label{tab:confusion}       % Give a unique label
+\label{tab:confusion}       % Give a unique label]
+
 \begin{tabular}{lllllllll}
 \hline\noalign{\smallskip}
       &  Case Study   &     Corresp.      &   Essay  & Opinion &     Perspective    &     Research    &     Review  & Viewpoint \\
@@ -314,7 +324,8 @@ Research      &  19    &    6 &       2 &       8    &    5      &  140  &   12 
 Review       & 27     &   8     &   35    &    5      &  13    &    21   &  197 &       6\\
 Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  &      11 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
-\end{tabular}
+\end{tabular}]
+\vspace{-15pt}
 \end{table}
 
 
@@ -346,6 +357,7 @@ values for Goal, Hypothesis, Result, Observation, Model, Conclusion
 and Object. These decisions seem reasonable and agreed with our
 expectations of the content of an Essay.
 
+\vspace{-15pt}
 \section{Conclusion}
 \label{sec:4}
 
@@ -383,6 +395,7 @@ Liakata's Early Career Fellowship and also EMBL-EBI, Cambridge UK for the
 facilities offered to Dr Liakata.  \end{acknowledgement}
 
 
+\vspace{-15pt}
 \bibliographystyle{plain}
 \bibliography{partridge}
 
