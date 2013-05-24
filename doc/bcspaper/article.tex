@@ -233,26 +233,28 @@ adaptation for the papers in PLoS.
 
 %how the machine learning is conducted (random forest using orange, features, validation methods).
 
-Machine learning to build a classifer of paper type was conducted using random
-forest learning \cite{Breiman2001}.  A random forest learning algorithm was
-chosen because this is a fast, accurate and widely accepted learning
-technology, and because the underlying decision trees can be used to describe
-and inspect some of the reasoning behind the predictions made by the final
-paper type classifiers.  The feature set consisted of the percentage
-composition of the CoreSC labels given to the sentences in each paper i.e. (the
-percentage of {\em Background} sentences, the percentage of {\em Hypothesis}
-sentences, etc.).  Thus there are 11 features corresponding to the 11 CoreSC
-labels.  The random forest learning was conducted using the Orange data mining
-library for Python \cite{Curk2005}.  The parameters for the random forest
-learner were as the defaults, except with min\_subsets=5 and same\_majority\_pruning=true.  
-We used 10-fold cross validation to estimate the precision,
-recall and F-measure.
+Random forest learning\cite{Breiman2001} was chosen for the construction of the
+paper type classifier. This is because random forests are a fast, accurate and
+widely accepted learning technology, and the underlying decision trees can be
+inspected to understand some of the reasoning behind the predictions made by
+the final paper type classifiers. The feature set consisted of the percentage
+composition of each of the 11 respective CoreSC labels assigned to the
+sentences in each paper i.e. (the percentage of {\em Background} sentences, the
+percentage of {\em Hypothesis} sentences, etc.). The random forest learning was
+conducted using the Orange data mining library for Python \cite{Curk2005}.  The
+parameters for the random forest learner were as the defaults, except with
+min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross
+validation to estimate the precision, recall and F-measure.
 
 
 \section{Results and Discussion}
 \label{sec:3}
 
-We report the results of the random forest learning as recall, precision and F-measure for each paper type, averaged over a 10-fold cross validation in Table \ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em Correspondence} are the most accurate classes, and {\em Viewpoint} is the most difficult paper type to predict. 
+The results of the random forest learning as recall, precision and F-measure
+for each paper type, averaged over a 10-fold cross validation are shown in Table
+\ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em
+Correspondence} are the most accurate classes, and {\em Viewpoint} is the most
+difficult paper type to predict. 
 
 \begin{table}
 \caption{Per-class recall, precision and F-measure averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
@@ -273,8 +275,21 @@ Viewpoint   &     0.149     &   0.157  &      0.153 \\
 \end{tabular}
 \end{table}
 
-A confusion matrix for the paper types in given in Table \ref{tab:confusion}. Research papers are usually predicted to belong to the Research class, and are sometimes confused with Case Study. However, Case Study papers are often predicted to be Research or Review. There are fewer Case Study papers for the learning algorithm to train on, and many research papers, so we would expect this outcome. We might also expect that Research and Case Study would share similar paper structures. 
-We initially expected the classes Essay, Opinion, Perspective and Viewpoint to be confused, as the four labels all indicate a paper containing an author's personal thoughts on an issue, rather than traditional experiment-driven science. Opinion is confused with Perspective and Viewpoint. Perspective is confused with almost all classes, except Research. Viewpoint is a small class and mostly confused with Opinion and Perspective. From this it would seem that there is a clear grouping of paper types which are very similar, and could better be labelled as a single type: \{Opinion, Perspective, Viewpoint\}. However, Essay appears to be different.
+A confusion matrix for the paper types in given in Table \ref{tab:confusion}.
+Research papers are classified correctly most frequently, but are sometimes
+confused with Case Study. However, Case Study papers are often predicted to be
+Research or Review. There are fewer Case Study papers for the learning
+algorithm to train on, and many research papers, so we would expect this
+outcome. We might also expect that Research and Case Study would share similar
+paper structures.  We initially expected the classes Essay, Opinion,
+Perspective and Viewpoint to be confused, as the four labels all indicate a
+paper containing an author's personal thoughts on an issue, rather than
+traditional experiment-driven science. Opinion is confused with Perspective and
+Viewpoint. Perspective is confused with almost all classes, except Research.
+Viewpoint is a small class and mostly confused with Opinion and Perspective.
+From this it would seem that there is a clear grouping of paper types which are
+very similar, and could better be labelled as a single type: \{Opinion,
+Perspective, Viewpoint\}. However, Essay appears to be different.
 
 Essay is confused with Perspective and Review. Review is confused with Case Study and Essay, and a few others. They share overlapping aspects, but are not entirely synonymous. A review should cover a wide range of background material (which we might also expect to find in an Essay), and might make recommendations based on the material presented (which we might also expect to find in a Case Study). 
 
