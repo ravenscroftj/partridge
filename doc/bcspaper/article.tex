@@ -82,8 +82,7 @@
   is online and available for use, includes a browser-friendly
   bookmarklet for new paper submission, and demonstrates a range of
   possibilities for more intelligent search in the scientific
-  literature. The Partidge instance can be used at
-  \url{http://farnsworth.papro.org.uk}, and further information about
+  literature. The Partridge instance and further information about
   the project can be found at \url{http://papro.org.uk}}
 
 \vspace{-15pt}
@@ -107,8 +106,8 @@ The value of these systems to their users is often restricted by the small
 proportion of available literature that they index, forcing researchers to use
 multiple, domain specific, search engines for their queries.  In contrast,
 there are also a number of interdisciplinary indexing systems and online
-journals such as arXiv( \url{http://arxiv.org/}),
-PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}),
+journals such as arXiv and 
+PloSOne
 that try to incorporate wide ranges of papers from as many disciplines as
 possible. The traits of these systems often complement those of their
 domain-specific counterparts; they provide a comprehensive collection of
@@ -126,7 +125,7 @@ to identify which scientific concept each sentence encapsulates.  SAPIENTA
 application which can automatically annotate all sentences in a scientific
 paper with their CoreSC labels. It was trained using a corpus of physical
 chemistry and biochemistry research papers whose sentences were manually
-annotated using the CoreSC\cite{LIAKATA10.644} scheme.  An intelligent academic
+annotated using the CoreSC\cite{LIAKATA10.644} scheme.  An intelligent 
 information retrieval system can use this data to provide better filtering and
 search capabilities for researchers.  Partridge implements such context-aware
 keyword search, by allowing researchers to search for papers where a term
@@ -135,12 +134,12 @@ sentences). This can be used to greatly improve both the precision with which
 researchers are able to perform searches for scientific literature and the
 accuracy of those searches in terms of relevance to the reader.
 
-The type of a paper ({\em review}, {\em case study}, {\em research}, {\em
-perspective}, etc) is another useful feature through which a user can narrow
+The type of a paper ({\em Review}, {\em Case Study}, {\em Research}, {\em
+Perspective}, etc) is another useful feature through which a user can narrow
 down the results of a search.  The type of a paper can then be used to augment
-queries.  For example, a user may search for a {\em review} paper containing
-the keywords ``PCR microfluidics'', or a {\em research} paper with a {\em
-hypothesis} containing the keywords ``cerevisiae'' and ``glucose''.   Such
+queries.  For example, a user may search for a {\em Review} paper containing
+the keywords ``PCR microfluidics'', or a {\em Research} paper with a {\em
+Hypothesis} containing the keywords ``cerevisiae'' and ``glucose''.   Such
 paper types are not yet standardised by journals.  We expect the structure of a
 paper to reflect its paper type.  For example, review papers would be expected
 to contain a large amount of background material.  In this article, we describe
@@ -170,11 +169,11 @@ Access (OA) journals provide free read access to their papers, but many do not
 permit the user of articles for data mining purposes. The PLoS
 journals\footnote{PLoS: \url{http://www.plos.org/}} contain large volumes of OA
 literature under a permissive license that allows data mining.  They also use
-the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers
+the PubMed Central markup schema, which is compatible with SAPIENTA, for papers
 published through their journal. The PLoS journals advanced search offers
 approximately 50 types of paper through which to restrict the search.  Many of
 these paper type categories contain too few papers to be useful, others are too
-specific (e.g.``Message from PLoS'') or appear rather adhoc. Indeed it is not
+specific (e.g. {\it Message from PLoS}) or appear rather {\it ad hoc}. Indeed it is not
 clear how these paper types have been identified. We chose to look at a range
 of types, some of which we expect to overlap or have an unclear distinction.
 These are namely: Essay, Correspondence, Case Study, Perspective,
@@ -287,7 +286,7 @@ A confusion matrix for the paper types in given in Table
 \ref{tab:confusion}. Research papers are usually predicted to belong
 to the Research class, and are sometimes confused with Case
 Study. However, Case Study papers are often predicted to be Research
-or Review. The ratio between Case study, Research and Review papers is
+or Review. The ratio between Case Study, Research and Review papers is
 ~1:2:3 so the outcome is not entirely surprising in terms of the data
 size effect. We expected Research and Case Study to share similar
 paper structures but perhaps the fact that Case Study is equally
@@ -302,9 +301,9 @@ and Perspective. From this it would seem that the paper types
 \{Opinion, Perspective, Viewpoint\} are very similar and should be
 grouped together into one category. Indeed when we trained the model
 on a super class consisting of the previous three categories,
-performance was improved overall with the following f-measures:
-OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
-Correspondence: 46 abd Case Study 24.8.
+performance was improved overall with the following F-measures:
+{\bf OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
+Correspondence: 46 and Case Study 24.8}.
 
 \begin{table}
 
@@ -340,7 +339,7 @@ the paper type predictions. This was a very large tree, with a depth of 37
 nodes in places.  The first decision was regarding the number of Background
 sentences in the article. A low Background percentage, of less than 0.694
 indicates a Correspondence paper. 28 out of the 31 papers that were classified
-by this decision as Correpondence were correctly labelled. 
+by this decision as Correspondence were correctly labelled. 
 
 The next decision, for higher amounts of Background, was based on the
 percentage of Experiment sentences in the paper. For a very low
@@ -353,7 +352,7 @@ papers were classified as those that had Observations $>$ 5.6\%, or
 Conclusions $<=$ 1.4\%, whereas Case Studies had fewer Observations
 and more Conclusions.
 
-The largest node classifiying Essay did so via a route after the low
+The largest node classifying Essay did so via a route after the low
 Experiment decision that asked for a Background $>$ 48\%, but then low
 values for Goal, Hypothesis, Result, Observation, Model, Conclusion
 and Object. These decisions seem reasonable and agreed with our
@@ -367,7 +366,7 @@ To summarise, we have demonstrated that paper type can largely be
 predicted from the distribution of the automatically obtained CoreSC
 sentence labels in the full text of a paper. We have described some of
 the particular CoreSC features that determine a paper type
-(e.g. Corresponsence characterised by very little Background, Opinions
+(e.g. Correspondence characterised by very little Background, Opinions
 characterised by low percentage of Experiment) and discussed which of
 the paper types are not easily separable in this way. We recommended
 for example merging the Opinion, Viewpoint and Perspective articles
