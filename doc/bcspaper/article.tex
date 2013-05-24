@@ -111,10 +111,10 @@ systems is Google Scholar (\url{http://scholar.google.com}). Google offers
 advanced query options specific to Scholar that allow searching by author, year
 and for words that occur only in the document title.
 
-However, the document title is just one part of the important structure to be
-found within a scientific document.  Liakata \emph{et al.} (2012) describe a
-system for automatically processing and classifying sentences in a research
-paper according to the core scientific concept (CoreSC) that they
+However, the document title is just one of the crucial parts of a scientific
+paper's structure.  Liakata \emph{et al.} (2012) describe a system for
+automatically processing and classifying sentences in a research paper
+according to the core scientific concept (CoreSC) that they
 describe\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis},
 {\em Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
 CoreSC labels can be allocated to all sentences in a scientific paper in order
@@ -173,14 +173,15 @@ published through their journal.  The PLoS journals advanced search offers
 approximately 50 types of paper through which to restrict the search.  Many of
 these paper type categories contain too few papers to be useful, others are too
 specific (e.g.``Message from PLoS'') or appear rather adhoc.  Indeed it is not
-clear how these paper types have been identified. % in conclusions add how this
-can give recommendations for Plos and other journals We chose to look at a
-range of types, some of which we expect to overlap or have an unclear
-distinction.  These are namely: Essay, Correspondence, Case Study, Synopsis,
-Perspective, Viewpoint, Opinion, Review, Research). 
+clear how these paper types have been identified. We chose to look at a range
+of types, some of which we expect to overlap or have an unclear distinction.
+These are namely: Essay, Correspondence, Case Study, Synopsis, Perspective,
+Viewpoint, Opinion, Review, Research. 
 
+
+% in conclusions add how this can give recommendations for Plos and other journals 
 The papers were downloaded from PLoS using {\em plosget.py}, a short python
-script that uses the PLoS restful search API. The number of papers downloaded
+script that uses the PLoS RESTful search API. The number of papers downloaded
 per paper type category was as follows: 200 Essay, 99 Correspondence, 174
 Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 107 Case Study, 312
 Review, 200 Research.  These formed a corpus of 1459 papers.
@@ -198,7 +199,8 @@ In order to obtain automatic labeling of sentences in a paper with
 CoreSC concepts we first needed to convert the papers to a format that
 the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
 supports the SciXML and PubMed Central DTDs.  Papers in PDF format are
-first converted to XML using PDFX \cite{PDFX}, a free service hosted
+first converted to XML using PDFX %\cite{PDFX} - no paper known yet
+, a free service hosted
 by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}).
 PDFX also provides output that already has some metadata, such as
 title, author, and abstract, associated with it.  SAPIENTA allocates
@@ -219,26 +221,15 @@ adaptation for the papers in PLoS.
 
 
 \begin{figure}[t]
-\sidecaption[t]
-% Use the relevant command for your figure-insertion program
-% to insert the figure file.
-% For example, with the option graphics use
-%\includegraphics[scale=.65]{figure}
-%
-% If no graphics program available, insert a blank space i.e. use
-%\picplace{5cm}{2cm} % Give the correct figure height and width in cm
-%
+
 \centering
-%\begin{subfigure}[b]{0.6\textwidth}
-\includegraphics[width=\textwidth]{figures/review_corescs.png}
-%\caption{CoreSC content for a sample review paper}
-%\end{subfigure}
-%\begin{subfigure}[b]{0.6\textwidth}
-\includegraphics[width=\textwidth]{figures/report_corescs.png}
-%\caption{CoreSC content for a sample research paper}
-%\end{subfigure}
+
+\includegraphics[width=0.75\textwidth]{figures/review_corescs.png}
+
+\includegraphics[width=0.75\textwidth]{figures/report_corescs.png}
+
 \caption{The CoreSC content of a review paper and a research paper randomly selected from the corpus}
-%\caption{If the width of the figure is less than 7.8 cm use the \texttt{sidecapion} command to flush the caption on the left side of the page. If the figure is positioned at the top of the page, align the sidecaption with the top of the figure -- to achieve this you simply need to use the optional argument \texttt{[t]} with the \texttt{sidecaption} command}
+
 \label{fig:coresc_pies} 
 \end{figure}
 
