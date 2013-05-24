@@ -223,7 +223,7 @@ papers and we have done no domain adaptation for the papers in PLoS.
 \subfloat{
 \includegraphics[width=0.45\textwidth]{figures/report_corescs.png}
 }
-\caption{The CoreSC content of a review paper and a research paper randomly selected from the corpus}
+\caption{The CoreSC content of a review paper (left) and a research paper (right) randomly selected from the corpus}
 
 \vspace{-20pt}
 \label{fig:coresc_pies} 
@@ -253,20 +253,20 @@ validation to estimate the precision, recall and F-measure.
 
 \begin{table}
 
-\caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
+\caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment. Top paper types in bold.}
 
-\begin{tabular}{p{2.4cm}p{1.5cm}p{1.5cm}p{1.5cm}}
+\begin{tabular}{p{2.4cm}p{2.0cm}p{2.0cm}p{2.5cm}}
 \hline\noalign{\smallskip}
-Classes & Recall & Precision & F-measure  \\
+Classes & Recall(\verb|%|) & Precision(\verb|%|)& F-measure(\verb|%|) \\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-Case Study      &   24.3\verb|%|    &    24.5\verb|%|     &   24.4\verb|%| \\
-Correspondence  &   {\bf  54.5\verb|%|}    &    {\bf 50.5\verb|%|}    &    {\bf 52.4\verb|%|} \\ 
-Essay           &   45.0\verb|%|     &   46.2\verb|%|    &    45.6\verb|%| \\
-Opinion         &   24.7\verb|%|    &    23.5\verb|%|  &      24.1\verb|%| \\   
-Perspective     &   25.5\verb|%|  &      30.4\verb|%|  &       27.7\verb|%| \\
-Research        &   {\bf 70.0\verb|%|}    &    {\bf 61.9\verb|%|}    &    {\bf 65.7\verb|%|} \\
-Review          &  {\bf 63.1\verb|%|}     &   {\bf 62.5\verb|%|}     &   {\bf 62.8\verb|%|} \\
-Viewpoint       &     14.9\verb|%|     &   15.7\verb|%|  &      15.3\verb|%| \\
+Case Study      &   24.3    &    24.5     &   24.4 \\
+Correspondence  &   {\bf  54.5}    &    {\bf 50.5}    &    {\bf 52.4} \\ 
+Essay           &   45.0     &   46.2    &    45.6 \\
+Opinion         &   24.7    &    23.5  &      24.1 \\   
+Perspective     &   25.5  &      30.4  &       27.7 \\
+Research        &   {\bf 70.0}    &    {\bf 61.9}    &    {\bf 65.7} \\
+Review          &  {\bf 63.1}     &   {\bf 62.5}     &   {\bf 62.8} \\
+Viewpoint       &     14.9     &   15.7  &      15.3 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 
