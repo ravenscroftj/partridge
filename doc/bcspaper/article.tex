@@ -26,9 +26,9 @@
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
 
 
-\usepackage{subcaption}
+%\usepackage{subcaption}
 
-\captionsetup{compatibility=false}
+%\captionsetup{compatibility=false}
 
 %
 %% see the list of further useful packages
@@ -51,7 +51,7 @@
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 \institute{James Ravenscroft, Amanda Clare \at Department of Computer Science, Aberystwyth University, Aberystwyth, SY23 3DB, UK  \email{jrr9@aber.ac.uk}
-\and Maria Liakata \at Name, Address of Institute \email{name@email.address}}
+\and Maria Liakata \at Department of Computer Science, University of Warwick \email{M.Liakata@warwick.ac.uk}}
 
 %
 % Use the package "url.sty" to avoid
@@ -173,15 +173,16 @@ these paper type categories contain too few papers to be useful, others are too
 specific (e.g.``Message from PLoS'') or appear rather adhoc. Indeed it is not
 clear how these paper types have been identified. We chose to look at a range
 of types, some of which we expect to overlap or have an unclear distinction.
-These are namely: Essay, Correspondence, Case Study, Synopsis, Perspective,
+These are namely: Essay, Correspondence, Case Study, Perspective,
 Viewpoint, Opinion, Review, Research. 
 
 % in conclusions add how this can give recommendations for Plos and other journals 
-The papers were downloaded from PLoS using {\em plosget.py}, a short python
-script that uses the PLoS RESTful search API. The number of papers downloaded
-per paper type category was as follows: 200 Essay, 99 Correspondence, 174
-Synopsis, 200 Perspective, 74 Viewpoint, 93 Opinion, 107 Case Study, 312
-Review, 200 Research.  These formed a corpus of 1459 papers.
+The papers were downloaded from PLoS using {\em plosget.py}, a short
+python script that uses the PLoS RESTful search API. The number of
+papers downloaded per paper type category was as follows: 200 Essay,
+99 Correspondence, 107 Case Study, 200 Perspective, 74 Viewpoint, 93
+Opinion, 312 Review, 200 Research.  These formed a corpus of 1285 %1459-174 after removing synopsis. Should double check the numbers add up
+papers.
 
 Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a
 research paper randomly selected from the corpus.  The review papers tend to be
@@ -243,31 +244,57 @@ recall and F-measure.
 \section{Results and Discussion}
 \label{sec:3}
 
-We report the results of the random forest learning as recall, precision and F-measure for each paper type, averaged over a 10-fold cross validation in Table \ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em Correspondence} are the most accurate classes, and {\em Viewpoint} is the most difficult paper type to predict. 
+We report the results of the random forest learning as recall, precision and F-measure for each paper type, averaged over a 10-fold cross validation in Table \ref{tab:recallPrecision}. Paper types {\em Research}, {\em Review} and {\em Correspondence} are the most accurate classes, and {\em Viewpoint} is the most difficult paper type to predict.
 
 \begin{table}
-\caption{Per-class recall, precision and F-measure averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
+\caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
 \label{tab:recallPrecision}       % Give a unique label
 \begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
 \hline\noalign{\smallskip}
 Classes & Recall & Precision & F-measure  \\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
 Case Study   &     0.243    &    0.245     &   0.244 \\
-Correspondence  &      0.545    &    0.505    &    0.524 \\ 
+Correspondence  &     {\bf  0.545}    &    {\bf 0.505}    &    {\bf 0.524} \\ 
 Essay     &   0.450     &   0.462    &    0.456 \\
 Opinion   &     0.247    &    0.235  &      0.241 \\   
 Perspective &       0.255  &      0.304  &       0.277 \\
-Research     &   0.700    &    0.619    &    0.657 \\
-Review      &  0.631     &   0.625     &   0.628 \\
+Research     &   {\bf 0.700}    &    {\bf 0.619}    &    {\bf 0.657} \\
+Review      &  {\bf 0.631}     &   {\bf 0.625}     &   {\bf 0.628} \\
 Viewpoint   &     0.149     &   0.157  &      0.153 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
 \end{table}
 
-A confusion matrix for the paper types in given in Table \ref{tab:confusion}. Research papers are usually predicted to belong to the Research class, and are sometimes confused with Case Study. However, Case Study papers are often predicted to be Research or Review. There are fewer Case Study papers for the learning algorithm to train on, and many research papers, so we would expect this outcome. We might also expect that Research and Case Study would share similar paper structures. 
-We initially expected the classes Essay, Opinion, Perspective and Viewpoint to be confused, as the four labels all indicate a paper containing an author's personal thoughts on an issue, rather than traditional experiment-driven science. Opinion is confused with Perspective and Viewpoint. Perspective is confused with almost all classes, except Research. Viewpoint is a small class and mostly confused with Opinion and Perspective. From this it would seem that there is a clear grouping of paper types which are very similar, and could better be labelled as a single type: \{Opinion, Perspective, Viewpoint\}. However, Essay appears to be different.
+A confusion matrix for the paper types in given in Table
+\ref{tab:confusion}. Research papers are usually predicted to belong
+to the Research class, and are sometimes confused with Case
+Study. However, Case Study papers are often predicted to be Research
+or Review. The ratio between Case study, Research and Review papers is
+~1:2:3 so the outcome is not entirely surprising in terms of the data
+size effect. We expected Research and Case Study to share similar
+paper structures but perhaps the fact that Case Study is equally
+confused with Research and Review suggests two distinct types of Case
+Study.  We expected the classes Essay, Opinion, Perspective and
+Viewpoint to be confused, as the four labels all indicate a paper
+containing an author's personal thoughts on an issue, rather than
+experiment-driven science. Opinion is confused with Perspective and
+Viewpoint. Perspective is confused with almost all classes, except
+Research. Viewpoint is a small class and mostly confused with Opinion
+and Perspective. From this it would seem that the paper types
+\{Opinion, Perspective, Viewpoint\} are very similar and should be
+grouped together into one category. Indeed when we trained the model
+on a super class consisting of the previous three categories,
+performance was improved overall with the following f-measures:
+OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
+Correspondence: 46 abd Case Study 24.8.
 
-Essay is confused with Perspective and Review. Review is confused with Case Study and Essay, and a few others. They share overlapping aspects, but are not entirely synonymous. A review should cover a wide range of background material (which we might also expect to find in an Essay), and might make recommendations based on the material presented (which we might also expect to find in a Case Study). 
+Essay appears to be distinct enought to justify a class of its own.
+Essay is confused with Perspective and Review. Review is the second
+best category but is at times confused with Case Study and Essay. A
+possible explanation is that Review should cover a wide range of
+background material (which we may also expect to find in an Essay),
+and could make recommendations based on the material presented (which
+we might also expect to find in a Case Study).
 
 \begin{table}
 \caption{Confusion matrix summed over 10-fold cross validation, reporting the results on the held-out validation segment. Rows represent true classes, columns represent predicted classes.}
@@ -294,23 +321,57 @@ Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  & 
 
 We inspected the detail of a single decision tree, grown on the entire dataset, to give further insight into which CoreSC class decisions were responsible for the paper type predictions. This was a very large tree, with a depth of 37 nodes in places.  The first decision was regarding the number of Background sentences in the article. A low Background percentage, of less than 0.694 indicates a Correspondence paper. 28 out of the 31 papers that were classified by this decision as Correpondence were correctly labelled. 
 
-The next decision, for higher amounts of Background, was based on the percentage of Experiment sentences in the paper. For a very low percentage of Experiment sentences ($<$ 0.061), the papers then branched into a long side chain of detailed classification decisions, to separate mostly the Opinion, Viewpoint and Perspective papers from other Correspondence papers, and a few examples of the remaining categories. For a higher percentage of Experiment sentences, Research papers were classified as those that had Observations $>$ 5.6\%, or Conclusions  $<=$ 1.4\%, whereas Case Studies had fewer Observations and more Conclusions.
+The next decision, for higher amounts of Background, was based on the
+percentage of Experiment sentences in the paper. For a very low
+percentage of Experiment sentences ($<$ 0.061), the papers then
+branched into a long side chain of detailed classification decisions,
+to separate mostly the Opinion, Viewpoint and Perspective papers from
+other Correspondence papers, and a few examples of the remaining
+categories. For a higher percentage of Experiment sentences, Research
+papers were classified as those that had Observations $>$ 5.6\%, or
+Conclusions $<=$ 1.4\%, whereas Case Studies had fewer Observations
+and more Conclusions.
 
-The largest node classifiying Essay did so via a route after the low Experiment decision that asked for a Background $>$ 48\%, but then low values for Goal, Hypothesis, Result, Observation, Model, Conclusion and Object. These decisions seem reasonable and agreed with our expectations of the content of an Essay.
+The largest node classifiying Essay did so via a route after the low
+Experiment decision that asked for a Background $>$ 48\%, but then low
+values for Goal, Hypothesis, Result, Observation, Model, Conclusion
+and Object. These decisions seem reasonable and agreed with our
+expectations of the content of an Essay.
 
 \section{Conclusion}
 \label{sec:4}
 
-To summarise, we have demonstrated that paper type can largely be predicted from the distribution of the CoreSC sentence labels in the full text of a paper. The CoreSC labels themselves are automatically annotated. We have described some of the particular CoreSC features that determine a paper type, and discussed which of the paper types are not easily separable in this way. Analysis of an example tree shows the decision making process to be complex, but agrees with our general understanding of paper types. The Partridge online system now allows refinement of paper search using CoreSC and paper type, both of which can be intelligently determined using machine learning methods. 
+To summarise, we have demonstrated that paper type can largely be
+predicted from the distribution of the automatically obtained CoreSC
+sentence labels in the full text of a paper. We have described some of
+the particular CoreSC features that determine a paper type
+(e.g. Corresponsence characterised by very little Background, Opinions
+characterised by low percentage of Experiment) and discussed which of
+the paper types are not easily separable in this way. We recommended
+for example merging the Opinion, Viewpoint and Perspective articles
+into a single category, which increased overall
+classification performance. It is also potentially useful to distinguish between two types of Case study.
+Analysis of an example tree shows the decision making
+process to be complex, but agrees with our general understanding of
+paper types. The Partridge online system now allows refinement of
+paper search using CoreSC and paper type, both of which can be
+intelligently determined using machine learning methods.
 
 
 %Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
 
-The potential for automatic extraction of useful features from scientific papers to assist researchers in their knowledge queries is now an exciting area for research. Open Access journals that permit full text mining lead the way in allowing this research to expand and flourish. In future work we aim to develop and implement a range of further useful properties that will uncover more of the information that is hidden within the text of articles, and to use Partridge as a working engine to demonstrate their usefulness in practice.
+The potential for automatic extraction of useful features from
+scientific papers to assist researchers in their knowledge queries is
+now an exciting area for research. Open Access journals that permit
+full text mining lead the way in allowing this research to expand and
+flourish. In future work we aim to develop and implement a range of
+further useful properties that will uncover more of the information
+that is hidden within the text of articles, and to use Partridge as a
+working engine to demonstrate their usefulness in practice.
 
 
 \begin{acknowledgement}
-Thanks to the Leverhulme for Maria's funding....
+Dr Liakata is in receipt of a Leverhulme trust Early Career Fellowship.
 \end{acknowledgement}
 
 
