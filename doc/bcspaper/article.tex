@@ -61,8 +61,8 @@
 \maketitle
 
 \abstract{Partridge is a system that enables intelligent search for
-  academic papers by allowing users to query particular terms within
-  sentences designating a particular core scientific concept (e.g. Hypotheses, Results, etc). 
+  academic papers by allowing users to query terms within
+  sentences designating a particular core scientific concept (e.g. Hypothesis, Result, etc). 
   The system also automatically classifies papers according to
   article types (e.g. Review, Case Study). Here we focus on the latter
   aspect of the system. For each paper, Partridge automatically
@@ -86,7 +86,7 @@ the ability of computers to copy and reproduce information for a negligible
 cost, the amount of information available to researchers has been increasing
 drastically. As available information increases, relevant material becomes
 progressively more difficult to find manually and the need for an automated
-information retrieval tool more apparent.  There are already a large number of
+information retrieval tool more apparent. There are already a large number of
 information retrieval and recommendation systems for scientific publications.
 Many of these systems, such as AGRICOLA (\url{http://agricola.nal.usda.gov/}),
 the Cochrane Library(\url{http://www.thecochranelibrary.com/}) and Textpresso
@@ -147,7 +147,8 @@ full text of the paper.
 
 This model of paper type is currently in use in our Partridge system, which has
 been created as an intelligent full-text search platform for scientific papers.
-Partridge makes use of automatically derived CoreSC sentence labels and
+Partridge (which currently holds XXX papers and is constantly expanding) 
+makes use of automatically derived CoreSC sentence labels and
 automatically derived paper types, to allow deeper information queries.  We
 discuss the reliability of this model of paper types and the insights that have
 been gained for the authorship of papers.
@@ -157,25 +158,23 @@ been gained for the authorship of papers.
 \label{sec:2}
 %how types were chosen,
 
-
 \subsection*{Collection of scientific articles} Partridge allows users to
 upload any paper which is free of copyright restrictions.  For the purpose of
 this study we needed a large set of papers that we could label with CoreSC to
 investigate how this information assists classification into paper type.  Open
 Access (OA) journals provide free read access to their papers, but many do not
-permit the user of articles for data mining purposes.  The PLoS
+permit the user of articles for data mining purposes. The PLoS
 journals\footnote{PLoS: \url{http://www.plos.org/}} contain large volumes of OA
 literature under a permissive license that allows data mining.  They also use
 the Pubmed Central markup schema, which is compatible with SAPIENTA, for papers
-published through their journal.  The PLoS journals advanced search offers
+published through their journal. The PLoS journals advanced search offers
 approximately 50 types of paper through which to restrict the search.  Many of
 these paper type categories contain too few papers to be useful, others are too
-specific (e.g.``Message from PLoS'') or appear rather adhoc.  Indeed it is not
+specific (e.g.``Message from PLoS'') or appear rather adhoc. Indeed it is not
 clear how these paper types have been identified. We chose to look at a range
 of types, some of which we expect to overlap or have an unclear distinction.
 These are namely: Essay, Correspondence, Case Study, Synopsis, Perspective,
 Viewpoint, Opinion, Review, Research. 
-
 
 % in conclusions add how this can give recommendations for Plos and other journals 
 The papers were downloaded from PLoS using {\em plosget.py}, a short python
@@ -198,23 +197,15 @@ CoreSC concepts we first needed to convert the papers to a format that
 the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
 supports the SciXML and PubMed Central DTDs.  Papers in PDF format are
 first converted to XML using PDFX %\cite{PDFX} - no paper known yet
-, a free service hosted
-by the University of Manchester (\url{http://pdfx.cs.man.ac.uk/}).
-PDFX also provides output that already has some metadata, such as
-title, author, and abstract, associated with it.  SAPIENTA allocates
-each sentence within a paper a separate CoreSC label.  However, the
-sentence boundaries must be detected before the document is passed
-into SAPIENTA for annotation.  The sentence splitter uses a regular
-expression to split the sentences within the document and then adds
-the necessary \verb|<s>| tags to the markup to indicate the location
-of each sentence.  Once the paper has been split, SAPIENTA is used to
-annotate each sentence with a relevant CoreSC label.  These labels are
-assigned using a conditional random fields model based upon a number
-of features such as the sentence's location within the paper and pairs
-and triplets of words found consecutively within the sentence
-\cite{Liakata2012}.  The SAPIENTA system has been trained on a corpus
-of 265 chemistry and biochemistry papers and we have done no domain
-adaptation for the papers in PLoS.
+, a free service hosted by the University of Manchester
+(\url{http://pdfx.cs.man.ac.uk/}). Once the paper has been split into
+sentences, SAPIENTA is used to annotate each sentence with a relevant
+CoreSC label. These labels are assigned using a conditional random
+fields model based upon a number of features such as the sentence's
+location within the paper and pairs and triplets of words found
+consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA
+system has been trained on a corpus of 265 chemistry and biochemistry
+papers and we have done no domain adaptation for the papers in PLoS.
 
 
 
