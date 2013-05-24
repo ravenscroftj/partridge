@@ -26,7 +26,8 @@
 \usepackage[bottom]{footmisc}% places footnotes at page bottom
 
 
-%\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{subfig}
 
 %\captionsetup{compatibility=false}
 
@@ -47,15 +48,15 @@
 \titlerunning{Partridge: classifying academic papers}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-\author{James Ravenscroft\,$^{1}$\footnote{to whom correspondence should be addressed}, Maria Liakata\,$^{2,3}$ and Amanda Clare$^{1}$}
-\address{$^{1}$Department of Computer Science, Aberystwyth University,
-$^{2}$Department of Computer Science, University of Warwick,
-$^{2}$Text mining group, EMBL-EBI Cambridge}
-%\author{James Ravenscroft \and Maria Liakata \and Amanda Clare}
+%\author{James Ravenscroft\,$^{1}$\footnote{to whom correspondence should be addressed}, Maria Liakata\,$^{2,3}$ and Amanda Clare$^{1}$}
+%\address{$^{1}$Department of Computer Science, Aberystwyth University,
+%$^{2}$Department of Computer Science, University of Warwick,
+%$^{2}$Text mining group, EMBL-EBI Cambridge}
+\author{James Ravenscroft \and Maria Liakata \and Amanda Clare}
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
-%\institute{James Ravenscroft, Amanda Clare \at Department of Computer Science, Aberystwyth University, Aberystwyth, SY23 3DB, UK  \email{jrr9@aber.ac.uk}
-%\and Maria Liakata \at Department of Computer Science, University of Warwick \email{M.Liakata@warwick.ac.uk}}
+\institute{James Ravenscroft, Amanda Clare \at Department of Computer Science, Aberystwyth University, Aberystwyth, SY23 3DB, UK  \email{jrr9@aber.ac.uk}
+\and Maria Liakata \at Department of Computer Science, University of Warwick \email{M.Liakata@warwick.ac.uk}}
 
 %
 % Use the package "url.sty" to avoid
@@ -64,7 +65,7 @@ $^{2}$Text mining group, EMBL-EBI Cambridge}
 %
 \maketitle
 
-\abstract{Partridge is a system that enables intelligent search for
+\abstract*{Partridge is a system that enables intelligent search for
   academic papers by allowing users to query terms within
   sentences designating a particular core scientific concept (e.g. Hypothesis, Result, etc). 
   The system also automatically classifies papers according to
@@ -109,11 +110,7 @@ PloSOne(\url{http://plosone.org/}), and JSTOR (\url{http://www.jstor.org/}),
 that try to incorporate wide ranges of papers from as many disciplines as
 possible. The traits of these systems often complement those of their
 domain-specific counterparts; they provide a comprehensive collection of
-literature but insufficient filtering and indexing capabilities.  One of the
-most publicised and well known interdisciplinery scientific literature search
-systems is Google Scholar (\url{http://scholar.google.com}). Google offers
-advanced query options specific to Scholar that allow searching by author, year
-and for words that occur only in the document title.
+literature but insufficient filtering and indexing capabilities.
 
 However, the document title is just one of the crucial parts of a scientific
 paper's structure.  Liakata \emph{et al.} (2012) describe a system for
@@ -132,7 +129,7 @@ information retrieval system can use this data to provide better filtering and
 search capabilities for researchers.  Partridge implements such context-aware
 keyword search, by allowing researchers to search for papers where a term
 appears in sentences with a specific CoreSC label (e.g only in {\em Method}
-senetences). This can be used to greatly improve both the precision with which
+sentences). This can be used to greatly improve both the precision with which
 researchers are able to perform searches for scientific literature and the
 accuracy of those searches in terms of relevance to the reader.
 
@@ -151,7 +148,7 @@ full text of the paper.
 
 This model of paper type is currently in use in our Partridge system, which has
 been created as an intelligent full-text search platform for scientific papers.
-Partridge (which currently holds XXX papers and is constantly expanding) 
+Partridge (which currently holds 1288 papers and is constantly expanding) 
 makes use of automatically derived CoreSC sentence labels and
 automatically derived paper types, to allow deeper information queries.  We
 discuss the reliability of this model of paper types and the insights that have
@@ -218,12 +215,15 @@ papers and we have done no domain adaptation for the papers in PLoS.
 
 \centering
 
-\includegraphics[width=0.75\textwidth]{figures/review_corescs.png}
-
-\includegraphics[width=0.75\textwidth]{figures/report_corescs.png}
-
+\subfloat[]{
+\includegraphics[width=0.48\textwidth]{figures/review_corescs.png}
+}
+\subfloat[]{
+\includegraphics[width=0.48\textwidth]{figures/report_corescs.png}
+}
 \caption{The CoreSC content of a review paper and a research paper randomly selected from the corpus}
 
+\vspace{-20pt}
 \label{fig:coresc_pies} 
 \end{figure}
 
@@ -252,24 +252,27 @@ for each paper type, averaged over a 10-fold cross validation are shown in Table
 Correspondence} are the most accurate classes, and {\em Viewpoint} is the most
 difficult paper type to predict. 
 
-\begin{table}
-\caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
-\label{tab:recallPrecision}       % Give a unique label
-\begin{tabular}{p{2cm}p{2.4cm}p{2cm}p{4.9cm}}
+\begin{wraptable}{l}{0.65\textwidth}
+\vspace{-20pt}
+
+\begin{tabular}{p{2.4cm}p{1.5cm}p{1.5cm}p{1.5cm}}
 \hline\noalign{\smallskip}
 Classes & Recall & Precision & F-measure  \\
 \noalign{\smallskip}\svhline\noalign{\smallskip}
-Case Study   &     0.243    &    0.245     &   0.244 \\
-Correspondence  &     {\bf  0.545}    &    {\bf 0.505}    &    {\bf 0.524} \\ 
-Essay     &   0.450     &   0.462    &    0.456 \\
-Opinion   &     0.247    &    0.235  &      0.241 \\   
-Perspective &       0.255  &      0.304  &       0.277 \\
-Research     &   {\bf 0.700}    &    {\bf 0.619}    &    {\bf 0.657} \\
-Review      &  {\bf 0.631}     &   {\bf 0.625}     &   {\bf 0.628} \\
-Viewpoint   &     0.149     &   0.157  &      0.153 \\
+Case Study      &   24.3\verb|%|    &    24.5\verb|%|     &   24.4\verb|%| \\
+Correspondence  &   {\bf  54.5\verb|%|}    &    {\bf 50.5\verb|%|}    &    {\bf 52.4\verb|%|} \\ 
+Essay           &   45.0\verb|%|     &   46.2\verb|%|    &    45.6\verb|%| \\
+Opinion         &   24.7\verb|%|    &    23.5\verb|%|  &      24.1\verb|%| \\   
+Perspective     &   25.5\verb|%|  &      30.4\verb|%|  &       27.7\verb|%| \\
+Research        &   {\bf 70.0\verb|%|}    &    {\bf 61.9\verb|%|}    &    {\bf 65.7\verb|%|} \\
+Review          &  {\bf 63.1\verb|%|}     &   {\bf 62.5\verb|%|}     &   {\bf 62.8\verb|%|} \\
+Viewpoint       &     14.9\verb|%|     &   15.7\verb|%|  &      15.3\verb|%| \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
-\end{table}
+\caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment}
+\label{tab:recallPrecision}       % Give a unique label
+\vspace{-30pt}
+\end{wraptable}
 
 
 A confusion matrix for the paper types in given in Table
