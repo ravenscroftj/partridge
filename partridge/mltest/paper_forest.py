@@ -29,10 +29,11 @@ TYPE_DIRS = {
     "Case Study" : "/home/james/dissertation/papers_for_type/case", 
     #"Subjective" : "/home/james/dissertation/papers_for_type/subjective",
     "Essay"      : "/home/james/dissertation/papers_for_type/essay",
-    "Opinion"    : "/home/james/dissertation/papers_for_type/opinion",
-    "Perspective": "/home/james/dissertation/papers_for_type/perspective",
-    "Viewpoint"  : "/home/james/dissertation/papers_for_type/viewpoints",
-    "Synopsis"   : "/home/james/dissertation/papers_for_type/synopsis",
+    "OpinionSuper": "/home/james/dissertation/papers_for_type/view_per_op",
+    #"Opinion"    : "/home/james/dissertation/papers_for_type/opinion",
+    #"Perspective": "/home/james/dissertation/papers_for_type/perspective",
+    #"Viewpoint"  : "/home/james/dissertation/papers_for_type/viewpoints",
+    #"Synopsis"   : "/home/james/dissertation/papers_for_type/synopsis",
     "Correspondence" : "/home/james/dissertation/papers_for_type/correspondence"
 }
 
@@ -136,7 +137,7 @@ def printMeasures( confusion ):
     print "Class\t\tRecall\t\tPrecision\t\tF-measure"
     print "-----------------------------------------------"
 
-    for c in confusion:
+    for c in sorted(confusion):
         recall  = confusion[c][c] / sum(confusion[c].values())
 
 

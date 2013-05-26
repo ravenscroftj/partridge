@@ -57,7 +57,8 @@ def main():
         printMeasures(confusion)
         
 
-        orngTree.printTxt(results.classifiers[k][i], leafFields=['major', 'contingency'])
+        orngTree.printTxt(results.classifiers[k][i], leafStr="%V (%M / %N)",
+        nodeStr="(%M / %N)", leafFields=['major', 'contingency'])
 
 if __name__ == "__main__":
     main()

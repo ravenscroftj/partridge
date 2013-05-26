@@ -44,7 +44,7 @@ class Paper( db.Model ):
   def sentenceDistribution(self, returnCounter=False):
     totalSentences = len(self.sentences)
 
-    count = Counter()
+    count = Counter({x:0 for x in C_ABRV})
 
     for sent in self.sentences:
         count[sent.coresc] += 1
@@ -54,11 +54,10 @@ class Paper( db.Model ):
 
     percentages = []
 
-    for label, num in count.items():
+    for label, num in sorted(count.items(), key=lambda x: x[0]):
         percentages.append( (C_ABRV[label], num * 100 / totalSentences) )
     
     return percentages
-        
 
 #-----------------------------------------------------------------------------
 
