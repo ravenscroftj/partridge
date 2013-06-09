@@ -9,6 +9,8 @@ import urlparse
 
 from flask import current_app as app, render_template, request, jsonify, make_response
 
+from partridge.views import frontend
+
 from partridge.util.remote import download_paper, paper_preview, \
 find_paper_plos_page
 
@@ -17,18 +19,21 @@ from partridge.models.doc import PaperWatcher
 
 PMC_OSI = "http://www.pubmedcentral.gov/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:%s&metadataPrefix=pmc"
 
+@frontend.route("/remote", methods=['GET'])
 def scan_url( the_url=None ):
     """Scan the URL for papers to download"""
     
     return render_template("remote_form.html")
 
+@frontend.route("/bookmarklet")
 def bookmarklet():
     """Serve up the bookmarklet script"""
     response = make_response(render_template("bookmarklet.js"))
     response.headers['Content-type'] = "text/javascript"
     return response
-    
 
+
+@frontend.route("/remote", methods=['POST'])
 def download_papers():
 
     if "url" in request.form:

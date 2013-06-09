@@ -1,6 +1,9 @@
 """Views related to querying partridge"""
 
 from flask import render_template,request,jsonify
+
+from partridge.views import frontend
+
 from partridge.models import db
 from partridge.models.doc import Paper,Sentence,Author, C_ABRV
 
@@ -8,6 +11,7 @@ from sqlalchemy import func, or_, and_
 
 PAGE_LIMIT = 10
 
+@frontend.route("/query")
 def query():
     '''Display the query form and then show results if a query is provided
     '''
