@@ -18,18 +18,14 @@ def create_app( config ):
     app.config.update(config)
 
     #load views model lazily
-    from views import frontend
-    import views
-    import views.upload
-    import views.paper
-    import views.query
-    import views.remote
-    import views.queue
+    from partridge.views import frontend
+    from partridge.api import api_bp
 
     app.url_map.converters["paper"] = PaperConverter
     app.url_map.converters["file"] = FileConverter
 
     app.register_blueprint(frontend)
+    app.register_blueprint(api_bp, url_prefix="/api")
 
     db.app = app
     db.init_app(app)
@@ -79,9 +75,10 @@ def run():
         print "Initialising database tables..."
         db.create_all()
         
-        
     #set up logger
     logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )

@@ -43,6 +43,15 @@ class Paper( db.Model ):
   abstract = Column(Text())
   type = Column(String(25))
 
+
+  def json(self):
+      return {
+              "title" : self.title,
+              "doi"   : self.doi,
+              "authors" : [a.json() for a in self.authors],
+              "abstract" : self.abstract
+              } 
+
   def sentenceDistribution(self, returnCounter=False):
     totalSentences = len(self.sentences)
 
@@ -113,6 +122,9 @@ class Author( db.Model ):
     id = Column(Integer, primary_key=True)
     surname = Column(String(50))
     forenames = Column(String(50))
+
+    def json(self):
+        return {"id" : self.id, "surname" : self.surname, "forenames" : self.forenames}
 
 #-----------------------------------------------------------------------------
 

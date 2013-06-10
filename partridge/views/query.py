@@ -42,7 +42,7 @@ def query():
         paper_q = pq.get_query()
 
         papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
-        
+
         result_count = len(papers)
 
         return jsonify(html=render_template("query_result.html",
