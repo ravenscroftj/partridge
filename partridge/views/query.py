@@ -5,7 +5,7 @@ from flask import render_template,request,jsonify
 from partridge.views import frontend
 
 from partridge.models import db
-from partridge.models.doc import Paper,Sentence,Author, C_ABRV
+from partridge.models.doc import Paper,Sentence,Author, C_ABRV, PAPER_TYPES
 
 from sqlalchemy import func, or_, and_
 
@@ -21,10 +21,7 @@ def query():
     papercount = Paper.query.count()
 
     #do paper counts for all paper types
-    paper_types = {'Review':0, 'Research': 0, 'Case Study': 0}
-
-    for k in paper_types:
-        paper_types[k] = str(Paper.query.filter(Paper.type == k).count())
+    paper_types = {x:Paper.query.filter(Paper.type == x).count() for x in PAPER_TYPES}
 
 
     if(searchterms != ''):
@@ -35,33 +32,14 @@ def query():
         clauses = []
         offset = 0
 
-        #process arguments
-        for key in request.args: 
-            value = request.args.get(key,'')
-            attr = key.split("_")[0]
+        constraints = { x:request.args.get(x,'') for x in request.args}
 
-            if(attr == "any"):
-                paper_q = paper_q.join("sentences")
-                clauses.append( Sentence.text.like("%%%s%%" % value) )
+        from partridge.util.querybuilder import PaperQueryBuilder
 
-            if(attr == "offset"):
-                offset = value
+        pq = PaperQueryBuilder()
+        pq.build_query(**constraints)
 
-            if(attr == "papertype"):
-                if value != "":
-                    clauses.append( Paper.type == value )
-
-            if(attr == "author"):
-                paper_q = paper_q.join("authors")
-                clauses.append( Author.surname.like("%%%s%%" % value) | 
-                    Author.forenames.like("%%%s%%") % value)
-
-            if attr in C_ABRV.keys():
-                paper_q = paper_q.join("sentences")
-                clauses.append( ( Sentence.coresc == attr ) & 
-                    Sentence.text.like("%%%s%%" % value))
-        
-        paper_q = paper_q.filter(and_(*clauses))
+        paper_q = pq.get_query()
 
         papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
         

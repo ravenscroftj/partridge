@@ -20,6 +20,8 @@ C_ABRV = {
 "Con" : "Conclusion"
 }
 
+PAPER_TYPES = ["Review", "Case Study", "Research"]
+
 #-----------------------------------------------------------------------------
 
 paper_authors = db.Table('paper_authors',
