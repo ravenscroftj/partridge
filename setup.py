@@ -13,7 +13,8 @@ setup(
             'progressbar>=2.3',
             'pyinotify>=0.9.4',
             'alembic>=0.4.2',
-            'Orange>=2.6'],
+            'Orange>=2.6',
+            'text-sentence>=0.14'],
 
     #program entrypoints
     entry_points ={
