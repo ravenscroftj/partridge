@@ -5,40 +5,42 @@ import codecs
 import logging
 import cPickle
 import os
+import sys
+import locale
 
 from nltk.tokenize.punkt import PunktSentenceTokenizer
 
 from xml.dom import minidom
 from sets import Set
 
+from text_sentence import Tokenizer
+
 from partridge.config import config
+
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 blacklist = set(['journal-id', 'journal-meta','article-id','article-categories'
 'contrib','contrib-group', 'aff','pub-date','volume','issue','elocation-id',
 'history','author-notes', 'copyright-statement', 'funding-group',
 'copyright-year','counts','s', 'subj-group','author-notes', 'alt-title',
 'title','ref-list','ack','meta','permissions', 'custom-meta-group',
-'responseDate','request','header'])
-
-SPLITTER_PATH = str(os.path.join(config['MODELS_DIR'], "splitter.dat"))
+'responseDate','request','header', 'xref', 'object-id'])
 
 class SentenceSplitter:
     '''XML Aware sentence splitter for Partridge
     '''
 
     def __init__(self):
-
-        with open(SPLITTER_PATH,'rb') as f:
-            self.tokenizer = cPickle.load(f)
-
-        #self.tokenizer = PunktSentenceTokenizer()
         self.nextSID = 1
+        self.tokenizer = Tokenizer()
+        self.inSentence = False
 
     def split(self, filename, outfile):
-        
+
         #read the document
         with open(filename, 'rb') as f:
             self.indoc = minidom.parse(f)
+
 
         logging.debug("Parsed input file %s " % filename)
 
@@ -54,8 +56,12 @@ class SentenceSplitter:
                 #add abstract to paper
                 self.addDummyAbstract()
 
+
             #do the annotating
             self.splitElement(self.indoc)
+            
+            #allocate the sentence IDs
+            self.allocateSIDs()
 
         with codecs.open(outfile,'w', encoding='utf-8') as f:
             self.indoc.writexml(f)
@@ -93,37 +99,90 @@ class SentenceSplitter:
             abp.appendChild(self.indoc.createTextNode(dummytext))
 
             parentEl.insertBefore(abstractEl,nextEl)
+
+
+    def allocateSIDs(self):
+        """Go through the document and allocate SIDs for each sentence"""
+
+        for node in self.indoc.getElementsByTagName("s"):
+            node.setAttribute("sid", str(self.nextSID))
+            self.nextSID += 1
+
     
     def splitElement(self, element):
         '''Split text found within element into sentences
         '''
 
+        if (element.nodeType == self.indoc.ELEMENT_NODE) & (element.localName in blacklist):
+            return
+
+        text = ""
+        boundary_nodes = []
+
         for node in element.childNodes:
-            
+
             if node.nodeType == self.indoc.ELEMENT_NODE:
+                boundary_nodes.append(node)
 
-                if node.localName not in blacklist:
-                    self.splitElement( node )
+            if node.nodeType == self.indoc.TEXT_NODE:
 
-            elif node.nodeType == self.indoc.TEXT_NODE:
+                if text == "":
+                    text = node.wholeText.strip()
+                else:
+                    text += " @@split_boundary@@ " + node.wholeText
 
-                logging.debug("Splitting text node %s" % node)
+        if len(text) > 0:
+
+            for n in list(element.childNodes):
+                print element.removeChild(n)
                 
-                text = node.wholeText
 
-                if( len(text.strip()) < 1):
-                    continue
+            sentence = ""
+            el = self.indoc.createElement("s")
+            
+            for tok in list(self.tokenizer.tokenize(text)):
 
-                element.removeChild(node)
-
-                for s in self.tokenizer.tokenize(text):
+                if el == None:
                     el = self.indoc.createElement("s")
 
-                    tnode = self.indoc.createTextNode(s)
-                    el.setAttribute("sid", str(self.nextSID))
+                
+                if tok.value == "@@split_boundary@@":
 
-                    el.appendChild(tnode)
+                    print "Appended %s to %s" %(sentence,el.localName)
+                    el.appendChild(self.indoc.createTextNode(sentence))
+                    el.appendChild(boundary_nodes.pop(0))
+                    sentence = ""
+
+
+                elif tok.is_sent_start:
+                    self.inSentence = True
+
+                    if tok.is_upper:
+                        sentence = tok.value.upper()
+                    else:
+                        sentence = tok.value.capitalize()
+
+                elif (tok.value == ".") | (tok.value == ","):
+                    sentence += tok.value
+                else:
+                    if tok.is_upper:
+                        tok.value = tok.value.upper()
+
+                    sentence += " " + tok.value
+
+                if tok.is_sent_end:
+                    self.inSentence = False
+                    el.appendChild(self.indoc.createTextNode(sentence))
                     element.appendChild(el)
-                    self.nextSID += 1
 
+                    print "Appended %s to %s" %(sentence,el.localName)
+                    el = None
+                    sentence = ""
+
+        
+        for node in element.childNodes:
+            if node.nodeType == self.indoc.ELEMENT_NODE:
+
+                if(node.localName not in blacklist) & (not self.inSentence):
+                    self.splitElement( node )
 
