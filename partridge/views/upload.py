@@ -5,15 +5,18 @@ import uuid
 from flask import render_template, request, current_app
 from werkzeug import secure_filename
 
+from partridge.views import frontend
+
 from partridge.models import db
 from partridge.models.doc import PaperWatcher
 
 ALLOWED_EXTENSIONS = ['.xml','.pdf']
 
+
+@frontend.route("/upload", methods=['GET','POST'])
 def upload():
     """Display the upload form allowing users to add their papers
     """
-
 
     if(request.method == "POST"):
 

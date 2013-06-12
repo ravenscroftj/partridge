@@ -18,37 +18,14 @@ def create_app( config ):
     app.config.update(config)
 
     #load views model lazily
-    import views
-    import views.upload
-    import views.paper
-    import views.query
-    import views.remote
-    import views.queue
+    from partridge.views import frontend
+    from partridge.api import api_bp
 
     app.url_map.converters["paper"] = PaperConverter
     app.url_map.converters["file"] = FileConverter
 
-    app.add_url_rule("/",view_func = views.index)
-    app.add_url_rule("/query", view_func = views.query.query)
-
-    app.add_url_rule("/queue", view_func = views.queue.show)
-
-    app.add_url_rule("/upload", methods=['GET','POST'], 
-        view_func = views.upload.upload)
-
-    app.add_url_rule("/remote", methods=['GET'],
-        view_func = views.remote.scan_url)
-
-    app.add_url_rule("/remote", methods=['POST'],
-        view_func = views.remote.download_papers)
-
-    app.add_url_rule("/bookmarklet", view_func = views.remote.bookmarklet)
-
-    app.add_url_rule("/paper/<paper:the_paper>", 
-        view_func=views.paper.paper_profile)
-
-    app.add_url_rule("/file/<file:the_file>",
-        view_func=views.paper.paper_file)
+    app.register_blueprint(frontend)
+    app.register_blueprint(api_bp, url_prefix="/api")
 
     db.app = app
     db.init_app(app)
@@ -98,12 +75,14 @@ def run():
         print "Initialising database tables..."
         db.create_all()
         
-        
     #set up logger
     logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
+    #logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
+
 
     if(config['PP_LOCAL_WORKER']):
         logging.info("Setting up local worker")

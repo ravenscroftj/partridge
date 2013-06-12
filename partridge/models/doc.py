@@ -20,6 +20,8 @@ C_ABRV = {
 "Con" : "Conclusion"
 }
 
+PAPER_TYPES = ["Review", "Case Study", "Research"]
+
 #-----------------------------------------------------------------------------
 
 paper_authors = db.Table('paper_authors',
@@ -40,6 +42,16 @@ class Paper( db.Model ):
   authors = relationship("Author", secondary=paper_authors, backref="papers")
   abstract = Column(Text())
   type = Column(String(25))
+
+
+  def json(self):
+      return {
+              "title" : self.title,
+              "doi"   : self.doi,
+              "authors" : [a.json() for a in self.authors],
+              "abstract" : self.abstract,
+              "files" : [f.json() for f in self.files]
+              } 
 
   def sentenceDistribution(self, returnCounter=False):
     totalSentences = len(self.sentences)
@@ -90,6 +102,14 @@ class PaperFile( db.Model ):
     import os
     return os.path.basename(self.path)
 
+  def json(self):
+      from flask import url_for
+      return {
+                "name" : self.basename,
+                "type" : self.contentType,
+                "url"  : url_for('frontend.paper_file', the_file=self, _external=True)
+              }
+
   @property
   def contentType(self):
     """Guess what sort of file this is"""
@@ -111,6 +131,9 @@ class Author( db.Model ):
     id = Column(Integer, primary_key=True)
     surname = Column(String(50))
     forenames = Column(String(50))
+
+    def json(self):
+        return {"id" : self.id, "surname" : self.surname, "forenames" : self.forenames}
 
 #-----------------------------------------------------------------------------
 

@@ -4,10 +4,13 @@ Provide statistics about the currrent state of the preprocesor
 
 from flask import render_template,request,jsonify
 
+from partridge.views import frontend
+
 from partridge.config import config
 
 import xmlrpclib
 
+@frontend.route("/queue")
 def show():
     """Show the queue stats"""
 
