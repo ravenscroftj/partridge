@@ -129,8 +129,8 @@ class Author( db.Model ):
     __tablename__ = "authors"
 
     id = Column(Integer, primary_key=True)
-    surname = Column(String(50))
-    forenames = Column(String(50))
+    surname = Column(String(250))
+    forenames = Column(String(250))
 
     def json(self):
         return {"id" : self.id, "surname" : self.surname, "forenames" : self.forenames}
