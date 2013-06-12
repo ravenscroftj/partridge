@@ -63,9 +63,6 @@ def run():
                 print "Could not find any configuration files. Exiting."
                 sys.exit(0)
 
-
-    config['SQLALCHEMY_ECHO'] = True
-
     app = create_app( config )
 
     logLevel = logging.INFO
