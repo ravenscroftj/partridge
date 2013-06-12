@@ -39,4 +39,4 @@ class PaperQueryBuilder:
                     Sentence.text.like("%%%s%%" % value))
 
     def get_query(self):
-        return self.paper_q.filter(and_(*self.clauses)).group_by(Paper.id, Paper.doi, Paper.title, Paper.abstract)
+        return self.paper_q.filter(and_(*self.clauses)).group_by(Paper.id, Paper.doi, Paper.title, Paper.abstract, Paper.type)
