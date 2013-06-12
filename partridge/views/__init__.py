@@ -4,6 +4,7 @@ from flask import Blueprint, render_template,request
 #register blueprint
 frontend = Blueprint('frontend', __name__)
 
+from partridge.views import paper, query, queue, remote, upload
 
 @frontend.route("/")
 def index():

@@ -49,7 +49,8 @@ class Paper( db.Model ):
               "title" : self.title,
               "doi"   : self.doi,
               "authors" : [a.json() for a in self.authors],
-              "abstract" : self.abstract
+              "abstract" : self.abstract,
+              "files" : [f.json() for f in self.files]
               } 
 
   def sentenceDistribution(self, returnCounter=False):
@@ -100,6 +101,14 @@ class PaperFile( db.Model ):
   def basename(self):
     import os
     return os.path.basename(self.path)
+
+  def json(self):
+      from flask import url_for
+      return {
+                "name" : self.basename,
+                "type" : self.contentType,
+                "url"  : url_for('frontend.paper_file', the_file=self, _external=True)
+              }
 
   @property
   def contentType(self):

@@ -63,6 +63,9 @@ def run():
                 print "Could not find any configuration files. Exiting."
                 sys.exit(0)
 
+
+    config['SQLALCHEMY_ECHO'] = True
+
     app = create_app( config )
 
     logLevel = logging.INFO
@@ -77,11 +80,12 @@ def run():
         
     #set up logger
     logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
-    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+    #logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
     from partridge.preprocessor import create_daemon
     #set up paper preprocessor
     pdaemon =  create_daemon( config )
+
 
     if(config['PP_LOCAL_WORKER']):
         logging.info("Setting up local worker")

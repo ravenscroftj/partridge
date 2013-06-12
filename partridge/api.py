@@ -8,13 +8,16 @@ from sqlalchemy import func, or_, and_
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
 
-@api_bp.route("/papers")
-@api_bp.route("/papers/<int:offset>")
-@api_bp.route("/papers/type/<string:type>")
-def list_papers(type="", offset=0):
+UPPER_LIMIT = 50
 
-    PAPER_LIMIT = 50
-    
+@api_bp.route("/papers/")
+@api_bp.route("/papers/<int:limit>/")
+@api_bp.route("/papers/<int:limit>/<int:offset>/")
+@api_bp.route("/papers/type/<string:type>/")
+@api_bp.route("/papers/type/<string:type>/<int:limit>/")
+@api_bp.route("/papers/type/<string:type>/<int:limit>/<int:offset>/")
+def list_papers(type="", offset=0, limit=UPPER_LIMIT):
+
     #do paper counts for all paper types
     paper_types = {x:Paper.query.filter(Paper.type == x).count() for x in PAPER_TYPES}
 
@@ -25,7 +28,7 @@ def list_papers(type="", offset=0):
     if type != "":
         constraints['papertype'] = type
 
-    qb.build_query(constraints)
+    qb.build_query(**constraints)
 
     paper_q = qb.get_query()
 
@@ -33,7 +36,7 @@ def list_papers(type="", offset=0):
         value = request.args.get(key,'')
         attr = key.split("_")[0]
 
-    papers = paper_q.limit(PAPER_LIMIT).offset(offset).all()
+    papers = paper_q.limit(limit).offset(offset).all()
 
     return jsonify({
         "total_paper_count"  : paper_q.count(),
