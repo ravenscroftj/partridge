@@ -143,7 +143,11 @@ class PaperDaemon(Thread):
                         self.cleanup(task[1])
 
                 elif task[0] == "STORE":
-                    self.store(task[1])
+                    try:
+                        self.store(task[1])
+                    except PaperExistsException:
+                        print "Paper Already exists, cleaning up"
+                        self.cleanup(task[1].paper)
 
             except Exception as e:
                 #get exception information and dump to user

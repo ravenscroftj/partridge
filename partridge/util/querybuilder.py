@@ -30,8 +30,7 @@ class PaperQueryBuilder:
 
             if(attr == "author"):
                 self.paper_q = self.paper_q.join("authors")
-                self.clauses.append( Author.surname.like("%%%s%%" % value) | 
-                    Author.forenames.like("%%%s%%") % value)
+                self.clauses.append( Author.surname.like("%%%s%%" % value))
 
             if attr in C_ABRV.keys():
                 self.paper_q = self.paper_q.join("sentences")
