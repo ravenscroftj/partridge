@@ -30,7 +30,7 @@ def query():
         author_q = Author.query
 
         clauses = []
-        offset = 0
+        offset = int(request.args.get('offset','0'))
 
         constraints = { x:request.args.get(x,'') for x in request.args}
 
@@ -43,7 +43,7 @@ def query():
 
         papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
 
-        result_count = len(papers)
+        print len(paper_q.all())
 
         return jsonify(html=render_template("query_result.html",
             papers=papers), total=paper_q.count(), count=len(papers))
