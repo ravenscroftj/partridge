@@ -50,7 +50,8 @@ class Paper( db.Model ):
               "doi"   : self.doi,
               "authors" : [a.json() for a in self.authors],
               "abstract" : self.abstract,
-              "files" : [f.json() for f in self.files]
+              "files" : [f.json() for f in self.files],
+              "coresc_distribution" : self.sentenceDistribution(True)
               } 
 
   def sentenceDistribution(self, returnCounter=False):
