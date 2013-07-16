@@ -87,14 +87,13 @@
 
 \vspace{-15pt}
 \section{Introduction} \label{sec:1}
-
-
+\vspace{-11pt}
 Since the advent of the `Digital Age', the amount of information available to
 researchers has been increasing drastically, relevant material is becoming
 progressively more difficult to find manually and the need for an automated
 information retrieval tool more apparent. There are already a large number of
 information retrieval and recommendation systems for scientific publications.
-Many of these systems, such as AGRICOLA \footnote{\url{http://agricola.nal.usda.gov/}},
+Many of these systems, such as AGRICOLA\footnote{\url{http://agricola.nal.usda.gov/}},
 the Cochrane Library\footnote{\url{http://www.thecochranelibrary.com/}} and Textpresso
 \footnote{\url{http://www.textpresso.org/}} index only publications from predefined
 journals or topics (for the above examples, Agriculture, Biology and
@@ -161,22 +160,24 @@ been gained for the authorship of papers.
 \label{sec:2}
 %how types were chosen,
 
-\subsection*{Collection of scientific articles} Partridge allows users to
-upload any paper which is free of copyright restrictions.  For the purpose of
-this study we needed a large set of papers that we could label with CoreSC to
-investigate how this information assists classification into paper type.  Open
-Access (OA) journals provide free read access to their papers, but many do not
-permit the user of articles for data mining purposes. The Public Library of
-Science (PLoS) journals contain large volumes of OA literature under a
-permissive license that allows data mining.  They also use the PubMed Central
-markup schema, which is compatible with SAPIENTA, for papers published through
-their journal. The PLoS journals advanced search offers approximately 50 types
-of paper through which to restrict the search.  Many of these paper type
-categories contain too few papers to be useful, others are too ad hoc (e.g.
-{\it Message from PLoS}). Indeed it is not clear how these paper types have
-been identified. We chose to look at a range of types, some of which we expect
-to overlap or have an unclear distinction.  These are namely: Essay,
-Correspondence, Case Study, Perspective, Viewpoint, Opinion, Review, Research. 
+\subsection*{Collection of scientific articles} 
+\vspace{-15pt}
+Partridge allows users to upload any paper which is free of copyright
+restrictions.  For the purpose of this study we needed a large set of papers
+that we could label with CoreSC to investigate how this information assists
+classification into paper type.  Open Access (OA) journals provide free read
+access to their papers, but many do not permit the user of articles for data
+mining purposes. The Public Library of Science (PLoS) journals contain large
+volumes of OA literature under a permissive license that allows data mining.
+They also use the PubMed Central markup schema, which is compatible with
+SAPIENTA, for papers published through their journal. The PLoS journals
+advanced search offers approximately 50 types of paper through which to
+restrict the search.  Many of these paper type categories contain too few
+papers to be useful, others are too ad hoc (e.g.  {\it Message from PLoS}).
+Indeed it is not clear how these paper types have been identified. We chose to
+look at a range of types, some of which we expect to overlap or have an unclear
+distinction.  These are namely: Essay, Correspondence, Case Study, Perspective,
+Viewpoint, Opinion, Review, Research. 
 
 % in conclusions add how this can give recommendations for Plos and other
 % journals 
@@ -194,8 +195,20 @@ papers are much more evenly spread, made up of several different types of
 CoreSC.  This investigation suggested that there is almost certainly a
 discriminative relationship between CoreSC categories and a paper's type. 
 
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.75\textwidth]{figures/corescs.png}
+\caption{The CoreSC content of a research paper (left) and a review paper (right) randomly selected from the corpus}
+\vspace{-20pt}
+\label{fig:coresc_pies} 
+\end{figure}
+
 \subsection*{Paper Processing and classification}
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
+\vspace{-15pt}
+
 In order to obtain automatic labeling of sentences in a paper with
 CoreSC concepts we first needed to convert the papers to a format that
 the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
@@ -213,21 +226,7 @@ papers and we have done no domain adaptation for the papers in PLoS.
 
 
 
-\begin{figure}[t]
 
-\centering
-
-%\subfloat{
-\includegraphics[width=0.75\textwidth]{figures/corescs.png}
-%}
-%\subfloat{
-%\includegraphics[width=0.45\textwidth]{figures/report_corescs.png}
-%}
-\caption{The CoreSC content of a research paper (left) and a review paper (right) randomly selected from the corpus}
-
-\vspace{-20pt}
-\label{fig:coresc_pies} 
-\end{figure}
 
 %how the machine learning is conducted (random forest using orange, features, validation methods).
 
@@ -248,11 +247,12 @@ validation to estimate the precision, recall and F-measure.
 \vspace{-15pt}
 \section{Results and Discussion}
 \label{sec:3}
-
+\vspace{-15pt}
 
 
 \begin{table}
 
+\vspace{-10pt}
 \caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment. Top paper types in bold.}
 
 \begin{tabular}{p{2.4cm}p{2.0cm}p{2.0cm}p{2.5cm}}
@@ -336,10 +336,11 @@ Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  & 
 We inspected the detail of a single decision tree, grown on the entire dataset,
 to give further insight into which CoreSC class decisions were responsible for
 the paper type predictions. This was a very large tree, with a depth of 37
-nodes in places.  The first decision was regarding the number of Background
-sentences in the article. A low Background percentage, of less than 0.694
-indicates a Correspondence paper. 28 out of the 31 papers that were classified
-by this decision as Correspondence were correctly labelled. 
+nodes in places.  The first decision was based upon the number of Background
+sentences in the article. Low Background percentages, of less than 0.694
+indicates a Correspondence paper. 28 out of the 31 Correspondence papers were
+correctly labelled by this decision  classified by this decision as
+Correspondence were correctly labelled.
 
 The next decision, for higher amounts of Background, was based on the
 percentage of Experiment sentences in the paper. For a very low
@@ -361,7 +362,7 @@ expectations of the content of an Essay.
 \vspace{-15pt}
 \section{Summary and Conclusions}
 \label{sec:4}
-
+\vspace{-15pt}
 To summarise, we have demonstrated that paper type can largely be predicted
 from the distribution of the automatically obtained CoreSC sentence labels in
 the full text of a paper. We have described some of the particular CoreSC
@@ -372,8 +373,7 @@ recommended for example merging the Opinion, Viewpoint and Perspective articles
 into a single category, which increased overall classification performance. It
 is also potentially useful to distinguish between two types of Case study.
 Analysis of an example tree shows the decision making process to be complex,
-but agrees with our general understanding of paper types. The Partridge system
-allows refinement of paper search using CoreSC and paper type, both of which
+but agrees with our general understanding of paper types. Partridge allows refinement of paper search using CoreSC and paper type, both of which
 can be intelligently determined using machine learning methods.
 
 
@@ -388,13 +388,13 @@ further useful properties that will uncover more of the information
 that is hidden within the text of articles, and to use Partridge as a
 working engine to demonstrate their usefulness in practice.
 
-
+\vspace{-10pt}
 \begin{acknowledgement} We thank the Leverhulme trust for the support to Dr
 Liakata's Early Career Fellowship and also EMBL-EBI, Cambridge UK for the
 facilities offered to Dr Liakata.  \end{acknowledgement}
+\vspace{-2pt}
 
-
-\vspace{-15pt}
+\vspace{-30pt}
 \bibliographystyle{plain}
 \bibliography{partridge}
 
