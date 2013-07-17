@@ -88,50 +88,53 @@
 \vspace{-15pt}
 \section{Introduction} \label{sec:1}
 \vspace{-11pt}
+
 Since the advent of the `Digital Age', the amount of information available to
 researchers has been increasing drastically, relevant material is becoming
 progressively more difficult to find manually and the need for an automated
 information retrieval tool more apparent. There are already a large number of
 information retrieval and recommendation systems for scientific publications.
-Many of these systems, such as AGRICOLA\footnote{\url{http://agricola.nal.usda.gov/}},
-the Cochrane Library\footnote{\url{http://www.thecochranelibrary.com/}} and Textpresso
-\footnote{\url{http://www.textpresso.org/}} index only publications from predefined
-journals or topics (for the above examples, Agriculture, Biology and
-Bioinformatics respectively).  Unfortunately, these domain specific indexing
-systems usually only contain a small subset of papers, excluding potentially
-crucial literature because it does not quite fit into the subject domain. 
+Many of these systems, such as
+AGRICOLA\footnote{\url{http://agricola.nal.usda.gov/}}, the Cochrane
+Library\footnote{\url{http://www.thecochranelibrary.com/}} and
+Textpresso\footnote{\url{http://www.textpresso.org/}} index only publications
+from predefined journals or topics (for the above examples, Agriculture,
+Biology and Bioinformatics respectively).  Unfortunately, these domain specific
+indexing systems usually only contain a small subset of papers, excluding
+potentially crucial literature because it does not quite fit into the subject
+domain. 
 
 The value of these systems to their users is often restricted by the small
 proportion of available literature that they index, forcing researchers to use
 multiple, domain specific, search engines for their queries.  In contrast,
 there are also a number of interdisciplinary indexing systems and online
-journals such as arXiv \footnote{\url{http://arxiv.org}} and PloSOne
-\footnote{\url{http://plosone.org}} that try to incorporate wide ranges of
-papers from as many disciplines as possible. The traits of these systems often
-complement those of their domain-specific counterparts; they provide a
+journals such as arXiv\footnote{\url{http://arxiv.org}} and
+PloSOne\footnote{\url{http://plosone.org}} that try to incorporate wide ranges
+of papers from as many disciplines as possible. The traits of these systems
+often complement those of their domain-specific counterparts; they provide a
 comprehensive collection of literature but insufficient filtering and indexing
 capabilities, usually based on title and abstract. 
 
 However, the document title is just one of the crucial parts of a scientific
 paper's structure.  Liakata \emph{et al.} (2012) describe a system for
 automatically processing and classifying sentences in a research paper
-according to the core scientific concept (CoreSC) that they
-describe\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis},
-{\em Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
+according to the core scientific concept (CoreSC) that they describe
+\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis}, {\em
+Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
 CoreSC labels can be allocated to all sentences in a scientific paper in order
-to identify which scientific concept each sentence encapsulates.  SAPIENTA
-\footnote{\url{http://www.sapientaproject.com}} is a publicly available machine learning
-application which can automatically annotate all sentences in a scientific
-paper with their CoreSC labels. It was trained using a corpus of physical
-chemistry and biochemistry research papers whose sentences were manually
-annotated using the CoreSC\cite{LIAKATA10.644} scheme.  An intelligent 
-information retrieval system can use this data to provide better filtering and
-search capabilities for researchers.  Partridge implements such context-aware
-keyword search, by allowing researchers to search for papers where a term
-appears in sentences with a specific CoreSC label (e.g only in {\em Method}
-sentences). This can be used to greatly improve both the precision with which
-researchers are able to perform searches for scientific literature and the
-accuracy of those searches in terms of relevance to the reader.
+to identify which scientific concept each sentence encapsulates.
+SAPIENTA\footnote{\url{http://www.sapientaproject.com}} is a publicly available
+machine learning application which can automatically annotate all sentences in
+a scientific paper with their CoreSC labels. It was trained using a corpus of
+physical chemistry and biochemistry research papers whose sentences were
+manually annotated using the CoreSC \cite{LIAKATA10.644} scheme.  An
+intelligent information retrieval system can use this data to provide better
+filtering and search capabilities for researchers.  Partridge implements such
+context-aware keyword search, by allowing researchers to search for papers
+where a term appears in sentences with a specific CoreSC label (e.g only in
+{\em Method} sentences). This can be used to greatly improve both the precision
+with which researchers are able to perform searches for scientific literature
+and the accuracy of those searches in terms of relevance to the reader.
 
 The type of a paper ({\em Review}, {\em Case Study}, {\em Research}, {\em
 Perspective}, etc) is another useful feature through which a user can narrow
@@ -182,7 +185,7 @@ Viewpoint, Opinion, Review, Research.
 % in conclusions add how this can give recommendations for Plos and other
 % journals 
 A script called {\em plosget.py} was written, in order to download the
-papers via the PloS RESTful search API \footnote{\url{http://api.plos.org/solr/faq/}}. The number of papers downloaded per
+papers via the PloS RESTful search API\footnote{\url{http://api.plos.org/solr/faq/}}. The number of papers downloaded per
 paper type category was as follows: 200 Essay, 99 Correspondence, 107 Case
 Study, 200 Perspective, 74 Viewpoint, 93 Opinion, 312 Review, 200 Research.
 These formed a corpus of 1285 %1459-174 after removing synopsis. Should double
@@ -209,20 +212,19 @@ discriminative relationship between CoreSC categories and a paper's type.
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 \vspace{-15pt}
 
-In order to obtain automatic labeling of sentences in a paper with
-CoreSC concepts we first needed to convert the papers to a format that
-the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
-supports the SciXML and PubMed Central DTDs.  Papers in PDF format are
-first converted to XML using PDFX %\cite{PDFX} - no paper known yet
-, a free service hosted by the University of Manchester
-(\cite{Constantin2013}). Once the paper has been split into
-sentences, SAPIENTA is used to annotate each sentence with a relevant
-CoreSC label. These labels are assigned using a conditional random
-fields model based upon a number of features such as the sentence's
-location within the paper and pairs and triplets of words found
-consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA
-system has been trained on a corpus of 265 chemistry and biochemistry
-papers and we have done no domain adaptation for the papers in PLoS.
+In order to obtain automatic labeling of sentences in a paper with CoreSC
+concepts we first needed to convert the papers to a format that the the CoreSC
+classifier, SAPIENTA can analyse.  Currently, SAPIENTA supports the SciXML and
+PubMed Central DTDs.  Papers in PDF format are first converted to XML using
+PDFX , a free service hosted by the University of Manchester
+\cite{Constantin2013}. Once the paper has been split into sentences, SAPIENTA
+is used to annotate each sentence with a relevant CoreSC label. These labels
+are assigned using a conditional random fields model based upon a number of
+features such as the sentence's location within the paper and pairs and
+triplets of words found consecutively within the sentence \cite{Liakata2012}.
+The SAPIENTA system has been trained on a corpus of 265 chemistry and
+biochemistry papers and we have done no domain adaptation for the papers in
+PLoS.
 
 
 
@@ -230,7 +232,7 @@ papers and we have done no domain adaptation for the papers in PLoS.
 
 %how the machine learning is conducted (random forest using orange, features, validation methods).
 
-Random forest learning\cite{Breiman2001} was chosen for the construction of the
+Random forest learning \cite{Breiman2001} was chosen for the construction of the
 paper type classifier. This is because random forests are a fast, accurate and
 widely accepted learning technology, and the underlying decision trees can be
 inspected to understand some of the reasoning behind the predictions made by
