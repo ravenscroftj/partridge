@@ -85,9 +85,7 @@
   literature. The Partridge instance and further information about
   the project can be found at \url{http://papro.org.uk}}
 
-\vspace{-15pt}
 \section{Introduction} \label{sec:1}
-\vspace{-11pt}
 
 Since the advent of the `Digital Age', the amount of information available to
 researchers has been increasing drastically, relevant material is becoming
@@ -158,13 +156,11 @@ discuss the reliability of this model of paper types and the insights that have
 been gained for the authorship of papers.
 
 
-\vspace{-15pt}
 \section{Methods}
 \label{sec:2}
 %how types were chosen,
 
 \subsection*{Collection of scientific articles} 
-\vspace{-15pt}
 Partridge allows users to upload any paper which is free of copyright
 restrictions.  For the purpose of this study we needed a large set of papers
 that we could label with CoreSC to investigate how this information assists
@@ -204,13 +200,11 @@ discriminative relationship between CoreSC categories and a paper's type.
 \centering
 \includegraphics[width=0.75\textwidth]{figures/corescs.png}
 \caption{The CoreSC content of a research paper (left) and a review paper (right) randomly selected from the corpus}
-\vspace{-20pt}
 \label{fig:coresc_pies} 
 \end{figure}
 
 \subsection*{Paper Processing and classification}
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
-\vspace{-15pt}
 
 In order to obtain automatic labeling of sentences in a paper with CoreSC
 concepts we first needed to convert the papers to a format that the the CoreSC
@@ -246,15 +240,12 @@ min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross
 validation to estimate the precision, recall and F-measure.
 
 
-\vspace{-15pt}
 \section{Results and Discussion}
 \label{sec:3}
-\vspace{-15pt}
 
 
 \begin{table}
 
-\vspace{-10pt}
 \caption{Per-class recall, precision and F-measure micro-averaged over 10-fold cross validation, reporting the results on the held-out validation segment. Top paper types in bold.}
 
 \begin{tabular}{p{2.4cm}p{2.0cm}p{2.0cm}p{2.5cm}}
@@ -273,7 +264,6 @@ Viewpoint       &     14.9     &   15.7  &      15.3 \\
 \end{tabular}
 
 
-\vspace{-20pt}
 \label{tab:recallPrecision}       % Give a unique label
 \end{table}
 
@@ -309,8 +299,6 @@ Correspondence: 46 and Case Study 24.8}.
 
 \begin{table}
 
-\vspace{-10pt}
-
 \caption{Confusion matrix summed over 10-fold cross validation, reporting the results on the held-out validation segment. Rows represent true classes, columns represent predicted classes.}
 \label{tab:confusion}       % Give a unique label]
 
@@ -328,7 +316,6 @@ Review       & 27     &   8     &   35    &    5      &  13    &    21   &  197 
 Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  &      11 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
-\vspace{-15pt}
 \end{table}
 
 
@@ -361,10 +348,8 @@ values for Goal, Hypothesis, Result, Observation, Model, Conclusion
 and Object. These decisions seem reasonable and agreed with our
 expectations of the content of an Essay.
 
-\vspace{-15pt}
 \section{Summary and Conclusions}
 \label{sec:4}
-\vspace{-15pt}
 To summarise, we have demonstrated that paper type can largely be predicted
 from the distribution of the automatically obtained CoreSC sentence labels in
 the full text of a paper. We have described some of the particular CoreSC
@@ -390,13 +375,10 @@ further useful properties that will uncover more of the information
 that is hidden within the text of articles, and to use Partridge as a
 working engine to demonstrate their usefulness in practice.
 
-\vspace{-10pt}
 \begin{acknowledgement} We thank the Leverhulme trust for the support to Dr
 Liakata's Early Career Fellowship and also EMBL-EBI, Cambridge UK for the
 facilities offered to Dr Liakata.  \end{acknowledgement}
-\vspace{-2pt}
 
-\vspace{-30pt}
 \bibliographystyle{plain}
 \bibliography{partridge}
 
