@@ -203,7 +203,7 @@ discriminative relationship between CoreSC categories and a paper's type.
 \label{fig:coresc_pies} 
 \end{figure}
 
-\subsection*{Paper Processing and classification}
+\subsection*{Paper Processing and Classification}
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 
 In order to obtain automatic labeling of sentences in a paper with CoreSC
@@ -211,14 +211,14 @@ concepts we first needed to convert the papers to a format that the the CoreSC
 classifier, SAPIENTA can analyse.  Currently, SAPIENTA supports the SciXML and
 PubMed Central DTDs.  Papers in PDF format are first converted to XML using
 PDFX , a free service hosted by the University of Manchester
-\cite{Constantin2013}. Once the paper has been split into sentences, SAPIENTA
-is used to annotate each sentence with a relevant CoreSC label. These labels
-are assigned using a conditional random fields model based upon a number of
-features such as the sentence's location within the paper and pairs and
-triplets of words found consecutively within the sentence \cite{Liakata2012}.
-The SAPIENTA system has been trained on a corpus of 265 chemistry and
-biochemistry papers and we have done no domain adaptation for the papers in
-PLoS.
+\cite{Constantin2013}. Once the paper has been split into sentences with
+Liakata's SSplit tool \cite{liakata2009semantic}, SAPIENTA is used to annotate
+each sentence with a relevant CoreSC label. These labels are assigned using a
+conditional random fields model based upon a number of features such as the
+sentence's location within the paper and pairs and triplets of words found
+consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA system has
+been trained on a corpus of 265 chemistry and biochemistry papers and we have
+done no domain adaptation for the papers in PLoS.
 
 
 
@@ -323,13 +323,12 @@ Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  & 
 %Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
 
 We inspected the detail of a single decision tree, grown on the entire dataset,
-to give further insight into which CoreSC class decisions were responsible for
+to gain further insight into which CoreSC class decisions were responsible for
 the paper type predictions. This was a very large tree, with a depth of 37
 nodes in places.  The first decision was based upon the number of Background
 sentences in the article. Low Background percentages, of less than 0.694
 indicates a Correspondence paper. 28 out of the 31 Correspondence papers were
-correctly labelled by this decision  classified by this decision as
-Correspondence were correctly labelled.
+correctly classified by this decision.
 
 The next decision, for higher amounts of Background, was based on the
 percentage of Experiment sentences in the paper. For a very low
