@@ -45,7 +45,7 @@
 
 
 \title*{Partridge: An effective system for the automatic classification of the types of academic papers}
-\titlerunning{Partridge: classifying academic papers}
+\titlerunning{Partridge: A system for classification of academic papers}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 %\author{James Ravenscroft\,$^{1}$\footnote{to whom correspondence should be addressed}, Maria Liakata\,$^{2,3}$ and Amanda Clare$^{1}$}
@@ -160,7 +160,7 @@ been gained for the authorship of papers.
 \label{sec:2}
 %how types were chosen,
 
-\subsection*{Collection of scientific articles} 
+\subsection{Collection of scientific articles} 
 Partridge allows users to upload any paper which is free of copyright
 restrictions.  For the purpose of this study we needed a large set of papers
 that we could label with CoreSC to investigate how this information assists
@@ -198,12 +198,12 @@ discriminative relationship between CoreSC categories and a paper's type.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/corescs.png}
-\caption{The CoreSC content of a research paper (left) and a review paper (right) randomly selected from the corpus}
+\includegraphics[width=\textwidth]{figures/corescs.png}
+\caption{The CoreSC content of a research paper (top) and a review paper (bottom) randomly selected from the corpus}
 \label{fig:coresc_pies} 
 \end{figure}
 
-\subsection*{Paper Processing and Classification}
+\subsection{Paper Processing and Classification}
 %Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
 
 In order to obtain automatic labeling of sentences in a paper with CoreSC
@@ -293,7 +293,7 @@ and Perspective. From this it would seem that the paper types
 \{Opinion, Perspective, Viewpoint\} are very similar and should be
 grouped together into one category. Indeed when we trained the model
 on a super class consisting of the previous three categories,
-performance was improved overall with the following F-measures:
+performance was improved overall with the following F-measures:\\
 {\bf OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
 Correspondence: 46 and Case Study 24.8}.
 
@@ -378,7 +378,7 @@ working engine to demonstrate their usefulness in practice.
 Liakata's Early Career Fellowship and also EMBL-EBI, Cambridge UK for the
 facilities offered to Dr Liakata.  \end{acknowledgement}
 
-\bibliographystyle{acm}
+\bibliographystyle{spphys}
 \bibliography{partridge}
 
 %\input{referenc}
