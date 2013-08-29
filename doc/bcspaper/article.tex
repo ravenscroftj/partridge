@@ -45,7 +45,7 @@
 
 
 \title*{Partridge: An effective system for the automatic classification of the types of academic papers}
-\titlerunning{Partridge: classifying academic papers}
+\titlerunning{Partridge: A system for classification of academic papers}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 %\author{James Ravenscroft\,$^{1}$\footnote{to whom correspondence should be addressed}, Maria Liakata\,$^{2,3}$ and Amanda Clare$^{1}$}
@@ -85,53 +85,54 @@
   literature. The Partridge instance and further information about
   the project can be found at \url{http://papro.org.uk}}
 
-\vspace{-15pt}
 \section{Introduction} \label{sec:1}
-
 
 Since the advent of the `Digital Age', the amount of information available to
 researchers has been increasing drastically, relevant material is becoming
 progressively more difficult to find manually and the need for an automated
 information retrieval tool more apparent. There are already a large number of
 information retrieval and recommendation systems for scientific publications.
-Many of these systems, such as AGRICOLA (\url{http://agricola.nal.usda.gov/}),
-the Cochrane Library(\url{http://www.thecochranelibrary.com/}) and Textpresso
-(\url{http://www.textpresso.org/}) index only publications from predefined
-journals or topics (for the above examples, Agriculture, Biology and
-Bioinformatics respectively).  Unfortunately, these domain specific indexing
-systems usually only contain a small subset of papers, excluding potentially
-crucial literature because it does not quite fit into the subject domain. 
+Many of these systems, such as
+AGRICOLA\footnote{\url{http://agricola.nal.usda.gov/}}, the Cochrane
+Library\footnote{\url{http://www.thecochranelibrary.com/}} and
+Textpresso\footnote{\url{http://www.textpresso.org/}} index only publications
+from predefined journals or topics (for the above examples, Agriculture,
+Biology and Bioinformatics respectively).  Unfortunately, these domain specific
+indexing systems usually only contain a small subset of papers, excluding
+potentially crucial literature because it does not quite fit into the subject
+domain. 
 
 The value of these systems to their users is often restricted by the small
 proportion of available literature that they index, forcing researchers to use
 multiple, domain specific, search engines for their queries.  In contrast,
 there are also a number of interdisciplinary indexing systems and online
-journals such as arXiv and PloSOne that try to incorporate wide ranges of
-papers from as many disciplines as possible. The traits of these systems often
-complement those of their domain-specific counterparts; they provide a
+journals such as arXiv\footnote{\url{http://arxiv.org}} and
+PloSOne\footnote{\url{http://plosone.org}} that try to incorporate wide ranges
+of papers from as many disciplines as possible. The traits of these systems
+often complement those of their domain-specific counterparts; they provide a
 comprehensive collection of literature but insufficient filtering and indexing
 capabilities, usually based on title and abstract. 
 
 However, the document title is just one of the crucial parts of a scientific
 paper's structure.  Liakata \emph{et al.} (2012) describe a system for
 automatically processing and classifying sentences in a research paper
-according to the core scientific concept (CoreSC) that they
-describe\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis},
-{\em Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
+according to the core scientific concept (CoreSC) that they describe
+\cite{Liakata2012}.  There are 11 CoreSCs, including {\em Hypothesis}, {\em
+Goal}, {\it Background}, {\em Method}, {\em Result} and {\em Conclusion}.
 CoreSC labels can be allocated to all sentences in a scientific paper in order
-to identify which scientific concept each sentence encapsulates.  SAPIENTA
-(\url{http://www.sapientaproject.com}) is a publicly available machine learning
-application which can automatically annotate all sentences in a scientific
-paper with their CoreSC labels. It was trained using a corpus of physical
-chemistry and biochemistry research papers whose sentences were manually
-annotated using the CoreSC\cite{LIAKATA10.644} scheme.  An intelligent 
-information retrieval system can use this data to provide better filtering and
-search capabilities for researchers.  Partridge implements such context-aware
-keyword search, by allowing researchers to search for papers where a term
-appears in sentences with a specific CoreSC label (e.g only in {\em Method}
-sentences). This can be used to greatly improve both the precision with which
-researchers are able to perform searches for scientific literature and the
-accuracy of those searches in terms of relevance to the reader.
+to identify which scientific concept each sentence encapsulates.
+SAPIENTA\footnote{\url{http://www.sapientaproject.com}} is a publicly available
+machine learning application which can automatically annotate all sentences in
+a scientific paper with their CoreSC labels. It was trained using a corpus of
+physical chemistry and biochemistry research papers whose sentences were
+manually annotated using the CoreSC \cite{LIAKATA10.644} scheme.  An
+intelligent information retrieval system can use this data to provide better
+filtering and search capabilities for researchers.  Partridge implements such
+context-aware keyword search, by allowing researchers to search for papers
+where a term appears in sentences with a specific CoreSC label (e.g only in
+{\em Method} sentences). This can be used to greatly improve both the precision
+with which researchers are able to perform searches for scientific literature
+and the accuracy of those searches in terms of relevance to the reader.
 
 The type of a paper ({\em Review}, {\em Case Study}, {\em Research}, {\em
 Perspective}, etc) is another useful feature through which a user can narrow
@@ -155,35 +156,36 @@ discuss the reliability of this model of paper types and the insights that have
 been gained for the authorship of papers.
 
 
-\vspace{-15pt}
 \section{Methods}
 \label{sec:2}
 %how types were chosen,
 
-\subsection*{Collection of scientific articles} Partridge allows users to
-upload any paper which is free of copyright restrictions.  For the purpose of
-this study we needed a large set of papers that we could label with CoreSC to
-investigate how this information assists classification into paper type.  Open
-Access (OA) journals provide free read access to their papers, but many do not
-permit the user of articles for data mining purposes. The Public Library of
-Science (PLoS) journals contain large volumes of OA literature under a
-permissive license that allows data mining.  They also use the PubMed Central
-markup schema, which is compatible with SAPIENTA, for papers published through
-their journal. The PLoS journals advanced search offers approximately 50 types
-of paper through which to restrict the search.  Many of these paper type
-categories contain too few papers to be useful, others are too ad hoc (e.g.
-{\it Message from PLoS}). Indeed it is not clear how these paper types have
-been identified. We chose to look at a range of types, some of which we expect
-to overlap or have an unclear distinction.  These are namely: Essay,
-Correspondence, Case Study, Perspective, Viewpoint, Opinion, Review, Research. 
+\subsection{Collection of scientific articles} 
+Partridge allows users to upload any paper which is free of copyright
+restrictions.  For the purpose of this study we needed a large set of papers
+that we could label with CoreSC to investigate how this information assists
+classification into paper type.  Open Access (OA) journals provide free read
+access to their papers, but many do not permit the user of articles for data
+mining purposes. The Public Library of Science (PLoS) journals contain large
+volumes of OA literature under a permissive license that allows data mining.
+They also use the PubMed Central markup schema, which is compatible with
+SAPIENTA, for papers published through their journal. The PLoS journals
+advanced search offers approximately 50 types of paper through which to
+restrict the search.  Many of these paper type categories contain too few
+papers to be useful, others are too ad hoc (e.g.  {\it Message from PLoS}).
+Indeed it is not clear how these paper types have been identified. We chose to
+look at a range of types, some of which we expect to overlap or have an unclear
+distinction.  These are namely: Essay, Correspondence, Case Study, Perspective,
+Viewpoint, Opinion, Review, Research. 
 
-% in conclusions add how this can give recommendations for Plos and other journals 
-The papers were downloaded from PLoS using {\em plosget.py}, a short
-python script that uses the PLoS RESTful search API. The number of
-papers downloaded per paper type category was as follows: 200 Essay,
-99 Correspondence, 107 Case Study, 200 Perspective, 74 Viewpoint, 93
-Opinion, 312 Review, 200 Research.  These formed a corpus of 1285 %1459-174 after removing synopsis. Should double check the numbers add up
-papers.
+% in conclusions add how this can give recommendations for Plos and other
+% journals 
+A script called {\em plosget.py}\footnote{\url{https://github.com/ravenscroftj/partridge}} was written, in order to download the
+papers via the PloS RESTful search API\footnote{\url{http://api.plos.org/solr/faq/}}. The number of papers downloaded per
+paper type category was as follows: 200 Essay, 99 Correspondence, 107 Case
+Study, 200 Perspective, 74 Viewpoint, 93 Opinion, 312 Review, 200 Research.
+These formed a corpus of 1285 %1459-174 after removing synopsis. Should double
+check the numbers add up papers.
 
 Figure \ref{fig:coresc_pies} shows the CoreSC content of a review paper and a
 research paper randomly selected from the corpus.  The review papers tend to be
@@ -192,44 +194,36 @@ papers are much more evenly spread, made up of several different types of
 CoreSC.  This investigation suggested that there is almost certainly a
 discriminative relationship between CoreSC categories and a paper's type. 
 
-\subsection*{Paper Processing and classification}
-%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
-In order to obtain automatic labeling of sentences in a paper with
-CoreSC concepts we first needed to convert the papers to a format that
-the the CoreSC classifier, SAPIENTA can analyse.  Currently, SAPIENTA
-supports the SciXML and PubMed Central DTDs.  Papers in PDF format are
-first converted to XML using PDFX %\cite{PDFX} - no paper known yet
-, a free service hosted by the University of Manchester
-(\url{http://pdfx.cs.man.ac.uk/}). Once the paper has been split into
-sentences, SAPIENTA is used to annotate each sentence with a relevant
-CoreSC label. These labels are assigned using a conditional random
-fields model based upon a number of features such as the sentence's
-location within the paper and pairs and triplets of words found
-consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA
-system has been trained on a corpus of 265 chemistry and biochemistry
-papers and we have done no domain adaptation for the papers in PLoS.
-
 
 
 \begin{figure}[t]
-
 \centering
-
-%\subfloat{
-\includegraphics[width=0.75\textwidth]{figures/corescs.png}
-%}
-%\subfloat{
-%\includegraphics[width=0.45\textwidth]{figures/report_corescs.png}
-%}
-\caption{The CoreSC content of a research paper (left) and a review paper (right) randomly selected from the corpus}
-
-\vspace{-20pt}
+\includegraphics[width=\textwidth]{figures/corescs.png}
+\caption{The CoreSC makeup of a research paper and a review paper randomly selected from the corpus}
 \label{fig:coresc_pies} 
 \end{figure}
 
+\subsection{Paper Processing and Classification}
+%Discuss in more detail how Partridge processes papers (PDFX, sentence splitting) 
+
+In order to obtain automatic labeling of sentences in a paper with CoreSC
+concepts we first needed to convert the papers to a format that the the CoreSC
+classifier, SAPIENTA can analyse.  Currently, SAPIENTA supports the SciXML and
+PubMed Central DTDs.  Papers in PDF format are first converted to XML using
+PDFX , a free service hosted by the University of Manchester
+\cite{Constantin2013}. Once the paper has been split into sentences with
+Liakata's SSplit tool \cite{liakata2009semantic}, SAPIENTA is used to annotate
+each sentence with a relevant CoreSC label. These labels are assigned using a
+conditional random fields model based upon a number of features such as the
+sentence's location within the paper and pairs and triplets of words found
+consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA system has
+been trained on a corpus of 265 chemistry and biochemistry papers and we have
+done no domain adaptation for the papers in PLoS.
+
+
 %how the machine learning is conducted (random forest using orange, features, validation methods).
 
-Random forest learning\cite{Breiman2001} was chosen for the construction of the
+Random forest learning \cite{Breiman2001} was chosen for the construction of the
 paper type classifier. This is because random forests are a fast, accurate and
 widely accepted learning technology, and the underlying decision trees can be
 inspected to understand some of the reasoning behind the predictions made by
@@ -243,10 +237,8 @@ min\_subsets=5 and same\_majority\_pruning=true.  We used 10-fold cross
 validation to estimate the precision, recall and F-measure.
 
 
-\vspace{-15pt}
 \section{Results and Discussion}
 \label{sec:3}
-
 
 
 \begin{table}
@@ -269,7 +261,6 @@ Viewpoint       &     14.9     &   15.7  &      15.3 \\
 \end{tabular}
 
 
-\vspace{-20pt}
 \label{tab:recallPrecision}       % Give a unique label
 \end{table}
 
@@ -280,7 +271,7 @@ Correspondence} are the most accurate classes, and {\em Viewpoint} is the most
 difficult paper type to predict. 
 
 
-A confusion matrix for the paper types in given in Table
+A confusion matrix for the paper types is given in Table
 \ref{tab:confusion}. Research papers are usually predicted to belong
 to the Research class, and are sometimes confused with Case
 Study. However, Case Study papers are often predicted to be Research
@@ -300,12 +291,10 @@ and Perspective. From this it would seem that the paper types
 grouped together into one category. Indeed when we trained the model
 on a super class consisting of the previous three categories,
 performance was improved overall with the following F-measures:
-{\bf OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
-Correspondence: 46 and Case Study 24.8}.
+OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
+Correspondence: 46 and Case Study 24.8.
 
 \begin{table}
-
-\vspace{-10pt}
 
 \caption{Confusion matrix summed over 10-fold cross validation, reporting the results on the held-out validation segment. Rows represent true classes, columns represent predicted classes.}
 \label{tab:confusion}       % Give a unique label]
@@ -324,7 +313,6 @@ Review       & 27     &   8     &   35    &    5      &  13    &    21   &  197 
 Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  &      11 \\
 \noalign{\smallskip}\hline\noalign{\smallskip}
 \end{tabular}
-\vspace{-15pt}
 \end{table}
 
 
@@ -332,12 +320,12 @@ Viewpoint    &    7  &      9   &     3     &   19     &   13 & 10     &   2  & 
 %Discuss why it's possible to predict type from CoreSC (which CoreSC define a class).
 
 We inspected the detail of a single decision tree, grown on the entire dataset,
-to give further insight into which CoreSC class decisions were responsible for
+to gain further insight into which CoreSC class decisions were responsible for
 the paper type predictions. This was a very large tree, with a depth of 37
-nodes in places.  The first decision was regarding the number of Background
-sentences in the article. A low Background percentage, of less than 0.694
-indicates a Correspondence paper. 28 out of the 31 papers that were classified
-by this decision as Correspondence were correctly labelled. 
+nodes in places.  The first decision was based upon the number of Background
+sentences in the article. Low Background percentages, of less than 0.694
+indicates a Correspondence paper. 28 out of the 31 Correspondence papers were
+correctly classified by this decision.
 
 The next decision, for higher amounts of Background, was based on the
 percentage of Experiment sentences in the paper. For a very low
@@ -356,25 +344,20 @@ values for Goal, Hypothesis, Result, Observation, Model, Conclusion
 and Object. These decisions seem reasonable and agreed with our
 expectations of the content of an Essay.
 
-\vspace{-15pt}
-\section{Conclusion}
+\section{Summary and Conclusions}
 \label{sec:4}
-
-To summarise, we have demonstrated that paper type can largely be
-predicted from the distribution of the automatically obtained CoreSC
-sentence labels in the full text of a paper. We have described some of
-the particular CoreSC features that determine a paper type
-(e.g. Correspondence characterised by very little Background, Opinions
-characterised by low percentage of Experiment) and discussed which of
-the paper types are not easily separable in this way. We recommended
-for example merging the Opinion, Viewpoint and Perspective articles
-into a single category, which increased overall
-classification performance. It is also potentially useful to distinguish between two types of Case study.
-Analysis of an example tree shows the decision making
-process to be complex, but agrees with our general understanding of
-paper types. The Partridge online system now allows refinement of
-paper search using CoreSC and paper type, both of which can be
-intelligently determined using machine learning methods.
+To summarise, we have demonstrated that paper type can largely be predicted
+from the distribution of the automatically obtained CoreSC sentence labels in
+the full text of a paper. We have described some of the particular CoreSC
+features that determine a paper type (e.g. Correspondence characterised by very
+little Background, Opinions characterised by low percentage of Experiment) and
+discussed which of the paper types are not easily separable in this way. We
+recommended for example merging the Opinion, Viewpoint and Perspective articles
+into a single category, which increased overall classification performance. It
+is also potentially useful to distinguish between two types of Case study.
+Analysis of an example tree shows the decision making process to be complex,
+but agrees with our general understanding of paper types. Partridge allows refinement of paper search using CoreSC and paper type, both of which
+can be intelligently determined using machine learning methods.
 
 
 %Discuss the potential for intelligent paper search opportunities in general and the future for Partridge.
@@ -388,14 +371,11 @@ further useful properties that will uncover more of the information
 that is hidden within the text of articles, and to use Partridge as a
 working engine to demonstrate their usefulness in practice.
 
-
-\begin{acknowledgement} We thank the Leverhulme trust for the support to Dr
+\begin{acknowledgement} We thank the Leverhulme Trust for the support to Dr
 Liakata's Early Career Fellowship and also EMBL-EBI, Cambridge UK for the
 facilities offered to Dr Liakata.  \end{acknowledgement}
 
-
-\vspace{-15pt}
-\bibliographystyle{plain}
+\bibliographystyle{spphys}
 \bibliography{partridge}
 
 %\input{referenc}
