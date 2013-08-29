@@ -199,7 +199,7 @@ discriminative relationship between CoreSC categories and a paper's type.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/corescs.png}
-\caption{The CoreSC content of a research paper (top) and a review paper (bottom) randomly selected from the corpus}
+\caption{The CoreSC makeup of a research paper and a review paper randomly selected from the corpus}
 \label{fig:coresc_pies} 
 \end{figure}
 
@@ -219,9 +219,6 @@ sentence's location within the paper and pairs and triplets of words found
 consecutively within the sentence \cite{Liakata2012}.  The SAPIENTA system has
 been trained on a corpus of 265 chemistry and biochemistry papers and we have
 done no domain adaptation for the papers in PLoS.
-
-
-
 
 
 %how the machine learning is conducted (random forest using orange, features, validation methods).
@@ -293,9 +290,9 @@ and Perspective. From this it would seem that the paper types
 \{Opinion, Perspective, Viewpoint\} are very similar and should be
 grouped together into one category. Indeed when we trained the model
 on a super class consisting of the previous three categories,
-performance was improved overall with the following F-measures:\\
-{\bf OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
-Correspondence: 46 and Case Study 24.8}.
+performance was improved overall with the following F-measures:
+OpinionSuper: 59, Research: 67.6, Review: 63.7, Essay: 44.9,
+Correspondence: 46 and Case Study 24.8.
 
 \begin{table}
 
