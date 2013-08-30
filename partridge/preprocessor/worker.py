@@ -6,9 +6,11 @@ from partridge.models import db
 from partridge.models.doc import PaperFile, PaperWatcher
 
 from partridge.tools.paperstore import PaperParser
-from partridge.tools.converter import PDFXConverter
-from partridge.tools.annotate import Annotator
-from partridge.tools.split import SentenceSplitter
+
+from sapienta.tools.converter import PDFXConverter
+from sapienta.tools.annotate import Annotator
+from sapienta.tools.split import SentenceSplitter
+
 #from partridge.tools.papertype import RawPaperClassifier
 
 class PartridgePaperWorker:
