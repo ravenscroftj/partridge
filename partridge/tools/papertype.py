@@ -110,29 +110,34 @@ if __name__ == "__main__":
 
     if(options.all):
         print "ignoring ID arguments and retrieving all papers"
-        papers = Paper.query.all()
+        q = Paper.query
     else:
         print "Retrieving papers with IDs in %s" % args
-        papers = Paper.query.filter(Paper.id.in_(args)).all()
+        q= Paper.query.filter(Paper.id.in_(args))
 
-    for p in papers:
+    offset = 0
+    limit = 50
 
-        if( p.type != None ):
-            print "Skipping paper %s" % p.title
-            continue
+
+    while q.offset(offset).limit(limit).count() > 0:
+
+        print "Downloading batch of %d papers..." % limit
+
+        for p in q.offset(offset).limit(limit).all():
+            
+            print p.title
+            for author in p.authors:
+                print "\t\t" + author.surname
+
+            cls = str(c.classify_paper(p))
+            
+            print "Predicted Class:" + cls
+
+            print "Saving paper type in database"
+            p.type = cls
+            db.session.merge(p)
         
-        print p.title
-        for author in p.authors:
-            print "\t\t" + author.surname
+        #commit the database session at the end of the run
+        db.session.commit()
 
-        cls = str(c.classify_paper(p))
-        
-        print "Predicted Class:" + cls
-
-        print "Saving paper type in database"
-        p.type = cls
-        db.session.merge(p)
-    
-    #commit the database session at the end of the run
-    db.session.commit()
-
+        offset += limit

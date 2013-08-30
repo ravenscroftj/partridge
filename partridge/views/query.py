@@ -5,8 +5,7 @@ from flask import render_template,request,jsonify
 from partridge.views import frontend
 
 from partridge.models import db
-from partridge.models.doc import Paper,Sentence,Author, C_ABRV, PAPER_TYPES
-
+from partridge.models.doc import Paper,Sentence,Author, C_ABRV
 from sqlalchemy import func, or_, and_
 
 PAGE_LIMIT = 10
@@ -20,9 +19,10 @@ def query():
 
     papercount = Paper.query.count()
 
+    PAPER_TYPES = [str(x[0]) for x in db.session.query(Paper.type).distinct().all()]
+
     #do paper counts for all paper types
     paper_types = {x:Paper.query.filter(Paper.type == x).count() for x in PAPER_TYPES}
-
 
     if(searchterms != ''):
 
@@ -42,8 +42,6 @@ def query():
         paper_q = pq.get_query()
 
         papers = paper_q.limit(PAGE_LIMIT).offset(offset).all()
-
-        print len(paper_q.all())
 
         return jsonify(html=render_template("query_result.html",
             papers=papers), total=paper_q.count(), count=len(papers))
