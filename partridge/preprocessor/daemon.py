@@ -303,7 +303,7 @@ class PaperDaemon(Thread):
         self.logger.info("Removing file %s", filename)
         os.unlink(filename)
 
-        pdf = os.path.join(self.watchdir, basename)
+        pdf = os.path.join(self.watchdir, basename) + ".pdf"
 
         if(os.path.exists(pdf)):
             self.logger.info("Removing PDF file %s", pdf)
