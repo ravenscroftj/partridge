@@ -14,7 +14,7 @@ setup(
             'pyinotify>=0.9.4',
             'alembic>=0.4.2',
             'Orange>=2.6',
-            'text-sentence>=0.14'],
+            'text-sentence>=0.14',
             'twitter>=1.9.4'],
 
     #program entrypoints
