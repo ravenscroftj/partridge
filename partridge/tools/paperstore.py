@@ -19,14 +19,16 @@ class PaperParser:
 
         results = Paper.query.filter(Paper.doi == doi)
 
-        if(results.count() < 1):
+        if( (results.count() < 1) or (doi == None)):
 
-            title = self.extractTitle()
-            authors = self.extractAuthors()
+						title = self.extractTitle()
+						
 
-            author_surnames = [ x.surname for x in authors]
+						authors = self.extractAuthors()
 
-            results = Paper.query.join("authors").filter(
+						author_surnames = [ x.surname for x in authors]
+
+						results = Paper.query.join("authors").filter(
                 Paper.title == title,
                 Author.surname.in_( author_surnames) )
 
