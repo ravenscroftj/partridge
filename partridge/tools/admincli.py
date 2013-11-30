@@ -40,8 +40,9 @@ class PaperManager(object):
         else:
             print "Response was not Y, no action will be taken"
 
-if __name__ == "__main__":
 
+
+def main():
     import sys
     from optparse import OptionParser
     from partridge import create_app
@@ -63,6 +64,9 @@ if __name__ == "__main__":
 
     create_app(config)
 
+    if(len(args) < 2):
+        print "Invalid arguments"
+        sys.exit(0)
 
     if (args[1] == "paper") and len(args) > 2:
         #expect the next argument to be the operation
@@ -75,4 +79,6 @@ if __name__ == "__main__":
 
 
 
+if __name__ == "__main__":
+    main()
 
