@@ -177,6 +177,14 @@ class PaperDaemon(Thread):
         else:
             filename, outfile, timetaken = result
 
+
+    	    if(self.paperExists(outfile)):
+	    	inform_watcher(self.logger, filename,
+			exception=PaperExistsException("Paper Already Exists"))
+		
+		self.cleanup(filename)
+		return None
+		
             #store the paper object in database
             paperObj = self.storePaperData(outfile)
 
