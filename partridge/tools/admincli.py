@@ -3,6 +3,14 @@ This module provides a CLI for partridge administration
 
 """
 
+import sys
+from optparse import OptionParser
+from partridge import create_app
+from flask import Config
+
+
+import codecs
+
 import xml.dom.minidom
 
 from partridge.config import config
@@ -28,8 +36,12 @@ class PaperManager(object):
             print "No paper with id %s " % id
             return
 
-        response = raw_input("Delete '%s' by %s? [Y/n] " % 
-                (paper.title, " and ".join([ (a.forenames + " " + a.surname) for a in paper.authors])))
+	msg = u"Delete '%s' by %s? [Y/n] " % (paper.title, u" and ".join([ (a.forenames + u" " + a.surname) 
+						for a in paper.authors]))
+
+	message = codecs.encode(msg, 'ascii', 'ignore')
+
+        response = raw_input(message)
 
         print " '%s' " % response
 
@@ -43,11 +55,6 @@ class PaperManager(object):
 
 
 def main():
-    import sys
-    from optparse import OptionParser
-    from partridge import create_app
-    from flask import Config
-
     optparser = OptionParser()
     
     optparser.add_option("-c", "--configfile", dest="config",
