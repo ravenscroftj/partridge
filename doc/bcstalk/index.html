@@ -230,7 +230,11 @@ For example this fallback message is only visible when there is `impress-not-sup
 
 <!--Add impress js-->
 <script src="impress/js/impress.js"></script>
-<script>impress().init();</script>
+<script src="impress-console/js/impressConsole.js"></script>
+<script>
+impress().init();
+impressConsole().init();
+</script>
 </body>
 
 </html>
