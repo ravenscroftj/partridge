@@ -59,12 +59,20 @@ For example this fallback message is only visible when there is `impress-not-sup
     </div>
 
     <div id="papergraph" class="step slide" data-x="1000" data-rotate-y="90" data-z="1000">
-    <img src="images/bc_bjork.png" width="700px"  alt="Graph of findings">
+
+        <img src="images/medline-articles-by-year-lg.png" width="650px"  alt="Medline articles per year">
+
+    <br /><br />
+    </div>
+
+
+    <div id="papergraph2" class="step slide" data-x="1000" data-rotate-y="90" data-z="2000">
+
+        <img src="images/bc_bjork.png" width="700px"  alt="Graph of Open Access publishing">
 
     <br /><br />
 
     <p class="small">Image Source: "Anatomy of open access publishing: a study of longitudinal development and internal structure", Mikael Laakso and Bo-Christer Björk, 2012 October 22. doi:  <a href="http://dx.doi.org/10.1186%2F1741-7015-10-124">10.1186/1741-7015-10-124</a> (Under Creative Commons By-Attribution License)</p>
-    
     </div>
 
 
@@ -84,8 +92,8 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="tokenizer" class="step pslide slide" data-x="-285" data-y="-490" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/split.png" alt="Split Icon"/>
         <h1> Tokenizing and Sentence Splitting </h1>
-
         <ul>
             <li>Use <a href="https://bitbucket.org/trebor74hr/text-sentence/src">text-sentence</a> to automatically tokenize all
             text in paper</li>
@@ -103,14 +111,15 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="sapienta-1" class="step pslide slide" data-x="-240" data-y="-490" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/tag.png" alt="Tag Icon"/>
         <h1> Annotating with SAPIENTA </h1>
 
-        <ul>
+        <ul style="font-size: 24px" >
             <li><a href="http://www.sapientaproject.com/">SAPIENTA</a> is a system for Automatically adding CoreSC
             Annotations to papers on a sentence-by-sentence level.</li>
             <li>CoreSC - Core Scientific Concept - used to indicate the type of content each sentence contains. More on this shortly.</li>
-            <li>Self-contained machine learning/classification system trained using a set of ~200 papers manually annotated with CoreSC tags.</li>
-
+            <li>Self-contained machine learning/classification system trained using a set of 265 papers manually annotated with CoreSC tags.</li>
+            <li>The algorithm used was Conditional Random Fields (CRF). </li>
             <li>Papers that were previously 'split' are now automatically annotated with CoreSC tags</li>
         </ul>
 
@@ -124,6 +133,7 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="sapienta-2" class="step pslide slide" data-x="-240" data-y="-470" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/tag.png" alt="Tag Icon"/>
         <h1> CoreSC Types and Examples</h1>
 
         <ul>
@@ -149,14 +159,15 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="type-class-1" class="step pslide slide" data-x="-180" data-y="-490" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
         <h1>Paper Type Classification</h1>
 
         <ul>
-            <li>Hypothesised that there is a correlation between CoreSC makeup of papers and paper 'type'</li>
-            <li>Used PLoSOne "types" filter to derive a list of 'types' to be investigated. These were: Case Study, Correspondence, 
-            Essay, Opinion, Perspective, Research, Review, Viewpoint</li>
+            <li>We hypothesise that there is a correlation between CoreSC makeup of papers and paper 'type'</li>
+            <li>Used PLoSOne "types" filter to derive a list of 'types' to be investigated. These were: <i>Case Study, Correspondence, 
+            Essay, Opinion, Perspective, Research, Review, Viewpoint</i></li>
             <li>The journal labels seem almost arbitrary. Suspect that they're chosen by authors at submission</li>
-            <li>We manually came to consensus on which ones to use and tried to omit synonymous ones.</li>
+            <li>We manually came to a consensus on which labels to investigate by omitting synonmous labels (for example Perspective = Opinion) and labels with too few examples.</li>
         </ul>
         <p class="small">
         </p>
@@ -166,6 +177,7 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="type-class-2" class="step pslide slide" data-x="-180" data-y="-470" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
         <h1>Paper Type Classification</h1>
 
         <span style="float: left">Visualisation of Randomly sampled Research (left) and Review (right) papers from the corpus:<br/><br/></span>
@@ -180,12 +192,11 @@ For example this fallback message is only visible when there is `impress-not-sup
 
     <div id="type-class-3" class="step pslide slide" data-x="-180" data-y="-450" data-scale="0.025" data-z="1000">
         
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
         <h1>Paper Type Classification</h1>
 
         <ul>
             <li>Trained a random forest classifier using the corpus accumulated from the Annotation pipeline</li>
-            <li>a</li>
-            
         </ul>
 
         <img src="images/confusion.png" width="750" alt="Confusion matrix from training">

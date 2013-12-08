@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+.icon{
+    width: 75px;
+    float:right;
+}
+
 #diagram .float-right{
     float: right;
 }

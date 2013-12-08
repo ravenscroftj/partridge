@@ -531,9 +531,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="372.82944"
-     inkscape:cy="692.05377"
+     inkscape:zoom="1.4"
+     inkscape:cx="341.98417"
+     inkscape:cy="638.09581"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -560,7 +560,7 @@
      id="layer1">
     <g
        id="g4438"
-       transform="matrix(0.01588559,0,0,-0.01588559,565.40218,619.23794)"
+       transform="matrix(0.01588559,0,0,-0.01588559,559.6879,656.38079)"
        inkscape:export-filename="/home/james/partridge/doc/bcstalk/images/text8667.png"
        inkscape:export-xdpi="149.98096"
        inkscape:export-ydpi="149.98096">
@@ -4355,7 +4355,7 @@
     </g>
     <g
        id="g8366"
-       transform="translate(-330.31988,19.192898)"
+       transform="translate(-292.46274,-31.521388)"
        inkscape:export-filename="/home/james/partridge/doc/bcstalk/images/text8667.png"
        inkscape:export-xdpi="149.98096"
        inkscape:export-ydpi="149.98096">
@@ -5057,7 +5057,7 @@
     </g>
     <g
        id="g8561-8"
-       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,452.65095,5.3196829)"
+       transform="matrix(0.95820048,0.95820048,-0.95820048,0.95820048,474.71663,-80.050385)"
        inkscape:export-filename="/home/james/partridge/doc/bcstalk/images/text8667.png"
        inkscape:export-xdpi="149.98096"
        inkscape:export-ydpi="149.98096">
@@ -5089,38 +5089,23 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-       x="472.94998"
-       y="214.82552"
+       x="384.37857"
+       y="386.25409"
        id="text8639"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/home/james/partridge/doc/bcstalk/images/text8667.png"
        inkscape:export-xdpi="149.98096"
        inkscape:export-ydpi="149.98096"><tspan
          sodipodi:role="line"
-         id="tspan8641"
-         x="472.94998"
-         y="214.82552"
-         style="font-size:20px">Natural </tspan><tspan
-         sodipodi:role="line"
-         x="472.94998"
-         y="239.82552"
-         id="tspan8643"
-         style="font-size:20px">Language </tspan><tspan
-         sodipodi:role="line"
-         x="472.94998"
-         y="264.82553"
-         id="tspan8645"
-         style="font-size:20px">Processing</tspan><tspan
-         sodipodi:role="line"
-         x="472.94998"
-         y="289.82553"
+         x="384.37857"
+         y="386.25409"
          style="font-size:20px"
-         id="tspan8647">and </tspan><tspan
+         id="tspan8649">Partridge AI</tspan><tspan
          sodipodi:role="line"
-         x="472.94998"
-         y="314.82553"
+         x="384.37857"
+         y="411.25409"
          style="font-size:20px"
-         id="tspan8649">Classification</tspan></text>
+         id="tspan4189">Pipeline</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeSans;-inkscape-font-specification:FreeSans"
