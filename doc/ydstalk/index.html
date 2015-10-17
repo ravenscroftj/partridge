@@ -1,0 +1,280 @@
+<!doctype html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title> Natural Language Processing and Cognitive Computing in Science</title>
+
+    <meta name="description" content="Partridge is an AI system for classifying
+    scientific papers using their Core Scientific Concepts." />
+    <meta name="author" content="James Ravenscroft" />
+
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+
+    <!--Add stylesheet -->
+    <link href="impress/css/impress-demo.css" rel="stylesheet" type="text/css"
+    />
+
+    <link href="presentation.css" rel="stylesheet" type="text/css"/>
+
+
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+<!--
+********************* CONTENT STARTS HERE ****************************
+-->
+
+<div id="timeline">
+  <img src="images/timeline.png">
+</div>
+
+    <div id="start" class="slide step" data-x="500" data-y="-1500">
+        <h1>The future of science</h1><h2>(according to a humble computational linguistics student) </h2>
+        <h2><a href="http://papro.org.uk">http://papro.org.uk</a></h2>
+    <h3>James Ravenscroft - PhD Student @ University of Warwick, Watson Solutions Architect @ IBM</h3>
+        <h4>Contact me at <a href="mailto:j.ravenscroft(at-nospam)warwick.ac.uk">j.ravenscroft&zwj;&zwj;@warwick.ac.uk</a>. Or on twitter <a href="https://twitter.com/jamesravey">@jamesravey</a></h4>
+    </div>
+
+    <div class="step slide-transparent" data-x="0" data-y="0" data-scale="0.5">
+      <h1>The dawn of man</h1>
+      <h2>~200,000BC</h2>
+      <img src="images/evolution.png" width="400px">
+    </div>
+
+    <div class="step slide-transparent" data-x="507" data-y="0" data-scale="0.5">
+      <h1>FIRE!</h1>
+      <h2>~120,000BC (+80,000 years)</h2>
+      <img src="images/fire.png" width="200px">
+    </div>
+
+
+    <div class="step slide-transparent" data-x="950" data-y="0" data-scale="0.25">
+      <h2>Upper Palaeolithic Revolution</h2>
+      <h3>~50,000 BC (+70,000 years)</h3>
+      <img src="images/pestle.png" width="200px">
+      <ul>
+        <li>Described as "Great leap forward [1]" for human kind. </li>
+        <li>Humans burying their dead, making clothes with animal hide, hunting with trapping pits, engaging in cave paintings</li>
+      </ul>
+
+      <div class="footnote">
+        [1] Diamond, Jared (1999). Guns, Germs, and Steel: The Fates of Human Societies. New York
+      </div>
+    </div>
+
+
+<!--
+
+    <div id="goldacre" class="step slide" data-x="1000" data-rotate-y="90">
+        <q><em>“...there have been an estimated 15 million medical academic articles
+    published so far, and 5000 journals published every month... picking out
+    what’s relevant is a gargantuan task.”</em> </q>
+    Ben Goldacre, Bad Science,
+    2008, p97
+    </div>
+
+    <div id="papergraph" class="step slide" data-x="1000" data-rotate-y="90" data-z="1000">
+
+        <img src="images/medline-articles-by-year-lg.png" width="650px"  alt="Medline articles per year">
+
+    <br /><br />
+    </div>
+
+
+    <div id="papergraph2" class="step slide" data-x="1000" data-rotate-y="90" data-z="2000">
+
+        <img src="images/bc_bjork.png" width="700px"  alt="Graph of Open Access publishing">
+
+    <br /><br />
+
+    <p class="small">Image Source: "Anatomy of open access publishing: a study of longitudinal development and internal structure", Mikael Laakso and Bo-Christer Björk, 2012 October 22. doi:  <a href="http://dx.doi.org/10.1186%2F1741-7015-10-124">10.1186/1741-7015-10-124</a> (Under Creative Commons By-Attribution License)</p>
+    </div>
+
+
+    <div id="partridge-inside" class="step slide" data-x="-400" data-y="-400" data-z="1000">
+        <h1> The Partridge Process </h1>
+
+        <img src="images/system_diagram.png" width="600px" alt="System Diagram">
+    </div>
+
+    <div id="ai-pipeline" class="step pslide slide" data-x="-250" data-y="-500" data-scale="0.25" data-z="1000">
+
+        <h1> The Processing Pipeline </h1>
+
+        <img src="images/pipeline.png"  width="750px" alt="Processing pipeline" />
+
+    </div>
+
+    <div id="tokenizer" class="step pslide slide" data-x="-285" data-y="-490" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/split.png" alt="Split Icon"/>
+        <h1> Tokenizing and Sentence Splitting </h1>
+        <ul>
+            <li>Use <a href="http://www.sapientaproject.com/software">SSSplit</a> to automatically tokenize all
+            text in paper</li>
+            <li>System serves as both XML parser and sentence splitter - a particularly difficult task.</li>
+            <li>Document is reconstructed sentence-by-sentence, sentence boundaries stored in document file</li>
+        </ul>
+
+        <p class="small">
+        Liakata, Maria, Q. Claire, and Larisa N. Soldatova. "Semantic Annotation of Papers: Interface &amp; Enrichment Tool (SAPIENT)."
+        </p>
+
+    </div>
+
+
+    <div id="sapienta-1" class="step pslide slide" data-x="-240" data-y="-490" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/tag.png" alt="Tag Icon"/>
+        <h1> Annotating with SAPIENTA </h1>
+
+        <ul style="font-size: 24px" >
+            <li><a href="http://www.sapientaproject.com/">SAPIENTA</a> is a system for Automatically adding CoreSC
+            Annotations to papers on a sentence-by-sentence level.</li>
+            <li>CoreSC - Core Scientific Concept - used to indicate the type of content each sentence contains. More on this shortly.</li>
+            <li>Self-contained machine learning/classification system trained using a set of 265 papers manually annotated with CoreSC tags.</li>
+            <li>The algorithm used was Conditional Random Fields (CRF). </li>
+            <li>Papers that were previously 'split' are now automatically annotated with CoreSC tags</li>
+        </ul>
+
+
+        <p class="small">
+        SAPIENTA - Maria Liakata - http://www.sapientaproject.com/
+        </p>
+
+    </div>
+
+
+    <div id="sapienta-2" class="step pslide slide" data-x="-240" data-y="-470" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/tag.png" alt="Tag Icon"/>
+        <h1> CoreSC Types and Examples</h1>
+
+        <ul>
+            <li>There are 11 CoreSCs as identified by Liakata et al.</li>
+            <li><i>Hypothesis, Motivation, Goal, Object,
+            Background, Method, Experiment, Model, Observation, Result and
+            Conclusion</i></li>
+
+            <li>
+            An example hypothesis sentence:
+            <em>It is expected that the results of clustering the data points will show clear grouping for this dataset</em>
+            </li>
+
+            <li>
+            Example background sentence:
+            <em>The perceptron algorithm was first invented by Frank Rosenblatt in 1957</em>
+            </li>
+        </ul>
+        <p class="small">
+        </p>
+
+    </div>
+
+    <div id="type-class-1" class="step pslide slide" data-x="-180" data-y="-490" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
+        <h1>Paper Type Classification</h1>
+
+        <ul>
+            <li>We hypothesise that there is a correlation between CoreSC makeup of papers and paper 'type'</li>
+            <li>Used PLoSOne "types" filter to derive a list of 'types' to be investigated. These were: <i>Case Study, Correspondence,
+            Essay, Opinion, Perspective, Research, Review, Viewpoint</i></li>
+            <li>The journal labels seem almost arbitrary. Suspect that they're chosen by authors at submission</li>
+            <li>We manually came to a consensus on which labels to investigate by omitting synonmous labels (for example <i>Correspondence</i> and <i>Messages from PLoS</i>) and labels with too few examples.</li>
+        </ul>
+        <p class="small">
+        </p>
+
+    </div>
+
+
+    <div id="type-class-2" class="step pslide slide" data-x="-180" data-y="-470" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
+        <h1>Paper Type Classification</h1>
+
+        <span style="float: left">Visualisation of Randomly sampled Research (left) and Review (right) papers from the corpus:<br/><br/></span>
+
+        <img src="images/paper_makeup.png" alt="Paper makeup of random review and research papers" />
+
+
+        <p class="clear: both;">We now had a couple of thousand papers of known 'types' and their respective CoreSC tag distributions. Suitable as
+        ML training data?</p>
+
+    </div>
+
+    <div id="type-class-3" class="step pslide slide" data-x="-180" data-y="-450" data-scale="0.025" data-z="1000">
+
+	<img class='icon' src="images/classify.png" alt="Classify Icon"/>
+        <h1>Paper Type Classification</h1>
+
+        <ul>
+            <li>Trained a random forest classifier using the corpus accumulated from the Annotation pipeline</li>
+        </ul>
+
+        <img src="images/confusion.png" width="750" alt="Confusion matrix from training">
+
+    </div>
+
+    <div id="ui-tour" class="step pslide slide" data-x="-100" data-y="-150" data-scale="0.25" data-z="1000">
+
+        <h1>Using Partridge (http://farnsworth.papro.org.uk/)</h1>
+
+
+    </div>
+
+    <div id="ui-query" class="step"  data-x="-170" data-y="-150" data-scale="0.10" data-z="1000">
+        <img src="images/partridge_query.png" alt="Query interface" />
+    </div>
+
+    <div id="ui-paper" class="step"  data-x="-70" data-y="-150" data-scale="0.10" data-z="1000">
+        <img src="images/paper_summary.png" alt="Query interface" />
+    </div>
+
+
+    <div id="paper-submission" class="step pslide slide"  data-x="600" data-y="-400" data-z="1000">
+
+        <h1>Submitting Papers</h1>
+
+        <ul>
+            <li>Please upload your (open access) papers to Partridge. We accept SciXML, Pubmed XML and PDF</li>
+            <li>We use <a href="http://pdfx.cs.man.ac.uk/">PDFX</a> to convert PDF to compatible XML</li>
+            <li>Bookmarklet for cross-site submission from PLOS and Pubmed</li>
+        </ul>
+
+        <p class="small">[1] PDFX - Alexander Constantin - http://pdfx.cs.man.ac.uk/</p>
+    </div>
+-->
+
+<!--
+******************** CONTENT ENDS HERE ****************************
+-->
+</div>
+
+<!--Add impress js-->
+<script src="impress/js/impress.js"></script>
+<script src="impress-console/js/impressConsole.js"></script>
+<script>
+impress().init();
+impressConsole().init();
+</script>
+</body>
+
+</html>
