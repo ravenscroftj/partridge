@@ -243,6 +243,21 @@ a:focus {
     letter-spacing: -1px;
 }
 
+.future{
+  display: none;
+}
+
+.past h1,
+.past h2,
+.past h3,
+.past ul,
+.past .footnote
+{
+  opacity: 0;
+  visibility: hidden;
+}
+
+
 .slide q {
     display: block;
     font-size: 50px;
