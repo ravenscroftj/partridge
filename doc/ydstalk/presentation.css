@@ -1,0 +1,94 @@
+/**
+ * Presentation styles for Partridge pres
+ *
+ */
+
+#start{
+    text-align: center;
+}
+
+.icon{
+    width: 75px;
+    float:right;
+}
+
+#diagram .float-right{
+    float: right;
+}
+
+#diagram li{
+    clear: both;
+}
+
+#start a{
+    color: #0000FF;
+    background: none;
+    text-decoration: underline;
+}
+
+#diagram .float-left{
+    float: left;
+}
+
+.pslide ul{
+    list-style-type: circle;
+    font-size: 28px;
+    margin: 75px;
+    margin-bottom: 25px;
+}
+
+.pslide .footnote{
+    font-size: 16px;
+}
+
+#queryslide a{
+    text-align: center;
+    text-decoration: underline;
+}
+
+#queryslide h1{
+    font-weight: bold;
+    margin: 50px;
+    font-size: 46px;
+}
+
+.pslide h1{
+    font-weight: bold;
+    font-size: 46px;
+    margin: 50px;
+    text-align: center;
+}
+
+h2{
+    font-size: 26px;
+}
+
+h3{ 
+    font-size: 20px;
+
+}
+
+.small {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#coresc_examples p{
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.blue{
+background-color: blue;
+color: #FFFFFF;
+}
+
+.green{
+background-color: green;
+color: #FFFFFF;
+}
+
+.red{
+background-color: red;
+color: #FFFFFF;
+}

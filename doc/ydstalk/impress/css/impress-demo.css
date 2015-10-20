@@ -243,15 +243,15 @@ a:focus {
     letter-spacing: -1px;
 }
 
-.future{
+.slide-transparent.future{
   display: none;
 }
 
-.past h1,
-.past h2,
-.past h3,
-.past ul,
-.past .footnote
+.slide-transparent.past h1,
+ .slide-transparent.past h2,
+.slide-transparent.past h3,
+.slide-transparent.past ul,
+.slide-transparent.past .footnote
 {
   opacity: 0;
   visibility: hidden;
