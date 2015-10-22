@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="system_diagram.svg"
-   inkscape:export-filename="/home/james/partridge/doc/bcstalk/images/system_diagram.png"
+   inkscape:export-filename="system_diagram.png"
    inkscape:export-xdpi="149.98096"
    inkscape:export-ydpi="149.98096">
   <defs
@@ -550,7 +550,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
