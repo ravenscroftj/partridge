@@ -122,7 +122,7 @@ a different RDBMS, you should replace `mysql-python` with the relevant library l
     ...
     ...
     
-Next you will need to clone and install SAPIENTA
+Next you will need to clone and install SAPIENTA (inside the partridge directory).
 
     (env) $ git clone git@bitbucket.org:partridge/sapienta.git
     Cloning into 'sapienta'
@@ -140,9 +140,12 @@ Finally, you can build the Partridge subsystem and dependencies with the followi
     ...
     ...
 
+#### Installing paper types model.
 
-Configuration
------------------------
+Create a directory inside your partridge project dir called "models" and download the pre-built decision tree model into it from [here](https://www.dropbox.com/s/lrgx6y7j9m82w0o/paper_types.model?dl=0).
+
+
+### Configuration
 
 Partridge uses a simple configuration file called `partridge.cfg`. The program will look for the existence of such a file at runtime
 in the following locations:
