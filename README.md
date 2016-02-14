@@ -60,6 +60,22 @@ system-wide python installation, preventing problems with module dependencies an
 
 ### Dependencies ###
 
+#### SAPIENTA ####
+
+SAPIENTA is currently also a dependency of Partridge. You can get it from [here](https://bitbucket.org/partridge/sapienta/).
+
+You need to make sure you install SAPIENTA and Partridge in the same virtualenv.
+
+#### Library/System dependencies ####
+
+Partridge was written and runs on Ubuntu. It is suggested that you install it on a unix/linux system that is similar to Ubuntu. It will run happily on OS/X but some of the commands here will not work.
+
+Partridge requires the *libmysqlclient-dev*  package installed so that it can run with a MySQL database (or you can use SQLite or whatever other database you want). 
+
+Partridge was written in and runs in *python2* so it probably won't work in Python 3 at the moment.
+
+#### Python dependencies ####
+
 Partridge has several dependencies that it requires to run successfully. These are:
 
   * [Flask](http://flask.pocoo.org/) 
@@ -105,6 +121,15 @@ a different RDBMS, you should replace `mysql-python` with the relevant library l
     Downloading/unpacking mysql-python
     ...
     ...
+    
+Next you will need to clone and install SAPIENTA
+
+    (env) $ git clone git@bitbucket.org:partridge/sapienta.git
+    Cloning into 'sapienta'
+    ...
+    ...
+
+You should follow the guide to install SAPIENTA and ensure that you use the same python virtualenv for both systems.
 
 Finally, you can build the Partridge subsystem and dependencies with the following command.
 
@@ -122,11 +147,11 @@ Configuration
 Partridge uses a simple configuration file called `partridge.cfg`. The program will look for the existence of such a file at runtime
 in the following locations:
 
-  # If you specify `-c filename.cfg` when running Partridge, it will try to use the provided filename first.
-  # If `-c` is not set, it will check for the existence of a `PARTRIDGE_CONF` variable set by your terminal environment
-  # If no environment variable is set, it will look in the current working directory for a `partridge.cfg` file.
-  # If no file could be found in the current working directory, it will try looking in `/home/yourname/.config/` for a config file.
-  # If no file was found in your home dir, the system will try /etc/partridge.cfg for a systemwide configuration file.
+  1. If you specify `-c filename.cfg` when running Partridge, it will try to use the provided filename first.
+  2. If `-c` is not set, it will check for the existence of a `PARTRIDGE_CONF` variable set by your terminal environment
+  3. If no environment variable is set, it will look in the current working directory for a `partridge.cfg` file.
+  4. If no file could be found in the current working directory, it will try looking in `/home/yourname/.config/` for a config file.
+  5. If no file was found in your home dir, the system will try /etc/partridge.cfg for a systemwide configuration file.
 
 Setting up your configuration file is simple, rename the provided sample (`partridge.cfg.sample`) and place it in the appropriate directory. 
 The below table illustrates each option and what it does
