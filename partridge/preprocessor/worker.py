@@ -9,7 +9,7 @@ from partridge.tools.paperstore import PaperParser
 
 from sapienta.tools.converter import PDFXConverter
 from sapienta.tools.annotate import Annotator
-from sapienta.tools.split import SentenceSplitter
+from sapienta.tools.sssplit import SSSplit as SentenceSplitter
 
 #from partridge.tools.papertype import RawPaperClassifier
 
