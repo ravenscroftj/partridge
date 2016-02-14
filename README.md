@@ -60,6 +60,12 @@ system-wide python installation, preventing problems with module dependencies an
 
 ### Dependencies ###
 
+#### SAPIENTA ####
+
+SAPIENTA is currently also a dependency of Partridge. You can get it from [here](https://bitbucket.org/partridge/sapienta/).
+
+You need to make sure you install SAPIENTA and Partridge in the same virtualenv.
+
 #### Library/System dependencies ####
 
 Partridge was written and runs on Ubuntu. It is suggested that you install it on a unix/linux system that is similar to Ubuntu. It will run happily on OS/X but some of the commands here will not work.
@@ -115,6 +121,15 @@ a different RDBMS, you should replace `mysql-python` with the relevant library l
     Downloading/unpacking mysql-python
     ...
     ...
+    
+Next you will need to clone and install SAPIENTA
+
+    (env) $ git clone git@bitbucket.org:partridge/sapienta.git
+    Cloning into 'sapienta'
+    ...
+    ...
+
+You should follow the guide to install SAPIENTA and ensure that you use the same python virtualenv for both systems.
 
 Finally, you can build the Partridge subsystem and dependencies with the following command.
 
