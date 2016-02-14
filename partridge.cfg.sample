@@ -5,13 +5,13 @@ SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/test.db"
 #You need mysql-python installed for this to work
 #SQLALCHEMY_DATABASE_URI = "mysql://root:password@localhost/partridge"
 #Upload directory
-PAPER_UPLOAD_DIR = "/home/james/dissertation/data/upload"
+PAPER_UPLOAD_DIR = "/path/to/your/partridge/data/upload"
 #Processed paper directory
-PAPER_PROC_DIR  =  "/home/james/dissertation/data/processed"
+PAPER_PROC_DIR  =  "/path/to/your/partridge/data/processed"
 #work directory - where papers being processed currently are stored
-PAPER_WORK_DIR = "/home/james/dissertation/data/working"
+PAPER_WORK_DIR = "/path/to/your/partridge/data/working"
 #set the model directory
-MODELS_DIR = "/home/james/dissertation/models"
+MODELS_DIR = "/path/to/your/partridge/models"
 
 #
 #
@@ -22,10 +22,6 @@ NOTIFICATION_SMTP_USER   = "uploadbot@yourdomain.com"
 NOTIFICATION_SMTP_PASWD  = "top_secret_password"
 NOTIFICATION_ADDRESS = "youremail@host.com"
 NOTIFICATION_FROM    = "uploadbot@papro.org.uk"
-
-#sapienta processor values
-SAPIENTA_PERL_DIR = "/run/media/james/Charismatic/sapienta/Project/sidePrograms/Code_for_svn/perl_code"
-SAPIENTA_RESULT_DIR = "/home/james/public_html/sapienta/queue/processing/output/All/Test/Feature/"
 
 #Processing server stuff
 PP_LISTEN_ADDRESS = "0.0.0.0"
