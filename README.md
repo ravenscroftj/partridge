@@ -132,11 +132,11 @@ Configuration
 Partridge uses a simple configuration file called `partridge.cfg`. The program will look for the existence of such a file at runtime
 in the following locations:
 
-  # If you specify `-c filename.cfg` when running Partridge, it will try to use the provided filename first.
-  # If `-c` is not set, it will check for the existence of a `PARTRIDGE_CONF` variable set by your terminal environment
-  # If no environment variable is set, it will look in the current working directory for a `partridge.cfg` file.
-  # If no file could be found in the current working directory, it will try looking in `/home/yourname/.config/` for a config file.
-  # If no file was found in your home dir, the system will try /etc/partridge.cfg for a systemwide configuration file.
+  1. If you specify `-c filename.cfg` when running Partridge, it will try to use the provided filename first.
+  2. If `-c` is not set, it will check for the existence of a `PARTRIDGE_CONF` variable set by your terminal environment
+  3. If no environment variable is set, it will look in the current working directory for a `partridge.cfg` file.
+  4. If no file could be found in the current working directory, it will try looking in `/home/yourname/.config/` for a config file.
+  5. If no file was found in your home dir, the system will try /etc/partridge.cfg for a systemwide configuration file.
 
 Setting up your configuration file is simple, rename the provided sample (`partridge.cfg.sample`) and place it in the appropriate directory. 
 The below table illustrates each option and what it does
