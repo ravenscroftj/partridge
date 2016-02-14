@@ -30,7 +30,7 @@ store_result,load_pp_stats, save_pp_stats
 
 from partridge.preprocessor.tweet import tweet_paper
 
-from partridge.tools.converter import PDFXConverter
+from sapienta.tools.converter import PDFXConverter
 
 from partridge.preprocessor.notification import inform_watcher, \
 send_error_report, send_success_report

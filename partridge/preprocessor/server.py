@@ -20,7 +20,6 @@ from partridge.config import config
 from partridge.preprocessor.result import ResultHandler
 from partridge.preprocessor.fs import FilesystemWatcher
 from partridge.tools.paperstore import PaperParser
-from partridge.tools.converter import PDFXConverter
 
 from partridge.preprocessor.notification import inform_watcher
 
