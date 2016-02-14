@@ -64,7 +64,7 @@ system-wide python installation, preventing problems with module dependencies an
 
 Partridge was written and runs on Ubuntu. It is suggested that you install it on a unix/linux system that is similar to Ubuntu. It will run happily on OS/X but some of the commands here will not work.
 
-Partridge requires the *mysql-server* and *mysql-client* packages installed so that it can run with a database (or you can use Postgres or whatever other database you want). 
+Partridge requires the *libmysqlclient-dev*  package installed so that it can run with a MySQL database (or you can use SQLite or whatever other database you want). 
 
 Partridge was written in and runs in *python2* so it probably won't work in Python 3 at the moment.
 
