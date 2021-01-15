@@ -39,9 +39,9 @@ class PaperClassifier:
         return self.classify_paper(self.get_paper_by_id(id))
 
     def classify_paper( self, paper ):
-        inst = self.instance_from_paper(paper)
+        #inst = self.instance_from_paper(paper)
 
-        return self.classifier( inst )
+        return "Unknown" #return self.classifier( inst )
     
     def instance_from_paper( self, paper ):
         inst_list = []

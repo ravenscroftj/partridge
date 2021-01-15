@@ -2,6 +2,9 @@
 """
 import os
 import uuid
+import io
+import requests
+
 from partridge.tools.paperstore import PaperParser
 
 
@@ -13,11 +16,12 @@ from flask import render_template
 def download_paper( url, destdir ):
     """Download the paper at URL and save to uploads folder"""
 
-    u = urlopen( url )
-    headers = u.info()
-    type = headers['Content-type']
+    r = requests.get(url)
+    type = r.headers['Content-type']
 
-    if type.startswith("text/xml"):
+    print(f"Paper type: {type}")
+
+    if "xml" in type:
         ext = ".xml"
     elif type.startswith("application/pdf"):
         ext = ".pdf"
@@ -28,19 +32,17 @@ def download_paper( url, destdir ):
     filename = str(uuid.uuid4()) + ext
 
     with open(os.path.join(destdir,  filename), 'wb') as f:
-        f.write(u.read())
-
-    u.close()
+        f.write(r.content)
 
     return filename
 
 
-def paper_preview( url, file_object ):
+def paper_preview( url, response_text ):
     """Render a paper preview from a filelike object
     """
     
     p = PaperParser()
-    p.parseFileObject( file_object )
+    p.parseString(response_text)
 
     return render_template("remote_download.html", the_url=url,
         filetype="xml", paper_title=p.extractTitle(),

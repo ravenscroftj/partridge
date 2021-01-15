@@ -2,7 +2,9 @@
 
 import os
 import re
+import requests
 
+from urllib.parse import urlparse, urlunparse
 #from urllib2 import urlopen
 
 #import urlparse
@@ -85,17 +87,16 @@ def do_scan( url ):
             url = PMC_OSI % id
 
     try:
-        u = urlopen( url )
+        r = requests.get(url)
     except:
         return "Invalid URL. Try again!"
 
-    #get the headers
-    headers = u.info()
-    type = headers['Content-type']
+    #get the headers   
+    content_type = r.headers['Content-type']
     
     
     #get content type see if HTML, XML etc
-    if type.startswith("text/html"):
+    if content_type.startswith("text/html"):
 
         #see if its a PLOS page and whether we can harvest links
         m = re.search
@@ -107,14 +108,13 @@ def do_scan( url ):
 
             if(path != ""): 
 
-                n = urlparse.urlparse( url )
+                n = urlparse( url )
                 newurl = (n.scheme, n.netloc, path, n.params, n.query, n.fragment)
 
-                newurl = urlparse.urlunparse(newurl)
-                u = urlopen( newurl )
+                newurl = urlunparse(newurl)
+                r = requests.get( newurl )
 
-                output = paper_preview( newurl, u )
-                u.close()
+                output = paper_preview( newurl, r.text )
                 
                 return output
 
@@ -126,14 +126,12 @@ def do_scan( url ):
                 filetype="invalid")
 
 
-    elif type.startswith("text/xml"):
-       output = paper_preview( url, u ) 
-       u.close()
+    elif content_type.startswith("text/xml") or content_type.startswith("application/xml"):
+       output = paper_preview( url, r.text ) 
        return output
 
 
-    elif type.startswith("application/pdf"):
-        u.close()
+    elif content_type.startswith("application/pdf"):
         return render_template("remote_download.html", the_url=url,
         filetype="pdf")
 
