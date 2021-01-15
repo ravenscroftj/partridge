@@ -6,7 +6,7 @@ import traceback
 
 from threading import Thread
 from multiprocessing import Queue, Process
-from Queue import Empty
+from queue import Empty
 
 from partridge.models import db
 

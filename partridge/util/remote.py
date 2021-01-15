@@ -5,9 +5,9 @@ import uuid
 from partridge.tools.paperstore import PaperParser
 
 
-from urllib2 import urlopen
+#from urllib2 import urlopen
+from html.parser import HTMLParser
 
-from HTMLParser import HTMLParser
 from flask import render_template
 
 def download_paper( url, destdir ):

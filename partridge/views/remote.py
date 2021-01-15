@@ -3,9 +3,9 @@
 import os
 import re
 
-from urllib2 import urlopen
+#from urllib2 import urlopen
 
-import urlparse
+#import urlparse
 
 from flask import current_app as app, render_template, request, jsonify, make_response
 

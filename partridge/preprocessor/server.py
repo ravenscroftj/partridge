@@ -5,10 +5,10 @@ from __future__ import division
 
 import os
 import logging
-import cPickle
+import pickle
 import zlib
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from xmlrpclib import Binary
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.client import Binary
 
 from multiprocessing import Queue, Process, log_to_stderr, SUBDEBUG
 from multiprocessing.managers import BaseManager
@@ -32,7 +32,7 @@ def load_pp_stats(dirname):
     stats = os.path.join(dirname,"stats.pickle")
     try:
         with open(stats,'rb') as f:
-            return cPickle.load(f)
+            return pickle.load(f)
     except IOError:
         return 0.0,0      
 
@@ -40,7 +40,7 @@ def save_pp_stats(stats, dirname):
     statfile = os.path.join(dirname,"stats.pickle")
 
     with open(statfile,'wb') as f:
-        cPickle.dump(stats,f)
+        pickle.dump(stats,f)
 
 
 def _get_uptox_items( x, queue):
@@ -69,11 +69,11 @@ def _get_uptox_items( x, queue):
 
         work.append( (filename, data) )
 
-    return Binary(zlib.compress(cPickle.dumps(work)))
+    return Binary(zlib.compress(pickle.dumps(work)))
 
 def store_result(x, queue, outdir, logger):
     
-    results = cPickle.loads(zlib.decompress(x.data))
+    results = pickle.loads(zlib.decompress(x.data))
 
     for result,time in results:
 

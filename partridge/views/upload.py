@@ -3,7 +3,7 @@
 import os
 import uuid
 from flask import render_template, request, current_app
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 from partridge.views import frontend
 
