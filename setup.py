@@ -23,7 +23,6 @@ setup(
     entry_points ={
      'console_scripts' : [
         'partridged = partridge:run',
-        'pdfxconv = partridge.tools.pdfxconv:main',
         'plosget = partridge.tools.plosget:main',
         'partridge-admin = partridge.tools.admincli:main'
      ]
