@@ -7,7 +7,7 @@ import json
 import flask
 
 
-config = flask.Config({})
+config = flask.Config(root_path=os.path.dirname(os.path.join("../../", __file__)), defaults={})
 
 if( os.getenv("PARTRIDGE_CONF")):
     #try and load config from env directory

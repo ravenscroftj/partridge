@@ -54,13 +54,13 @@ def run():
     parser.add_option("--initdb", action="store_true",dest="initdb",
         help="Initialise the patridge database and create tables")
 
-    opts,args = parser.parse_args(sys.argv)
+    opts,_ = parser.parse_args(sys.argv)
 
     if(opts.config != ""):
         try:
             config.from_pyfile(opts.config)
         except IOError:
-                print "Could not find any configuration files. Exiting."
+                print ("Could not find any configuration files. Exiting.")
                 sys.exit(0)
 
     app = create_app( config )
@@ -68,11 +68,11 @@ def run():
     logLevel = logging.INFO
 
     if(opts.debug):
-        print "Debug mode is active..."
+        print ("Debug mode is active...")
         logLevel = logging.DEBUG
 
     if(opts.initdb):
-        print "Initialising database tables..."
+        print ("Initialising database tables...")
         db.create_all()
         
     #set up logger
@@ -95,14 +95,14 @@ def run():
         app.debug = opts.debug
         try:
             app.run(host="0.0.0.0", port=int(opts.port))
-        except KeyboardInterrupt as e:
+        except KeyboardInterrupt:
             logging.info("Interrupted by user...")
 
     else:
         try:
             while 1:
-                raw_input()
-        except KeyboardInterrupt as e:
+                input()
+        except KeyboardInterrupt:
             logging.info("Interrupted by user...")
 
         
