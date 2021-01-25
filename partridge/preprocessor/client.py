@@ -12,6 +12,7 @@ import traceback
 import signal
 import sys
 import threading
+import base64
 
 from xmlrpc.client import ServerProxy, Binary
 

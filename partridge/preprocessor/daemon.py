@@ -8,6 +8,7 @@ import time
 import traceback
 import tempfile
 import shutil
+import base64
 
 
 from xmlrpc.server import SimpleXMLRPCServer
@@ -30,7 +31,7 @@ from partridge.preprocessor.server import _get_uptox_items, \
 
 #from partridge.preprocessor.tweet import tweet_paper
 
-from sapienta.tools.converter import PDFXConverter
+#from sapienta.tools.converter import PDFXConverter
 
 from partridge.preprocessor.notification import inform_watcher, \
     send_error_report, send_success_report
@@ -333,25 +334,25 @@ class PaperDaemon(Thread):
         basename = os.path.basename(file)
         name, ext = os.path.splitext(basename)
 
-        pdf = False
+        # pdf = False
 
-        if(basename.endswith(".pdf")):
+        # if(basename.endswith(".pdf")):
 
-            self.logger.info("%s has been converted and re-queued for paper check",
-                             self.convertPDF(file))
+        #     self.logger.info("%s has been converted and re-queued for paper check",
+        #                      self.convertPDF(file))
 
-        else:
-            if(self.paperExists(file)):
-                raise PaperExistsException("Paper Already Exists")
+        # else:
+        #     if(self.paperExists(file)):
+        #         raise PaperExistsException("Paper Already Exists")
 
-            basename = os.path.basename(file)
-            newname = os.path.join(self.pdir, basename)
-            os.rename(file, newname)
+        basename = os.path.basename(file)
+        newname = os.path.join(self.pdir, basename)
+        os.rename(file, newname)
 
-            self.processq.put(newname)
+        self.processq.put(newname)
 
-            # enqueue the file to be annotated
-            self.logger.info("%s has been enqueued for annotation", basename)
+        # enqueue the file to be annotated
+        self.logger.info("%s has been enqueued for annotation", basename)
 
 
 # ---------------------------------------------------------------------
@@ -391,22 +392,22 @@ class PaperDaemon(Thread):
         return paper
 
 
-# ---------------------------------------------------------------------
+# # ---------------------------------------------------------------------
 
-    def convertPDF(self, infile):
-        """Small routine for starting the PDF conversion call
-        """
+#     def convertPDF(self, infile):
+#         """Small routine for starting the PDF conversion call
+#         """
 
-        self.logger.info("Converting %s to xml", infile)
+#         self.logger.info("Converting %s to xml", infile)
 
-        p = PDFXConverter()
+#         p = PDFXConverter()
 
-        basename = os.path.basename(infile)
+#         basename = os.path.basename(infile)
 
-        name, ext = os.path.splitext(basename)
+#         name, ext = os.path.splitext(basename)
 
-        outname = os.path.join(self.watchdir, name + ".xml")
+#         outname = os.path.join(self.watchdir, name + ".xml")
 
-        p.convert(infile, outname)
+#         p.convert(infile, outname)
 
-        return outname
+#         return outname

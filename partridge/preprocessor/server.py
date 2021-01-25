@@ -7,6 +7,8 @@ import os
 import logging
 import pickle
 import zlib
+import base64
+
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.client import Binary
 
@@ -53,13 +55,14 @@ def _get_uptox_items( x, queue):
 
         p = PaperParser()
 
-        paper = p.paperExists(filename)
+        if filename.endswith('xml'):
+            paper = p.paperExists(filename)
 
-        if paper != None:
-            logger.info("Paper already exists for %s, skipping...", filename)
-            os.unlink(filename)
-            inform_watcher(logger, filename, exists=True, paperObj=paper)
-            continue
+            if paper != None:
+                logger.info("Paper already exists for %s, skipping...", filename)
+                os.unlink(filename)
+                inform_watcher(logger, filename, exists=True, paperObj=paper)
+                continue
 
 
         with open(filename,'rb') as f:
@@ -67,9 +70,12 @@ def _get_uptox_items( x, queue):
 
             i += 1
 
-        work.append( (filename, data) )
+        work.append( (filename, data ))
 
-    return Binary(zlib.compress(pickle.dumps(work)))
+
+    #print(Binary(zlib.compress(pickle.dumps(work))))
+
+    return zlib.compress(pickle.dumps(work))
 
 def store_result(x, queue, outdir, logger):
     
