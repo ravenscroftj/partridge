@@ -20,7 +20,7 @@ def show():
 
     uri = "http://%s:%d/" % (server,int(port))
 
-    qm = xmlrpclib.ServerProxy(uri)
+    qm = ServerProxy(uri)
 
     return render_template("queue.html",
         qsize=qm.qsize(),
