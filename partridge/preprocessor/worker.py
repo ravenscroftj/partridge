@@ -1,15 +1,8 @@
 """Preprocessor worker system for talking to the server
 """
 import os
-import websockets
 import requests
-import asyncio
 import time
-
-from partridge.models import db
-from partridge.models.doc import PaperFile, PaperWatcher
-
-from partridge.tools.paperstore import PaperParser
 
 # from sapienta.tools.converter import PDFXConverter
 # from sapienta.tools.annotate import Annotator
@@ -33,16 +26,16 @@ class PartridgePaperWorker:
 
         infile = filename
 
-        if ext == "pdf":
-            outfile = self.name + ".xml"
+        print(ext)
+
+        if ext == ".pdf":
+            outfile = name + ".xml"
         else:
             outfile = infile
 
         self.logger.info("Annotating paper %s", infile)
 
         r = requests.post(f"{SAPIENTA_ENDPOINT}/submit", files={"file": open(infile,'rb')})
-
-        print(r.json())
 
         job_id = r.json()['job_id']
 

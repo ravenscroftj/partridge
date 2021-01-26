@@ -79,40 +79,40 @@ def run():
     logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
     #logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
-    from partridge.preprocessor import create_daemon
-    #set up paper preprocessor
-    pdaemon =  create_daemon( config )
+    # from partridge.preprocessor import create_daemon
+    # #set up paper preprocessor
+    # pdaemon =  create_daemon( config )
 
 
-    if(config['PP_LOCAL_WORKER']):
-        logging.info("Setting up local worker")
-        from partridge.preprocessor.client import create_client
+    # if(config['PP_LOCAL_WORKER']):
+    #     logging.info("Setting up local worker")
+    #     from partridge.preprocessor.client import create_client
 
-        clientevt = threading.Event()
-        pclient = create_client( config, clientevt )
+    #     clientevt = threading.Event()
+    #     pclient = create_client( config, clientevt )
 
-    if not opts.paperdaemon:
-        app.debug = opts.debug
-        try:
-            app.run(host="0.0.0.0", port=int(opts.port))
-        except KeyboardInterrupt:
-            logging.info("Interrupted by user...")
+    # if not opts.paperdaemon:
+    app.debug = opts.debug
+    try:
+        app.run(host="0.0.0.0", port=int(opts.port))
+    except KeyboardInterrupt:
+        logging.info("Interrupted by user...")
 
-    else:
-        try:
-            while 1:
-                input()
-        except KeyboardInterrupt:
-            logging.info("Interrupted by user...")
+    # else:
+    #     try:
+    #         while 1:
+    #             input()
+    #     except KeyboardInterrupt:
+    #         logging.info("Interrupted by user...")
 
         
-    if(config['PP_LOCAL_WORKER']):
-        logging.info("Waiting for client to finish work...")
-        clientevt.set()
-        pclient.join()
+    # if(config['PP_LOCAL_WORKER']):
+    #     logging.info("Waiting for client to finish work...")
+    #     clientevt.set()
+    #     pclient.join()
 
     
-    logging.info("Shutting down paper daemon...")
-    pdaemon.stop()
+    # logging.info("Shutting down paper daemon...")
+    # pdaemon.stop()
 
 

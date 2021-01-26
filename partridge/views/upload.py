@@ -10,6 +10,7 @@ from partridge.views import frontend
 from partridge.models import db
 from partridge.models.doc import PaperWatcher
 
+
 ALLOWED_EXTENSIONS = ['.xml','.pdf']
 
 
@@ -18,6 +19,8 @@ def upload():
     """Display the upload form allowing users to add their papers
     """
 
+    from partridge.preprocessor.service import annotate_paper
+    
     if(request.method == "POST"):
 
 
@@ -47,6 +50,9 @@ def upload():
                 
                 #now save the file
                 file.save(os.path.join(destdir,fname))
+
+                # enqueue the file to be processed
+                annotate_paper.send(os.path.join(destdir,fname))
 
 
 

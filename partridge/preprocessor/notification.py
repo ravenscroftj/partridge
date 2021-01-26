@@ -1,6 +1,7 @@
 import smtplib
 import traceback
 import os
+import dramatiq
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -9,14 +10,17 @@ from partridge.config import config
 from flask import url_for
 
 from partridge.models import db
-from partridge.models.doc import PaperFile, PaperWatcher
+from partridge.models.doc import PaperFile, PaperWatcher, Paper
+
 
 app = db.app
 
 #---------------------------------------------------------------
-
-def inform_watcher(logger, papername, **kwargs):
+@dramatiq.actor(max_retries=3)
+def inform_watcher(papername, **kwargs):
     """Informa watchers of papers and what happened to them"""
+
+    logger = inform_watcher.logger
     
     basename = os.path.basename(papername)
 
@@ -27,13 +31,13 @@ def inform_watcher(logger, papername, **kwargs):
 
         logger.info("Informing %s about paper %s", w.email, w.filename) 
 
-        if "paperObj" in kwargs:
+        if "paper_id" in kwargs:
             
             if "exists" in kwargs:
-                send_exists_email( papername, kwargs['paperObj'], w.email)
+                send_exists_email( papername, kwargs['paper_id'], w.email)
 
             else:
-                send_success_report( kwargs['paperObj'], w.email)
+                send_success_report( kwargs['paper_id'], w.email)
         else:
 
             e = kwargs['exception']
@@ -46,16 +50,16 @@ def inform_watcher(logger, papername, **kwargs):
         db.session.commit()
 
 #---------------------------------------------------------------
-def send_exists_email(filename, paperObj, to):
+def send_exists_email(filename, paper_id, to):
     """If a paper exists in the system, send the uploader an email"""
+
+    paperObj = Paper.query.get(paper_id)
 
     file = os.path.basename(filename)
 
-    ctx=app.test_request_context()
-    ctx.push()
-    url = url_for(".paper_profile", the_paper=paperObj, _external=True)
-    ctx.pop()
- 
+    with app.app_context():
+        url = url_for("frontend.paper_profile", the_paper=paperObj, _external=True)
+
     txt = """Hi There,
 
 Thanks for submitting your paper to Partridge. We've done some analysis and
@@ -134,13 +138,13 @@ Failed to process a paper because %s \n""" % error
 
 #-----------------------------------------------------------------------------
 
-def send_success_report( paperObj, to=config['NOTIFICATION_ADDRESS']):
+def send_success_report( paper_id, to=config['NOTIFICATION_ADDRESS']):
    
-    ctx=app.test_request_context()
-    ctx.push()
-    url = url_for(".paper_profile", the_paper=paperObj, _external=True)
-    ctx.pop()
- 
+    paperObj = Paper.query.get(paper_id)
+
+    with app.app_context():
+        url = url_for("frontend.paper_profile", the_paper=paperObj, _external=True)
+
     txt = """Hi There,
 
 Thanks for submitting your paper to Partridge. We've done some analysis and
