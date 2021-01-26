@@ -34,7 +34,7 @@ def download_paper( url, destdir ):
     with open(os.path.join(destdir,  filename), 'wb') as f:
         f.write(r.content)
 
-    return filename
+    return os.path.join(destdir,  filename)
 
 
 def paper_preview( url, response_text ):
