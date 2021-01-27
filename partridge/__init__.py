@@ -1,6 +1,7 @@
 import sys
 import logging
 import threading
+import dotenv
 
 from optparse import OptionParser
 from flask import Config,Flask

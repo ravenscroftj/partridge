@@ -4,6 +4,8 @@ import os
 import re
 import requests
 
+from datetime import datetime
+
 from urllib.parse import urlparse, urlunparse
 #from urllib2 import urlopen
 
@@ -48,8 +50,10 @@ def download_papers():
 
         url = request.form['download_url']
 
-        paper = download_paper(url,
-                               app.config['PAPER_UPLOAD_DIR'])
+        now = datetime.now()
+        destdir = os.path.join(os.environ.get(
+            "PARTRIDGE_UPLOAD_PREFIX", "uploads"), now.strftime("%Y/%m/%d"))
+        paper = download_paper(url, destdir)
 
         annotate_paper.send(paper)
 

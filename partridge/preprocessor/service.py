@@ -1,4 +1,5 @@
 """Entrypoint for dramatiq worker"""
+
 import dramatiq
 import tempfile
 import os
@@ -7,16 +8,15 @@ from partridge.config import config
 
 app = create_app(config)
 
-
-from partridge.models import db
-from partridge.models.doc import Paper, PaperFile
-from partridge.preprocessor import get_minio_client
-from partridge.tools.paperstore import PaperParser
 from partridge.preprocessor.notification import inform_watcher
-
+from partridge.tools.paperstore import PaperParser
+from partridge.preprocessor import get_minio_client
+from partridge.models.doc import Paper, PaperFile
+from partridge.models import db
 
 class PaperExistsException(Exception):
     pass
+
 
 @dramatiq.actor
 def cleanup(filename):
@@ -38,21 +38,13 @@ def cleanup(filename):
         logger.info("Removing PDF file %s", pdf)
         os.unlink(pdf)
 
+
 @dramatiq.actor
 def savePaperFiles(logger, filenames, paper):
 
     for file in filenames:
 
-        basename = os.path.basename(file)
-
-        final_path = os.path.join(config['PAPER_PROC_DIR'], basename)
-
-        logger.info("Saving file %s", final_path)
-
-        if(file != final_path):
-            os.rename(file, final_path)
-
-        fileObj = PaperFile(path=final_path)
+        fileObj = PaperFile(path=file)
         db.session.add(fileObj)
         paper.files.append(fileObj)
 
@@ -66,16 +58,25 @@ def annotate_paper(paper_filename):
 
     from .worker import PartridgePaperWorker
 
+    mc = get_minio_client()
+
     with tempfile.TemporaryDirectory() as tmpdir:
+
+        tmpname = os.path.join(tmpdir, os.path.basename(paper_filename))
+
+        mc.fget_object(os.getenv('MINIO_BUCKET'), paper_filename, tmpname)
+
         worker = PartridgePaperWorker(logger, tmpdir)
-        outfile = worker.process(paper_filename)
+
+        outfile = worker.process(tmpname)
 
         logger.info("Created file: %s", outfile)
 
         pp = PaperParser()
         if pp.paperExists(outfile):
 
-            inform_watcher(logger, paper_filename, exception=PaperExistsException("Paper Already Exists"))
+            inform_watcher(logger, paper_filename, exception=PaperExistsException(
+                "Paper Already Exists"))
 
             cleanup.send(logger, paper_filename)
             return
@@ -86,14 +87,15 @@ def annotate_paper(paper_filename):
         # add paper classification to database
         #paperObj = self.classifyPaper(paperObj)
 
-        
-        filenames = [paper_filename, outfile]
+        nameroot, ext = os.path.splitext(os.path.basename(paper_filename))
+        dirname = os.path.dirname(paper_filename)
 
-        basename = os.path.basename(paper_filename)
+        final_output = os.path.join(dirname, nameroot + "_annotated.xml")
 
-        if paper_filename.endswith(".xml") and os.path.exists(paper_filename[:-4] + ".pdf"):
-            filenames.append(paper_filename[:-4] + ".pdf")
-        
+        mc.fput_object(os.getenv('MINIO_BUCKET'), final_output, outfile)
+
+        filenames = [obj.object_name for obj in mc.list_objects(
+            os.getenv('MINIO_BUCKET'), prefix=os.path.join(dirname, nameroot))]
 
         # add the related files to the db
         savePaperFiles(logger, filenames, paperObj)
@@ -104,7 +106,7 @@ def annotate_paper(paper_filename):
             inform_watcher.send(paper_filename, paper_id=paperObj.id)
         except Exception as e:
             logger.warn("Failed to inform watcher about paper"
-                                + " success: %s", e)
+                        + " success: %s", e)
 
         # if config.has_key('TWITTER_ENABLED') and config['TWITTER_ENABLED']:
         #     try:

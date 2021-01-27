@@ -34,9 +34,14 @@ def get_minio_client() -> minio.Minio:
 
     use_ssl = os.environ.get("MINIO_USE_SSL", "1") == '1'
 
-    return minio.Minio(os.environ.get("MINIO_HOST", "localhost:9000"),
+    mc = minio.Minio(os.environ.get("MINIO_HOST", "localhost:9000"),
         access_key=os.environ.get("MINIO_ACCESS_KEY",""),
         secret_key=os.environ.get("MINIO_SECRET_KEY",""), secure=use_ssl)
+
+    if not mc.bucket_exists(os.getenv('MINIO_BUCKET')):
+        mc.make_bucket(os.getenv('MINIO_BUCKET'))
+
+    return mc
 
 
 def create_daemon( config ):

@@ -29,7 +29,7 @@ class PartridgePaperWorker:
         print(ext)
 
         if ext == ".pdf":
-            outfile = name + ".xml"
+            outfile = os.path.join(os.path.dirname(filename), name + ".xml")
         else:
             outfile = infile
 
