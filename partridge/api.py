@@ -36,7 +36,7 @@ def list_papers(type="", offset=0, limit=UPPER_LIMIT):
         value = request.args.get(key,'')
         attr = key.split("_")[0]
 
-    papers = paper_q.limit(limit).offset(offset).all()
+    papers = paper_q.limit(min(limit, UPPER_LIMIT)).offset(offset).all()
 
     return jsonify({
         "total_paper_count"  : paper_q.count(),

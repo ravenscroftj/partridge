@@ -1,17 +1,16 @@
 """Preprocessor worker system for talking to the server
 """
 import os
+import requests
+import time
 
-from partridge.models import db
-from partridge.models.doc import PaperFile, PaperWatcher
-
-from partridge.tools.paperstore import PaperParser
-
-from sapienta.tools.converter import PDFXConverter
-from sapienta.tools.annotate import Annotator
-from sapienta.tools.sssplit import SSSplit as SentenceSplitter
+# from sapienta.tools.converter import PDFXConverter
+# from sapienta.tools.annotate import Annotator
+# from sapienta.tools.sssplit import SSSplit as SentenceSplitter
 
 #from partridge.tools.papertype import RawPaperClassifier
+
+SAPIENTA_ENDPOINT = "https://sapienta.papro.org.uk"
 
 class PartridgePaperWorker:
 
@@ -19,26 +18,56 @@ class PartridgePaperWorker:
         self.logger = logger
         self.outdir = outdir
         #self.paper_classifier = RawPaperClassifier()
-    
+
+
     def process(self, filename):
         basename = os.path.basename(filename)
-        self.name,ext = os.path.splitext(basename)
+        name, ext = os.path.splitext(basename)
 
         infile = filename
 
-        #run XML splitter
-        infile = self.splitXML(infile)
+        print(ext)
 
-        #run XML annotation
-        infile = self.annotateXML(infile)
+        if ext == ".pdf":
+            outfile = os.path.join(os.path.dirname(filename), name + ".xml")
+        else:
+            outfile = infile
+
+        self.logger.info("Annotating paper %s", infile)
+
+        r = requests.post(f"{SAPIENTA_ENDPOINT}/submit", files={"file": open(infile,'rb')})
+
+        job_id = r.json()['job_id']
+
+        self.logger.info("Polling job status for sapienta job_id=%s", job_id)
+
+        complete = False
+        
+        while not complete:
+            
+            self.logger.debug("poll loop for job_id=%s, sleep 5s", job_id)
+            time.sleep(5)
+
+            r = requests.post(f"{SAPIENTA_ENDPOINT}/{job_id}/status")
+
+            print(r.json())
+
+            complete = r.json()['annotation_complete']
+        
+        r = requests.get(f"{SAPIENTA_ENDPOINT}/{job_id}/result")
+
+        with open(outfile, 'w') as f:
+            f.write(r.text)
+
+        return outfile
 
         #classify the paper
         #type = self.classifyPaper(infile)
 
-        with open(infile,'rb') as f:
-            data = f.read()
+        # with open(infile,'rb') as f:
+        #     data = f.read()
 
-        return infile
+        # return infile
         #return infile, type
 
     def annotateXML(self, infile):

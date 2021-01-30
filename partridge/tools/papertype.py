@@ -5,7 +5,7 @@ A small utility that can be used to guess a paper's type using the forest model
 
 import os
 import sys
-import cPickle
+import pickle
 import Orange
 
 
@@ -13,7 +13,7 @@ from optparse import OptionParser
 
 from partridge.config import config
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 from partridge.models import db
 from partridge.models.doc import Paper, C_ABRV
@@ -26,22 +26,22 @@ FEATURES = C_ABRV.keys()
 
 class PaperClassifier:
 
-    def __init__(self):
+    # def __init__(self):
 
-        with open(PAPER_TYPE_MODEL_PATH, 'rb') as f:
-            self.classifier = cPickle.load(f)
+    #     with open(PAPER_TYPE_MODEL_PATH, 'rb') as f:
+    #         self.classifier = pickle.load(f)
 
     def get_paper_by_id(self, id):
         return Paper.query.filter(Paper.id == id).first()
 
 
     def classify_paper_id( self, id ):
-        return self.classify_paper(self.get_paper_by_id(paper))
+        return self.classify_paper(self.get_paper_by_id(id))
 
     def classify_paper( self, paper ):
-        inst = self.instance_from_paper(paper)
+        #inst = self.instance_from_paper(paper)
 
-        return self.classifier( inst )
+        return "Unknown" #return self.classifier( inst )
     
     def instance_from_paper( self, paper ):
         inst_list = []
@@ -67,7 +67,7 @@ class RawPaperClassifier(PaperClassifier):
 
         sentenceCount = 0
 
-        for sent, annotype in p.extractSentences():
+        for _, annotype in p.extractSentences():
             sentenceCount += 1
             types[annotype] += 1
 
@@ -109,10 +109,10 @@ if __name__ == "__main__":
     c = PaperClassifier()
 
     if(options.all):
-        print "ignoring ID arguments and retrieving all papers"
+        print ("ignoring ID arguments and retrieving all papers")
         q = Paper.query
     else:
-        print "Retrieving papers with IDs in %s" % args
+        print (f"Retrieving papers with IDs in {args}")
         q= Paper.query.filter(Paper.id.in_(args))
 
     offset = 0
@@ -121,19 +121,19 @@ if __name__ == "__main__":
 
     while q.offset(offset).limit(limit).count() > 0:
 
-        print "Downloading batch of %d papers..." % limit
+        print ("Downloading batch of {limit} papers...")
 
         for p in q.offset(offset).limit(limit).all():
             
-            print p.title
+            print (p.title)
             for author in p.authors:
-                print "\t\t" + author.surname
+                print ("\t\t" + author.surname)
 
             cls = str(c.classify_paper(p))
             
-            print "Predicted Class:" + cls
+            print ("Predicted Class:" + cls)
 
-            print "Saving paper type in database"
+            print ("Saving paper type in database")
             p.type = cls
             db.session.merge(p)
         

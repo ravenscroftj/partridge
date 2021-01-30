@@ -7,7 +7,7 @@ import sys
 import traceback
 
 from threading import Thread
-from Queue import Empty
+from queue import Empty
 
 from partridge.models import db
 
@@ -42,7 +42,7 @@ class ResultHandler(Thread):
 
         #if is the result of a PDF conversion, we want to keep the pdf
         if(ispdf):
-            name,ext = os.path.splitext(os.path.basename(filename))
+            name,_ = os.path.splitext(os.path.basename(filename))
             pdf = os.path.join(self.watchdir, name + ".pdf")
             self.logger.info("Keeping PDF file %s", pdf)
             self.paper_files.append( (pdf, 'move'))
@@ -92,7 +92,7 @@ class ResultHandler(Thread):
 
 
                     if(result.pdf):
-                        name,ext = os.path.splitext(os.path.basename(result.paper))
+                        name,_ = os.path.splitext(os.path.basename(result.paper))
                         pdf = os.path.join(self.watchdir, name + ".pdf")
                         self.paper_files.append( (pdf, 'move'))
 
@@ -100,8 +100,8 @@ class ResultHandler(Thread):
                 
                     try:
                         #send the error report
-                        send_error_report( e, e.traceback, 
-                            e.files)
+                        send_error_report( result, result.traceback, 
+                            result.files)
 
                     except Exception as e:
                         self.logger.error("ERROR SENDING EMAIL: %s", e)
@@ -111,7 +111,7 @@ class ResultHandler(Thread):
                         paperObj = self._process_paper(result)
                     except Exception as e:
 
-                        exc_type, exc_obj, exc_tb = sys.exc_info()
+                        _, _, exc_tb = sys.exc_info()
                         self.logger.error("Error processing paper %s: %s",
                             result[0],e)
                         
@@ -158,7 +158,7 @@ class ResultHandler(Thread):
 
         for filename, action in self.paper_files:
             
-            print self.paper_files
+            self.logger.info(self.paper_files)
 
             if paper == None or action == "delete":
                 self.logger.debug("Deleting file %s", filename) 

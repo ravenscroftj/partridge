@@ -1,9 +1,11 @@
 import sys
 import logging
 import threading
+import dotenv
+import os
 
 from optparse import OptionParser
-from flask import Config,Flask
+from flask import Config, Flask
 
 from partridge.config import config
 from partridge.models import db
@@ -16,6 +18,7 @@ def create_app( config ):
     app = Flask(__name__)
 
     app.config.update(config)
+    app.config.update(os.environ)
 
     #load views model lazily
     from partridge.views import frontend
@@ -54,13 +57,13 @@ def run():
     parser.add_option("--initdb", action="store_true",dest="initdb",
         help="Initialise the patridge database and create tables")
 
-    opts,args = parser.parse_args(sys.argv)
+    opts,_ = parser.parse_args(sys.argv)
 
     if(opts.config != ""):
         try:
             config.from_pyfile(opts.config)
         except IOError:
-                print "Could not find any configuration files. Exiting."
+                print ("Could not find any configuration files. Exiting.")
                 sys.exit(0)
 
     app = create_app( config )
@@ -68,51 +71,51 @@ def run():
     logLevel = logging.INFO
 
     if(opts.debug):
-        print "Debug mode is active..."
+        print ("Debug mode is active...")
         logLevel = logging.DEBUG
 
     if(opts.initdb):
-        print "Initialising database tables..."
+        print ("Initialising database tables...")
         db.create_all()
         
     #set up logger
     logging.basicConfig(level=logLevel, format="%(asctime)s - %(levelname)s - %(name)s:%(message)s")
     #logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
-    from partridge.preprocessor import create_daemon
-    #set up paper preprocessor
-    pdaemon =  create_daemon( config )
+    # from partridge.preprocessor import create_daemon
+    # #set up paper preprocessor
+    # pdaemon =  create_daemon( config )
 
 
-    if(config['PP_LOCAL_WORKER']):
-        logging.info("Setting up local worker")
-        from partridge.preprocessor.client import create_client
+    # if(config['PP_LOCAL_WORKER']):
+    #     logging.info("Setting up local worker")
+    #     from partridge.preprocessor.client import create_client
 
-        clientevt = threading.Event()
-        pclient = create_client( config, clientevt )
+    #     clientevt = threading.Event()
+    #     pclient = create_client( config, clientevt )
 
-    if not opts.paperdaemon:
-        app.debug = opts.debug
-        try:
-            app.run(host="0.0.0.0", port=int(opts.port))
-        except KeyboardInterrupt as e:
-            logging.info("Interrupted by user...")
+    # if not opts.paperdaemon:
+    app.debug = opts.debug
+    try:
+        app.run(host="0.0.0.0", port=int(opts.port))
+    except KeyboardInterrupt:
+        logging.info("Interrupted by user...")
 
-    else:
-        try:
-            while 1:
-                raw_input()
-        except KeyboardInterrupt as e:
-            logging.info("Interrupted by user...")
+    # else:
+    #     try:
+    #         while 1:
+    #             input()
+    #     except KeyboardInterrupt:
+    #         logging.info("Interrupted by user...")
 
         
-    if(config['PP_LOCAL_WORKER']):
-        logging.info("Waiting for client to finish work...")
-        clientevt.set()
-        pclient.join()
+    # if(config['PP_LOCAL_WORKER']):
+    #     logging.info("Waiting for client to finish work...")
+    #     clientevt.set()
+    #     pclient.join()
 
     
-    logging.info("Shutting down paper daemon...")
-    pdaemon.stop()
+    # logging.info("Shutting down paper daemon...")
+    # pdaemon.stop()
 
 

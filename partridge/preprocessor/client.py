@@ -2,7 +2,7 @@
 
 from multiprocessing import Pool
 import os
-import cPickle
+import pickle
 import zlib
 import tempfile
 import sys
@@ -12,7 +12,9 @@ import traceback
 import signal
 import sys
 import threading
-import xmlrpclib
+import base64
+
+from xmlrpc.client import ServerProxy, Binary
 
 from optparse import OptionParser
 
@@ -100,8 +102,7 @@ def run_worker(server, port, password="", processes=None, evt=None):
 
     logger.info("Connecting to XML-RPC server on '%s'", uri)
 
-    qm = xmlrpclib.ServerProxy(uri)
-
+    qm = ServerProxy(uri)
     p = Pool(processes=processes, initializer=init_worker)
 
     logger.info("Starting worker with %d threads", len(p._pool))
@@ -118,7 +119,7 @@ def run_worker(server, port, password="", processes=None, evt=None):
             logger.debug("Trying to get %s jobs from %s:%d",
                 batch_size,server,int(port))
 
-            batch = cPickle.loads(zlib.decompress(
+            batch = pickle.loads(zlib.decompress(
                 qm.get_work(batch_size).data))
 
             if( len(batch) < 1):
@@ -127,10 +128,10 @@ def run_worker(server, port, password="", processes=None, evt=None):
 
             else:
                 results = p.map(process_paper, batch)
-                zippedlist = zlib.compress(cPickle.dumps(results))
+                zippedlist = zlib.compress(pickle.dumps(results))
 
                 if zippedlist != None:
-                    qm.return_result(xmlrpclib.Binary(zippedlist))
+                    qm.return_result(Binary(zippedlist))
         except KeyboardInterrupt as e:
             logger.warn("Interrupted client")
             break;
@@ -197,7 +198,7 @@ def main():
         run_worker(server,port,password,int(options.processes),pevt))
         p.start()
         while 1:
-            raw_input()
+            input()
     except KeyboardInterrupt:
         pevt.set()
 

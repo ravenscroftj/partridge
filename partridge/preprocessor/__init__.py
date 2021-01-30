@@ -3,12 +3,45 @@ import os
 import time
 import sys
 import traceback
+import dramatiq
+import minio
 
 from threading import Thread
 from multiprocessing import Queue, Process
-from Queue import Empty
+from queue import Empty
 
 from partridge.models import db
+
+from dotenv import load_dotenv
+from dramatiq.brokers.redis import RedisBroker
+from dramatiq.results.backends import RedisBackend
+from dramatiq.results import Results
+
+load_dotenv()
+
+redis_broker = RedisBroker(host=os.environ.get("REDIS_HOST", 'localhost'), 
+    password=os.environ.get("REDIS_PASSWORD", None))
+
+result_backend = RedisBackend(host=os.environ.get("REDIS_HOST", 'localhost'), 
+    password=os.environ.get("REDIS_PASSWORD", None))
+
+redis_broker.add_middleware(Results(backend=result_backend))
+
+dramatiq.set_broker(redis_broker)
+
+
+def get_minio_client() -> minio.Minio:
+
+    use_ssl = os.environ.get("MINIO_USE_SSL", "1") == '1'
+
+    mc = minio.Minio(os.environ.get("MINIO_HOST", "localhost:9000"),
+        access_key=os.environ.get("MINIO_ACCESS_KEY",""),
+        secret_key=os.environ.get("MINIO_SECRET_KEY",""), secure=use_ssl)
+
+    if not mc.bucket_exists(os.getenv('MINIO_BUCKET')):
+        mc.make_bucket(os.getenv('MINIO_BUCKET'))
+
+    return mc
 
 
 def create_daemon( config ):

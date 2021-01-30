@@ -5,10 +5,12 @@ from __future__ import division
 
 import os
 import logging
-import cPickle
+import pickle
 import zlib
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from xmlrpclib import Binary
+import base64
+
+from xmlrpc.server import SimpleXMLRPCServer
+from xmlrpc.client import Binary
 
 from multiprocessing import Queue, Process, log_to_stderr, SUBDEBUG
 from multiprocessing.managers import BaseManager
@@ -32,7 +34,7 @@ def load_pp_stats(dirname):
     stats = os.path.join(dirname,"stats.pickle")
     try:
         with open(stats,'rb') as f:
-            return cPickle.load(f)
+            return pickle.load(f)
     except IOError:
         return 0.0,0      
 
@@ -40,7 +42,7 @@ def save_pp_stats(stats, dirname):
     statfile = os.path.join(dirname,"stats.pickle")
 
     with open(statfile,'wb') as f:
-        cPickle.dump(stats,f)
+        pickle.dump(stats,f)
 
 
 def _get_uptox_items( x, queue):
@@ -53,13 +55,14 @@ def _get_uptox_items( x, queue):
 
         p = PaperParser()
 
-        paper = p.paperExists(filename)
+        if filename.endswith('xml'):
+            paper = p.paperExists(filename)
 
-        if paper != None:
-            logger.info("Paper already exists for %s, skipping...", filename)
-            os.unlink(filename)
-            inform_watcher(logger, filename, exists=True, paperObj=paper)
-            continue
+            if paper != None:
+                logger.info("Paper already exists for %s, skipping...", filename)
+                os.unlink(filename)
+                inform_watcher(logger, filename, exists=True, paperObj=paper)
+                continue
 
 
         with open(filename,'rb') as f:
@@ -67,13 +70,16 @@ def _get_uptox_items( x, queue):
 
             i += 1
 
-        work.append( (filename, data) )
+        work.append( (filename, data ))
 
-    return Binary(zlib.compress(cPickle.dumps(work)))
+
+    #print(Binary(zlib.compress(pickle.dumps(work))))
+
+    return zlib.compress(pickle.dumps(work))
 
 def store_result(x, queue, outdir, logger):
     
-    results = cPickle.loads(zlib.decompress(x.data))
+    results = pickle.loads(zlib.decompress(x.data))
 
     for result,time in results:
 

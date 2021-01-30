@@ -8,7 +8,7 @@ from partridge.views import frontend
 
 from partridge.config import config
 
-import xmlrpclib
+from xmlrpc.client import ServerProxy
 
 @frontend.route("/queue")
 def show():
@@ -20,7 +20,7 @@ def show():
 
     uri = "http://%s:%d/" % (server,int(port))
 
-    qm = xmlrpclib.ServerProxy(uri)
+    qm = ServerProxy(uri)
 
     return render_template("queue.html",
         qsize=qm.qsize(),
