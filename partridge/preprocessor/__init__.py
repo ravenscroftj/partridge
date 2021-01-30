@@ -20,7 +20,7 @@ from dramatiq.results import Results
 load_dotenv()
 
 redis_broker = RedisBroker(host=os.environ.get("REDIS_HOST", 'localhost'), 
-    password=os.environ.get("REDIS_PASSWORD", None))
+    password=os.environ.get("REDIS_PASSWORD", None), namespace='partridge')
 
 result_backend = RedisBackend(host=os.environ.get("REDIS_HOST", 'localhost'), 
     password=os.environ.get("REDIS_PASSWORD", None))

@@ -10,7 +10,7 @@ import time
 
 #from partridge.tools.papertype import RawPaperClassifier
 
-SAPIENTA_ENDPOINT = "https://sapienta.papro.org.uk"
+SAPIENTA_ENDPOINT = os.environ.get("SAPIENTA_ENDPOINT", "https://sapienta.papro.org.uk")
 
 class PartridgePaperWorker:
 

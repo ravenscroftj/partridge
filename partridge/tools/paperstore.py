@@ -83,6 +83,16 @@ class PaperParser:
             if id.getAttribute("pub-id-type") == "doi":
                 return self.extractText(id)
 
+        # try TEI processing
+        if len(self.doc.getElementsByTagName("teiHeader")) > 0:
+            header = self.doc.getElementsByTagName("teiHeader")[0]
+            idnos = header.getElementsByTagName("idno")
+
+            for id in idnos:
+                if id.getAttribute("type") == "DOI":
+                    return self.extractText(id)
+
+
         # now try the ART format style
         mdlist = self.doc.getElementsByTagName("METADATA")
 
@@ -156,6 +166,27 @@ class PaperParser:
 
                 yield self.lookupAuthor(surname, forenames)
 
+        # tei
+        headerEls = self.doc.getElementsByTagName("teiHeader")
+
+        if len(headerEls) > 0:
+            
+            for author in headerEls[0].getElementsByTagName("author"):
+
+                # see if the document is using surname/given-names or name
+                nameEls = author.getElementsByTagName("persName")
+                if nameEls is not None:
+
+                    nameEl = nameEls[0]
+
+                    if len(nameEl.getElementsByTagName("surname")) > 0:
+                        surnameEl = nameEl.getElementsByTagName("surname")[0]
+                        forenames = nameEl.getElementsByTagName("forename")
+                        surname = self.extractText(surnameEl)
+                        forenames = " ".join([self.extractText(el) for el in forenames])
+
+                        yield self.lookupAuthor(surname, forenames)
+
         authEls = self.doc.getElementsByTagName("CURRENT_AUTHOR")
         authEls.extend(self.doc.getElementsByTagName("AUTHOR"))
 
@@ -194,6 +225,9 @@ class PaperParser:
 
         if len(titleEls) < 1:
             titleEls = self.doc.getElementsByTagName("TITLE")
+
+        if len(titleEls) < 1:  # for TEI
+            titleEls = self.doc.getElementsByTagName("title")
 
         return self.extractText(titleEls[0])
 

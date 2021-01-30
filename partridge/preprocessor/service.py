@@ -4,6 +4,8 @@ import dramatiq
 import tempfile
 import os
 import dotenv
+import base64
+import pickle
 from partridge import create_app
 from partridge.config import config
 
@@ -78,12 +80,12 @@ def annotate_paper(paper_filename):
         logger.info("Created file: %s", outfile)
 
         pp = PaperParser()
-        if pp.paperExists(outfile):
+        paper = pp.paperExists(outfile)
+        if paper is not None:
 
-            inform_watcher(logger, paper_filename, exception=PaperExistsException(
-                "Paper Already Exists"))
+            inform_watcher.send(paper_filename, exists=True, paper_id=paper.id)
 
-            cleanup.send(logger, paper_filename)
+            cleanup.send(paper_filename)
             return
 
         # store the paper object in database

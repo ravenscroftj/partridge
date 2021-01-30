@@ -2,6 +2,8 @@ import smtplib
 import traceback
 import os
 import dramatiq
+import base64
+import pickle
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
