@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name = "Partridge",
     version = "0.1",
-    packages = find_packages(),
+    packages = ['partridge'],
 
     #install requirements
     install_requires = [
@@ -20,13 +20,13 @@ setup(
             ],
 
     #program entrypoints
-    entry_points ={
-     'console_scripts' : [
-        'partridged = partridge:run',
-        'plosget = partridge.tools.plosget:main',
-        'partridge-admin = partridge.tools.admincli:main'
-     ]
-    },
+    # entry_points ={
+    #  'console_scripts' : [
+    #     'partridged = partridge:run',
+    #     'plosget = partridge.tools.plosget:main',
+    #     'partridge-admin = partridge.tools.admincli:main'
+    #  ]
+    # },
     #author details
     author = "James Ravenscroft",
     author_email = "ravenscroftj@gmail.com",
