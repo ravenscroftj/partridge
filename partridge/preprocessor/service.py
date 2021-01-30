@@ -3,8 +3,13 @@
 import dramatiq
 import tempfile
 import os
+import dotenv
 from partridge import create_app
 from partridge.config import config
+
+dotenv.load_dotenv()
+
+config.update(os.environ)
 
 app = create_app(config)
 

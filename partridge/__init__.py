@@ -2,9 +2,10 @@ import sys
 import logging
 import threading
 import dotenv
+import os
 
 from optparse import OptionParser
-from flask import Config,Flask
+from flask import Config, Flask
 
 from partridge.config import config
 from partridge.models import db
@@ -17,6 +18,7 @@ def create_app( config ):
     app = Flask(__name__)
 
     app.config.update(config)
+    app.config.update(os.environ)
 
     #load views model lazily
     from partridge.views import frontend
