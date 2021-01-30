@@ -13,3 +13,7 @@ ADD ./partridge/wsgi.py /app/main.py
 ADD ./setup.py /app/setup.py
 
 RUN python setup.py develop
+
+ADD alembic /app/alembic
+ADD alembic.ini /app/alembic.ini
+ADD prestart.sh /app/prestart.sh

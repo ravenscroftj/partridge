@@ -1,4 +1,5 @@
-from __future__ import with_statement
+import os
+
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
@@ -11,6 +12,7 @@ from partridge.config import config
 ##connect alembic to the db 
 app = Flask(__name__)
 app.config.update(config)
+app.config.update(os.environ)
 
 db.app = app
 db.init_app(app)
