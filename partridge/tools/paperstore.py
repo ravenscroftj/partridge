@@ -175,7 +175,7 @@ class PaperParser:
 
                 # see if the document is using surname/given-names or name
                 nameEls = author.getElementsByTagName("persName")
-                if nameEls is not None:
+                if len(nameEls) > 0:
 
                     nameEl = nameEls[0]
 
