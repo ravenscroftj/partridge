@@ -1,0 +1,33 @@
+# Name of the Workflow
+name: Push to Dockerhub
+# Only push for commits on master branch
+# Remove this if you want to publish on every branch
+on:
+  push:
+    branches: [ master ]
+jobs:
+ push-to-dockerhub:
+    # You can change this if you want to build on an other image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Checkout submodules
+        uses: textbook/git-checkout-submodule-action@master
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+        # Change filename here if Dockerfile is other than Dockerfile
+          file: ./Dockerfile
+          push: true
+        # Change this to the Dockerhub repo you want to push your image to
+          tags: ravenscroftj/partridge:latest
+        # Can be removed if digest not needed
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
