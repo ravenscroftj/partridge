@@ -4,7 +4,7 @@ name: Push to Dockerhub
 # Remove this if you want to publish on every branch
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
 jobs:
  push-to-dockerhub:
     # You can change this if you want to build on an other image
